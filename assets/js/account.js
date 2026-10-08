@@ -221,8 +221,9 @@ function historyPane(m, host) {
     });
   }).catch(function (e) {
     if (m.closed) return;
+    var why = e && e.status ? ' (' + esc(e.status + (e.detail ? ' · ' + e.detail : '')) + ')' : '';
     host.innerHTML = e && e.denied
-      ? errBanner('Prijava je istekla. Odjavi se pa se prijavi ponovo.', 'Your sign-in has expired. Sign out and sign in again.')
+      ? errBanner('Baza je odbila pristup' + why + '. Proveri da su pravila objavljena, pa se odjavi i prijavi ponovo.', 'The database refused access' + why + '. Check that the rules are published, then sign out and sign in again.')
       : errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.');
   });
 }

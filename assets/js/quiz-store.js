@@ -82,10 +82,13 @@ function req(method, path, body, query) {
     return fetch(dbUrl + '/' + root + (path ? '/' + path : '') + '.json' + q, opt).then(function (r) {
       clearTimeout(timer);
       if (!r.ok) {
-        var e = new Error('http ' + r.status);
-        e.status = r.status;
-        e.denied = r.status === 401 || r.status === 403;
-        throw e;
+        return r.text().then(function (t) {
+          var e = new Error('http ' + r.status);
+          e.status = r.status;
+          e.denied = r.status === 401 || r.status === 403;
+          try { var j = JSON.parse(t); e.detail = typeof j.error === 'string' ? j.error : (j.error && j.error.message) || ''; } catch (x) { e.detail = String(t || '').slice(0, 120); }
+          throw e;
+        });
       }
       return r.json();
     }, function (e) {
