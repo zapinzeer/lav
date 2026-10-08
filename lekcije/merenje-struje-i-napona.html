@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Vežba: merenje struje i napona u kolima naizmenične struje analognim i digitalnim instrumentom. Efektivna vrednost, vezivanje ampermetra i voltmetra, klasa tačnosti, čitanje skale i True RMS, sa animacijama i rešenim primerima.">
+<title>Merenje struje i napona · lav</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="merenje-struje-i-napona">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove vežbe umeš da</span><span lang="en">After this exercise you can</span></p>
+    <ul lang="sr">
+      <li>odrediš vršnu, efektivnu i srednju vrednost sinusnog napona i prelaziš sa jedne na drugu;</li>
+      <li>ispravno vežeš ampermetar (redno) i voltmetar (paralelno) i izabereš merni opseg;</li>
+      <li>očitaš analogni instrument, izračunaš njegovu konstantu i najveću grešku iz klase tačnosti;</li>
+      <li>očitaš digitalni multimetar i objasniš kada je potreban instrument sa True RMS;</li>
+      <li>objasniš kako unutrašnji otpor instrumenta utiče na rezultat merenja;</li>
+      <li>popuniš tabelu vežbe i izračunaš apsolutnu i relativnu grešku.</li>
+    </ul>
+    <ul lang="en">
+      <li>find the peak, RMS and average value of a sine voltage and convert between them;</li>
+      <li>correctly connect an ammeter (in series) and a voltmeter (in parallel) and choose a range;</li>
+      <li>read an analog instrument, calculate its constant and its largest error from the accuracy class;</li>
+      <li>read a digital multimeter and explain when a True RMS instrument is needed;</li>
+      <li>explain how the internal resistance of an instrument affects the result;</li>
+      <li>fill in the exercise table and calculate the absolute and relative error.</li>
+    </ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="signal" data-toc data-toc-sr="Vrednosti napona" data-toc-en="Voltage values">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">pre merenja</span><span lang="en">before measuring</span></p>
+    <h2><span lang="sr">Šta zapravo pokazuje instrument za naizmenični napon</span><span lang="en">What an instrument actually shows for an alternating voltage</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Jednosmerni napon se ne menja, pa je jasno šta instrument pokazuje. Naizmenični napon se stalno menja, pa o njemu govorimo preko nekoliko različitih vrednosti. Za sinusni napon:</p>
+      <p lang="en">A direct voltage does not change, so it is clear what an instrument shows. An alternating voltage changes all the time, so we describe it with several different values. For a sine voltage:</p>
+      <div class="formula">
+        <div class="tex">\[ u(t) = U_m \sin(\omega t) = U_m \sin(2\pi f\,t) \]</div>
+      </div>
+      <ul class="plain" lang="sr">
+        <li><strong>Trenutna vrednost</strong> <span class="v">u</span>(<span class="v">t</span>) je vrednost napona u jednom trenutku.</li>
+        <li><strong>Vršna vrednost (amplituda)</strong> <span class="v">U<sub>m</sub></span> je najveća vrednost. Razmak od najnižeg do najvišeg vrha je <span class="v">U<sub>pp</sub></span> = 2<span class="v">U<sub>m</sub></span>.</li>
+        <li><strong>Perioda</strong> <span class="v">T</span> je trajanje jednog punog ciklusa, a <strong>frekvencija</strong> <span class="v">f</span> = 1/<span class="v">T</span> je broj ciklusa u sekundi (Hz). Mreža u Srbiji ima 50 Hz, pa je <span class="v">T</span> = 20 ms.</li>
+        <li><strong>Efektivna vrednost</strong> <span class="v">U</span> je ona vrednost jednosmernog napona koji bi na istom otporniku razvio istu snagu, to jest istu toplotu.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li>The <strong>instantaneous value</strong> <span class="v">u</span>(<span class="v">t</span>) is the voltage at one moment.</li>
+        <li>The <strong>peak value (amplitude)</strong> <span class="v">U<sub>m</sub></span> is the largest value. The distance from the lowest to the highest peak is <span class="v">U<sub>pp</sub></span> = 2<span class="v">U<sub>m</sub></span>.</li>
+        <li>The <strong>period</strong> <span class="v">T</span> is the duration of one full cycle, and the <strong>frequency</strong> <span class="v">f</span> = 1/<span class="v">T</span> is the number of cycles per second (Hz). The mains in Serbia have 50 Hz, so <span class="v">T</span> = 20 ms.</li>
+        <li>The <strong>RMS (effective) value</strong> <span class="v">U</span> is the value of a direct voltage that would develop the same power, that is the same heat, in the same resistor.</li>
+      </ul>
+      <div class="formula">
+        <div class="tex">\[ U = \frac{U_m}{\sqrt{2}} \approx 0{,}707\,U_m \qquad I = \frac{I_m}{\sqrt{2}} \]</div>
+        <dl class="legend">
+          <div><dt>U, I</dt><dd><span lang="sr">efektivni napon i efektivna struja</span><span lang="en">RMS voltage and RMS current</span></dd><span class="unit">V, A</span></div>
+          <div><dt>U<sub>m</sub>, I<sub>m</sub></dt><dd><span lang="sr">vršni napon i vršna struja</span><span lang="en">peak voltage and peak current</span></dd><span class="unit">V, A</span></div>
+        </dl>
+      </div>
+      <p lang="sr">Zato se na instrumentima i na utičnici navodi efektivna vrednost. Utičnica od 230 V ima vršnu vrednost 230 · √2 ≈ 325 V.</p>
+      <p lang="en">That is why instruments and the wall socket quote the RMS value. A 230 V socket has a peak value of 230 · √2 ≈ 325 V.</p>
+      <p lang="sr">Srednja vrednost sinusoide u celoj periodi je nula, jer se pozitivna i negativna polovina potiru. Zato se kao „srednja vrednost” uzima srednja vrednost <em>ispravljenog</em> signala (apsolutne vrednosti):</p>
+      <p lang="en">The average of a sine over a whole period is zero, because the positive and negative halves cancel. So the "average value" means the average of the <em>rectified</em> signal (the absolute values):</p>
+      <div class="formula">
+        <div class="tex">\[ U_{sr} = \frac{2\,U_m}{\pi} \approx 0{,}637\,U_m \qquad k_f = \frac{U}{U_{sr}} \approx 1{,}11 \qquad k_t = \frac{U_m}{U} = \sqrt{2} \]</div>
+        <dl class="legend">
+          <div><dt>k<sub>f</sub></dt><dd><span lang="sr">faktor oblika (efektivna / srednja)</span><span lang="en">form factor (RMS / average)</span></dd><span class="unit">–</span></div>
+          <div><dt>k<sub>t</sub></dt><dd><span lang="sr">faktor temena (vršna / efektivna)</span><span lang="en">crest factor (peak / RMS)</span></dd><span class="unit">–</span></div>
+        </dl>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-wave">
+      <div class="plot tall"><canvas aria-label="Talasni oblik napona sa vršnom, efektivnom i srednjom vrednošću / voltage waveform with peak, RMS and average values"></canvas></div>
+      <div class="controls">
+        <div class="btns">
+          <div class="seg" id="w-shape" role="group" aria-label="Oblik / Shape">
+            <button type="button" data-v="sin" aria-pressed="true"><span lang="sr">Sinusni</span><span lang="en">Sine</span></button>
+            <button type="button" data-v="tri" aria-pressed="false"><span lang="sr">Trougaoni</span><span lang="en">Triangle</span></button>
+            <button type="button" data-v="sqr" aria-pressed="false"><span lang="sr">Pravougaoni</span><span lang="en">Square</span></button>
+          </div>
+        </div>
+        <div class="ctl"><label for="w-um"><span lang="sr">Vršna vrednost U<sub>m</sub></span><span lang="en">Peak value U<sub>m</sub></span></label><output id="w-um-out" for="w-um">10 V</output><input type="range" id="w-um" min="0" max="7" step="1" value="3"></div>
+        <div class="ctl"><label for="w-f"><span lang="sr">Frekvencija f</span><span lang="en">Frequency f</span></label><output id="w-f-out" for="w-f">50 Hz</output><input type="range" id="w-f" min="0" max="3" step="1" value="1"></div>
+        <div class="btns">
+          <label class="switch" for="w-pp"><input type="checkbox" id="w-pp"><span lang="sr">Razmak vrh–vrh</span><span lang="en">Peak to peak</span></label>
+          <label class="switch" for="w-rms"><input type="checkbox" id="w-rms" checked><span lang="sr">Efektivna</span><span lang="en">RMS</span></label>
+          <label class="switch" for="w-avg"><input type="checkbox" id="w-avg" checked><span lang="sr">Srednja</span><span lang="en">Average</span></label>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="w-calc"></div><div class="result" id="w-result"></div></div>
+      <figcaption><span lang="sr">Dve periode napona. Zelena linija je efektivna vrednost, ljubičasta srednja vrednost ispravljenog napona, a bela isprekidana vršna. Promeni oblik: za isti vrh pravougaoni napon ima mnogo veću efektivnu vrednost od trougaonog, jer je „pun” snage u svakom trenutku.</span><span lang="en">Two periods of the voltage. The green line is the RMS value, the violet one the average of the rectified voltage, and the white dashed one the peak. Change the shape: for the same peak a square voltage has a much larger RMS value than a triangle, because it is "full" of power at every moment.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <div class="tbl-wrap">
+        <table class="scale num">
+          <caption><span lang="sr">Faktori za tri oblika signala</span><span lang="en">Factors for three signal shapes</span></caption>
+          <thead><tr><th><span lang="sr">Oblik</span><span lang="en">Shape</span></th><th>U / U<sub>m</sub></th><th>U<sub>sr</sub> / U<sub>m</sub></th><th>k<sub>f</sub></th><th>k<sub>t</sub></th></tr></thead>
+          <tbody>
+            <tr><td><span lang="sr">Sinusni</span><span lang="en">Sine</span></td><td>0,707</td><td>0,637</td><td>1,11</td><td>1,41</td></tr>
+            <tr><td><span lang="sr">Trougaoni</span><span lang="en">Triangle</span></td><td>0,577</td><td>0,500</td><td>1,15</td><td>1,73</td></tr>
+            <tr><td><span lang="sr">Pravougaoni</span><span lang="en">Square</span></td><td>1,000</td><td>1,000</td><td>1,00</td><td>1,00</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="rule-box green">
+        <p class="eyebrow"><span lang="sr">Snaga na otporniku</span><span lang="en">Power in a resistor</span></p>
+        <p lang="sr">Ako koristiš efektivne vrednosti, sve formule su iste kao za jednosmernu struju: \( P = U\,I = I^2 R = U^2/R \) i \( I = U/R \).</p>
+        <p lang="en">If you use RMS values, all the formulas are the same as for direct current: \( P = U\,I = I^2 R = U^2/R \) and \( I = U/R \).</p>
+      </div>
+      <details class="think">
+        <summary><span lang="sr">Za radoznale: odakle potiče √2?</span><span lang="en">For the curious: where does √2 come from?</span></summary>
+        <div class="ans">
+          <p lang="sr">Efektivna vrednost je koren iz srednje vrednosti kvadrata, pa je za sinusoidu \( U = \sqrt{\dfrac{1}{T}\displaystyle\int_0^T U_m^2 \sin^2\omega t\,dt} = U_m\sqrt{\dfrac{1}{2}} \), jer je srednja vrednost od \( \sin^2 \) tačno 1/2.</p>
+          <p lang="en">The RMS value is the square root of the mean of the square, so for a sine \( U = \sqrt{\dfrac{1}{T}\displaystyle\int_0^T U_m^2 \sin^2\omega t\,dt} = U_m\sqrt{\dfrac{1}{2}} \), because the average of \( \sin^2 \) is exactly 1/2.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="vezivanje" data-toc data-toc-sr="Vezivanje" data-toc-en="Connecting">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">šema veze</span><span lang="en">the circuit</span></p>
+    <h2><span lang="sr">Kako se vezuju ampermetar i voltmetar</span><span lang="en">How to connect an ammeter and a voltmeter</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr"><strong>Ampermetar</strong> meri struju grane, pa kroz njega mora da prođe cela ta struja. Zato se vezuje <strong>redno</strong>: kolo se prekine na mestu gde merimo, a ampermetar se ubaci u prekid. Da ne bi menjao struju, treba da ima što manji unutrašnji otpor <span class="v">R<sub>a</sub></span> (idealno nula).</p>
+      <p lang="en">An <strong>ammeter</strong> measures the current of a branch, so the whole current must pass through it. That is why it is connected <strong>in series</strong>: the circuit is broken where we measure, and the ammeter is inserted in the gap. To avoid changing the current, it should have as small an internal resistance <span class="v">R<sub>a</sub></span> as possible (ideally zero).</p>
+      <p lang="sr"><strong>Voltmetar</strong> meri razliku potencijala između dve tačke, pa se priključuje na njih, <strong>paralelno</strong> elementu, bez prekidanja kola. Da kroz njega ne bi odlazila struja, treba da ima što veći unutrašnji otpor <span class="v">R<sub>v</sub></span> (idealno beskonačan).</p>
+      <p lang="en">A <strong>voltmeter</strong> measures the potential difference between two points, so it is connected across them, <strong>in parallel</strong> with the element, without breaking the circuit. To avoid drawing current away, it should have as large an internal resistance <span class="v">R<sub>v</sub></span> as possible (ideally infinite).</p>
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Pravilo za pamćenje</span><span lang="en">Rule to remember</span></p>
+        <p lang="sr"><strong>Ampermetar u red, voltmetar uporedo.</strong> Kod naizmenične struje polaritet nije bitan, ali prekidač instrumenta mora biti na naizmeničnoj veličini (<span class="u">~</span>).</p>
+        <p lang="en"><strong>Ammeter in series, voltmeter in parallel.</strong> With alternating current the polarity does not matter, but the switch of the instrument must be set to the alternating quantity (<span class="u">~</span>).</p>
+      </div>
+      <div class="rule-box warn">
+        <p class="eyebrow"><span lang="sr">Nikad ne mešaj</span><span lang="en">Never mix them up</span></p>
+        <p lang="sr">Ampermetar vezan paralelno sa izvorom ili otpornikom je <strong>kratak spoj</strong>, jer mu je otpor oko 1 Ω ili manje. Struja skače na desetine ampera i pregoreva instrument ili osigurač. Voltmetar vezan redno praktično prekida kolo, jer mu je otpor ogroman.</p>
+        <p lang="en">An ammeter connected in parallel with a source or a resistor is a <strong>short circuit</strong>, because its resistance is about 1 Ω or less. The current jumps to tens of amperes and burns out the instrument or a fuse. A voltmeter connected in series practically breaks the circuit, because its resistance is huge.</p>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-circuit">
+      <div class="viewport"><canvas tabindex="0" aria-label="Strujno kolo sa izvorom, otpornikom, ampermetrom i voltmetrom / a circuit with a source, resistor, ammeter and voltmeter"></canvas></div>
+      <div class="controls">
+        <div class="btns">
+          <div class="seg" id="c-mode" role="group" aria-label="Veza / Connection">
+            <button type="button" data-v="ok" aria-pressed="true"><span lang="sr">Ispravno</span><span lang="en">Correct</span></button>
+            <button type="button" data-v="apar" aria-pressed="false"><span lang="sr">A paralelno</span><span lang="en">A in parallel</span></button>
+            <button type="button" data-v="vser" aria-pressed="false"><span lang="sr">V redno</span><span lang="en">V in series</span></button>
+          </div>
+        </div>
+        <div class="ctl"><label for="c-u"><span lang="sr">Napon izvora U</span><span lang="en">Source voltage U</span></label><output id="c-u-out" for="c-u">12 V</output><input type="range" id="c-u" min="6" max="24" step="1" value="12"></div>
+        <div class="ctl"><label for="c-r"><span lang="sr">Otpornik R</span><span lang="en">Resistor R</span></label><output id="c-r-out" for="c-r">100 Ω</output><input type="range" id="c-r" min="10" max="200" step="10" value="100"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="c-calc"></div><div class="result" id="c-result"></div><div class="calc" id="c-note"></div></div>
+      <figcaption><span lang="sr">Naizmenična struja je prikazana tačkicama koje se pomeraju napred i nazad. Prebaci vezu na pogrešnu i vidi šta se dešava: ampermetar paralelno sa otpornikom kratko spaja izvor, a voltmetar u redu gotovo prekida struju.</span><span lang="en">The alternating current is shown by dots that move back and forth. Switch the connection to a wrong one and see what happens: an ammeter in parallel with the resistor short-circuits the source, and a voltmeter in series almost stops the current.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <h3><span lang="sr">Izbor mernog opsega</span><span lang="en">Choosing the measuring range</span></h3>
+      <ol class="steps-inline" lang="sr">
+        <li><span>Ako ne znaš koju vrednost očekuješ, počni od <strong>najvećeg opsega</strong>. Kazaljka tako ne udari u ograničač.</span></li>
+        <li><span>Smanjuj opseg dok kazaljka ne dođe u <strong>poslednju trećinu skale</strong>, a da ne pređe kraj.</span></li>
+        <li><span>Kod digitalnog instrumenta uključi automatski opseg (AUTO) ili izaberi najmanji opseg koji ne pokazuje preopterećenje (OL).</span></li>
+        <li><span>Proveri prekidač: <span class="u">~</span> za naizmenične, <span class="u">⎓</span> za jednosmerne veličine.</span></li>
+      </ol>
+      <ol class="steps-inline" lang="en">
+        <li><span>If you do not know what value to expect, start from the <strong>largest range</strong>. That way the needle does not slam into the stop.</span></li>
+        <li><span>Reduce the range until the needle is in the <strong>last third of the scale</strong>, without going past the end.</span></li>
+        <li><span>On a digital instrument switch on the automatic range (AUTO) or choose the smallest range that does not show overload (OL).</span></li>
+        <li><span>Check the switch: <span class="u">~</span> for alternating, <span class="u">⎓</span> for direct quantities.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="analogni" data-toc data-toc-sr="Analogni instrument" data-toc-en="Analog instrument">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">skala · konstanta · klasa tačnosti</span><span lang="en">scale · constant · accuracy class</span></p>
+    <h2><span lang="sr">Analogni instrument</span><span lang="en">The analog instrument</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Analogni instrument ima kazaljku koja se pomera preko skale. Dva najčešća tipa:</p>
+      <p lang="en">An analog instrument has a needle that moves over a scale. The two most common types:</p>
+      <div class="cases">
+        <div>
+          <span class="h"><span lang="sr">Magnetoelektrični</span><span lang="en">Moving-coil</span></span>
+          <p lang="sr">Kalem u polju stalnog magneta. Otklon je srazmeran <strong>srednjoj vrednosti</strong> struje. Za naizmeničnu struju ispred kalema stoji ispravljač, a skala je baždarena da pokaže efektivnu vrednost <em>samo za sinusoidu</em>.</p>
+          <p lang="en">A coil in the field of a permanent magnet. The deflection is proportional to the <strong>average value</strong> of the current. For alternating current a rectifier stands in front of the coil, and the scale is calibrated to show the RMS value <em>for a sine only</em>.</p>
+        </div>
+        <div>
+          <span class="h"><span lang="sr">Elektromagnetni</span><span lang="en">Moving-iron</span></span>
+          <p lang="sr">Komad mekog gvožđa u polju kalema. Otklon je srazmeran kvadratu struje, pa instrument direktno meri <strong>efektivnu vrednost</strong>. Skala nije ravnomerna. Koristi se za tablne instrumente na mreži.</p>
+          <p lang="en">A piece of soft iron in the field of a coil. The deflection is proportional to the square of the current, so the instrument measures the <strong>RMS value</strong> directly. The scale is not uniform. It is used for panel instruments on the mains.</p>
+        </div>
+      </div>
+      <h3><span lang="sr">Čitanje skale</span><span lang="en">Reading the scale</span></h3>
+      <p lang="sr">Skala ima određen broj podeoka, a opseg se bira prekidačem. Jednom podeoku odgovara <strong>konstanta instrumenta</strong>:</p>
+      <p lang="en">The scale has a certain number of divisions, and the range is chosen with a switch. One division corresponds to the <strong>constant of the instrument</strong>:</p>
+      <div class="formula">
+        <div class="tex">\[ C = \frac{X_n}{\alpha_{max}} \qquad X = \alpha \cdot C \]</div>
+        <dl class="legend">
+          <div><dt>X<sub>n</sub></dt><dd><span lang="sr">merni opseg (vrednost pri punom otklonu)</span><span lang="en">measuring range (value at full deflection)</span></dd><span class="unit">V, A</span></div>
+          <div><dt>α<sub>max</sub></dt><dd><span lang="sr">broj podeoka cele skale</span><span lang="en">number of divisions of the whole scale</span></dd><span class="unit">–</span></div>
+          <div><dt>α</dt><dd><span lang="sr">broj podeoka koji pokazuje kazaljka</span><span lang="en">number of divisions the needle shows</span></dd><span class="unit">–</span></div>
+          <div><dt>C</dt><dd><span lang="sr">konstanta: vrednost jednog podeoka</span><span lang="en">constant: the value of one division</span></dd><span class="unit">V/pod.</span></div>
+        </dl>
+      </div>
+      <p lang="sr">Pogled treba da bude pod pravim uglom na skalu. Na boljim instrumentima ispod skale je ogledalo: kazaljka se čita kada se poklopi sa svojom slikom. Tako se izbegava <strong>greška paralakse</strong>.</p>
+      <p lang="en">Your eye should look at the scale at a right angle. Better instruments have a mirror strip under the scale: you read the needle when it covers its own reflection. This avoids the <strong>parallax error</strong>.</p>
+      <h3><span lang="sr">Klasa tačnosti</span><span lang="en">Accuracy class</span></h3>
+      <p lang="sr">Broj <span class="v">k</span> na skali (npr. 1,5) je klasa tačnosti. To je najveća dozvoljena greška izražena u procentima <strong>mernog opsega</strong>, a ne očitane vrednosti:</p>
+      <p lang="en">The number <span class="v">k</span> on the scale (for example 1.5) is the accuracy class. It is the largest permitted error expressed as a percentage of the <strong>measuring range</strong>, not of the reading:</p>
+      <div class="formula">
+        <div class="tex">\[ \Delta_{max} = \pm\frac{k\,X_n}{100} \qquad \delta = \frac{\Delta_{max}}{X}\cdot 100\,\% \]</div>
+        <dl class="legend">
+          <div><dt>Δ<sub>max</sub></dt><dd><span lang="sr">najveća apsolutna greška (ista na celoj skali)</span><span lang="en">largest absolute error (the same over the whole scale)</span></dd><span class="unit">V, A</span></div>
+          <div><dt>δ</dt><dd><span lang="sr">relativna greška očitane vrednosti</span><span lang="en">relative error of the reading</span></dd><span class="unit">%</span></div>
+        </dl>
+      </div>
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Zašto poslednja trećina skale?</span><span lang="en">Why the last third of the scale?</span></p>
+        <p lang="sr">Apsolutna greška Δ<sub>max</sub> je ista na celoj skali, pa je relativna greška najmanja pri kraju skale. Kazaljka na 10 % skale daje desetostruko veću relativnu grešku nego pri punom otklonu.</p>
+        <p lang="en">The absolute error Δ<sub>max</sub> is the same over the whole scale, so the relative error is smallest near the end of the scale. A needle at 10 % of the scale gives a relative error ten times larger than at full deflection.</p>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-analog">
+      <div class="viewport"><canvas tabindex="0" aria-label="Analogni voltmetar sa skalom od 50 podeoka / an analog voltmeter with a 50-division scale"></canvas></div>
+      <div class="controls">
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Opseg</span><span lang="en">Range</span></span>
+          <div class="seg" id="a-range" role="group" aria-label="Opseg / Range">
+            <button type="button" data-v="5" aria-pressed="false">5 V</button>
+            <button type="button" data-v="10" aria-pressed="false">10 V</button>
+            <button type="button" data-v="50" aria-pressed="true">50 V</button>
+            <button type="button" data-v="250" aria-pressed="false">250 V</button>
+          </div>
+        </div>
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Klasa</span><span lang="en">Class</span></span>
+          <div class="seg" id="a-class" role="group" aria-label="Klasa tačnosti / Accuracy class">
+            <button type="button" data-v="0.5" aria-pressed="false">0,5</button>
+            <button type="button" data-v="1.5" aria-pressed="true">1,5</button>
+            <button type="button" data-v="2.5" aria-pressed="false">2,5</button>
+          </div>
+        </div>
+        <div class="ctl" style="grid-column:1/-1"><label for="a-u"><span lang="sr">Napon koji merimo</span><span lang="en">The voltage being measured</span></label><output id="a-u-out" for="a-u">18 V</output><input type="range" id="a-u" min="0" max="100" step="0.5" value="18"></div>
+        <div class="btns">
+          <label class="switch" for="a-err"><input type="checkbox" id="a-err" checked><span lang="sr">Prikaži opseg greške</span><span lang="en">Show the error band</span></label>
+          <button type="button" class="btn" id="a-prac"><span lang="sr">Vežbaj očitavanje</span><span lang="en">Practise reading</span></button>
+        </div>
+        <div class="btns" id="a-quiz" hidden>
+          <input class="input" id="a-guess" type="text" inputmode="decimal" autocomplete="off" style="max-width:150px" data-ph-sr="Očitano (V)" data-ph-en="Reading (V)" data-aria-sr="Očitana vrednost u voltima" data-aria-en="Reading in volts">
+          <button type="button" class="btn primary" id="a-check" style="padding:10px 18px"><span lang="sr">Proveri</span><span lang="en">Check</span></button>
+          <button type="button" class="btn" id="a-next"><span lang="sr">Novi zadatak</span><span lang="en">New task</span></button>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="a-calc"></div><div class="result" id="a-result"></div></div>
+      <figcaption><span lang="sr">Skala ima 50 podeoka. Promeni opseg i vidi kako se menja položaj kazaljke i konstanta. Bakarna traka iznad skale je opseg u kome je prava vrednost, zbog klase tačnosti. Kada pritisneš „Vežbaj očitavanje”, kazaljka se postavi na slučajno mesto: pročitaj broj podeoka i izračunaj napon.</span><span lang="en">The scale has 50 divisions. Change the range and watch the position of the needle and the constant change. The copper band above the scale is the interval in which the true value lies, because of the accuracy class. When you press "Practise reading", the needle is put at a random place: read the number of divisions and calculate the voltage.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <p class="note" lang="sr">Na skali nalaziš i druge oznake: znak <span class="u">~</span> za naizmeničnu, <span class="u">⎓</span> za jednosmernu struju, klasu tačnosti (npr. 1,5) i položaj u kome instrument treba da radi (horizontalno ili uspravno). Ispravan položaj je uslov za deklarisanu tačnost.</p>
+      <p class="note" lang="en">The scale carries other markings as well: the sign <span class="u">~</span> for alternating, <span class="u">⎓</span> for direct current, the accuracy class (for example 1.5) and the position in which the instrument should work (horizontal or upright). The correct position is a condition for the stated accuracy.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="digitalni" data-toc data-toc-sr="Digitalni instrument" data-toc-en="Digital instrument">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">cifre · tačnost · True RMS</span><span lang="en">digits · accuracy · True RMS</span></p>
+    <h2><span lang="sr">Digitalni multimetar</span><span lang="en">The digital multimeter</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Digitalni instrument pomoću A/D konvertora pretvara napon u broj i prikazuje ga na displeju. Nema kazaljke ni paralakse, a čitanje je trenutno. Zato je u praksi veoma raširen, ali treba razumeti šta mu piše u podacima.</p>
+      <p lang="en">A digital instrument uses an A/D converter to turn the voltage into a number and shows it on a display. It has no needle and no parallax, and the reading is immediate. That is why it is so common in practice, but you need to understand what its specifications say.</p>
+      <ul class="plain" lang="sr">
+        <li><strong>3½ cifre</strong> znači tri pune cifre (0 do 9) i jednu „polovinu” koja može biti samo 0 ili 1. Najveći prikaz je 1999.</li>
+        <li><strong>Rezolucija</strong> <span class="v">r</span> je vrednost poslednje cifre. Na opsegu 20 V displej prikazuje do 19,99 V, pa je <span class="v">r</span> = 0,01 V. Na opsegu 200 V je <span class="v">r</span> = 0,1 V.</li>
+        <li><strong>Ulazni otpor</strong> je obično 10 MΩ na svim naponskim opsezima, pa digitalni voltmetar vrlo malo opterećuje kolo.</li>
+        <li><strong>Automatski opseg (AUTO)</strong> sam bira najmanji opseg na kome se vrednost vidi.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li><strong>3½ digits</strong> means three full digits (0 to 9) and one "half" that can only be 0 or 1. The largest display is 1999.</li>
+        <li>The <strong>resolution</strong> <span class="v">r</span> is the value of the last digit. On the 20 V range the display shows up to 19.99 V, so <span class="v">r</span> = 0.01 V. On the 200 V range <span class="v">r</span> = 0.1 V.</li>
+        <li>The <strong>input resistance</strong> is usually 10 MΩ on all voltage ranges, so a digital voltmeter loads the circuit very little.</li>
+        <li>The <strong>automatic range (AUTO)</strong> chooses the smallest range in which the value can be seen.</li>
+      </ul>
+      <p lang="sr">Tačnost se navodi kao <strong>±(a % očitavanja + b cifara)</strong>. Prvi član je srazmeran očitanoj vrednosti, a drugi je stalan:</p>
+      <p lang="en">The accuracy is stated as <strong>±(a % of reading + b digits)</strong>. The first term is proportional to the reading, and the second is constant:</p>
+      <div class="formula">
+        <div class="tex">\[ \Delta = \pm\left(\frac{a}{100}\,X + b\cdot r\right) \]</div>
+        <dl class="legend">
+          <div><dt>X</dt><dd><span lang="sr">prikazana vrednost</span><span lang="en">displayed value</span></dd><span class="unit">V</span></div>
+          <div><dt>a</dt><dd><span lang="sr">procenat od očitavanja (npr. 0,8)</span><span lang="en">percentage of the reading (e.g. 0.8)</span></dd><span class="unit">%</span></div>
+          <div><dt>b</dt><dd><span lang="sr">broj cifara (npr. 3)</span><span lang="en">number of digits (e.g. 3)</span></dd><span class="unit">–</span></div>
+          <div><dt>r</dt><dd><span lang="sr">rezolucija na tom opsegu</span><span lang="en">resolution on that range</span></dd><span class="unit">V</span></div>
+        </dl>
+      </div>
+      <h3><span lang="sr">Naizmenični napon: srednja vrednost ili True RMS</span><span lang="en">Alternating voltage: average-responding or True RMS</span></h3>
+      <p lang="sr">Većina jeftinih multimetara je <strong>„srednja vrednost × 1,11”</strong>: ispravi napon, izračuna srednju vrednost i pomnoži je faktorom oblika sinusoide 1,11. To je tačno samo za čistu sinusoidu. Instrument sa oznakom <strong>True RMS</strong> računa pravu efektivnu vrednost, pa je tačan i za trougaone, pravougaone i izobličene signale (struja iz napajanja računara, LED sijalica, regulatora).</p>
+      <p lang="en">Most cheap multimeters are <strong>"average × 1.11"</strong>: they rectify the voltage, compute the average and multiply it by the form factor of a sine, 1.11. This is correct only for a pure sine. An instrument marked <strong>True RMS</strong> computes the real RMS value, so it is correct for triangle, square and distorted signals as well (the current of a computer power supply, an LED lamp, a dimmer).</p>
+    </div>
+
+    <figure class="lab" id="lab-dmm">
+      <div class="viewport"><canvas tabindex="0" aria-label="Digitalni multimetar meri naizmenični napon / a digital multimeter measuring an alternating voltage"></canvas></div>
+      <div class="controls">
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Signal</span><span lang="en">Signal</span></span>
+          <div class="seg" id="d-shape" role="group" aria-label="Oblik signala / Signal shape">
+            <button type="button" data-v="sin" aria-pressed="true"><span lang="sr">Sinusni</span><span lang="en">Sine</span></button>
+            <button type="button" data-v="tri" aria-pressed="false"><span lang="sr">Trougaoni</span><span lang="en">Triangle</span></button>
+            <button type="button" data-v="sqr" aria-pressed="false"><span lang="sr">Pravougaoni</span><span lang="en">Square</span></button>
+          </div>
+        </div>
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Instrument</span><span lang="en">Instrument</span></span>
+          <div class="seg" id="d-type" role="group" aria-label="Tip instrumenta / Instrument type">
+            <button type="button" data-v="avg" aria-pressed="true"><span lang="sr">Srednja ×1,11</span><span lang="en">Average ×1.11</span></button>
+            <button type="button" data-v="rms" aria-pressed="false">True RMS</button>
+          </div>
+        </div>
+        <div class="ctl" style="grid-column:1/-1"><label for="d-um"><span lang="sr">Vršna vrednost U<sub>m</sub></span><span lang="en">Peak value U<sub>m</sub></span></label><output id="d-um-out" for="d-um">10 V</output><input type="range" id="d-um" min="0" max="12" step="1" value="6"></div>
+        <div class="btns"><button type="button" class="btn" id="d-mains">⏚ <span lang="sr">Utičnica 230 V</span><span lang="en">Mains socket 230 V</span></button></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="d-calc"></div><div class="result" id="d-result"></div></div>
+      <figcaption><span lang="sr">Multimetar ima 3½ cifre i automatski opseg. Pri sinusnom signalu oba tipa pokazuju istu vrednost. Pređi na trougaoni ili pravougaoni signal: instrument sa srednjom vrednošću greši, a True RMS ne. Ispod displeja je prava efektivna vrednost i nesigurnost iz podataka proizvođača.</span><span lang="en">The multimeter has 3½ digits and an automatic range. With a sine signal both types show the same value. Switch to a triangle or square signal: the average-responding instrument errs, True RMS does not. Under the display is the true RMS value and the uncertainty from the manufacturer's specification.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="otpor" data-toc data-toc-sr="Otpor instrumenta" data-toc-en="Instrument resistance">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">greška metode</span><span lang="en">method error</span></p>
+    <h2><span lang="sr">Instrument menja ono što meri</span><span lang="en">The instrument changes what it measures</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">I instrument je otpornik. Kada ga priključimo, kolo koje merimo se menja, pa je rezultat malo drugačiji od vrednosti pre priključenja. To je <strong>greška metode</strong>, različita od greške instrumenta (klase tačnosti).</p>
+      <p lang="en">An instrument is a resistor too. When we connect it, the circuit we measure changes, so the result is slightly different from the value before connecting. This is the <strong>method error</strong>, different from the error of the instrument itself (the accuracy class).</p>
+      <p lang="sr"><strong>Voltmetar</strong> je paralelan elementu, pa mu smanjuje otpor: umesto <span class="v">R</span> deluje \( R' = \dfrac{R\,R_v}{R+R_v} \). Napon se zato smanji. Greška je mala samo ako je \( R_v \gg R \) (za 1 % treba \( R_v \ge 100\,R \)).</p>
+      <p lang="en">A <strong>voltmeter</strong> is parallel to an element, so it lowers its resistance: instead of <span class="v">R</span> the element acts like \( R' = \dfrac{R\,R_v}{R+R_v} \). The voltage therefore drops. The error is small only if \( R_v \gg R \) (for 1 % you need \( R_v \ge 100\,R \)).</p>
+      <p lang="sr">Unutrašnji otpor analognog voltmetra zavisi od opsega. Zadaje se kao <strong>osetljivost</strong> u kΩ/V: na opsegu 10 V instrument od 20 kΩ/V ima \( R_v = 20\ \mathrm{k\Omega/V}\cdot 10\ \mathrm{V} = 200\ \mathrm{k\Omega} \). Digitalni ima 10 MΩ na svakom opsegu.</p>
+      <p lang="en">The internal resistance of an analog voltmeter depends on the range. It is given as a <strong>sensitivity</strong> in kΩ/V: on the 10 V range an instrument of 20 kΩ/V has \( R_v = 20\ \mathrm{k\Omega/V}\cdot 10\ \mathrm{V} = 200\ \mathrm{k\Omega} \). A digital one has 10 MΩ on every range.</p>
+      <p lang="sr"><strong>Ampermetar</strong> je redan, pa kolu dodaje svoj otpor <span class="v">R<sub>a</sub></span>: \( I' = \dfrac{U}{R + R_a} \). Greška je mala samo ako je \( R_a \ll R \).</p>
+      <p lang="en">An <strong>ammeter</strong> is in series, so it adds its own resistance <span class="v">R<sub>a</sub></span> to the circuit: \( I' = \dfrac{U}{R + R_a} \). The error is small only if \( R_a \ll R \).</p>
+    </div>
+
+    <figure class="lab" id="lab-load">
+      <div class="viewport"><canvas tabindex="0" aria-label="Razdelnik napona sa voltmetrom koji opterećuje kolo / a voltage divider with a voltmeter that loads the circuit"></canvas></div>
+      <div class="controls">
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Voltmetar</span><span lang="en">Voltmeter</span></span>
+          <div class="seg" id="o-type" role="group" aria-label="Tip voltmetra / Voltmeter type">
+            <button type="button" data-v="an" aria-pressed="true"><span lang="sr">Analogni 20 kΩ/V</span><span lang="en">Analog 20 kΩ/V</span></button>
+            <button type="button" data-v="dig" aria-pressed="false"><span lang="sr">Digitalni 10 MΩ</span><span lang="en">Digital 10 MΩ</span></button>
+          </div>
+        </div>
+        <div class="ctl"><label for="o-r1">R<sub>1</sub></label><output id="o-r1-out" for="o-r1">100 kΩ</output><input type="range" id="o-r1" min="0" max="9" step="1" value="6"></div>
+        <div class="ctl"><label for="o-r2">R<sub>2</sub></label><output id="o-r2-out" for="o-r2">100 kΩ</output><input type="range" id="o-r2" min="0" max="9" step="1" value="6"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="o-calc"></div><div class="result" id="o-result"></div></div>
+      <figcaption><span lang="sr">Izvor od 10 V napaja razdelnik R<sub>1</sub>, R<sub>2</sub>, a voltmetar meri napon na R<sub>2</sub>. Dok je R<sub>2</sub> mnogo manji od otpora voltmetra, greška je mala. Povećaj oba otpornika i gledaj kako analogni voltmetar „obara” napon, dok digitalni gotovo ne smeta.</span><span lang="en">A 10 V source feeds the divider R<sub>1</sub>, R<sub>2</sub>, and the voltmeter measures the voltage on R<sub>2</sub>. While R<sub>2</sub> is much smaller than the resistance of the voltmeter, the error is small. Increase both resistors and watch the analog voltmeter "pull down" the voltage, while the digital one hardly interferes.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="tok" data-toc data-toc-sr="Tok vežbe" data-toc-en="The procedure">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">vežba korak po korak</span><span lang="en">the exercise step by step</span></p>
+    <h2><span lang="sr">Tok vežbe</span><span lang="en">The procedure</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="intro">
+      <p lang="sr"><strong>Cilj vežbe:</strong> izmeriti napon i struju na otporniku u kolu naizmenične struje analognim i digitalnim instrumentom, uporediti rezultate, izračunati otpor i snagu i proceniti greške merenja.</p>
+      <p lang="en"><strong>Aim of the exercise:</strong> to measure the voltage and current on a resistor in an AC circuit with an analog and a digital instrument, compare the results, calculate the resistance and the power, and estimate the measurement errors.</p>
+      <div class="cols2">
+        <div>
+          <h3><span lang="sr">Pribor</span><span lang="en">Equipment</span></h3>
+          <ul class="plain" lang="sr">
+            <li>Izvor naizmeničnog napona 0 do 24 V (transformator sa regulacijom ili funkcijski generator), 50 Hz.</li>
+            <li>Otpornik oko 100 Ω, najmanje 5 W.</li>
+            <li>Analogni ampermetar i analogni voltmetar (~).</li>
+            <li>Digitalni multimetar.</li>
+            <li>Provodnici sa banana-utikačima.</li>
+          </ul>
+          <ul class="plain" lang="en">
+            <li>An alternating voltage source 0 to 24 V (a regulating transformer or a function generator), 50 Hz.</li>
+            <li>A resistor of about 100 Ω, at least 5 W.</li>
+            <li>An analog ammeter and an analog voltmeter (~).</li>
+            <li>A digital multimeter.</li>
+            <li>Leads with banana plugs.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="rule-box warn">
+            <p class="eyebrow"><span lang="sr">Bezbednost</span><span lang="en">Safety</span></p>
+            <p lang="sr">Kolo sastavljaj samo kada je izvor isključen i podešen na nulu. Za vežbu koristi mali napon preko transformatora, nikad direktno mrežu od 230 V. Pre uključivanja neka nastavnik proveri vezu.</p>
+            <p lang="en">Build the circuit only when the source is switched off and set to zero. Use a low voltage through a transformer for the exercise, never the 230 V mains directly. Have the teacher check the connection before switching on.</p>
+          </div>
+        </div>
+      </div>
+      <h3><span lang="sr">Koraci</span><span lang="en">Steps</span></h3>
+      <ol class="steps-inline" lang="sr">
+        <li><span>Nacrtaj šemu: izvor, ampermetar redno sa otpornikom, voltmetar paralelno otporniku.</span></li>
+        <li><span>Izvor isključi i postavi na 0 V. Sastavi kolo prema šemi.</span></li>
+        <li><span>Prekidače instrumenata postavi na naizmeničnu veličinu (<span class="u">~</span>), a opsege na najveće.</span></li>
+        <li><span>Uključi izvor i polako povećaj napon do oko 2 V. Smanji opsege tako da kazaljke budu u poslednjoj trećini skale.</span></li>
+        <li><span>Pročitaj napon i struju na analognim i na digitalnom instrumentu, pa zapiši u tabelu opsege, broj podeoka i rezultate.</span></li>
+        <li><span>Ponovi za još četiri napona (4, 6, 8 i 10 V). Promeni opsege kada je potrebno.</span></li>
+        <li><span>Smanji napon na nulu, isključi izvor, pa tek onda rastavi kolo.</span></li>
+        <li><span>Izračunaj \( R = U/I \) i \( P = U\,I \), a zatim greške (formule ispod).</span></li>
+      </ol>
+      <ol class="steps-inline" lang="en">
+        <li><span>Draw the diagram: the source, the ammeter in series with the resistor, the voltmeter in parallel with the resistor.</span></li>
+        <li><span>Switch the source off and set it to 0 V. Build the circuit according to the diagram.</span></li>
+        <li><span>Set the switches of the instruments to the alternating quantity (<span class="u">~</span>), and the ranges to the largest.</span></li>
+        <li><span>Switch the source on and slowly raise the voltage to about 2 V. Reduce the ranges so the needles are in the last third of the scale.</span></li>
+        <li><span>Read the voltage and the current on the analog and on the digital instrument, then write the ranges, the number of divisions and the results in the table.</span></li>
+        <li><span>Repeat for four more voltages (4, 6, 8 and 10 V). Change the ranges when needed.</span></li>
+        <li><span>Reduce the voltage to zero, switch the source off, and only then take the circuit apart.</span></li>
+        <li><span>Calculate \( R = U/I \) and \( P = U\,I \), then the errors (formulas below).</span></li>
+      </ol>
+      <h3><span lang="sr">Primer popunjene tabele</span><span lang="en">An example of a filled-in table</span></h3>
+      <div class="tbl-wrap">
+        <table class="scale num">
+          <thead><tr><th>#</th><th>U<sub>a</sub> (V)</th><th>U<sub>d</sub> (V)</th><th>I<sub>a</sub> (mA)</th><th>I<sub>d</sub> (mA)</th><th>R = U<sub>d</sub>/I<sub>d</sub> (Ω)</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>2,0</td><td>2,04</td><td>20</td><td>20,3</td><td>100,5</td></tr>
+            <tr><td>2</td><td>4,0</td><td>4,11</td><td>41</td><td>40,9</td><td>100,5</td></tr>
+            <tr><td>3</td><td>6,1</td><td>6,03</td><td>60</td><td>60,0</td><td>100,5</td></tr>
+            <tr><td>4</td><td>8,0</td><td>8,07</td><td>80</td><td>80,3</td><td>100,5</td></tr>
+            <tr><td>5</td><td>10,0</td><td>10,05</td><td>100</td><td>100,0</td><td>100,5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note" lang="sr">Oznake: indeks <em>a</em> je analogni, a <em>d</em> digitalni instrument. Vrednosti u tabeli su primer, tvoje će se razlikovati.</p>
+      <p class="note" lang="en">Notation: the index <em>a</em> is the analog and <em>d</em> the digital instrument. The values in the table are an example, yours will differ.</p>
+      <h3><span lang="sr">Obrada rezultata</span><span lang="en">Processing the results</span></h3>
+      <p lang="sr">Digitalni instrument ima manju grešku, pa ga uzimamo kao referentnu vrednost. Za svaki red izračunaj:</p>
+      <p lang="en">The digital instrument has the smaller error, so we take it as the reference value. For every row calculate:</p>
+      <div class="formula">
+        <div class="tex">\[ \Delta U = U_a - U_d \qquad \delta U = \frac{\Delta U}{U_d}\cdot 100\,\% \qquad P = U_d\,I_d \]</div>
+      </div>
+      <p lang="sr">Za red 3: \( \Delta U = 6{,}1 - 6{,}03 = 0{,}07\ \mathrm{V} \), \( \delta U = 0{,}07/6{,}03 \cdot 100\,\% = 1{,}2\,\% \), \( P = 6{,}03 \cdot 0{,}060 = 0{,}36\ \mathrm{W} \). Ako analogni voltmetar ima klasu 1,5 i opseg 15 V, dozvoljena greška je \( 1{,}5 \cdot 15/100 = 0{,}225\ \mathrm{V} \). Izmerena razlika 0,07 V je manja, pa je instrument u svojoj klasi.</p>
+      <p lang="en">For row 3: \( \Delta U = 6.1 - 6.03 = 0.07\ \mathrm{V} \), \( \delta U = 0.07/6.03 \cdot 100\,\% = 1.2\,\% \), \( P = 6.03 \cdot 0.060 = 0.36\ \mathrm{W} \). If the analog voltmeter has class 1.5 and a 15 V range, the permitted error is \( 1.5 \cdot 15/100 = 0.225\ \mathrm{V} \). The measured difference 0.07 V is smaller, so the instrument is within its class.</p>
+      <div class="rule-box green">
+        <p class="eyebrow"><span lang="sr">Šta napisati u zaključku</span><span lang="en">What to write in the conclusion</span></p>
+        <p lang="sr">Da li su se instrumenti slagali u okviru svojih klasa i kolika je bila najveća relativna greška. Zašto je greška veća pri malim naponima. Koliki je otpor otpornika i da li je približno stalan (Omov zakon važi za efektivne vrednosti). Šta bi se promenilo da su opsezi bili preveliki.</p>
+        <p lang="en">Whether the instruments agreed within their classes and how large the biggest relative error was. Why the error is larger at small voltages. What the resistance of the resistor is and whether it is roughly constant (Ohm's law holds for RMS values). What would have changed if the ranges had been too large.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="ex">
+        <h4><span lang="sr">Primer 1 · vrednosti napona</span><span lang="en">Example 1 · voltage values</span></h4>
+        <p class="given" lang="sr">Dato: vršna vrednost sinusnog napona je U<sub>m</sub> = 325 V. Traže se efektivna vrednost, razmak vrh–vrh i srednja vrednost ispravljenog napona.</p>
+        <p class="given" lang="en">Given: the peak value of a sine voltage is U<sub>m</sub> = 325 V. Find the RMS value, the peak-to-peak value and the average of the rectified voltage.</p>
+        <ol lang="sr">
+          <li>\( U = \dfrac{U_m}{\sqrt{2}} = \dfrac{325}{1{,}414} = 230\ \mathrm{V} \)</li>
+          <li>\( U_{pp} = 2\,U_m = 650\ \mathrm{V} \)</li>
+          <li>\( U_{sr} = \dfrac{2\,U_m}{\pi} = \dfrac{2\cdot 325}{3{,}14} = 207\ \mathrm{V} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>\( U = \dfrac{U_m}{\sqrt{2}} = \dfrac{325}{1.414} = 230\ \mathrm{V} \)</li>
+          <li>\( U_{pp} = 2\,U_m = 650\ \mathrm{V} \)</li>
+          <li>\( U_{sr} = \dfrac{2\,U_m}{\pi} = \dfrac{2\cdot 325}{3.14} = 207\ \mathrm{V} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">U = 230 V, U<sub>pp</sub> = 650 V, U<sub>sr</sub> = 207 V</span><span lang="en">U = 230 V, U<sub>pp</sub> = 650 V, U<sub>sr</sub> = 207 V</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 2 · čitanje analognog instrumenta</span><span lang="en">Example 2 · reading an analog instrument</span></h4>
+        <p class="given" lang="sr">Dato: voltmetar ima skalu od 50 podeoka. Kazaljka stoji na 36,5 podeoka. Koliki je napon na opsegu 50 V, a koliki na opsegu 10 V?</p>
+        <p class="given" lang="en">Given: a voltmeter has a scale of 50 divisions. The needle stands at 36.5 divisions. What is the voltage on the 50 V range, and on the 10 V range?</p>
+        <ol lang="sr">
+          <li>Opseg 50 V: \( C = \dfrac{50}{50} = 1\ \mathrm{V/pod.} \), pa je \( U = 36{,}5 \cdot 1 = 36{,}5\ \mathrm{V} \).</li>
+          <li>Opseg 10 V: \( C = \dfrac{10}{50} = 0{,}2\ \mathrm{V/pod.} \), pa je \( U = 36{,}5 \cdot 0{,}2 = 7{,}3\ \mathrm{V} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>Range 50 V: \( C = \dfrac{50}{50} = 1\ \mathrm{V/div.} \), so \( U = 36.5 \cdot 1 = 36.5\ \mathrm{V} \).</li>
+          <li>Range 10 V: \( C = \dfrac{10}{50} = 0.2\ \mathrm{V/div.} \), so \( U = 36.5 \cdot 0.2 = 7.3\ \mathrm{V} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">36,5 V na opsegu 50 V, a 7,3 V na opsegu 10 V. Isti otklon znači različit napon, zato uvek proveri opseg.</span><span lang="en">36.5 V on the 50 V range, and 7.3 V on the 10 V range. The same deflection means a different voltage, so always check the range.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 3 · klasa tačnosti</span><span lang="en">Example 3 · accuracy class</span></h4>
+        <p class="given" lang="sr">Dato: voltmetar klase 1,5 ima opseg 50 V. Izmeren je napon od 40 V, a zatim od 10 V. Traži se najveća apsolutna i relativna greška u oba slučaja.</p>
+        <p class="given" lang="en">Given: a voltmeter of class 1.5 has a 50 V range. A voltage of 40 V is measured, and then one of 10 V. Find the largest absolute and relative error in both cases.</p>
+        <ol lang="sr">
+          <li>\( \Delta_{max} = \dfrac{k\,X_n}{100} = \dfrac{1{,}5\cdot 50}{100} = 0{,}75\ \mathrm{V} \) (isto za oba merenja).</li>
+          <li>\( \delta_{40} = \dfrac{0{,}75}{40}\cdot 100\,\% = 1{,}9\,\% \)</li>
+          <li>\( \delta_{10} = \dfrac{0{,}75}{10}\cdot 100\,\% = 7{,}5\,\% \)</li>
+        </ol>
+        <ol lang="en">
+          <li>\( \Delta_{max} = \dfrac{k\,X_n}{100} = \dfrac{1.5\cdot 50}{100} = 0.75\ \mathrm{V} \) (the same for both measurements).</li>
+          <li>\( \delta_{40} = \dfrac{0.75}{40}\cdot 100\,\% = 1.9\,\% \)</li>
+          <li>\( \delta_{10} = \dfrac{0.75}{10}\cdot 100\,\% = 7.5\,\% \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">Δ<sub>max</sub> = 0,75 V. Greška je 1,9 % pri 40 V i 7,5 % pri 10 V: za 10 V treba uzeti manji opseg.</span><span lang="en">Δ<sub>max</sub> = 0.75 V. The error is 1.9 % at 40 V and 7.5 % at 10 V: for 10 V a smaller range should be used.</span></p>
+      </div>
+      <div class="ex field">
+        <h4><span lang="sr">Primer 4 · tačnost digitalnog instrumenta</span><span lang="en">Example 4 · accuracy of a digital instrument</span></h4>
+        <p class="given" lang="sr">Dato: multimetar 3½ cifre, opseg 20 V, tačnost ±(0,8 % + 3 cifre). Na displeju je 12,34 V. U kom intervalu je prava vrednost?</p>
+        <p class="given" lang="en">Given: a 3½-digit multimeter, 20 V range, accuracy ±(0.8 % + 3 digits). The display shows 12.34 V. In what interval is the true value?</p>
+        <ol lang="sr">
+          <li>Na opsegu 20 V poslednja cifra vredi \( r = 0{,}01\ \mathrm{V} \).</li>
+          <li>\( \Delta = \dfrac{0{,}8}{100}\cdot 12{,}34 + 3\cdot 0{,}01 = 0{,}099 + 0{,}03 = 0{,}13\ \mathrm{V} \)</li>
+          <li>Interval: \( 12{,}34 \pm 0{,}13 \), to jest od 12,21 V do 12,47 V.</li>
+        </ol>
+        <ol lang="en">
+          <li>On the 20 V range the last digit is worth \( r = 0.01\ \mathrm{V} \).</li>
+          <li>\( \Delta = \dfrac{0.8}{100}\cdot 12.34 + 3\cdot 0.01 = 0.099 + 0.03 = 0.13\ \mathrm{V} \)</li>
+          <li>The interval: \( 12.34 \pm 0.13 \), that is from 12.21 V to 12.47 V.</li>
+        </ol>
+        <p class="answer"><span lang="sr">U = (12,34 ± 0,13) V, relativna greška oko 1 %.</span><span lang="en">U = (12.34 ± 0.13) V, a relative error of about 1 %.</span></p>
+      </div>
+      <div class="ex field">
+        <h4><span lang="sr">Primer 5 · pravougaoni napon i srednja vrednost</span><span lang="en">Example 5 · a square voltage and the average</span></h4>
+        <p class="given" lang="sr">Dato: pravougaoni napon vrha 10 V (između +10 V i −10 V) meri se multimetrom koji pokazuje „srednju vrednost × 1,11”. Šta pokazuje, a kolika je prava efektivna vrednost?</p>
+        <p class="given" lang="en">Given: a square voltage with a peak of 10 V (between +10 V and −10 V) is measured with a multimeter that shows "average × 1.11". What does it show, and what is the real RMS value?</p>
+        <ol lang="sr">
+          <li>Srednja vrednost ispravljenog napona: \( U_{sr} = 10\ \mathrm{V} \).</li>
+          <li>Instrument pokazuje \( 1{,}11 \cdot 10 = 11{,}1\ \mathrm{V} \).</li>
+          <li>Prava efektivna vrednost pravougaonog napona je \( U = U_m = 10\ \mathrm{V} \).</li>
+          <li>Greška: \( \dfrac{11{,}1 - 10}{10}\cdot 100\,\% = +11\,\% \).</li>
+        </ol>
+        <ol lang="en">
+          <li>The average of the rectified voltage: \( U_{sr} = 10\ \mathrm{V} \).</li>
+          <li>The instrument shows \( 1.11 \cdot 10 = 11.1\ \mathrm{V} \).</li>
+          <li>The true RMS value of a square voltage is \( U = U_m = 10\ \mathrm{V} \).</li>
+          <li>The error: \( \dfrac{11.1 - 10}{10}\cdot 100\,\% = +11\,\% \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">Instrument pokazuje 11,1 V umesto 10 V (+11 %). Za ovakav signal treba True RMS.</span><span lang="en">The instrument shows 11.1 V instead of 10 V (+11 %). For a signal like this a True RMS instrument is needed.</span></p>
+      </div>
+      <div class="ex violet">
+        <h4><span lang="sr">Primer 6 · opterećenje voltmetrom</span><span lang="en">Example 6 · loading by the voltmeter</span></h4>
+        <p class="given" lang="sr">Dato: razdelnik od izvora 10 V sa R<sub>1</sub> = R<sub>2</sub> = 100 kΩ. Napon na R<sub>2</sub> meri se analognim voltmetrom od 20 kΩ/V na opsegu 10 V, a zatim digitalnim od 10 MΩ. Traže se pokazivanja.</p>
+        <p class="given" lang="en">Given: a divider on a 10 V source with R<sub>1</sub> = R<sub>2</sub> = 100 kΩ. The voltage on R<sub>2</sub> is measured with an analog voltmeter of 20 kΩ/V on the 10 V range, and then with a digital one of 10 MΩ. Find the readings.</p>
+        <ol lang="sr">
+          <li>Bez instrumenta: \( U_2 = 10 \cdot \dfrac{100}{100+100} = 5\ \mathrm{V} \).</li>
+          <li>Analogni: \( R_v = 200\ \mathrm{k\Omega} \), \( R' = \dfrac{100\cdot 200}{100+200} = 66{,}7\ \mathrm{k\Omega} \), pa je \( U_2' = 10\cdot\dfrac{66{,}7}{100+66{,}7} = 4{,}0\ \mathrm{V} \) (greška −20 %).</li>
+          <li>Digitalni: \( R' = \dfrac{100\cdot 10000}{100+10000} = 99{,}0\ \mathrm{k\Omega} \), pa je \( U_2' = 10\cdot\dfrac{99{,}0}{100+99{,}0} = 4{,}975\ \mathrm{V} \) (greška −0,5 %).</li>
+        </ol>
+        <ol lang="en">
+          <li>Without an instrument: \( U_2 = 10 \cdot \dfrac{100}{100+100} = 5\ \mathrm{V} \).</li>
+          <li>Analog: \( R_v = 200\ \mathrm{k\Omega} \), \( R' = \dfrac{100\cdot 200}{100+200} = 66.7\ \mathrm{k\Omega} \), so \( U_2' = 10\cdot\dfrac{66.7}{100+66.7} = 4.0\ \mathrm{V} \) (error −20 %).</li>
+          <li>Digital: \( R' = \dfrac{100\cdot 10000}{100+10000} = 99.0\ \mathrm{k\Omega} \), so \( U_2' = 10\cdot\dfrac{99.0}{100+99.0} = 4.975\ \mathrm{V} \) (error −0.5 %).</li>
+        </ol>
+        <p class="answer"><span lang="sr">Analogni pokazuje 4,0 V, digitalni 4,98 V, a stvarno je 5 V. U kolima sa velikim otporima koristi instrument velikog ulaznog otpora.</span><span lang="en">The analog shows 4.0 V, the digital 4.98 V, while the real value is 5 V. In circuits with large resistances use an instrument with a large input resistance.</span></p>
+      </div>
+      <div class="ex violet">
+        <h4><span lang="sr">Primer 7 · otpor ampermetra</span><span lang="en">Example 7 · the resistance of the ammeter</span></h4>
+        <p class="given" lang="sr">Dato: izvor 5 V napaja otpornik R = 10 Ω. Ampermetar ima unutrašnji otpor R<sub>a</sub> = 1 Ω. Šta on pokazuje i koliko je odstupanje od struje bez instrumenta?</p>
+        <p class="given" lang="en">Given: a 5 V source feeds a resistor R = 10 Ω. The ammeter has an internal resistance R<sub>a</sub> = 1 Ω. What does it show, and how far is that from the current without the instrument?</p>
+        <ol lang="sr">
+          <li>Bez ampermetra: \( I = \dfrac{5}{10} = 0{,}5\ \mathrm{A} \).</li>
+          <li>Sa ampermetrom: \( I' = \dfrac{5}{10+1} = 0{,}4545\ \mathrm{A} \).</li>
+          <li>Greška: \( \dfrac{0{,}4545-0{,}5}{0{,}5}\cdot 100\,\% = -9{,}1\,\% \).</li>
+        </ol>
+        <ol lang="en">
+          <li>Without the ammeter: \( I = \dfrac{5}{10} = 0.5\ \mathrm{A} \).</li>
+          <li>With the ammeter: \( I' = \dfrac{5}{10+1} = 0.4545\ \mathrm{A} \).</li>
+          <li>The error: \( \dfrac{0.4545-0.5}{0.5}\cdot 100\,\% = -9.1\,\% \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">I′ ≈ 0,45 A umesto 0,5 A (−9 %). Pri malim otporima kola ampermetar mora imati zanemarljiv otpor.</span><span lang="en">I′ ≈ 0.45 A instead of 0.5 A (−9 %). In low-resistance circuits the ammeter must have a negligible resistance.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <ul class="pitfalls" lang="sr">
+        <li><div><b>Ampermetar paralelno.</b> To je kratak spoj. Ampermetar je uvek redno, u prekidu kola.</div></li>
+        <li><div><b>Voltmetar redno.</b> Praktično prekida kolo i ne pokazuje ono što misliš. Voltmetar ide paralelno elementu.</div></li>
+        <li><div><b>Jednosmerni opseg za naizmeničnu veličinu.</b> Instrument će pokazati oko nule. Proveri prekidač <span class="u">~</span> i <span class="u">⎓</span>.</div></li>
+        <li><div><b>Počinjanje od najmanjeg opsega.</b> Kazaljka udari u ograničač, a kod digitalnog se može pregoreti osigurač. Počni od najvećeg.</div></li>
+        <li><div><b>Merenje na početku skale.</b> Mali otklon znači veliku relativnu grešku. Smanji opseg dok ne uđeš u poslednju trećinu.</div></li>
+        <li><div><b>Zaboravljen opseg pri čitanju.</b> Broj podeoka nije napon. Pomnoži sa konstantom opsega.</div></li>
+        <li><div><b>Paralaksa.</b> Gledanje sa strane pomera kazaljku u odnosu na skalu. Pogledaj pravo, a kod ogledala poklopi kazaljku i njenu sliku.</div></li>
+        <li><div><b>Mešanje vršne i efektivne vrednosti.</b> Instrument pokazuje efektivnu, a na osciloskopu čitaš vršnu. Pretvaraj ih sa √2.</div></li>
+        <li><div><b>Crvena sonda u priključku za struju dok meriš napon.</b> To je ampermetar paralelno izvoru. Pre svakog merenja proveri gde su sonde.</div></li>
+        <li><div><b>Srednja vrednost × 1,11 kod nesinusnog signala.</b> Greška može biti desetak procenata. Za takve signale koristi True RMS.</div></li>
+        <li><div><b>Zanemarivanje otpora instrumenta.</b> U kolima sa velikim otporima analogni voltmetar „obara” napon.</div></li>
+      </ul>
+      <ul class="pitfalls" lang="en">
+        <li><div><b>An ammeter in parallel.</b> That is a short circuit. An ammeter is always in series, in a gap of the circuit.</div></li>
+        <li><div><b>A voltmeter in series.</b> It practically breaks the circuit and does not show what you think. A voltmeter goes in parallel with the element.</div></li>
+        <li><div><b>A DC range for an AC quantity.</b> The instrument will show about zero. Check the <span class="u">~</span> and <span class="u">⎓</span> switch.</div></li>
+        <li><div><b>Starting with the smallest range.</b> The needle slams into the stop, and on a digital one a fuse may blow. Start with the largest.</div></li>
+        <li><div><b>Measuring at the beginning of the scale.</b> A small deflection means a large relative error. Reduce the range until you reach the last third.</div></li>
+        <li><div><b>Forgetting the range when reading.</b> A number of divisions is not a voltage. Multiply by the constant of the range.</div></li>
+        <li><div><b>Parallax.</b> Looking from the side moves the needle relative to the scale. Look straight on, and with a mirror cover the needle with its reflection.</div></li>
+        <li><div><b>Mixing peak and RMS values.</b> The instrument shows RMS, and on an oscilloscope you read the peak. Convert with √2.</div></li>
+        <li><div><b>The red probe in the current jack while measuring voltage.</b> That is an ammeter across the source. Check where the probes are before every measurement.</div></li>
+        <li><div><b>Average × 1.11 on a non-sine signal.</b> The error can be around ten percent. Use True RMS for such signals.</div></li>
+        <li><div><b>Ignoring the resistance of the instrument.</b> In circuits with large resistances an analog voltmeter "pulls down" the voltage.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 9</span><span lang="en">Part 9</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="summary">
+        <ul lang="sr">
+          <li>Naizmenični napon ima trenutnu, vršnu, srednju i efektivnu vrednost. Instrumenti i mreža navode <strong>efektivnu</strong>: \( U = U_m/\sqrt{2} \). Za sinusoidu je \( U_{sr} = 2U_m/\pi \) i \( k_f = 1{,}11 \).</li>
+          <li><strong>Ampermetar redno</strong> (mali otpor), <strong>voltmetar paralelno</strong> (veliki otpor). Obrnuto je kratak spoj ili prekid.</li>
+          <li>Opseg biraj od najvećeg ka manjem, do poslednje trećine skale. Prekidač mora biti na <span class="u">~</span> za naizmenične veličine.</li>
+          <li>Analogno čitanje: \( X = \alpha \cdot C \), \( C = X_n/\alpha_{max} \). Klasa tačnosti \( k \): \( \Delta_{max} = k X_n/100 \), a relativna greška \( \delta = \Delta_{max}/X \) raste kada je kazaljka blizu početka skale.</li>
+          <li>Digitalno: tačnost ±(a % očitavanja + b cifara), rezolucija zavisi od opsega. Za nesinusne signale potreban je True RMS.</li>
+          <li>Instrument ima unutrašnji otpor i menja kolo. Voltmetar: \( R_v \gg R \), ampermetar: \( R_a \ll R \).</li>
+        </ul>
+        <ul lang="en">
+          <li>An alternating voltage has instantaneous, peak, average and RMS values. Instruments and the mains quote the <strong>RMS</strong> value: \( U = U_m/\sqrt{2} \). For a sine \( U_{sr} = 2U_m/\pi \) and \( k_f = 1.11 \).</li>
+          <li><strong>The ammeter in series</strong> (small resistance), <strong>the voltmeter in parallel</strong> (large resistance). The other way round gives a short circuit or a break.</li>
+          <li>Choose the range from the largest down, to the last third of the scale. The switch must be on <span class="u">~</span> for alternating quantities.</li>
+          <li>Analog reading: \( X = \alpha \cdot C \), \( C = X_n/\alpha_{max} \). Accuracy class \( k \): \( \Delta_{max} = k X_n/100 \), and the relative error \( \delta = \Delta_{max}/X \) grows when the needle is near the start of the scale.</li>
+          <li>Digital: the accuracy is ±(a % of reading + b digits), the resolution depends on the range. For non-sine signals True RMS is needed.</li>
+          <li>An instrument has an internal resistance and changes the circuit. Voltmeter: \( R_v \gg R \), ammeter: \( R_a \ll R \).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" data-test="OSN01" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/merenje-struje-i-napona.js"></script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Usmerivač: p-n spoj i dioda, poluperiodni usmerivač, kondenzator kao filter, talasanje i izbor diode i kondenzatora, sa simulatorima, animacijama i rešenim primerima.">
+<title>Usmerivač · lav</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="usmerivac">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr">
+      <li>objasniš kako p-n spoj propušta struju samo u jednom smeru i šta je prag vođenja;</li>
+      <li>nacrtaš poluperiodni usmerivač i oblike napona na izvoru i na opterećenju;</li>
+      <li>izračunaš \( U_{dc} = U_m/\pi \), \( U_{ef} = U_m/2 \) i inverzni napon diode;</li>
+      <li>objasniš kako kondenzator izravnava napon i proceniš talasanje \( \Delta u \approx I/(fC) \);</li>
+      <li>izabereš diodu i kondenzator za zadato napajanje;</li>
+      <li>povežeš izračunato sa merenjem voltmetrom i osciloskopom.</li>
+    </ul>
+    <ul lang="en">
+      <li>explain how a p-n junction passes current in one direction only and what the conduction threshold is;</li>
+      <li>draw a half-wave rectifier and the voltage shapes on the source and on the load;</li>
+      <li>calculate \( U_{dc} = U_m/\pi \), \( U_{rms} = U_m/2 \) and the reverse voltage of the diode;</li>
+      <li>explain how a capacitor smooths the voltage and estimate the ripple \( \Delta u \approx I/(fC) \);</li>
+      <li>choose a diode and a capacitor for a given power supply;</li>
+      <li>connect the calculated values with measurements by a voltmeter and an oscilloscope.</li>
+    </ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="dioda" data-toc data-toc-sr="Dioda" data-toc-en="The diode">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">p-n spoj</span><span lang="en">the p-n junction</span></p>
+    <h2><span lang="sr">Dioda: ventil za struju</span><span lang="en">The diode: a valve for current</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Mikrokontroler, pojačavač i LED traka rade na <strong>jednosmernom</strong> naponu, a iz utičnice (i iz transformatora) dolazi <strong>naizmenični</strong>. Pretvaranje naizmeničnog napona u jednosmerni zove se <strong>ispravljanje</strong>, a uređaj koji to radi je <strong>usmerivač</strong>. Njegov najvažniji deo je <strong>dioda</strong>.</p>
+      <p lang="en">A microcontroller, an amplifier and an LED strip run on a <strong>direct</strong> voltage, while the wall socket (and a transformer) gives an <strong>alternating</strong> one. Converting an alternating voltage into a direct one is called <strong>rectification</strong>, and the device that does it is a <strong>rectifier</strong>. Its most important part is the <strong>diode</strong>.</p>
+      <p lang="sr">Dioda ima dva priključka: <strong>anodu (A)</strong> i <strong>katodu (K)</strong>. Ponaša se kao ventil: struju propušta samo od anode ka katodi, kada je anoda pozitivnija od katode, a u suprotnom smeru je zaustavlja.</p>
+      <p lang="en">A diode has two terminals: the <strong>anode (A)</strong> and the <strong>cathode (K)</strong>. It acts as a valve: it passes current only from the anode to the cathode, when the anode is more positive than the cathode, and stops it in the opposite direction.</p>
+      <h3><span lang="sr">Zašto dioda to može?</span><span lang="en">Why can a diode do that?</span></h3>
+      <p lang="sr">Dioda je od silicijuma sa dve različito dopirane oblasti koje se dodiruju, i to se zove <strong>p-n spoj</strong>:</p>
+      <p lang="en">A diode is made of silicon with two differently doped regions that touch, and this is called a <strong>p-n junction</strong>:</p>
+      <ul class="plain" lang="sr">
+        <li><strong>P-strana</strong> ima višak „šupljina”, to jest mesta gde elektron nedostaje. Šupljine se ponašaju kao pokretna <em>pozitivna</em> naelektrisanja.</li>
+        <li><strong>N-strana</strong> ima višak slobodnih elektrona, pokretnih <em>negativnih</em> naelektrisanja.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li>The <strong>P side</strong> has an excess of "holes", places where an electron is missing. Holes behave as mobile <em>positive</em> charges.</li>
+        <li>The <strong>N side</strong> has an excess of free electrons, mobile <em>negative</em> charges.</li>
+      </ul>
+      <p lang="sr">Na dodiru elektroni pređu u P-stranu i spoje se sa šupljinama. Ostaju nepokretni naelektrisani joni, pa nastaje <strong>osiromašeni sloj</strong> bez slobodnih nosilaca. U njemu je jako električno polje koje je <strong>barijera</strong> za dalji prelaz, visine oko 0,7 V kod silicijuma.</p>
+      <p lang="en">At the contact, electrons cross into the P side and combine with holes. Immobile charged ions are left behind, so a <strong>depletion layer</strong> without free carriers appears. In it there is a strong electric field that is a <strong>barrier</strong> to further crossing, about 0.7 V high in silicon.</p>
+      <div class="cases three">
+        <div><p class="h"><span lang="sr">Propusni smer</span><span lang="en">Forward direction</span></p><p>A (+) → K (−)</p><p class="note" lang="sr">Spoljašnji napon poništava barijeru, sloj se sužava. Iznad praga od oko 0,7 V struja naglo raste.</p><p class="note" lang="en">The external voltage cancels the barrier, the layer narrows. Above the threshold of about 0.7 V the current rises sharply.</p></div>
+        <div><p class="h"><span lang="sr">Zaporni smer</span><span lang="en">Reverse direction</span></p><p>A (−) → K (+)</p><p class="note" lang="sr">Barijera raste, sloj se širi. Teče samo zanemarljiva struja curenja (nA do μA).</p><p class="note" lang="en">The barrier grows, the layer widens. Only a negligible leakage current flows (nA to μA).</p></div>
+        <div><p class="h"><span lang="sr">Proboj</span><span lang="en">Breakdown</span></p><p>U<sub>RRM</sub></p><p class="note" lang="sr">Pri prevelikom zapornom naponu dioda se probija i struja naglo raste. Zato svaka dioda ima najveći dozvoljeni inverzni napon.</p><p class="note" lang="en">At too large a reverse voltage the diode breaks down and the current rises sharply. That is why every diode has a maximum allowed reverse voltage.</p></div>
+      </div>
+      <h3><span lang="sr">Tri modela diode</span><span lang="en">Three models of a diode</span></h3>
+      <div class="cases three">
+        <div><p class="h"><span lang="sr">Idealna</span><span lang="en">Ideal</span></p><p>U<sub>D</sub> = 0</p><p class="note" lang="sr">Prekidač: kratak spoj u propusnom, prekid u zapornom smeru. Dobro kada su naponi mnogo veći od 1 V.</p><p class="note" lang="en">A switch: a short circuit in the forward and an open circuit in the reverse direction. Good when voltages are much larger than 1 V.</p></div>
+        <div><p class="h"><span lang="sr">Sa padom napona</span><span lang="en">With a voltage drop</span></p><p>U<sub>D</sub> ≈ 0,7 V</p><p class="note" lang="sr">Kada vodi, na silicijumskoj diodi je stalnih 0,7 V. Najčešći model u zadacima.</p><p class="note" lang="en">When it conducts, a silicon diode has a constant 0.7 V across it. The most common model in exercises.</p></div>
+        <div><p class="h"><span lang="sr">Stvarna</span><span lang="en">Real</span></p><p>I = f(U<sub>D</sub>)</p><p class="note" lang="sr">Eksponencijalna kriva: pad napona lagano raste sa strujom (oko 0,6 do 0,8 V).</p><p class="note" lang="en">An exponential curve: the voltage drop rises slowly with the current (about 0.6 to 0.8 V).</p></div>
+      </div>
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: izvor od 5 V, otpornik 330 Ω i silicijumska dioda u propusnom smeru su vezani na red. Kolika otprilike teče struja?</span><span lang="en">Think first: a 5 V source, a 330 Ω resistor and a silicon diode in the forward direction are in series. About how large is the current?</span></summary>
+        <div class="ans">
+          <p lang="sr">Dioda zadrži oko 0,7 V, pa na otporniku ostane 5 − 0,7 = 4,3 V. Struja je \( I = 4{,}3/330 \approx 13\ \mathrm{mA} \).</p>
+          <p lang="en">The diode keeps about 0.7 V, so 5 − 0.7 = 4.3 V is left on the resistor. The current is \( I = 4.3/330 \approx 13\ \mathrm{mA} \).</p>
+        </div>
+      </details>
+    </div>
+
+    <figure class="lab" id="lab-pn">
+      <div class="viewport"><canvas tabindex="0" aria-label="P-n spoj sa šupljinama i elektronima i osiromašenim slojem / a p-n junction with holes, electrons and a depletion layer"></canvas></div>
+      <div class="plot" style="margin-top:10px"><canvas aria-label="Strujno-naponska karakteristika diode i radna prava / the current-voltage characteristic of a diode and the load line"></canvas></div>
+      <div class="controls">
+        <div class="ctl" style="grid-column:1/-1"><label for="p-e"><span lang="sr">Napon izvora E</span><span lang="en">Source voltage E</span></label><output id="p-e-out" for="p-e">+2,0 V</output><input type="range" id="p-e" min="-4" max="4" step="0.1" value="2"></div>
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Materijal</span><span lang="en">Material</span></span>
+          <div class="seg" id="p-mat" role="group" aria-label="Materijal diode / Diode material">
+            <button type="button" data-v="si" aria-pressed="true"><span lang="sr">Silicijum</span><span lang="en">Silicon</span></button>
+            <button type="button" data-v="ge" aria-pressed="false"><span lang="sr">Germanijum</span><span lang="en">Germanium</span></button>
+            <button type="button" data-v="led">LED</button>
+          </div>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="p-calc"></div><div class="result" id="p-result"></div><div class="calc" id="p-note"></div></div>
+      <figcaption><span lang="sr">Izvor E, otpornik od 100 Ω i dioda su vezani na red. Povuci klizač udesno: kada E pređe prag, nosioci počinju da prelaze spoj, sloj se sužava i teče struja. Ulevo se sloj širi i struje nema. Narandžasta isprekidana linija je „radna prava” UD = E − I·R, a bela tačka na preseku sa krivom je stvarno radno stanje. Probaj germanijum (prag oko 0,3 V) i LED (oko 1,8 V).</span><span lang="en">The source E, a 100 Ω resistor and the diode are in series. Drag the slider to the right: when E passes the threshold, carriers start to cross the junction, the layer narrows and a current flows. To the left the layer widens and there is no current. The orange dashed line is the "load line" UD = E − I·R, and the white dot at its crossing with the curve is the real operating point. Try germanium (threshold about 0.3 V) and the LED (about 1.8 V).</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <figure class="fig" style="max-width:420px">
+        <svg class="dg" viewBox="0 0 340 150" role="img" aria-label="Simbol diode i njen izgled sa trakom na katodi / the diode symbol and its appearance with a band on the cathode">
+          <defs>
+            <marker id="ah-sym" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillc"/></marker>
+          </defs>
+          <path class="w" d="M16 62H72M118 62H172"/>
+          <path class="box" d="M72 42V82L118 62Z"/>
+          <path class="w" d="M118 42V82"/>
+          <line class="wc" x1="40" y1="24" x2="148" y2="24" marker-end="url(#ah-sym)"/>
+          <text class="it cu" x="94" y="16" text-anchor="middle">I</text>
+          <text class="sm" x="32" y="104" text-anchor="middle">A</text>
+          <text class="sm" x="158" y="104" text-anchor="middle">K</text>
+          <text class="sm mu" x="94" y="132" text-anchor="middle" lang="sr">simbol</text>
+          <text class="sm mu" x="94" y="132" text-anchor="middle" lang="en">symbol</text>
+          <path class="w" d="M196 62H226M296 62H326"/>
+          <rect class="box" x="226" y="46" width="70" height="32" rx="6"/>
+          <rect class="fillk" x="278" y="46" width="14" height="32" rx="3"/>
+          <text class="sm" x="206" y="104" text-anchor="middle">A</text>
+          <text class="sm" x="316" y="104" text-anchor="middle">K</text>
+          <text class="sm mu" x="261" y="132" text-anchor="middle" lang="sr">traka = katoda</text>
+          <text class="sm mu" x="261" y="132" text-anchor="middle" lang="en">band = cathode</text>
+        </svg>
+        <figcaption><span lang="sr">Trougao pokazuje smer u kom dioda propušta struju, a crta je katoda. Na stvarnoj diodi traka obeležava katodu.</span><span lang="en">The triangle shows the direction in which the diode passes current, and the bar is the cathode. On a real diode the band marks the cathode.</span></figcaption>
+      </figure>
+      <div class="tbl-wrap">
+        <table class="scale num">
+          <caption><span lang="sr">Prag vođenja (pad napona u propusnom smeru)</span><span lang="en">Conduction threshold (forward voltage drop)</span></caption>
+          <thead><tr><th><span lang="sr">Vrsta diode</span><span lang="en">Type of diode</span></th><th>U<sub>γ</sub> (V)</th></tr></thead>
+          <tbody>
+            <tr><td><span lang="sr">Silicijumska</span><span lang="en">Silicon</span></td><td>0,6 – 0,7</td></tr>
+            <tr><td><span lang="sr">Germanijumska</span><span lang="en">Germanium</span></td><td>0,2 – 0,3</td></tr>
+            <tr><td><span lang="sr">Šotki (Schottky)</span><span lang="en">Schottky</span></td><td>0,2 – 0,4</td></tr>
+            <tr><td><span lang="sr">LED (crvena … plava)</span><span lang="en">LED (red … blue)</span></td><td>1,8 – 3,3</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="rule-box warn">
+        <p class="eyebrow"><span lang="sr">Dioda nije otpornik</span><span lang="en">A diode is not a resistor</span></p>
+        <p lang="sr">Kada dioda vodi, njen otpor je mali, pa struju ne ograničava ona nego ostatak kola. Dioda ili LED bez otpornika na red povući će toliku struju da se uništi.</p>
+        <p lang="en">When a diode conducts, its resistance is small, so the current is not limited by it but by the rest of the circuit. A diode or an LED without a series resistor will draw so much current that it is destroyed.</p>
+      </div>
+      <details class="think">
+        <summary><span lang="sr">Za radoznale: jednačina diode</span><span lang="en">For the curious: the diode equation</span></summary>
+        <div class="ans">
+          <p lang="sr">Struja stvarne diode opisuje se Šoklijevom jednačinom:</p>
+          <p lang="en">The current of a real diode is described by the Shockley equation:</p>
+          <div class="tex">\[ I = I_S\left(e^{\,U_D/(n\,U_T)} - 1\right) \qquad U_T = \frac{kT}{q} \approx 26\ \mathrm{mV}\ \ (T = 300\ \mathrm{K}) \]</div>
+          <p lang="sr">Struja zasićenja \( I_S \) je vrlo mala (pA do nA). Zato za male napone struje skoro nema, a svakih oko 60 mV iznad toga struja poraste 10 puta. To je razlog što napon na provodnoj diodi ostaje skoro stalan oko 0,7 V.</p>
+          <p lang="en">The saturation current \( I_S \) is very small (pA to nA). That is why at small voltages there is almost no current, and for every 60 mV or so above that the current grows 10 times. This is the reason that the voltage across a conducting diode stays almost constant at about 0.7 V.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="poluperioda" data-toc data-toc-sr="Poluperiodni usmerivač" data-toc-en="Half-wave rectifier">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">najjednostavniji usmerivač</span><span lang="en">the simplest rectifier</span></p>
+    <h2><span lang="sr">Poluperiodni usmerivač</span><span lang="en">The half-wave rectifier</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Najjednostavniji usmerivač je jedna dioda <strong>vezana na red</strong> sa potrošačem <span class="v">R</span>, na naizmenični izvor (obično sekundar transformatora) napona \( u_2 = U_m\sin\omega t \).</p>
+      <p lang="en">The simplest rectifier is a single diode <strong>in series</strong> with a load <span class="v">R</span>, on an alternating source (usually a transformer secondary) of voltage \( u_2 = U_m\sin\omega t \).</p>
+      <ul class="plain" lang="sr">
+        <li><strong>Pozitivna poluperioda</strong>: anoda je pozitivnija, dioda vodi i kroz <span class="v">R</span> teče struja. Izlazni napon prati ulazni, umanjen za pad na diodi.</li>
+        <li><strong>Negativna poluperioda</strong>: dioda je zakočena, struje nema, izlazni napon je nula. Ceo napon izvora pada na diodi.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li><strong>Positive half-cycle</strong>: the anode is more positive, the diode conducts and a current flows through <span class="v">R</span>. The output voltage follows the input one, reduced by the drop on the diode.</li>
+        <li><strong>Negative half-cycle</strong>: the diode is blocked, there is no current, the output voltage is zero. The whole source voltage falls on the diode.</li>
+      </ul>
+      <p lang="sr">Struja kroz opterećenje uvek ima isti smer, pa je napon <em>jednosmeran</em>, ali nije <em>stalan</em>: to je niz pulseva sa pauzama, koji se ponavlja 50 puta u sekundi. Takav napon se zove <strong>pulsirajući</strong>.</p>
+      <p lang="en">The current through the load always has the same direction, so the voltage is <em>unidirectional</em>, but it is not <em>constant</em>: it is a train of pulses with pauses, repeated 50 times per second. Such a voltage is called <strong>pulsating</strong>.</p>
+      <div class="formula">
+        <div class="tex">\[ U_m = U_2\sqrt{2} \qquad U_{dc} = \frac{U_m}{\pi} \approx 0{,}318\,U_m \qquad U_{ef} = \frac{U_m}{2} \]</div>
+        <div class="tex">\[ I_{dc} = \frac{U_{dc}}{R} \qquad f_{p} = f = 50\ \mathrm{Hz} \qquad \mathrm{PIV} = U_m \]</div>
+        <dl class="legend">
+          <div><dt>U<sub>2</sub></dt><dd><span lang="sr">efektivni napon sekundara transformatora</span><span lang="en">RMS voltage of the transformer secondary</span></dd><span class="unit">V</span></div>
+          <div><dt>U<sub>m</sub></dt><dd><span lang="sr">vršni napon izvora</span><span lang="en">peak voltage of the source</span></dd><span class="unit">V</span></div>
+          <div><dt>U<sub>dc</sub></dt><dd><span lang="sr">srednja vrednost izlaza (to pokazuje voltmetar na DC)</span><span lang="en">average value of the output (what a voltmeter on DC shows)</span></dd><span class="unit">V</span></div>
+          <div><dt>U<sub>ef</sub></dt><dd><span lang="sr">efektivna vrednost izlaza (važna za zagrevanje)</span><span lang="en">RMS value of the output (it matters for heating)</span></dd><span class="unit">V</span></div>
+          <div><dt>f<sub>p</sub></dt><dd><span lang="sr">učestanost pulseva (talasanja)</span><span lang="en">pulse (ripple) frequency</span></dd><span class="unit">Hz</span></div>
+          <div><dt>PIV</dt><dd><span lang="sr">najveći inverzni napon na diodi</span><span lang="en">peak inverse voltage across the diode</span></dd><span class="unit">V</span></div>
+        </dl>
+      </div>
+      <p lang="sr">Sa stvarnom diodom svaki vrh je niži za pad napona, pa je približno \( U_{dc} \approx (U_m - U_\gamma)/\pi \).</p>
+      <p lang="en">With a real diode every peak is lower by the voltage drop, so approximately \( U_{dc} \approx (U_m - U_\gamma)/\pi \).</p>
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: sekundar daje 12 V (efektivno). Koliki je vršni napon, a koliki je srednji napon iza idealne diode?</span><span lang="en">Think first: the secondary gives 12 V (RMS). What is the peak voltage, and what is the average voltage behind an ideal diode?</span></summary>
+        <div class="ans">
+          <p lang="sr">\( U_m = 12\cdot 1{,}414 = 17\ \mathrm{V} \) i \( U_{dc} = 17/\pi = 5{,}4\ \mathrm{V} \). Srednji napon je manji od polovine efektivnog napona izvora, jer pola vremena nema ništa, a ostatak je sinusoida.</p>
+          <p lang="en">\( U_m = 12\cdot 1.414 = 17\ \mathrm{V} \) and \( U_{dc} = 17/\pi = 5.4\ \mathrm{V} \). The average voltage is less than half of the RMS source voltage, because for half of the time there is nothing, and the rest is a sine.</p>
+        </div>
+      </details>
+    </div>
+
+    <figure class="lab" id="lab-half">
+      <div class="viewport" style="aspect-ratio:360/236"><canvas tabindex="0" aria-label="Poluperiodni usmerivač: izvor, dioda i otpornik / a half-wave rectifier: source, diode and resistor"></canvas></div>
+      <div class="plot" style="margin-top:10px"><canvas aria-label="Napon izvora i napon na otporniku u funkciji vremena / the source voltage and the voltage on the resistor against time"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="h-um"><span lang="sr">Amplituda U<sub>m</sub></span><span lang="en">Amplitude U<sub>m</sub></span></label><output id="h-um-out" for="h-um">10 V</output><input type="range" id="h-um" min="2" max="30" step="1" value="10"></div>
+        <div class="ctl"><label for="h-r">R</label><output id="h-r-out" for="h-r">100 Ω</output><input type="range" id="h-r" min="10" max="1000" step="10" value="100"></div>
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Dioda</span><span lang="en">Diode</span></span>
+          <div class="seg" id="h-vg" role="group" aria-label="Model diode / Diode model">
+            <button type="button" data-v="ideal" aria-pressed="false"><span lang="sr">Idealna</span><span lang="en">Ideal</span></button>
+            <button type="button" data-v="si" aria-pressed="true">Si</button>
+            <button type="button" data-v="ge" aria-pressed="false">Ge</button>
+          </div>
+          <label class="switch" for="h-flip"><input type="checkbox" id="h-flip"><span lang="sr">Okreni diodu</span><span lang="en">Reverse the diode</span></label>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="h-calc"></div><div class="result" id="h-result"></div><div class="calc" id="h-note"></div></div>
+      <figcaption><span lang="sr">Gore je strujno kolo (zelena dioda vodi, narandžaste tačkice su struja), dole su naponi. Bela isprekidana kriva je napon izvora u<sub>2</sub>, narandžasta je napon na otporniku. Probaj: (1) idealna dioda daje tačno U<sub>m</sub>/π, (2) silicijumska dioda skida 0,7 V sa svakog vrha i skraćuje vreme vođenja, (3) pri maloj amplitudi od 2 V taj pad je velik deo napona, (4) okreni diodu pa izlaz postaje negativan.</span><span lang="en">The circuit is on top (the green diode conducts, the orange dots are the current), the voltages are below. The white dashed curve is the source voltage u<sub>2</sub>, the orange one is the voltage on the resistor. Try: (1) an ideal diode gives exactly U<sub>m</sub>/π, (2) a silicon diode removes 0.7 V from every peak and shortens the conduction time, (3) at a small amplitude of 2 V that drop is a large part of the voltage, (4) reverse the diode and the output becomes negative.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <div class="tbl-wrap">
+        <table class="scale num">
+          <caption><span lang="sr">Poluperiodni usmerivač, otporno opterećenje, idealna dioda</span><span lang="en">Half-wave rectifier, resistive load, ideal diode</span></caption>
+          <thead><tr><th><span lang="sr">Veličina</span><span lang="en">Quantity</span></th><th><span lang="sr">Vrednost</span><span lang="en">Value</span></th></tr></thead>
+          <tbody>
+            <tr><td><span lang="sr">Srednji napon U<sub>dc</sub></span><span lang="en">Average voltage U<sub>dc</sub></span></td><td>0,318 U<sub>m</sub></td></tr>
+            <tr><td><span lang="sr">Efektivni napon U<sub>ef</sub></span><span lang="en">RMS voltage U<sub>rms</sub></span></td><td>0,500 U<sub>m</sub></td></tr>
+            <tr><td><span lang="sr">Faktor talasanja γ</span><span lang="en">Ripple factor γ</span></td><td>1,21</td></tr>
+            <tr><td><span lang="sr">Stepen iskorišćenja η</span><span lang="en">Efficiency η</span></td><td>40,5 %</td></tr>
+            <tr><td><span lang="sr">Učestanost talasanja</span><span lang="en">Ripple frequency</span></td><td>50 Hz</td></tr>
+            <tr><td>PIV</td><td>U<sub>m</sub></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p lang="sr">Faktor talasanja \( \gamma = \sqrt{(U_{ef}/U_{dc})^2 - 1} = 1{,}21 \) pokazuje koliko je naizmenična komponenta velika u odnosu na jednosmernu. Veći od 1 znači da je „nemirna” komponenta veća od korisne, pa je izlaz poluperiodnog usmerivača bez filtra loš izvor napajanja. Stepen iskorišćenja \( \eta = P_{dc}/P_{ac} = 4/\pi^2 \approx 40{,}5\ \% \): manje od polovine snage završi kao koristan jednosmerni napon.</p>
+      <p lang="en">The ripple factor \( \gamma = \sqrt{(U_{rms}/U_{dc})^2 - 1} = 1.21 \) shows how large the alternating component is compared to the direct one. A value above 1 means the "restless" component is larger than the useful one, so the output of a half-wave rectifier without a filter is a poor power supply. The efficiency \( \eta = P_{dc}/P_{ac} = 4/\pi^2 \approx 40.5\ \% \): less than half of the power ends up as useful direct voltage.</p>
+      <p lang="sr">Ima i drugi nedostatak: jednosmerna struja kroz sekundar transformatora <strong>magnetiše jezgro</strong> u jednom smeru i može da ga dovede do zasićenja. Zato se poluperiodni usmerivač koristi samo za male snage.</p>
+      <p lang="en">There is another drawback: the direct current through the transformer secondary <strong>magnetises the core</strong> in one direction and can drive it into saturation. That is why the half-wave rectifier is used only for small powers.</p>
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Šta pokazuju instrumenti (vežbe 8 i 9)</span><span lang="en">What the instruments show (exercises 8 and 9)</span></p>
+        <p lang="sr">Voltmetar na <strong>DC</strong> pokazuje srednju vrednost \( U_{dc} \). Multimetar na <strong>AC</strong> sa True RMS meri efektivnu vrednost samo naizmenične komponente. Osciloskop sa <strong>DC spregom</strong> pokazuje oblik, a sa <strong>AC spregom</strong> samo talasanje oko nule.</p>
+        <p lang="en">A voltmeter on <strong>DC</strong> shows the average value \( U_{dc} \). A multimeter on <strong>AC</strong> with True RMS measures the RMS value of the alternating component only. An oscilloscope with <strong>DC coupling</strong> shows the shape, and with <strong>AC coupling</strong> only the ripple around zero.</p>
+      </div>
+      <details class="think">
+        <summary><span lang="sr">Za radoznale: odakle π?</span><span lang="en">For the curious: where does π come from?</span></summary>
+        <div class="ans">
+          <p lang="sr">Srednja vrednost je površina ispod krive podeljena periodom. Dioda vodi samo u prvoj polovini periode:</p>
+          <p lang="en">The average value is the area under the curve divided by the period. The diode conducts only in the first half of the period:</p>
+          <div class="tex">\[ U_{dc} = \frac{1}{T}\int_0^{T/2} U_m\sin\omega t\,dt = \frac{U_m}{T}\cdot\frac{2}{\omega} = \frac{U_m}{T}\cdot\frac{T}{\pi} = \frac{U_m}{\pi} \]</div>
+          <p lang="sr">Za efektivnu vrednost, srednja vrednost kvadrata je \( \frac{1}{T}\int_0^{T/2} U_m^2\sin^2\omega t\,dt = \frac{U_m^2}{4} \), pa je \( U_{ef} = U_m/2 \).</p>
+          <p lang="en">For the RMS value, the mean of the square is \( \frac{1}{T}\int_0^{T/2} U_m^2\sin^2\omega t\,dt = \frac{U_m^2}{4} \), so \( U_{rms} = U_m/2 \).</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="filtar" data-toc data-toc-sr="Filter" data-toc-en="The filter">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">od pulsa do skoro stalnog napona</span><span lang="en">from pulses to a nearly constant voltage</span></p>
+    <h2><span lang="sr">Kondenzator kao filter</span><span lang="en">The capacitor as a filter</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Pulsirajući napon pada na nulu u svakoj periodi, pa je neupotrebljiv za napajanje elektronike. Rešenje je <strong>kondenzator <span class="v">C</span> paralelno sa opterećenjem</strong>. On skladišti naelektrisanje pri vrhu sinusoide, a kada dioda ne vodi, daje ga opterećenju.</p>
+      <p lang="en">A pulsating voltage falls to zero in every period, so it is useless for powering electronics. The solution is a <strong>capacitor <span class="v">C</span> in parallel with the load</strong>. It stores charge near the top of the sine, and when the diode does not conduct, it supplies it to the load.</p>
+      <ol class="steps-inline" lang="sr">
+        <li><span><strong>Punjenje.</strong> Kada \( u_2 \) naraste iznad napona kondenzatora (plus pad na diodi), dioda provede i kondenzator se brzo napuni do vrha, \( U_m - U_\gamma \).</span></li>
+        <li><span><strong>Pražnjenje.</strong> Kada \( u_2 \) počne da pada, kondenzator je viši od izvora, pa je dioda zakočena. Kondenzator se prazni kroz <span class="v">R</span> i njegov napon lagano opada.</span></li>
+        <li><span><strong>Dopuna.</strong> U sledećem vrhu \( u_2 \) ponovo premaši napon kondenzatora, dioda kratko provede i dopuni izgubljeno naelektrisanje.</span></li>
+      </ol>
+      <ol class="steps-inline" lang="en">
+        <li><span><strong>Charging.</strong> When \( u_2 \) rises above the capacitor voltage (plus the drop on the diode), the diode conducts and the capacitor quickly charges to the peak, \( U_m - U_\gamma \).</span></li>
+        <li><span><strong>Discharging.</strong> When \( u_2 \) starts to fall, the capacitor is higher than the source, so the diode is blocked. The capacitor discharges through <span class="v">R</span> and its voltage slowly falls.</span></li>
+        <li><span><strong>Topping up.</strong> At the next peak \( u_2 \) exceeds the capacitor voltage again, the diode conducts briefly and replaces the lost charge.</span></li>
+      </ol>
+      <p lang="sr">Izlazni napon sada ima oblik „testere” koja se zove <strong>talasanje</strong> (engl. <em>ripple</em>). Izmerimo ga vrednošću <span class="v">Δu</span> od vrha do dna. Dok dioda ne vodi, kondenzator daje struju \( I_{dc} \) skoro celu periodu \( T = 1/f \), pa izgubi naelektrisanje \( \Delta Q \approx I_{dc}\,T \), a napon mu padne za \( \Delta u = \Delta Q/C \):</p>
+      <p lang="en">The output voltage now has a "sawtooth" shape called <strong>ripple</strong>. We measure it by the value <span class="v">Δu</span> from peak to bottom. While the diode does not conduct, the capacitor supplies the current \( I_{dc} \) for almost the whole period \( T = 1/f \), so it loses the charge \( \Delta Q \approx I_{dc}\,T \), and its voltage falls by \( \Delta u = \Delta Q/C \):</p>
+      <div class="formula">
+        <div class="tex">\[ \Delta u \approx \frac{I_{dc}}{f\,C} \qquad U_{dc} \approx U_m - U_\gamma - \frac{\Delta u}{2} \qquad r = \frac{\Delta u}{2\sqrt{3}\,U_{dc}} \]</div>
+        <dl class="legend">
+          <div><dt>Δu</dt><dd><span lang="sr">talasanje od vrha do dna (vp)</span><span lang="en">ripple from peak to bottom (pp)</span></dd><span class="unit">V</span></div>
+          <div><dt>I<sub>dc</sub></dt><dd><span lang="sr">srednja struja opterećenja</span><span lang="en">mean load current</span></dd><span class="unit">A</span></div>
+          <div><dt>f</dt><dd><span lang="sr">učestanost talasanja (kod poluperiodnog 50 Hz)</span><span lang="en">ripple frequency (50 Hz for a half-wave rectifier)</span></dd><span class="unit">Hz</span></div>
+          <div><dt>C</dt><dd><span lang="sr">kapacitivnost filtra</span><span lang="en">filter capacitance</span></dd><span class="unit">F</span></div>
+          <div><dt>r</dt><dd><span lang="sr">faktor talasanja (efektivno talasanje / U<sub>dc</sub>)</span><span lang="en">ripple factor (RMS ripple / U<sub>dc</sub>)</span></dd><span class="unit">–</span></div>
+        </dl>
+      </div>
+      <div class="rule-box green">
+        <p class="eyebrow"><span lang="sr">Veći C, manje talasanje</span><span lang="en">A larger C, a smaller ripple</span></p>
+        <p lang="sr">Talasanje je <strong>srazmerno struji</strong> opterećenja, a <strong>obrnuto srazmerno</strong> kapacitivnosti i učestanosti. Udvostručiš li C, talasanje se prepolovi. Udvostručiš li struju, udvostruči se i talasanje.</p>
+        <p lang="en">The ripple is <strong>proportional to the current</strong> of the load and <strong>inversely proportional</strong> to the capacitance and the frequency. Double C and the ripple is halved. Double the current and the ripple doubles too.</p>
+      </div>
+      <div class="rule-box warn">
+        <p class="eyebrow"><span lang="sr">Cena filtra: impulsi struje</span><span lang="en">The price of the filter: current pulses</span></p>
+        <p lang="sr">Dioda vodi samo kratko, pa joj struja nije stalna nego niz <strong>jakih impulsa</strong>, mnogo većih od srednje struje. Što je C veći, to je vođenje kraće, a impulsi jači. Pri uključenju prazan kondenzator se ponaša kao kratak spoj, pa dioda mora da izdrži i veliku <strong>udarnu struju</strong>. Zato se bira dioda sa velikom rezervom. Visinu impulsa ograničava samo unutrašnji otpor transformatora i diode (simulator uzima 0,1 Ω).</p>
+        <p lang="en">The diode conducts only briefly, so its current is not steady but a train of <strong>strong pulses</strong>, much larger than the mean current. The larger C is, the shorter the conduction and the stronger the pulses. At switch-on an empty capacitor acts as a short circuit, so the diode must also withstand a large <strong>surge current</strong>. That is why a diode with a large margin is chosen. The height of the pulses is limited only by the internal resistance of the transformer and the diode (the simulator takes 0.1 Ω).</p>
+      </div>
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: kolika je talasanje ako se struja opterećenja udvostruči, a C ostane isti? A ako se udvostruči i C?</span><span lang="en">Think first: what happens to the ripple if the load current is doubled and C stays the same? And if C is doubled too?</span></summary>
+        <div class="ans">
+          <p lang="sr">Za dvostruku struju talasanje se udvostruči (\( \Delta u \propto I \)). Ako se uz to udvostruči i C, talasanje se vrati na staru vrednost.</p>
+          <p lang="en">For a doubled current the ripple doubles (\( \Delta u \propto I \)). If C is doubled as well, the ripple returns to its old value.</p>
+        </div>
+      </details>
+    </div>
+
+    <figure class="lab" id="lab-filt">
+      <div class="viewport" style="aspect-ratio:360/236"><canvas tabindex="0" aria-label="Poluperiodni usmerivač sa kondenzatorom kao filtrom / a half-wave rectifier with a capacitor filter"></canvas></div>
+      <div class="plot" style="margin-top:10px"><canvas aria-label="Napon izvora i izlazni napon sa talasanjem / the source voltage and the output voltage with ripple"></canvas></div>
+      <div class="plot short" style="margin-top:10px"><canvas aria-label="Struja diode: kratki impulsi / the diode current: short pulses"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="f-c">C</label><output id="f-c-out" for="f-c">1000 μF</output><input type="range" id="f-c" min="0" max="5" step="1" value="3"></div>
+        <div class="ctl"><label for="f-r"><span lang="sr">Opterećenje R</span><span lang="en">Load R</span></label><output id="f-r-out" for="f-r">100 Ω</output><input type="range" id="f-r" min="0" max="4" step="1" value="1"></div>
+        <div class="ctl" style="grid-column:1/-1"><label for="f-um"><span lang="sr">Amplituda U<sub>m</sub></span><span lang="en">Amplitude U<sub>m</sub></span></label><output id="f-um-out" for="f-um">17 V</output><input type="range" id="f-um" min="6" max="30" step="1" value="17"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="f-calc"></div><div class="result" id="f-result"></div><div class="calc" id="f-note"></div></div>
+      <figcaption><span lang="sr">Plava tačkica je struja punjenja kondenzatora, žuta njegovo pražnjenje kroz R, narandžasta struja opterećenja. Zelene isprekidane linije označavaju vrh i dno talasanja. U trećem grafiku je struja diode. Probaj: (1) smanji C na 100 μF i gledaj kako testera raste, (2) smanji R (veća struja) i talasanje opet raste, (3) uporedi širinu i visinu impulsa struje diode za C = 100 μF i C = 4700 μF.</span><span lang="en">The blue dots are the charging current of the capacitor, the yellow ones its discharging through R, the orange ones the load current. The green dashed lines mark the top and the bottom of the ripple. The third graph shows the diode current. Try: (1) reduce C to 100 μF and watch the sawtooth grow, (2) reduce R (a larger current) and the ripple grows again, (3) compare the width and height of the diode current pulses for C = 100 μF and C = 4700 μF.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <figure class="fig" style="max-width:360px">
+        <svg class="dg" viewBox="0 0 320 360" role="img" aria-label="Blok-šema napajanja: mreža, transformator, usmerivač, filter, stabilizator / block diagram of a power supply: mains, transformer, rectifier, filter, regulator">
+          <defs>
+            <marker id="ah-chain" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillk"/></marker>
+          </defs>
+          <rect class="box" x="10" y="8" width="160" height="50" rx="6"/>
+          <text x="90" y="30" text-anchor="middle" lang="sr">Mreža</text>
+          <text x="90" y="30" text-anchor="middle" lang="en">Mains</text>
+          <text class="sm mu" x="90" y="46" text-anchor="middle">230 V ~ 50 Hz</text>
+          <path class="wc" d="M192 33Q206.5 5 221 33T250 33T279 33T308 33"/>
+          <path class="w" d="M90 58V74" marker-end="url(#ah-chain)"/>
+          <rect class="box" x="10" y="74" width="160" height="50" rx="6"/>
+          <text x="90" y="96" text-anchor="middle" lang="sr">Transformator</text>
+          <text x="90" y="96" text-anchor="middle" lang="en">Transformer</text>
+          <text class="sm mu" x="90" y="112" text-anchor="middle">230 V → 12 V</text>
+          <path class="wc" d="M192 99Q206.5 83 221 99T250 99T279 99T308 99"/>
+          <path class="w" d="M90 124V140" marker-end="url(#ah-chain)"/>
+          <rect class="box" x="10" y="140" width="160" height="50" rx="6"/>
+          <text x="90" y="162" text-anchor="middle" lang="sr">Usmerivač</text>
+          <text x="90" y="162" text-anchor="middle" lang="en">Rectifier</text>
+          <text class="sm mu" x="90" y="178" text-anchor="middle" lang="sr">diode</text>
+          <text class="sm mu" x="90" y="178" text-anchor="middle" lang="en">diodes</text>
+          <path class="wf" d="M192 165Q206.5 137 221 165H250Q264.5 137 279 165H308"/>
+          <path class="w" d="M90 190V206" marker-end="url(#ah-chain)"/>
+          <rect class="box" x="10" y="206" width="160" height="50" rx="6"/>
+          <text x="90" y="228" text-anchor="middle">Filter</text>
+          <text class="sm mu" x="90" y="244" text-anchor="middle" lang="sr">kondenzator</text>
+          <text class="sm mu" x="90" y="244" text-anchor="middle" lang="en">capacitor</text>
+          <path class="wf" d="M192 239Q196 223 200 223L250 239Q254 223 258 223L308 239"/>
+          <path class="w" d="M90 256V272" marker-end="url(#ah-chain)"/>
+          <rect class="box" x="10" y="272" width="160" height="50" rx="6"/>
+          <text x="90" y="294" text-anchor="middle" lang="sr">Stabilizator</text>
+          <text x="90" y="294" text-anchor="middle" lang="en">Regulator</text>
+          <text class="sm mu" x="90" y="310" text-anchor="middle" lang="sr">npr. 7805</text>
+          <text class="sm mu" x="90" y="310" text-anchor="middle" lang="en">e.g. 7805</text>
+          <path class="wg" d="M192 297H308"/>
+          <path class="w" d="M90 322V338" marker-end="url(#ah-chain)"/>
+          <text class="sm mu" x="90" y="354" text-anchor="middle" lang="sr">potrošač</text>
+          <text class="sm mu" x="90" y="354" text-anchor="middle" lang="en">load</text>
+        </svg>
+        <figcaption><span lang="sr">Gde je usmerivač u napajanju: transformator smanji napon, dioda ga ispravi, kondenzator izravna, a stabilizator na kraju daje stalan napon bez talasanja.</span><span lang="en">Where the rectifier sits in a power supply: the transformer reduces the voltage, the diode rectifies it, the capacitor smooths it, and the regulator at the end gives a constant voltage without ripple.</span></figcaption>
+      </figure>
+      <p lang="sr">Stabilizator (npr. tipa 7805 ili Zener dioda) traži da ulazni napon <em>nikada ne padne</em> ispod izlaznog plus nekoliko volti. Zato se talasanje ne gleda samo kao kvar: najniža tačka testere \( U_m - U_\gamma - \Delta u \) mora ostati iznad tog praga.</p>
+      <p lang="en">A regulator (e.g. a 7805 or a Zener diode) requires the input voltage to <em>never fall</em> below the output voltage plus a few volts. So the ripple is not just a defect: the lowest point of the sawtooth \( U_m - U_\gamma - \Delta u \) must stay above that threshold.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="parametri" data-toc data-toc-sr="Izbor elemenata" data-toc-en="Choosing parts">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">kako se projektuje napajanje</span><span lang="en">how a power supply is designed</span></p>
+    <h2><span lang="sr">Izbor diode i kondenzatora</span><span lang="en">Choosing the diode and the capacitor</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Zadatak je obično ovakav: <em>transformator daje \( U_2 \), potrošaču treba struja \( I_{dc} \), a talasanje sme da bude najviše \( \Delta u \)</em>. Redosled rada:</p>
+      <p lang="en">The task is usually like this: <em>the transformer gives \( U_2 \), the load needs the current \( I_{dc} \), and the ripple may be at most \( \Delta u \)</em>. The order of work:</p>
+      <ol class="steps-inline" lang="sr">
+        <li><span><strong>Vrh napona:</strong> \( U_m = U_2\sqrt{2} \). Sve se dimenzioniše prema vrhu, a ne prema efektivnoj vrednosti.</span></li>
+        <li><span><strong>Kondenzator:</strong> \( C \ge \dfrac{I_{dc}}{f\,\Delta u} \), pa se zaokruži <em>nagore</em> na standardnu vrednost (red E6: 100, 150, 220, 330, 470, 680 …). Elektrolitski kondenzatori imaju toleranciju ±20 % i starenjem gube kapacitivnost.</span></li>
+        <li><span><strong>Napon kondenzatora:</strong> najmanje \( 1{,}5\,U_m \).</span></li>
+        <li><span><strong>Dioda:</strong> inverzni napon \( U_{RRM} \ge 2\,U_m \) (sa filtrom!), srednja struja \( I_{F(AV)} \) veća od \( I_{dc} \) (bolje bar dvostruko) i dovoljna udarna struja \( I_{FSM} \).</span></li>
+        <li><span><strong>Provera:</strong> \( U_{dc} \approx U_m - U_\gamma - \Delta u/2 \) i \( R = U_{dc}/I_{dc} \).</span></li>
+      </ol>
+      <ol class="steps-inline" lang="en">
+        <li><span><strong>Peak voltage:</strong> \( U_m = U_2\sqrt{2} \). Everything is dimensioned for the peak, not for the RMS value.</span></li>
+        <li><span><strong>Capacitor:</strong> \( C \ge \dfrac{I_{dc}}{f\,\Delta u} \), then round <em>up</em> to a standard value (series E6: 100, 150, 220, 330, 470, 680 …). Electrolytic capacitors have a ±20 % tolerance and lose capacitance with age.</span></li>
+        <li><span><strong>Capacitor voltage:</strong> at least \( 1.5\,U_m \).</span></li>
+        <li><span><strong>Diode:</strong> reverse voltage \( U_{RRM} \ge 2\,U_m \) (with a filter!), mean current \( I_{F(AV)} \) larger than \( I_{dc} \) (better at least twice) and a sufficient surge current \( I_{FSM} \).</span></li>
+        <li><span><strong>Check:</strong> \( U_{dc} \approx U_m - U_\gamma - \Delta u/2 \) and \( R = U_{dc}/I_{dc} \).</span></li>
+      </ol>
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Zašto je inverzni napon 2·U<sub>m</sub>?</span><span lang="en">Why is the reverse voltage 2·U<sub>m</sub>?</span></p>
+        <p lang="sr">Kondenzator drži vrh \( +U_m \) na katodi. U negativnom vrhu izvor daje \( -U_m \) na anodi. Napon na zakočenoj diodi je razlika, dakle \( U_m - (-U_m) = 2U_m \). Bez kondenzatora to je samo \( U_m \).</p>
+        <p lang="en">The capacitor holds the peak \( +U_m \) on the cathode. At the negative peak the source gives \( -U_m \) on the anode. The voltage across the blocked diode is the difference, so \( U_m - (-U_m) = 2U_m \). Without the capacitor it is only \( U_m \).</p>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-dim">
+      <div class="plot"><canvas aria-label="Izlazni napon projektovanog usmerivača / the output voltage of the designed rectifier"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="d-u">U<sub>2</sub></label><output id="d-u-out" for="d-u">12 V</output><input type="range" id="d-u" min="0" max="5" step="1" value="2"></div>
+        <div class="ctl"><label for="d-i">I<sub>dc</sub></label><output id="d-i-out" for="d-i">200 mA</output><input type="range" id="d-i" min="0" max="5" step="1" value="2"></div>
+        <div class="ctl" style="grid-column:1/-1"><label for="d-d"><span lang="sr">Dozvoljeno talasanje Δu</span><span lang="en">Allowed ripple Δu</span></label><output id="d-d-out" for="d-d">1 V</output><input type="range" id="d-d" min="0" max="3" step="1" value="2"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="d-calc"></div><div class="result" id="d-result"></div><div class="calc" id="d-note"></div></div>
+      <figcaption><span lang="sr">Podesi napon sekundara, struju potrošača i dozvoljeno talasanje. Kalkulator prati korake iz liste, bira standardni kondenzator iz reda E6 i crta izlazni napon dobijenog usmerivača. Zelena isprekidana linija je vrh U<sub>m</sub> − 0,7 V.</span><span lang="en">Set the secondary voltage, the load current and the allowed ripple. The calculator follows the steps of the list, picks a standard capacitor from the E6 series and plots the output voltage of the resulting rectifier. The green dashed line is the peak U<sub>m</sub> − 0.7 V.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <div class="tbl-wrap">
+        <table class="scale num">
+          <caption><span lang="sr">Često korišćene diode</span><span lang="en">Commonly used diodes</span></caption>
+          <thead><tr><th><span lang="sr">Oznaka</span><span lang="en">Part</span></th><th>U<sub>RRM</sub> (V)</th><th>I<sub>F(AV)</sub> (A)</th><th>U<sub>F</sub> (V)</th><th><span lang="sr">Namena</span><span lang="en">Use</span></th></tr></thead>
+          <tbody>
+            <tr><td>1N4148</td><td>100</td><td>0,2</td><td>≈ 0,7</td><td><span lang="sr">signali, logika</span><span lang="en">signals, logic</span></td></tr>
+            <tr><td>1N4001</td><td>50</td><td>1</td><td>≈ 1</td><td><span lang="sr">mali ispravljači</span><span lang="en">small rectifiers</span></td></tr>
+            <tr><td>1N4007</td><td>1000</td><td>1</td><td>≈ 1</td><td><span lang="sr">opšta namena, mreža</span><span lang="en">general use, mains</span></td></tr>
+            <tr><td>1N5819</td><td>40</td><td>1</td><td>0,3 – 0,6</td><td><span lang="sr">Šotki, mali pad</span><span lang="en">Schottky, low drop</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="rule-box warn">
+        <p class="eyebrow"><span lang="sr">Mrežni napon je opasan po život</span><span lang="en">Mains voltage is dangerous to life</span></p>
+        <p lang="sr">Utičnica od 230 V ima vrh \( 230\sqrt{2} \approx 325\ \mathrm{V} \), pa filtrirani usmerivač traži diodu za bar \( 2\cdot 325 = 650\ \mathrm{V} \) (npr. 1N4007). Ali pre svega: bez transformatora kolo nije odvojeno od mreže i <strong>nikada se ne sklapa na laboratorijskoj ploči</strong>. Vežbe radi samo sa transformatorom i na malom naponu.</p>
+        <p lang="en">A 230 V socket has a peak of \( 230\sqrt{2} \approx 325\ \mathrm{V} \), so a filtered rectifier needs a diode for at least \( 2\cdot 325 = 650\ \mathrm{V} \) (e.g. a 1N4007). But above all: without a transformer the circuit is not isolated from the mains and <strong>must never be built on a breadboard</strong>. Do the exercises only with a transformer and at low voltage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc data-toc-sr="Primeri" data-toc-en="Examples">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">rešeni zadaci</span><span lang="en">worked exercises</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="ex">
+        <h4><span lang="sr">Primer 1 · LED i otpornik</span><span lang="en">Example 1 · an LED and a resistor</span></h4>
+        <p class="given" lang="sr">Dato: izvor 5 V, crvena LED (\( U_D = 1{,}8\ \mathrm{V} \)) treba da svetli strujom 10 mA. Koliki otpornik treba vezati na red?</p>
+        <p class="given" lang="en">Given: a 5 V source, a red LED (\( U_D = 1.8\ \mathrm{V} \)) must light with a current of 10 mA. What series resistor is needed?</p>
+        <ol lang="sr">
+          <li>Na otporniku ostaje \( 5 - 1{,}8 = 3{,}2\ \mathrm{V} \).</li>
+          <li>\( R = \dfrac{3{,}2}{0{,}010} = 320\ \Omega \). Prva standardna vrednost je 330 Ω.</li>
+          <li>Stvarna struja: \( I = 3{,}2/330 = 9{,}7\ \mathrm{mA} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>\( 5 - 1.8 = 3.2\ \mathrm{V} \) is left on the resistor.</li>
+          <li>\( R = \dfrac{3.2}{0.010} = 320\ \Omega \). The nearest standard value is 330 Ω.</li>
+          <li>The real current: \( I = 3.2/330 = 9.7\ \mathrm{mA} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">R = 330 Ω, I ≈ 9,7 mA</span><span lang="en">R = 330 Ω, I ≈ 9.7 mA</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 2 · silicijumska dioda i otpornik</span><span lang="en">Example 2 · a silicon diode and a resistor</span></h4>
+        <p class="given" lang="sr">Dato: E = 5 V, R = 330 Ω, silicijumska dioda u propusnom smeru. Koliki su struja i snaga na otporniku i na diodi?</p>
+        <p class="given" lang="en">Given: E = 5 V, R = 330 Ω, a silicon diode in the forward direction. What are the current and the power on the resistor and on the diode?</p>
+        <ol lang="sr">
+          <li>\( U_R = 5 - 0{,}7 = 4{,}3\ \mathrm{V} \).</li>
+          <li>\( I = \dfrac{4{,}3}{330} = 13\ \mathrm{mA} \).</li>
+          <li>\( P_R = I^2 R = 0{,}013^2\cdot 330 = 56\ \mathrm{mW} \) i \( P_D = U_D I = 0{,}7\cdot 0{,}013 = 9{,}1\ \mathrm{mW} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>\( U_R = 5 - 0.7 = 4.3\ \mathrm{V} \).</li>
+          <li>\( I = \dfrac{4.3}{330} = 13\ \mathrm{mA} \).</li>
+          <li>\( P_R = I^2 R = 0.013^2\cdot 330 = 56\ \mathrm{mW} \) and \( P_D = U_D I = 0.7\cdot 0.013 = 9.1\ \mathrm{mW} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">I = 13 mA, P<sub>R</sub> = 56 mW, P<sub>D</sub> = 9,1 mW</span><span lang="en">I = 13 mA, P<sub>R</sub> = 56 mW, P<sub>D</sub> = 9.1 mW</span></p>
+      </div>
+      <div class="ex field">
+        <h4><span lang="sr">Primer 3 · poluperiodni usmerivač bez filtra</span><span lang="en">Example 3 · a half-wave rectifier without a filter</span></h4>
+        <p class="given" lang="sr">Dato: \( U_2 = 12\ \mathrm{V} \) (ef.), R = 100 Ω, silicijumska dioda. Traže se \( U_m \), vrh izlaza, \( U_{dc} \), \( I_{dc} \) i PIV.</p>
+        <p class="given" lang="en">Given: \( U_2 = 12\ \mathrm{V} \) (RMS), R = 100 Ω, a silicon diode. Find \( U_m \), the output peak, \( U_{dc} \), \( I_{dc} \) and PIV.</p>
+        <ol lang="sr">
+          <li>\( U_m = 12\sqrt{2} = 16{,}97\ \mathrm{V} \approx 17\ \mathrm{V} \).</li>
+          <li>Vrh izlaza: \( 16{,}97 - 0{,}7 = 16{,}27\ \mathrm{V} \).</li>
+          <li>\( U_{dc} \approx \dfrac{16{,}27}{\pi} = 5{,}18\ \mathrm{V} \).</li>
+          <li>\( I_{dc} = \dfrac{5{,}18}{100} = 51{,}8\ \mathrm{mA} \).</li>
+          <li>\( \mathrm{PIV} = U_m \approx 17\ \mathrm{V} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>\( U_m = 12\sqrt{2} = 16.97\ \mathrm{V} \approx 17\ \mathrm{V} \).</li>
+          <li>Output peak: \( 16.97 - 0.7 = 16.27\ \mathrm{V} \).</li>
+          <li>\( U_{dc} \approx \dfrac{16.27}{\pi} = 5.18\ \mathrm{V} \).</li>
+          <li>\( I_{dc} = \dfrac{5.18}{100} = 51.8\ \mathrm{mA} \).</li>
+          <li>\( \mathrm{PIV} = U_m \approx 17\ \mathrm{V} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">U<sub>m</sub> = 17 V, vrh izlaza 16,3 V, U<sub>dc</sub> ≈ 5,2 V, I<sub>dc</sub> ≈ 52 mA, PIV = 17 V</span><span lang="en">U<sub>m</sub> = 17 V, output peak 16.3 V, U<sub>dc</sub> ≈ 5.2 V, I<sub>dc</sub> ≈ 52 mA, PIV = 17 V</span></p>
+      </div>
+      <div class="ex field">
+        <h4><span lang="sr">Primer 4 · talasanje sa zadatim C</span><span lang="en">Example 4 · ripple with a given C</span></h4>
+        <p class="given" lang="sr">Dato: C = 1000 μF, \( I_{dc} = 100\ \mathrm{mA} \), \( U_{dc} = 15\ \mathrm{V} \), f = 50 Hz. Traže se \( \Delta u \) i faktor talasanja r.</p>
+        <p class="given" lang="en">Given: C = 1000 μF, \( I_{dc} = 100\ \mathrm{mA} \), \( U_{dc} = 15\ \mathrm{V} \), f = 50 Hz. Find \( \Delta u \) and the ripple factor r.</p>
+        <ol lang="sr">
+          <li>\( \Delta u = \dfrac{I_{dc}}{fC} = \dfrac{0{,}1}{50\cdot 10^{-3}} = 2\ \mathrm{V} \).</li>
+          <li>\( r = \dfrac{\Delta u}{2\sqrt{3}\,U_{dc}} = \dfrac{2}{3{,}46\cdot 15} = 0{,}038 \), to jest 3,8 %.</li>
+          <li>Sa dvostrukim C (2200 μF) talasanje bi bilo 0,91 V.</li>
+        </ol>
+        <ol lang="en">
+          <li>\( \Delta u = \dfrac{I_{dc}}{fC} = \dfrac{0.1}{50\cdot 10^{-3}} = 2\ \mathrm{V} \).</li>
+          <li>\( r = \dfrac{\Delta u}{2\sqrt{3}\,U_{dc}} = \dfrac{2}{3.46\cdot 15} = 0.038 \), that is 3.8 %.</li>
+          <li>With a doubled C (2200 μF) the ripple would be 0.91 V.</li>
+        </ol>
+        <p class="answer"><span lang="sr">Δu = 2 V, r ≈ 3,8 %</span><span lang="en">Δu = 2 V, r ≈ 3.8 %</span></p>
+      </div>
+      <div class="ex violet">
+        <h4><span lang="sr">Primer 5 · dimenzionisanje napajanja</span><span lang="en">Example 5 · designing a power supply</span></h4>
+        <p class="given" lang="sr">Dato: \( U_2 = 12\ \mathrm{V} \), potrošač uzima \( I_{dc} = 200\ \mathrm{mA} \), talasanje sme da bude najviše 1 V (vp), silicijumska dioda. Izaberi C, diodu i napon kondenzatora i izračunaj \( U_{dc} \) i R.</p>
+        <p class="given" lang="en">Given: \( U_2 = 12\ \mathrm{V} \), the load draws \( I_{dc} = 200\ \mathrm{mA} \), the ripple may be at most 1 V (pp), a silicon diode. Choose C, the diode and the capacitor voltage and calculate \( U_{dc} \) and R.</p>
+        <ol lang="sr">
+          <li>\( U_m = 12\sqrt{2} = 17\ \mathrm{V} \), vrh posle diode je 16,3 V.</li>
+          <li>\( C \ge \dfrac{I_{dc}}{f\,\Delta u} = \dfrac{0{,}2}{50\cdot 1} = 4\ \mathrm{mF} = 4000\ \mu\mathrm{F} \). Prva standardna vrednost je <strong>4700 μF</strong>.</li>
+          <li>Stvarno talasanje: \( \Delta u = \dfrac{0{,}2}{50\cdot 4{,}7\cdot 10^{-3}} = 0{,}85\ \mathrm{V} \).</li>
+          <li>\( U_{dc} \approx 16{,}3 - \dfrac{0{,}85}{2} = 15{,}8\ \mathrm{V} \) i \( R = \dfrac{15{,}8}{0{,}2} = 79\ \Omega \).</li>
+          <li>Napon kondenzatora: \( 1{,}5\cdot 17 = 25{,}5\ \mathrm{V} \), pa uzimamo <strong>35 V</strong>.</li>
+          <li>Dioda: \( U_{RRM} \ge 2U_m = 34\ \mathrm{V} \), \( I_{F(AV)} > 0{,}2\ \mathrm{A} \). Biramo <strong>1N4007</strong> (1000 V, 1 A).</li>
+        </ol>
+        <ol lang="en">
+          <li>\( U_m = 12\sqrt{2} = 17\ \mathrm{V} \), the peak after the diode is 16.3 V.</li>
+          <li>\( C \ge \dfrac{I_{dc}}{f\,\Delta u} = \dfrac{0.2}{50\cdot 1} = 4\ \mathrm{mF} = 4000\ \mu\mathrm{F} \). The first standard value is <strong>4700 μF</strong>.</li>
+          <li>The real ripple: \( \Delta u = \dfrac{0.2}{50\cdot 4.7\cdot 10^{-3}} = 0.85\ \mathrm{V} \).</li>
+          <li>\( U_{dc} \approx 16.3 - \dfrac{0.85}{2} = 15.8\ \mathrm{V} \) and \( R = \dfrac{15.8}{0.2} = 79\ \Omega \).</li>
+          <li>Capacitor voltage: \( 1.5\cdot 17 = 25.5\ \mathrm{V} \), so we take <strong>35 V</strong>.</li>
+          <li>Diode: \( U_{RRM} \ge 2U_m = 34\ \mathrm{V} \), \( I_{F(AV)} > 0.2\ \mathrm{A} \). We choose the <strong>1N4007</strong> (1000 V, 1 A).</li>
+        </ol>
+        <p class="answer"><span lang="sr">C = 4700 μF / 35 V, 1N4007, U<sub>dc</sub> ≈ 15,8 V, R ≈ 79 Ω</span><span lang="en">C = 4700 μF / 35 V, 1N4007, U<sub>dc</sub> ≈ 15.8 V, R ≈ 79 Ω</span></p>
+      </div>
+      <div class="ex violet">
+        <h4><span lang="sr">Primer 6 · merenje na izlazu usmerivača</span><span lang="en">Example 6 · measuring at the rectifier output</span></h4>
+        <p class="given" lang="sr">Dato: osciloskop na izlazu filtriranog poluperiodnog usmerivača. DC sprega, 5 V/div: vrh je 3,2 podeoka iznad nule. AC sprega, 0,5 V/div, 5 ms/div: talasanje zauzima 4 podeoka od vrha do dna, a jedna perioda 4 podeoka. Traže se \( \Delta u \), f i približno \( U_{dc} \).</p>
+        <p class="given" lang="en">Given: an oscilloscope at the output of a filtered half-wave rectifier. DC coupling, 5 V/div: the peak is 3.2 divisions above zero. AC coupling, 0.5 V/div, 5 ms/div: the ripple takes 4 divisions from top to bottom, and one period 4 divisions. Find \( \Delta u \), f and the approximate \( U_{dc} \).</p>
+        <ol lang="sr">
+          <li>Vrh: \( 3{,}2\cdot 5 = 16\ \mathrm{V} \).</li>
+          <li>\( \Delta u = 4\cdot 0{,}5 = 2\ \mathrm{V} \).</li>
+          <li>\( T = 4\cdot 5 = 20\ \mathrm{ms} \), pa je \( f = 1/T = 50\ \mathrm{Hz} \). To je učestanost mreže, što znači da je usmerivač poluperiodni.</li>
+          <li>\( U_{dc} \approx 16 - \dfrac{2}{2} = 15\ \mathrm{V} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>Peak: \( 3.2\cdot 5 = 16\ \mathrm{V} \).</li>
+          <li>\( \Delta u = 4\cdot 0.5 = 2\ \mathrm{V} \).</li>
+          <li>\( T = 4\cdot 5 = 20\ \mathrm{ms} \), so \( f = 1/T = 50\ \mathrm{Hz} \). This is the mains frequency, which means the rectifier is half-wave.</li>
+          <li>\( U_{dc} \approx 16 - \dfrac{2}{2} = 15\ \mathrm{V} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">Δu = 2 V, f = 50 Hz (poluperiodni), U<sub>dc</sub> ≈ 15 V</span><span lang="en">Δu = 2 V, f = 50 Hz (half-wave), U<sub>dc</sub> ≈ 15 V</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <ul class="pitfalls" lang="sr">
+        <li><div><b>Dioda okrenuta naopako.</b> Izlaz je nula (ili negativan). Traka na kućištu je katoda i ide ka plusu potrošača.</div></li>
+        <li><div><b>Zaboravljen pad od 0,7 V.</b> Pri malim naponima (oko 5 V i manje) to je velik deo napona.</div></li>
+        <li><div><b>Dioda ili LED bez otpornika.</b> Struju ograničava kolo, ne dioda. Bez otpornika dioda pregoreva.</div></li>
+        <li><div><b>Efektivna vrednost umesto vrha.</b> „12 V” na transformatoru je efektivna vrednost, vrh je 17 V. Dioda, kondenzator i zasićenje se računaju prema vrhu.</div></li>
+        <li><div><b>Inverzni napon jednak U<sub>m</sub>.</b> Sa kondenzatorom je inverzni napon do \( 2U_m \). Dioda 1N4148 (100 V) nije za mrežu.</div></li>
+        <li><div><b>Obrnut elektrolitski kondenzator.</b> Ima plus i minus. Obrnut polaritet ga greje, naduva i može da ga raznese.</div></li>
+        <li><div><b>Premali radni napon kondenzatora.</b> Kondenzator od 16 V na vrhu od 17 V ne sme da se koristi. Uzmi bar \( 1{,}5U_m \).</div></li>
+        <li><div><b>Talasanje zavisi od struje.</b> Ako potrošač povuče više struje, \( \Delta u \) raste. Računaj uvek sa najvećom strujom.</div></li>
+        <li><div><b>Srednja i efektivna vrednost.</b> DC voltmetar pokazuje \( U_{dc} \), a ne vrh i ne efektivnu vrednost. Uporedi sa vežbom 8.</div></li>
+        <li><div><b>Pogrešna sprega na osciloskopu.</b> Talasanje od 1 V na 15 V jednosmernog napona se vidi tek sa AC spregom i malim V/div. Uporedi sa vežbom 9.</div></li>
+        <li><div><b>Mreža bez transformatora.</b> Kolo nije galvanski odvojeno od mreže i opasno je po život. Eksperimentiši samo na malom naponu.</div></li>
+      </ul>
+      <ul class="pitfalls" lang="en">
+        <li><div><b>A reversed diode.</b> The output is zero (or negative). The band on the case is the cathode and goes to the plus of the load.</div></li>
+        <li><div><b>Forgetting the 0.7 V drop.</b> At small voltages (about 5 V and less) it is a large part of the voltage.</div></li>
+        <li><div><b>A diode or an LED without a resistor.</b> The current is limited by the circuit, not by the diode. Without a resistor the diode burns out.</div></li>
+        <li><div><b>RMS instead of the peak.</b> "12 V" on a transformer is the RMS value, the peak is 17 V. The diode, the capacitor and the saturation are calculated from the peak.</div></li>
+        <li><div><b>A reverse voltage equal to U<sub>m</sub>.</b> With a capacitor the reverse voltage is up to \( 2U_m \). A 1N4148 diode (100 V) is not for the mains.</div></li>
+        <li><div><b>A reversed electrolytic capacitor.</b> It has a plus and a minus. A wrong polarity heats it, bloats it, and it can burst.</div></li>
+        <li><div><b>Too low a capacitor voltage rating.</b> A 16 V capacitor must not be used at a peak of 17 V. Take at least \( 1.5U_m \).</div></li>
+        <li><div><b>The ripple depends on the current.</b> If the load draws more current, \( \Delta u \) grows. Always calculate with the largest current.</div></li>
+        <li><div><b>The average and the RMS value.</b> A DC voltmeter shows \( U_{dc} \), not the peak and not the RMS value. Compare with exercise 8.</div></li>
+        <li><div><b>The wrong coupling on the oscilloscope.</b> A ripple of 1 V on 15 V of direct voltage is only seen with AC coupling and a small V/div. Compare with exercise 9.</div></li>
+        <li><div><b>Mains without a transformer.</b> The circuit is not galvanically isolated from the mains and it is dangerous to life. Experiment only at low voltage.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="summary">
+        <ul lang="sr">
+          <li>Dioda propušta struju od anode ka katodi kada je napon na njoj veći od praga \( U_\gamma \approx 0{,}7\ \mathrm{V} \) (Si), a u suprotnom smeru je zaustavlja. Razlog je osiromašeni sloj p-n spoja.</li>
+          <li>Dioda uvek mora imati otpornik (potrošač) na red, jer struju ne ograničava ona sama.</li>
+          <li>Poluperiodni usmerivač propušta jednu poluperiodu: \( U_m = U_2\sqrt{2} \), \( U_{dc} = U_m/\pi \), \( U_{ef} = U_m/2 \), PIV = \( U_m \), učestanost talasanja 50 Hz, \( \gamma = 1{,}21 \), \( \eta = 40{,}5\ \% \).</li>
+          <li>Kondenzator paralelno sa opterećenjem izravnava napon: \( \Delta u \approx I_{dc}/(fC) \), \( U_{dc} \approx U_m - U_\gamma - \Delta u/2 \).</li>
+          <li>Sa filtrom dioda vodi kratkim jakim impulsima, a inverzni napon raste do \( 2U_m \).</li>
+          <li>Izbor: \( C \ge I_{dc}/(f\,\Delta u) \) (zaokruži nagore), \( U_C \ge 1{,}5U_m \), \( U_{RRM} \ge 2U_m \), \( I_{F(AV)} > I_{dc} \).</li>
+          <li>Merenje: DC voltmetar daje \( U_{dc} \), osciloskop sa DC spregom oblik, a sa AC spregom talasanje.</li>
+        </ul>
+        <ul lang="en">
+          <li>A diode passes current from the anode to the cathode when the voltage across it is above the threshold \( U_\gamma \approx 0.7\ \mathrm{V} \) (Si), and stops it in the opposite direction. The reason is the depletion layer of the p-n junction.</li>
+          <li>A diode must always have a resistor (a load) in series, because it does not limit the current itself.</li>
+          <li>A half-wave rectifier passes one half-cycle: \( U_m = U_2\sqrt{2} \), \( U_{dc} = U_m/\pi \), \( U_{rms} = U_m/2 \), PIV = \( U_m \), ripple frequency 50 Hz, \( \gamma = 1.21 \), \( \eta = 40.5\ \% \).</li>
+          <li>A capacitor in parallel with the load smooths the voltage: \( \Delta u \approx I_{dc}/(fC) \), \( U_{dc} \approx U_m - U_\gamma - \Delta u/2 \).</li>
+          <li>With a filter the diode conducts in short strong pulses, and the reverse voltage grows up to \( 2U_m \).</li>
+          <li>Selection: \( C \ge I_{dc}/(f\,\Delta u) \) (round up), \( U_C \ge 1.5U_m \), \( U_{RRM} \ge 2U_m \), \( I_{F(AV)} > I_{dc} \).</li>
+          <li>Measuring: a DC voltmeter gives \( U_{dc} \), an oscilloscope with DC coupling the shape, and with AC coupling the ripple.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" data-test="ELE01" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/rectsim.js"></script>
+<script src="../assets/js/lessons/usmerivac.js"></script>
+</body>
+</html>

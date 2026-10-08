@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="Pomoćna stranica: izračunaj otisak (SHA-256) nove lozinke za pravljenje kvizova.">
+<title>Nova lozinka · lav</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="assets/css/lav.css">
+</head>
+<body data-title-sr="Nova lozinka · lav" data-title-en="New password · lav">
+<div id="site-header"></div>
+<div class="wrap" style="max-width:720px">
+  <div class="lib-head">
+    <p class="eyebrow"><span lang="sr">Pomoćna stranica</span><span lang="en">Helper page</span></p>
+    <h1><span lang="sr">Nova lozinka</span><span lang="en">New password</span></h1>
+    <p class="lead" lang="sr">Lozinka za pravljenje kvizova ne stoji u kodu kao tekst, nego kao otisak (SHA-256) u datoteci <b>config.js</b>. Ovde izračunaš otisak za novu lozinku. Sve se računa u tvom pregledaču i ništa se ne šalje.</p>
+    <p class="lead" lang="en">The password for creating quizzes is not stored in the code as text, but as a fingerprint (SHA-256) in the file <b>config.js</b>. Here you calculate the fingerprint for a new password. Everything is calculated in your browser and nothing is sent anywhere.</p>
+  </div>
+  <form id="pw-form" class="field-row" style="gap:14px;margin:28px 0" autocomplete="off">
+    <label for="pw"><span lang="sr">Nova lozinka</span><span lang="en">New password</span></label>
+    <input class="input" id="pw" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+    <div><button type="submit" class="btn primary"><span lang="sr">Izračunaj otisak</span><span lang="en">Calculate the fingerprint</span></button></div>
+  </form>
+  <div id="pw-out" hidden>
+    <div class="rule-box blue">
+      <p class="eyebrow"><span lang="sr">Tvoj otisak</span><span lang="en">Your fingerprint</span></p>
+      <p><code id="pw-hash" style="word-break:break-all;font-family:var(--mono)"></code></p>
+      <div><button type="button" class="btn small" id="pw-copy"><span lang="sr">Kopiraj liniju za config.js</span><span lang="en">Copy the line for config.js</span></button></div>
+    </div>
+    <ol class="steps-inline" style="margin-top:20px" lang="sr">
+      <li><span>Otvori <b>config.js</b> u repozitorijumu na GitHub-u i klikni na olovku (Edit).</span></li>
+      <li><span>Zameni vrednost posle <b>creatorPasswordHash:</b> otiskom iznad (između navodnika).</span></li>
+      <li><span>Klikni <b>Commit changes</b>. Posle minut-dva nova lozinka važi.</span></li>
+    </ol>
+    <ol class="steps-inline" style="margin-top:20px" lang="en">
+      <li><span>Open <b>config.js</b> in the repository on GitHub and click the pencil (Edit).</span></li>
+      <li><span>Replace the value after <b>creatorPasswordHash:</b> with the fingerprint above (between the quotes).</span></li>
+      <li><span>Click <b>Commit changes</b>. After a minute or two the new password is valid.</span></li>
+    </ol>
+  </div>
+  <p class="help" id="pw-unsupported" hidden><span lang="sr">Ovaj pregledač ne podržava računanje otiska na ovoj adresi. Otvori stranicu preko https adrese.</span><span lang="en">This browser does not support calculating the fingerprint at this address. Open the page over an https address.</span></p>
+</div>
+<div id="site-footer"></div>
+<script src="config.js"></script>
+<script src="assets/js/lessons.js"></script>
+<script src="assets/vendor/katex/katex.min.js"></script>
+<script src="assets/vendor/katex/auto-render.min.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/lozinka.js"></script>
+</body>
+</html>

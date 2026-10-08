@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Magnetno polje, linije polja, magnetna indukcija B i tesla: lekcija sa 3D modelom, rešenim primerima i testom.">
+<title>Magnetna indukcija · lav</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="magnetna-indukcija">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr">
+      <li>objasniš šta je magnetno polje i šta pokazuju linije polja;</li>
+      <li>definišeš magnetnu indukciju <span class="v">B</span> i jedinicu tesla;</li>
+      <li>izračunaš silu na provodnik sa strujom i obrnuto, indukciju iz sile;</li>
+      <li>odrediš smer sile pravilom leve ruke.</li>
+    </ul>
+    <ul lang="en">
+      <li>explain what a magnetic field is and what field lines show;</li>
+      <li>define magnetic induction <span class="v">B</span> and the unit tesla;</li>
+      <li>calculate the force on a current-carrying wire, and the induction from a force;</li>
+      <li>find the direction of the force with the left-hand rule.</li>
+    </ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="polje" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">magnetno polje</span><span lang="en">the magnetic field</span></p>
+    <h2><span lang="sr">Magnetno polje i linije polja</span><span lang="en">The magnetic field and field lines</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Oko svakog magneta i oko svakog provodnika kroz koji teče struja postoji <strong>magnetno polje</strong>. Polje ne možemo da vidimo, ali vidimo šta radi: privlači gvožđe, okreće iglu kompasa, deluje silom na provodnik sa strujom. Koliko je to polje jako i u kom smeru deluje, opisuje vektor <strong>magnetne indukcije</strong> <span class="v">B</span>.</p>
+      <p lang="en">Every magnet, and every wire carrying a current, is surrounded by a <strong>magnetic field</strong>. We cannot see the field, but we can see what it does: it attracts iron, turns a compass needle, pushes on a wire with current. How strong the field is, and which way it acts, is described by the <strong>magnetic induction</strong> vector <span class="v">B</span> (also called magnetic flux density).</p>
+      <p lang="sr">Polje prikazujemo <strong>linijama polja</strong>. Izvan magneta one izlaze iz severnog pola (N) i ulaze u južni pol (S), a unutar magneta zatvaraju se nazad ka N, pa su uvek <strong>zatvorene</strong>. Vektor <span class="v">B</span> je tangenta na liniju polja, a gde su linije gušće, polje je jače.</p>
+      <p lang="en">We draw the field with <strong>field lines</strong>. Outside a magnet they leave the north pole (N) and enter the south pole (S), and inside the magnet they close back to N, so they always form <strong>closed loops</strong>. <span class="v">B</span> is tangent to the field line, and where the lines are packed closer, the field is stronger.</p>
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Tri pravila za linije polja</span><span lang="en">Three rules for field lines</span></p>
+        <ul class="plain" lang="sr">
+          <li>Linije polja su zatvorene i nikada se ne seku.</li>
+          <li>Smer linije je smer koji pokazuje severni kraj igle kompasa.</li>
+          <li>Gušće linije znače jače polje.</li>
+        </ul>
+        <ul class="plain" lang="en">
+          <li>Field lines are closed and never cross.</li>
+          <li>The direction of a line is the direction the north end of a compass needle points.</li>
+          <li>Denser lines mean a stronger field.</li>
+        </ul>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-dipole">
+      <div class="viewport"><canvas tabindex="0" aria-label="Magnet i kompas / magnet and compass"></canvas><span class="hint"><span lang="sr">Prevuci kompas</span><span lang="en">Drag the compass</span></span></div>
+      <div class="controls one">
+        <div class="btns">
+          <div class="seg" id="dip-mode" role="group" aria-label="Prikaz / View">
+            <button type="button" data-v="lines" aria-pressed="true"><span lang="sr">Linije polja</span><span lang="en">Field lines</span></button>
+            <button type="button" data-v="filings" aria-pressed="false"><span lang="sr">Gvozdena piljevina</span><span lang="en">Iron filings</span></button>
+          </div>
+          <button type="button" class="btn" id="dip-flip">⇄ <span lang="sr">Okreni magnet</span><span lang="en">Flip the magnet</span></button>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="dip-calc"></div><div class="result" id="dip-result"></div></div>
+      <figcaption><span lang="sr">Šipkasti magnet i kompas koji možeš da prevlačiš. Crveni kraj igle pokazuje smer vektora B u toj tački. Blizu polova polje je najjače, a daleko od magneta skoro nestaje.</span><span lang="en">A bar magnet and a compass you can drag. The red end of the needle shows the direction of B at that point. The field is strongest near the poles and nearly vanishes far from the magnet.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <h3><span lang="sr">Polovi i podela magneta</span><span lang="en">Poles and cutting a magnet</span></h3>
+      <p lang="sr">Istoimeni polovi se odbijaju, raznoimeni se privlače. Ako šipkasti magnet prelomimo na pola, ne dobijamo odvojen severni i odvojen južni pol, nego <strong>dva manja magneta</strong>, svaki sa svojim N i S. Izolovan magnetni pol nikada nije pronađen.</p>
+      <p lang="en">Like poles repel, unlike poles attract. If we break a bar magnet in half, we do not get a separate north and a separate south pole, but <strong>two smaller magnets</strong>, each with its own N and S. An isolated magnetic pole has never been found.</p>
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: kompas u Srbiji pokazuje na sever Zemlje. Šta to znači za magnetni pol Zemlje blizu Arktika?</span><span lang="en">Think first: a compass points to Earth's north. What does that say about the magnetic pole of the Earth near the Arctic?</span></summary>
+        <div class="ans">
+          <p lang="sr">Severni kraj igle (N) privlači se sa južnim polom magneta. Dakle, blizu geografskog severa nalazi se <strong>južni magnetni pol</strong> Zemlje. Zato se geografski sever zove i „magnetni sever”, iako je tamo, fizički gledano, pol S.</p>
+          <p lang="en">The north end of the needle (N) is attracted to a magnet's south pole. So near geographic north lies the <strong>south magnetic pole</strong> of the Earth. It is only called the "magnetic north" because it is in the north, even though physically it is an S pole.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="merenje" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">oznaka B · jedinica tesla (T)</span><span lang="en">symbol B · unit tesla (T)</span></p>
+    <h2><span lang="sr">Kako merimo B?</span><span lang="en">How do we measure B?</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Magnetno polje deluje silom na provodnik sa strujom. Ta sila se zove <strong>Amperova sila</strong> i zavisi od ugla između provodnika i linija polja:</p>
+      <p lang="en">A magnetic field pushes on a wire that carries a current. This push is called the <strong>Ampère force</strong>, and it depends on the angle between the wire and the field lines:</p>
+      <div class="formula">
+        <div class="tex">\[ F = B\,I\,l\,\sin\alpha \]</div>
+        <dl class="legend">
+          <div><dt>F</dt><dd><span lang="sr">sila</span><span lang="en">force</span></dd><span class="unit">N</span></div>
+          <div><dt>B</dt><dd><span lang="sr">magnetna indukcija</span><span lang="en">magnetic induction</span></dd><span class="unit">T</span></div>
+          <div><dt>I</dt><dd><span lang="sr">jačina struje</span><span lang="en">current</span></dd><span class="unit">A</span></div>
+          <div><dt>l</dt><dd><span lang="sr">dužina provodnika u polju</span><span lang="en">length of wire inside the field</span></dd><span class="unit">m</span></div>
+          <div><dt>α</dt><dd><span lang="sr">ugao između provodnika i linija polja</span><span lang="en">angle between the wire and the field lines</span></dd><span class="unit">°</span></div>
+        </dl>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-force">
+      <div class="viewport"><canvas tabindex="0" aria-label="3D model: provodnik u polju potkovičastog magneta / wire in a horseshoe magnet's field"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje</span><span lang="en">Drag to rotate</span></span></div>
+      <div class="controls">
+        <div class="ctl"><label for="f-angle"><span lang="sr">Ugao α između provodnika i polja</span><span lang="en">Angle α between wire and field</span></label><output id="f-angle-out" for="f-angle">90°</output><input type="range" id="f-angle" min="0" max="90" step="1" value="90"></div>
+        <div class="ctl"><label for="f-current"><span lang="sr">Struja I</span><span lang="en">Current I</span></label><output id="f-current-out" for="f-current">4 A</output><input type="range" id="f-current" min="0" max="10" step="0.5" value="4"></div>
+        <div class="btns"><button type="button" class="btn" id="f-flip">⇄ <span lang="sr">Obrni smer struje</span><span lang="en">Reverse the current</span></button></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="f-calc"></div><div class="result" id="f-result"></div></div>
+      <figcaption><span lang="sr">Provodnik između polova potkovičastog magneta (B = 0,4 T, l = 0,25 m). Žuta strelica je sila F. Kada je provodnik paralelan sa linijama polja, sila nestaje.</span><span lang="en">A wire between the poles of a horseshoe magnet (B = 0.4 T, l = 0.25 m). The yellow arrow is the force F. When the wire is parallel to the field lines, the force disappears.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <p lang="sr">Sila je najveća kada je provodnik normalan na polje (<span class="v">α</span> = 90°, sin 90° = 1), a jednaka nuli kada je paralelan sa poljem (sin 0° = 0). Iz najveće sile definišemo magnetnu indukciju:</p>
+      <p lang="en">The force is largest when the wire is perpendicular to the field (<span class="v">α</span> = 90°, sin 90° = 1) and zero when the wire is parallel to it (sin 0° = 0). From the largest force we define magnetic induction:</p>
+      <div class="formula"><div class="tex">\[ B = \frac{F}{I\,l} \qquad 1\,\mathrm{T} = 1\,\frac{\mathrm{N}}{\mathrm{A\cdot m}} \]</div></div>
+      <p lang="sr">Polje ima indukciju od <strong>1 tesle</strong> ako na provodnik dužine 1 m, kroz koji teče struja od 1 A, deluje silom od 1 N. Tesla je velika jedinica, pa se često koriste mT (mili) i μT (mikro).</p>
+      <p lang="en">A field has an induction of <strong>1 tesla</strong> if it pushes on a 1 m wire carrying 1 A with a force of 1 N. The tesla is a large unit, so mT (milli) and μT (micro) are common.</p>
+      <div class="rule-box">
+        <p class="eyebrow"><span lang="sr">Pravilo leve ruke</span><span lang="en">Left-hand rule</span></p>
+        <p lang="sr">Postavi levu šaku tako da linije polja ulaze u dlan, a ispruženi prsti pokazuju smer struje. Odvojeni palac tada pokazuje smer sile.</p>
+        <p lang="en">Hold your left hand so the field lines enter your palm and your outstretched fingers point along the current. Your thumb, held out to the side, then shows the direction of the force.</p>
+      </div>
+      <p class="note" lang="sr">Obrati pažnju: sila nije ni u smeru polja ni u smeru struje. Uvek je normalna na oba.</p>
+      <p class="note" lang="en">Notice: the force is neither along the field nor along the current. It is always perpendicular to both.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="jedinice" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">redovi veličine</span><span lang="en">orders of magnitude</span></p>
+    <h2><span lang="sr">Koliko je 1 tesla?</span><span lang="en">How big is 1 tesla?</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="intro">
+      <div class="cols2">
+        <table class="scale">
+          <caption><span lang="sr">Primeri polja</span><span lang="en">Example fields</span></caption>
+          <tbody>
+            <tr><td><span lang="sr">Magnetno polje Zemlje</span><span lang="en">Earth's magnetic field</span></td><td>≈ 50 μT</td></tr>
+            <tr><td><span lang="sr">Magnet za frižider</span><span lang="en">Fridge magnet</span></td><td>≈ 5 mT</td></tr>
+            <tr><td><span lang="sr">Jak neodijumski magnet</span><span lang="en">Strong neodymium magnet</span></td><td>≈ 1 T</td></tr>
+            <tr><td><span lang="sr">MRI aparat u bolnici</span><span lang="en">Hospital MRI scanner</span></td><td><span lang="sr">1,5 – 3 T</span><span lang="en">1.5 – 3 T</span></td></tr>
+          </tbody>
+        </table>
+        <table class="scale">
+          <caption><span lang="sr">Pretvaranje jedinica</span><span lang="en">Unit conversions</span></caption>
+          <tbody>
+            <tr><td>1 mT</td><td>10<sup>−3</sup> T</td></tr>
+            <tr><td>1 μT</td><td>10<sup>−6</sup> T</td></tr>
+            <tr><td>1 nT</td><td>10<sup>−9</sup> T</td></tr>
+            <tr><td><span lang="sr">1 gaus (G, stara jedinica)</span><span lang="en">1 gauss (G, old unit)</span></td><td>10<sup>−4</sup> T</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p lang="sr">Magnetna indukcija je <strong>vektor</strong>: pored jačine ima i smer. Zato se u formuli za silu pojavljuje ugao, a u zadacima često crtamo i strelice. U ovoj lekciji računamo samo jačinu, a smer određujemo pravilom ruke.</p>
+      <p lang="en">Magnetic induction is a <strong>vector</strong>: besides strength it has a direction. That is why an angle appears in the force formula, and why we often draw arrows in problems. In this lesson we calculate only the magnitude and find the direction with a hand rule.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="ex">
+        <h4><span lang="sr">Primer 1 · sila na provodnik</span><span lang="en">Example 1 · force on a wire</span></h4>
+        <p class="given" lang="sr">Dato: l = 30 cm, I = 5 A, B = 0,2 T, provodnik je normalan na polje. Traži se sila F.</p>
+        <p class="given" lang="en">Given: l = 30 cm, I = 5 A, B = 0.2 T, the wire is perpendicular to the field. Find the force F.</p>
+        <ol lang="sr">
+          <li>Dužinu pretvaramo u metre: <span class="u">30 cm = 0,3 m</span>.</li>
+          <li>Normalan na polje znači <span class="v">α</span> = 90°, pa je sin α = 1.</li>
+          <li>\( F = B\,I\,l\,\sin\alpha = 0{,}2\cdot 5\cdot 0{,}3\cdot 1 = 0{,}3\ \mathrm{N} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Convert the length to metres: <span class="u">30 cm = 0.3 m</span>.</li>
+          <li>Perpendicular to the field means <span class="v">α</span> = 90°, so sin α = 1.</li>
+          <li>\( F = B\,I\,l\,\sin\alpha = 0.2\cdot 5\cdot 0.3\cdot 1 = 0.3\ \mathrm{N} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">F = 0,3 N</span><span lang="en">F = 0.3 N</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 2 · indukcija iz sile</span><span lang="en">Example 2 · induction from a force</span></h4>
+        <p class="given" lang="sr">Dato: na provodnik dužine 20 cm kroz koji teče 3 A deluje sila 0,06 N, normalno na polje. Traži se B.</p>
+        <p class="given" lang="en">Given: a force of 0.06 N acts on a 20 cm wire carrying 3 A, perpendicular to the field. Find B.</p>
+        <ol lang="sr">
+          <li>Pošto je α = 90°, koristimo <span class="v">B</span> = <span class="v">F</span>/(<span class="v">I l</span>).</li>
+          <li>\( B = \dfrac{F}{I\,l} = \dfrac{0{,}06}{3\cdot 0{,}2} = 0{,}1\ \mathrm{T} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Since α = 90°, we use <span class="v">B</span> = <span class="v">F</span>/(<span class="v">I l</span>).</li>
+          <li>\( B = \dfrac{F}{I\,l} = \dfrac{0.06}{3\cdot 0.2} = 0.1\ \mathrm{T} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">B = 0,1 T = 100 mT</span><span lang="en">B = 0.1 T = 100 mT</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 3 · nagnut provodnik</span><span lang="en">Example 3 · a tilted wire</span></h4>
+        <p class="given" lang="sr">Isti provodnik kao u primeru 1 (B = 0,2 T, I = 5 A, l = 0,3 m), ali zaklapa ugao od 30° sa linijama polja.</p>
+        <p class="given" lang="en">The same wire as in example 1 (B = 0.2 T, I = 5 A, l = 0.3 m), but it makes an angle of 30° with the field lines.</p>
+        <ol lang="sr">
+          <li>sin 30° = 0,5.</li>
+          <li>\( F = 0{,}2\cdot 5\cdot 0{,}3\cdot 0{,}5 = 0{,}15\ \mathrm{N} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>sin 30° = 0.5.</li>
+          <li>\( F = 0.2\cdot 5\cdot 0.3\cdot 0.5 = 0.15\ \mathrm{N} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">F = 0,15 N, tačno polovina najveće sile.</span><span lang="en">F = 0.15 N, exactly half of the maximum force.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <ul class="pitfalls" lang="sr">
+        <li><div><b>Centimetri umesto metara.</b> U formuli dužina mora biti u metrima. 20 cm je 0,2 m, ne 20.</div></li>
+        <li><div><b>Pogrešan ugao.</b> U formuli za silu α je ugao između <em>provodnika</em> i linija polja, ne između provodnika i normale.</div></li>
+        <li><div><b>Sila duž polja.</b> Sila nikada ne ide duž linija polja. Ona je normalna i na polje i na struju.</div></li>
+        <li><div><b>Linije polja koje „počinju” i „završavaju”.</b> Linije su zatvorene. Izvan magneta idu od N ka S, a unutar magneta od S ka N.</div></li>
+      </ul>
+      <ul class="pitfalls" lang="en">
+        <li><div><b>Centimetres instead of metres.</b> In the formula the length must be in metres. 20 cm is 0.2 m, not 20.</div></li>
+        <li><div><b>The wrong angle.</b> In the force formula α is the angle between the <em>wire</em> and the field lines, not between the wire and the normal.</div></li>
+        <li><div><b>Force along the field.</b> The force never points along the field lines. It is perpendicular to both the field and the current.</div></li>
+        <li><div><b>Field lines that "start" and "end".</b> Lines are closed. Outside a magnet they run from N to S, and inside the magnet from S to N.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="summary">
+        <ul lang="sr">
+          <li>Magnetno polje postoji oko magneta i oko provodnika sa strujom. Crtamo ga zatvorenim linijama.</li>
+          <li>Magnetna indukcija <span class="v">B</span> je vektor, a jedinica je <strong>tesla</strong> (1 T = 1 N/(A·m)).</li>
+          <li>Sila na provodnik: \( F = B\,I\,l\,\sin\alpha \). Najveća je za α = 90°, a nula za α = 0°.</li>
+          <li>Smer sile određujemo pravilom leve ruke, a sila je normalna i na polje i na struju.</li>
+        </ul>
+        <ul lang="en">
+          <li>A magnetic field exists around magnets and around wires with current. We draw it with closed lines.</li>
+          <li>Magnetic induction <span class="v">B</span> is a vector, and its unit is the <strong>tesla</strong> (1 T = 1 N/(A·m)).</li>
+          <li>Force on a wire: \( F = B\,I\,l\,\sin\alpha \). It is largest for α = 90° and zero for α = 0°.</li>
+          <li>We find the direction of the force with the left-hand rule, and the force is perpendicular to both field and current.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" data-test="FIZ01" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/magnetna-indukcija.js"></script>
+</body>
+</html>

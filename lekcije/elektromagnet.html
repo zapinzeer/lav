@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Elektromagnet: kalem, gvozdeno jezgro, polovi, zasićenje i rad releja, sa 3D modelom, animacijom i rešenim primerima.">
+<title>Elektromagnet · lav</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="elektromagnet">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr">
+      <li>objasniš šta je kalem (solenoid) i izračunaš indukciju u njemu: <span class="v">B</span> = <span class="v">μ</span><sub>0</sub><span class="v">N I</span> / <span class="v">l</span>;</li>
+      <li>pravilom desne ruke odrediš koji kraj kalema je severni pol;</li>
+      <li>objasniš šta radi gvozdeno jezgro i zašto je polje <span class="v">μ</span><sub>r</sub> puta jače;</li>
+      <li>znaš da gvožđe može da se zasiti i da polje tada više ne raste;</li>
+      <li>opišeš kako radi relej i gde se elektromagneti koriste.</li>
+    </ul>
+    <ul lang="en">
+      <li>explain what a coil (solenoid) is and calculate the induction inside it: <span class="v">B</span> = <span class="v">μ</span><sub>0</sub><span class="v">N I</span> / <span class="v">l</span>;</li>
+      <li>use the right-hand rule to find which end of a coil is the north pole;</li>
+      <li>explain what an iron core does and why it makes the field <span class="v">μ</span><sub>r</sub> times stronger;</li>
+      <li>know that iron can saturate and the field then stops growing;</li>
+      <li>describe how a relay works and where electromagnets are used.</li>
+    </ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="kalem" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">mnogo zavojaka jedan do drugog</span><span lang="en">many turns side by side</span></p>
+    <h2><span lang="sr">Kalem (solenoid)</span><span lang="en">The coil (solenoid)</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Kada žicu namotamo u mnogo zavojaka, dobijamo <strong>kalem</strong> (solenoid). Polja svih zavojaka se sabiraju, pa je unutar kalema polje jako i skoro homogeno. Spolja, kalem sa strujom ponaša se kao <strong>šipkasti magnet</strong> sa severnim i južnim polom.</p>
+      <p lang="en">Wind a wire into many turns and you get a <strong>coil</strong> (solenoid). The fields of all the turns add up, so inside the coil the field is strong and almost uniform. From the outside, a coil with a current behaves like a <strong>bar magnet</strong> with a north and a south pole.</p>
+      <div class="formula">
+        <div class="tex">\[ B = \frac{\mu_0\, N\, I}{l} \]</div>
+        <dl class="legend">
+          <div><dt>B</dt><dd><span lang="sr">magnetna indukcija u unutrašnjosti kalema</span><span lang="en">magnetic induction inside the coil</span></dd><span class="unit">T</span></div>
+          <div><dt>N</dt><dd><span lang="sr">broj zavojaka</span><span lang="en">number of turns</span></dd><span class="unit">–</span></div>
+          <div><dt>I</dt><dd><span lang="sr">jačina struje</span><span lang="en">current</span></dd><span class="unit">A</span></div>
+          <div><dt>l</dt><dd><span lang="sr">dužina kalema</span><span lang="en">length of the coil</span></dd><span class="unit">m</span></div>
+        </dl>
+      </div>
+      <p lang="sr">Odnos <span class="v">N</span>/<span class="v">l</span> je broj zavojaka po metru, koji često označavamo sa <span class="v">n</span>. Tada je \( B=\mu_0 n I \). Polje zavisi od gustine zavojaka, a ne od prečnika kalema.</p>
+      <p lang="en">The ratio <span class="v">N</span>/<span class="v">l</span> is the number of turns per metre, often written <span class="v">n</span>. Then \( B=\mu_0 n I \). The field depends on the density of the turns, not on the diameter of the coil.</p>
+      <div class="rule-box">
+        <p class="eyebrow"><span lang="sr">Gde je severni pol?</span><span lang="en">Where is the north pole?</span></p>
+        <p lang="sr">Obuhvati kalem desnom šakom tako da savijeni prsti prate smer struje kroz zavojke. Ispruženi palac pokazuje severni pol N.</p>
+        <p lang="en">Grip the coil with your right hand so your curled fingers follow the current around the turns. Your outstretched thumb points to the north pole N.</p>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-coil">
+      <div class="viewport"><canvas tabindex="0" aria-label="3D model: kalem sa gvozdenim jezgrom / coil with an iron core"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje</span><span lang="en">Drag to rotate</span></span></div>
+      <div class="controls">
+        <div class="ctl"><label for="e-current"><span lang="sr">Struja I</span><span lang="en">Current I</span></label><output id="e-current-out" for="e-current">2 A</output><input type="range" id="e-current" min="0" max="3" step="0.1" value="2"></div>
+        <div class="ctl"><label for="e-turns"><span lang="sr">Broj zavojaka N</span><span lang="en">Number of turns N</span></label><output id="e-turns-out" for="e-turns">400</output><input type="range" id="e-turns" min="100" max="600" step="50" value="400"></div>
+        <div class="btns">
+          <label class="switch" for="e-core"><input type="checkbox" id="e-core" checked><span lang="sr">Gvozdeno jezgro</span><span lang="en">Iron core</span></label>
+          <button type="button" class="btn" id="e-flip">⇄ <span lang="sr">Obrni smer struje</span><span lang="en">Reverse the current</span></button>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="e-calc"></div><div class="result" id="e-result"></div></div>
+      <figcaption><span lang="sr">Kalem dužine l = 30 cm. Jezgro u modelu ima μᵣ = 200. Obrni struju i gledaj kako N i S menjaju mesta. Kretanje tačaka pokazuje smer struje kroz zavojke i smer linija polja.</span><span lang="en">A coil of length l = 30 cm. The core in the model has μᵣ = 200. Reverse the current and watch N and S swap places. The moving dots show the direction of the current in the turns and of the field lines.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <h3><span lang="sr">Polje van kalema</span><span lang="en">The field outside the coil</span></h3>
+      <p lang="sr">Formula <span class="v">B</span> = <span class="v">μ</span><sub>0</sub><span class="v">N I</span> / <span class="v">l</span> važi u sredini <strong>dugačkog</strong> kalema, kada je dužina mnogo veća od prečnika. Na krajevima kalema polje je otprilike upola slabije, a daleko od kalema linije polja se šire i polje brzo opada, baš kao kod šipkastog magneta.</p>
+      <p lang="en">The formula <span class="v">B</span> = <span class="v">μ</span><sub>0</sub><span class="v">N I</span> / <span class="v">l</span> holds in the middle of a <strong>long</strong> coil, when the length is much larger than the diameter. At the ends of the coil the field is about half as strong, and far from the coil the field lines spread out and the field falls quickly, just like for a bar magnet.</p>
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: kalem ima 200 zavojaka na 10 cm. Šta se desi sa poljem ako isti kalem razvučemo na 20 cm, a struja ostane ista?</span><span lang="en">Think first: a coil has 200 turns over 10 cm. What happens to the field if we stretch the same coil to 20 cm with the same current?</span></summary>
+        <div class="ans">
+          <p lang="sr">Broj zavojaka po metru se prepolovi (<span class="v">n</span> = <span class="v">N</span>/<span class="v">l</span> pada sa 2000 na 1000 po metru), pa se i polje prepolovi.</p>
+          <p lang="en">The number of turns per metre is halved (<span class="v">n</span> = <span class="v">N</span>/<span class="v">l</span> falls from 2000 to 1000 per metre), so the field is halved too.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="jezgro" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">kalem + gvožđe</span><span lang="en">coil + iron</span></p>
+    <h2><span lang="sr">Gvozdeno jezgro i zasićenje</span><span lang="en">The iron core and saturation</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Ako u kalem stavimo gvozdeno jezgro, gvožđe se namagnetiše i polje postaje <span class="v">μ</span><sub>r</sub> puta jače. Kalem sa gvozdenim jezgrom zovemo <strong>elektromagnet</strong>.</p>
+      <p lang="en">If we put an iron core into the coil, the iron becomes magnetised and the field gets <span class="v">μ</span><sub>r</sub> times stronger. A coil with an iron core is called an <strong>electromagnet</strong>.</p>
+      <div class="formula">
+        <div class="tex">\[ B = \mu_r\,\frac{\mu_0\, N\, I}{l} \]</div>
+        <dl class="legend">
+          <div><dt>μ<sub>r</sub></dt><dd><span lang="sr">relativna magnetna permeabilnost jezgra</span><span lang="en">relative permeability of the core</span></dd><span class="unit">–</span></div>
+        </dl>
+      </div>
+      <div class="tbl-wrap">
+        <table class="scale">
+          <caption><span lang="sr">Približne vrednosti μᵣ</span><span lang="en">Approximate values of μᵣ</span></caption>
+          <tbody>
+            <tr><td><span lang="sr">Vazduh, drvo, plastika</span><span lang="en">Air, wood, plastic</span></td><td>≈ 1</td></tr>
+            <tr><td><span lang="sr">Običan gvozdeni ekser</span><span lang="en">An ordinary iron nail</span></td><td>≈ 100 – 300</td></tr>
+            <tr><td><span lang="sr">Meko gvožđe, transformatorski lim</span><span lang="en">Soft iron, transformer steel</span></td><td>≈ 1000 – 5000</td></tr>
+            <tr><td><span lang="sr">Specijalne legure (permaloj)</span><span lang="en">Special alloys (permalloy)</span></td><td>≈ 10⁵</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p lang="sr">Ali gvožđe ne može da se namagnetiše neograničeno. Kada su svi njegovi mali magneti (domeni) poređani u istom smeru, dalje povećanje struje više ne pomaže. To se zove <strong>zasićenje</strong>. Kod gvožđa se dešava već oko 1,5 do 2 T.</p>
+      <p lang="en">But iron cannot be magnetised without limit. When all of its tiny magnets (domains) are lined up in the same direction, increasing the current further no longer helps. This is called <strong>saturation</strong>. For iron it happens at about 1.5 to 2 T.</p>
+    </div>
+
+    <figure class="lab" id="lab-sat">
+      <div class="plot tall"><canvas aria-label="Grafik B(I) sa i bez jezgra / graph of B(I) with and without a core"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="s-n"><span lang="sr">Broj zavojaka N</span><span lang="en">Number of turns N</span></label><output id="s-n-out" for="s-n">400</output><input type="range" id="s-n" min="100" max="1000" step="50" value="400"></div>
+        <div class="ctl"><label for="s-i"><span lang="sr">Struja I</span><span lang="en">Current I</span></label><output id="s-i-out" for="s-i">2 A</output><input type="range" id="s-i" min="0" max="5" step="0.1" value="2"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="s-calc"></div><div class="result" id="s-result"></div></div>
+      <figcaption><span lang="sr">Kalem dužine 30 cm. Donja prava je kalem bez jezgra: skoro ne vidi se na ovoj skali. Isprekidana linija je „idealno” jezgro sa μᵣ = 200. Puna plava kriva je pravo gvožđe, koje se zasiti na oko 1,6 T.</span><span lang="en">A coil 30 cm long. The bottom line is the coil without a core: it is hardly visible on this scale. The dashed line is an "ideal" core with μᵣ = 200. The solid blue curve is real iron, which saturates at about 1.6 T.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <h3><span lang="sr">Zašto elektromagnet?</span><span lang="en">Why an electromagnet?</span></h3>
+      <ul class="plain" lang="sr">
+        <li>Može da se uključi i isključi.</li>
+        <li>Jačina se podešava strujom i brojem zavojaka.</li>
+        <li>Kada se smer struje obrne, polovi zamene mesta.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li>It can be switched on and off.</li>
+        <li>Its strength is set by the current and the number of turns.</li>
+        <li>When the current is reversed, the poles swap places.</li>
+      </ul>
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Za radoznale: koliko jako drži</span><span lang="en">For the curious: how strongly it holds</span></p>
+        <p lang="sr">Sila kojom elektromagnet privlači gvozdeni predmet na površini preseka <span class="v">S</span> je približno \( F = \dfrac{B^2 S}{2\mu_0} \). Za <span class="v">B</span> = 1 T i <span class="v">S</span> = 10 cm² dobija se oko 400 N, što je težina tela od oko 40 kg. Sila raste sa kvadratom indukcije.</p>
+        <p lang="en">The force with which an electromagnet attracts an iron object across a cross-section <span class="v">S</span> is approximately \( F = \dfrac{B^2 S}{2\mu_0} \). For <span class="v">B</span> = 1 T and <span class="v">S</span> = 10 cm² this gives about 400 N, the weight of a mass of about 40 kg. The force grows with the square of the induction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="relej" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">primena</span><span lang="en">application</span></p>
+    <h2><span lang="sr">Relej: mala struja upravlja velikom</span><span lang="en">The relay: a small current controls a large one</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr"><strong>Relej</strong> je prekidač kojim upravlja elektromagnet. Slaba struja kroz kalem namagnetiše jezgro, jezgro privuče gvozdenu <strong>kotvu</strong>, a kotva zatvori <strong>kontakt</strong> u drugom, radnom kolu. Tako mala struja može da uključi motor, grejač ili auto-starter, a da se oni ne dodiruju sa osetljivom elektronikom.</p>
+      <p lang="en">A <strong>relay</strong> is a switch operated by an electromagnet. A weak current through the coil magnetises the core, the core pulls in an iron <strong>armature</strong>, and the armature closes a <strong>contact</strong> in a second, load circuit. In this way a small current can switch on a motor, a heater or a car starter, without those touching the sensitive electronics.</p>
+      <ol class="steps-inline" lang="sr">
+        <li><span>Zatvori prekidač: struja teče kroz kalem.</span></li>
+        <li><span>Jezgro postaje magnet i privlači kotvu.</span></li>
+        <li><span>Kotva zatvara kontakt radnog kola, lampa svetli.</span></li>
+        <li><span>Otvori prekidač: nema struje, opruga vraća kotvu i kontakt se otvara.</span></li>
+      </ol>
+      <ol class="steps-inline" lang="en">
+        <li><span>Close the switch: a current flows through the coil.</span></li>
+        <li><span>The core becomes a magnet and pulls in the armature.</span></li>
+        <li><span>The armature closes the contact of the load circuit, the lamp lights.</span></li>
+        <li><span>Open the switch: no current, the spring pulls the armature back and the contact opens.</span></li>
+      </ol>
+    </div>
+
+    <figure class="lab" id="lab-relay">
+      <div class="viewport"><canvas tabindex="0" aria-label="Animacija releja / relay animation"></canvas></div>
+      <div class="controls one">
+        <div class="btns">
+          <label class="switch" for="r-sw"><input type="checkbox" id="r-sw"><span lang="sr">Zatvori prekidač</span><span lang="en">Close the switch</span></label>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="r-calc"></div><div class="result" id="r-result"></div></div>
+      <figcaption><span lang="sr">Levo je upravljačko kolo sa baterijom, prekidačem i kalemom. Desno je radno kolo sa drugom baterijom i lampom. Narandžaste tačke pokazuju gde teče struja.</span><span lang="en">On the left is the control circuit with a battery, a switch and a coil. On the right is the load circuit with a second battery and a lamp. The orange dots show where current flows.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <h3><span lang="sr">Gde se još koriste elektromagneti</span><span lang="en">Where else electromagnets are used</span></h3>
+      <ul class="plain" lang="sr">
+        <li><b>Dizalica za staro gvožđe:</b> uključi se struja i teret se podigne, isključi se i teret pada.</li>
+        <li><b>Električno zvono:</b> elektromagnet privlači čekić, ali tim pokretom prekida sopstveno kolo, pa se čekić vraća i ciklus se ponavlja.</li>
+        <li><b>Zvučnik:</b> kalem u polju magneta se pomera i pokreće membranu.</li>
+        <li><b>MRI aparat u bolnici:</b> jak superprovodni elektromagnet stvara polje od 1,5 do 3 T.</li>
+        <li><b>Voz na magnetnoj levitaciji:</b> elektromagneti ga podižu iznad šine.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li><b>Scrapyard crane:</b> switch the current on and the load lifts, switch it off and the load drops.</li>
+        <li><b>Electric bell:</b> the electromagnet pulls the hammer, but that motion breaks its own circuit, so the hammer springs back and the cycle repeats.</li>
+        <li><b>Loudspeaker:</b> a coil in a magnet's field moves and drives the diaphragm.</li>
+        <li><b>Hospital MRI scanner:</b> a strong superconducting electromagnet creates a field of 1.5 to 3 T.</li>
+        <li><b>Magnetic levitation train:</b> electromagnets lift it above the track.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="ex">
+        <h4><span lang="sr">Primer 1 · kalem bez jezgra</span><span lang="en">Example 1 · a coil without a core</span></h4>
+        <p class="given" lang="sr">Dato: kalem ima N = 500 zavojaka i dužinu l = 20 cm. Kroz njega teče struja I = 2 A. Traži se B u unutrašnjosti.</p>
+        <p class="given" lang="en">Given: a coil has N = 500 turns and length l = 20 cm. A current I = 2 A flows through it. Find B inside.</p>
+        <ol lang="sr">
+          <li>Dužina u metrima: <span class="u">l = 0,2 m</span>.</li>
+          <li>Broj zavojaka po metru: \( n = N/l = 500/0{,}2 = 2500\ \mathrm{m^{-1}} \).</li>
+          <li>\( B = \mu_0 n I = 4\pi\cdot 10^{-7}\cdot 2500\cdot 2 = 6{,}28\cdot 10^{-3}\ \mathrm{T} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Length in metres: <span class="u">l = 0.2 m</span>.</li>
+          <li>Turns per metre: \( n = N/l = 500/0.2 = 2500\ \mathrm{m^{-1}} \).</li>
+          <li>\( B = \mu_0 n I = 4\pi\cdot 10^{-7}\cdot 2500\cdot 2 = 6.28\cdot 10^{-3}\ \mathrm{T} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">B ≈ 6,3 mT</span><span lang="en">B ≈ 6.3 mT</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 2 · isti kalem sa gvozdenim jezgrom</span><span lang="en">Example 2 · the same coil with an iron core</span></h4>
+        <p class="given" lang="sr">U kalem iz Primera 1 stavimo jezgro relativne permeabilnosti μᵣ = 200. Traži se novo B.</p>
+        <p class="given" lang="en">An iron core with relative permeability μᵣ = 200 is put into the coil of Example 1. Find the new B.</p>
+        <ol lang="sr">
+          <li>Jezgro množi polje sa μᵣ: \( B = \mu_r\,\mu_0 n I = 200\cdot 6{,}28\cdot 10^{-3} \).</li>
+          <li>\( B = 1{,}26\ \mathrm{T} \)</li>
+          <li>To je ispod zasićenja gvožđa (oko 1,6 T), pa je račun realan.</li>
+        </ol>
+        <ol lang="en">
+          <li>The core multiplies the field by μᵣ: \( B = \mu_r\,\mu_0 n I = 200\cdot 6.28\cdot 10^{-3} \).</li>
+          <li>\( B = 1.26\ \mathrm{T} \)</li>
+          <li>This is below the saturation of iron (about 1.6 T), so the calculation is realistic.</li>
+        </ol>
+        <p class="answer"><span lang="sr">B ≈ 1,26 T, dvesta puta jače nego bez jezgra.</span><span lang="en">B ≈ 1.26 T, two hundred times stronger than without the core.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 3 · koliko zavojaka</span><span lang="en">Example 3 · how many turns</span></h4>
+        <p class="given" lang="sr">Dato: kalem bez jezgra dužine l = 10 cm treba da stvori B = 20 mT pri struji I = 1,5 A. Koliko zavojaka ima?</p>
+        <p class="given" lang="en">Given: a coil without a core, length l = 10 cm, must create B = 20 mT with a current I = 1.5 A. How many turns does it need?</p>
+        <ol lang="sr">
+          <li>Iz formule izrazimo broj zavojaka: \( N = \dfrac{B\,l}{\mu_0 I} \).</li>
+          <li>Jedinice: <span class="u">B = 0,02 T</span>, <span class="u">l = 0,1 m</span>.</li>
+          <li>\( N = \dfrac{0{,}02\cdot 0{,}1}{4\pi\cdot 10^{-7}\cdot 1{,}5} = \dfrac{0{,}002}{1{,}885\cdot 10^{-6}} \approx 1061 \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Solve the formula for the number of turns: \( N = \dfrac{B\,l}{\mu_0 I} \).</li>
+          <li>Units: <span class="u">B = 0.02 T</span>, <span class="u">l = 0.1 m</span>.</li>
+          <li>\( N = \dfrac{0.02\cdot 0.1}{4\pi\cdot 10^{-7}\cdot 1.5} = \dfrac{0.002}{1.885\cdot 10^{-6}} \approx 1061 \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">N ≈ 1060 zavojaka</span><span lang="en">N ≈ 1060 turns</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 4 · koji je kraj severni</span><span lang="en">Example 4 · which end is north</span></h4>
+        <p class="given" lang="sr">Gledamo kalem sa leve strane. Struja kroz zavojke koje vidimo ide odozgo nadole na prednjoj strani kalema. Koji kraj je severni pol, levi ili desni?</p>
+        <p class="given" lang="en">We look at a coil from the front. The current in the turns we can see goes from top to bottom on the front side of the coil. Which end is the north pole, the left or the right?</p>
+        <ol lang="sr">
+          <li>Desnom šakom obuhvatimo kalem tako da prsti na prednjoj strani idu nadole.</li>
+          <li>Ispruženi palac tada pokazuje udesno.</li>
+          <li>Palac pokazuje severni pol.</li>
+        </ol>
+        <ol lang="en">
+          <li>Wrap the right hand around the coil so the fingers on the front side point downwards.</li>
+          <li>The outstretched thumb then points to the right.</li>
+          <li>The thumb points to the north pole.</li>
+        </ol>
+        <p class="answer"><span lang="sr">Desni kraj je severni pol (N), levi je južni (S). Ako se struja obrne, polovi zamene mesta.</span><span lang="en">The right end is the north pole (N), the left end is the south (S). If the current is reversed, the poles swap.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <ul class="pitfalls" lang="sr">
+        <li><div><b>l nije dužina žice.</b> U formuli je <span class="v">l</span> dužina kalema, a ne dužina žice kojom je namotan. Žica može biti dugačka desetine metara, a kalem samo nekoliko centimetara.</div></li>
+        <li><div><b>Centimetri.</b> Dužinu kalema pretvori u metre: 20 cm = 0,2 m. Inače B ispadne sto puta pogrešno.</div></li>
+        <li><div><b>Zaboravljeno μᵣ.</b> Kod elektromagneta formula ima faktor μᵣ. Bez njega dobijaš polje kalema u vazduhu.</div></li>
+        <li><div><b>Jezgro ne povećava struju.</b> Struju određuje baterija i otpor žice. Jezgro samo pojačava polje za istu struju.</div></li>
+        <li><div><b>Pogrešan pol.</b> Ne mešaj pravilo za pravi provodnik (palac je smer struje) sa pravilom za kalem (palac je smer polja, severni pol).</div></li>
+        <li><div><b>Zasićenje.</b> Ako račun da B od 5 T za gvozdeno jezgro, rezultat nije realan. Gvožđe se zasiti oko 1,6 T.</div></li>
+      </ul>
+      <ul class="pitfalls" lang="en">
+        <li><div><b>l is not the length of the wire.</b> In the formula <span class="v">l</span> is the length of the coil, not the length of the wire it is wound from. The wire may be tens of metres long while the coil is only a few centimetres.</div></li>
+        <li><div><b>Centimetres.</b> Convert the length of the coil to metres: 20 cm = 0.2 m. Otherwise B is wrong by a factor of a hundred.</div></li>
+        <li><div><b>Forgetting μᵣ.</b> For an electromagnet the formula has the factor μᵣ. Without it you get the field of an air-core coil.</div></li>
+        <li><div><b>The core does not raise the current.</b> The current is set by the battery and the resistance of the wire. The core only strengthens the field for the same current.</div></li>
+        <li><div><b>Wrong pole.</b> Do not mix the rule for a straight wire (the thumb is the current) with the rule for a coil (the thumb is the field, the north pole).</div></li>
+        <li><div><b>Saturation.</b> If your calculation gives a B of 5 T for an iron core, the result is not realistic. Iron saturates at about 1.6 T.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="summary">
+        <ul lang="sr">
+          <li>Kalem sa <span class="v">N</span> zavojaka i dužinom <span class="v">l</span>: \( B = \dfrac{\mu_0 N I}{l} = \mu_0 n I \). Polje je skoro homogeno u unutrašnjosti.</li>
+          <li>Severni pol nalazi se tamo gde pokazuje palac desne ruke kada prsti prate struju.</li>
+          <li>Gvozdeno jezgro pojačava polje <span class="v">μ</span><sub>r</sub> puta: \( B = \mu_r\,\dfrac{\mu_0 N I}{l} \). To je elektromagnet.</li>
+          <li>Gvožđe se zasiti na oko 1,6 T, pa tada polje ne raste sa strujom.</li>
+          <li>Relej je prekidač kojim upravlja elektromagnet: mala struja uključuje veliku.</li>
+        </ul>
+        <ul lang="en">
+          <li>A coil with <span class="v">N</span> turns and length <span class="v">l</span>: \( B = \dfrac{\mu_0 N I}{l} = \mu_0 n I \). The field is nearly uniform inside.</li>
+          <li>The north pole is where the thumb of the right hand points when the fingers follow the current.</li>
+          <li>An iron core strengthens the field <span class="v">μ</span><sub>r</sub> times: \( B = \mu_r\,\dfrac{\mu_0 N I}{l} \). That is an electromagnet.</li>
+          <li>Iron saturates at about 1.6 T, so the field then stops growing with the current.</li>
+          <li>A relay is a switch operated by an electromagnet: a small current switches a large one.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" data-test="FIZ04" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/elektromagnet.js"></script>
+</body>
+</html>

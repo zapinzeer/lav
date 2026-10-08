@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Elektromotor jednosmerne struje: moment sile na zavojak u polju, komutator, protivelektromotorna sila, sa rotirajućim 3D modelom i rešenim primerima.">
+<title>Elektromotor · lav</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="elektromotor">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr">
+      <li>objasniš kako Amperove sile na dve strane zavojka stvaraju obrtni moment;</li>
+      <li>izračunaš moment sile <span class="v">M</span> = <span class="v">N B I S</span> sin <span class="v">α</span> i kažeš kada je on najveći, a kada nula;</li>
+      <li>objasniš zašto je potreban komutator i šta bi se desilo bez njega;</li>
+      <li>objasniš šta je protivelektromotorna sila i zašto je polazna struja motora velika;</li>
+      <li>izračunaš mehaničku snagu motora iz momenta i broja obrtaja.</li>
+    </ul>
+    <ul lang="en">
+      <li>explain how the Ampère forces on the two sides of a loop create a turning torque;</li>
+      <li>calculate the torque <span class="v">M</span> = <span class="v">N B I S</span> sin <span class="v">α</span> and say when it is largest and when zero;</li>
+      <li>explain why a commutator is needed and what would happen without it;</li>
+      <li>explain what back-EMF is and why the starting current of a motor is large;</li>
+      <li>calculate the mechanical power of a motor from its torque and speed.</li>
+    </ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="princip" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">od Amperove sile do rotacije</span><span lang="en">from the Ampère force to rotation</span></p>
+    <h2><span lang="sr">Kako radi elektromotor</span><span lang="en">How an electric motor works</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr"><strong>Elektromotor</strong> pretvara električnu energiju u mehaničku. Jednosmerni motor ima stalni magnet (<strong>stator</strong>) koji stvara polje, i zavojak na osovini (<strong>rotor</strong>) kroz koji teče struja.</p>
+      <p lang="en">An <strong>electric motor</strong> converts electrical energy into mechanical energy. A DC motor has a permanent magnet (the <strong>stator</strong>) that creates a field, and a loop on an axle (the <strong>rotor</strong>) carrying a current.</p>
+      <ol class="steps-inline" lang="sr">
+        <li><span>Na dve naspramne strane zavojka struje idu u suprotnim smerovima.</span></li>
+        <li><span>Polje magneta zato deluje na njih Amperovim silama suprotnog smera: jedna strana se podiže, druga spušta.</span></li>
+        <li><span>Taj par sila je spreg koji zavrti zavojak oko osovine.</span></li>
+        <li><span>Kada zavojak prođe uspravan položaj, komutator obrne smer struje, pa se zavrtanje nastavlja u istu stranu.</span></li>
+      </ol>
+      <ol class="steps-inline" lang="en">
+        <li><span>On the two opposite sides of the loop the currents flow in opposite directions.</span></li>
+        <li><span>The magnet's field therefore pushes on them with Ampère forces in opposite directions: one side goes up, the other down.</span></li>
+        <li><span>That pair of forces is a couple that turns the loop about the axle.</span></li>
+        <li><span>When the loop passes the upright position, the commutator reverses the current, so the turning continues in the same direction.</span></li>
+      </ol>
+      <p lang="sr">U modelu levo je severni (crveni), a desno južni (plavi) pol. Narandžaste tačke pokazuju smer struje u stranama zavojka, a žute strelice sile na njih. Probaj da isključiš komutator.</p>
+      <p lang="en">In the model the left pole is north (red) and the right pole is south (blue). The orange dots show the direction of the current in the sides of the loop, and the yellow arrows the forces on them. Try switching the commutator off.</p>
+    </div>
+
+    <figure class="lab" id="lab-motor">
+      <div class="viewport"><canvas tabindex="0" aria-label="3D model: elektromotor jednosmerne struje / DC electric motor"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje</span><span lang="en">Drag to rotate</span></span></div>
+      <div class="controls">
+        <div class="ctl"><label for="m-b"><span lang="sr">Indukcija B</span><span lang="en">Induction B</span></label><output id="m-b-out" for="m-b">0,3 T</output><input type="range" id="m-b" min="0.1" max="0.5" step="0.05" value="0.3"></div>
+        <div class="ctl"><label for="m-i"><span lang="sr">Struja I</span><span lang="en">Current I</span></label><output id="m-i-out" for="m-i">2 A</output><input type="range" id="m-i" min="0" max="5" step="0.5" value="2"></div>
+        <div class="ctl"><label for="m-load"><span lang="sr">Opterećenje</span><span lang="en">Load</span></label><output id="m-load-out" for="m-load">0 mN·m</output><input type="range" id="m-load" min="0" max="40" step="2" value="0"></div>
+        <div class="btns">
+          <label class="switch" for="m-comm"><input type="checkbox" id="m-comm" checked><span lang="sr">Komutator</span><span lang="en">Commutator</span></label>
+          <button type="button" class="btn" id="m-flip">⇄ <span lang="sr">Obrni polaritet</span><span lang="en">Reverse polarity</span></button>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="m-calc"></div><div class="result" id="m-result"></div></div>
+      <figcaption><span lang="sr">Zavojak ima N = 20 navoja i površinu S = 40 cm². Sa komutatorom rotor se ubrzava dok se moment ne izjednači sa trenjem i opterećenjem. Bez komutatora se zavojak njiše oko uspravnog položaja i staje. Veliko opterećenje zaustavlja motor.</span><span lang="en">The loop has N = 20 turns and an area S = 40 cm². With the commutator the rotor speeds up until the torque balances friction and load. Without the commutator the loop swings about the upright position and stops. A large load stalls the motor.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <div class="rule-box">
+        <p class="eyebrow"><span lang="sr">Šta čini motor</span><span lang="en">What makes a motor</span></p>
+        <p lang="sr">Magnetno polje (stator) + provodnik sa strujom (rotor) + komutator sa četkicama koji obrće smer struje svakih pola obrtaja.</p>
+        <p lang="en">A magnetic field (stator) + a conductor with a current (rotor) + a commutator with brushes that reverses the current every half turn.</p>
+      </div>
+      <p lang="sr">Isti uređaj radi i kao <strong>generator</strong>: kada rotor vrtimo spolja, u zavojku se indukuje napon. O tome govori lekcija „Pojava elektromagnetne indukcije”.</p>
+      <p lang="en">The same device also works as a <strong>generator</strong>: when we turn the rotor from outside, a voltage is induced in the loop. The lesson "Electromagnetic induction" covers that.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="moment" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">oznaka M · jedinica N·m</span><span lang="en">symbol M · unit N·m</span></p>
+    <h2><span lang="sr">Moment sile na zavojak</span><span lang="en">The torque on a loop</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Na svaku od dve strane zavojka dužine <span class="v">l</span> deluje sila <span class="v">F</span> = <span class="v">B I l</span>, jedna naviše, druga naniže. Zajedno čine <strong>spreg</strong>. Moment sprega je proizvod sile i kraka. Za pravougaoni zavojak širine <span class="v">b</span> krak je <span class="v">b</span> sin <span class="v">α</span>, pa je:</p>
+      <p lang="en">On each of the two sides of the loop of length <span class="v">l</span> acts a force <span class="v">F</span> = <span class="v">B I l</span>, one upwards and the other downwards. Together they form a <strong>couple</strong>. The torque of a couple is the force times the arm. For a rectangular loop of width <span class="v">b</span> the arm is <span class="v">b</span> sin <span class="v">α</span>, so:</p>
+      <div class="formula">
+        <div class="tex">\[ M = F\,b\sin\alpha = B\,I\,l\,b\,\sin\alpha = B\,I\,S\sin\alpha \]</div>
+      </div>
+      <p lang="sr">Ako zavojak ima <span class="v">N</span> navoja, svaki doprinosi isto:</p>
+      <p lang="en">If the loop has <span class="v">N</span> turns, each contributes equally:</p>
+      <div class="formula">
+        <div class="tex">\[ M = N\,B\,I\,S\,\sin\alpha \]</div>
+        <dl class="legend">
+          <div><dt>M</dt><dd><span lang="sr">obrtni moment</span><span lang="en">torque</span></dd><span class="unit">N·m</span></div>
+          <div><dt>N</dt><dd><span lang="sr">broj navoja</span><span lang="en">number of turns</span></dd><span class="unit">–</span></div>
+          <div><dt>S</dt><dd><span lang="sr">površina jednog navoja</span><span lang="en">area of one turn</span></dd><span class="unit">m²</span></div>
+          <div><dt>α</dt><dd><span lang="sr">ugao između normale zavojka i polja</span><span lang="en">angle between the normal of the loop and the field</span></dd><span class="unit">°</span></div>
+        </dl>
+      </div>
+      <div class="cases">
+        <div><p class="h" lang="sr">α = 90° · ravan zavojka paralelna polju</p><p class="h" lang="en">α = 90° · plane of the loop parallel to the field</p><p><span class="v">M</span> = <span class="v">N B I S</span></p><p class="note" lang="sr">Moment je najveći.</p><p class="note" lang="en">The torque is largest.</p></div>
+        <div><p class="h" lang="sr">α = 0° · ravan zavojka normalna na polje</p><p class="h" lang="en">α = 0° · plane of the loop perpendicular to the field</p><p><span class="v">M</span> = 0</p><p class="note" lang="sr">Neutralni položaj: sile su na istom pravcu i samo istežu zavojak.</p><p class="note" lang="en">The neutral position: the forces lie along one line and only stretch the loop.</p></div>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-torque">
+      <div class="viewport"><canvas tabindex="0" aria-label="Pogled sa strane na zavojak u polju / end view of the loop in the field"></canvas></div>
+      <div class="plot short" style="margin-top:10px"><canvas aria-label="Grafik momenta M(α) / graph of torque M(α)"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="q-a"><span lang="sr">Ugao α</span><span lang="en">Angle α</span></label><output id="q-a-out" for="q-a">60°</output><input type="range" id="q-a" min="0" max="360" step="1" value="60"></div>
+        <div class="ctl"><label for="q-i"><span lang="sr">Struja I</span><span lang="en">Current I</span></label><output id="q-i-out" for="q-i">2 A</output><input type="range" id="q-i" min="1" max="5" step="0.5" value="2"></div>
+        <div class="btns">
+          <label class="switch" for="q-comm"><input type="checkbox" id="q-comm" checked><span lang="sr">Komutator</span><span lang="en">Commutator</span></label>
+          <label class="switch" for="q-auto"><input type="checkbox" id="q-auto"><span lang="sr">Automatsko okretanje</span><span lang="en">Auto-rotate</span></label>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="q-calc"></div><div class="result" id="q-result"></div></div>
+      <figcaption><span lang="sr">Pogled sa kraja na zavojak. Strane zavojka su ⊙ i ⊗ (struja izlazi ili ulazi), žute strelice su Amperove sile, bela strelica n je normala. Na grafiku je puna linija moment sa komutatorom, a isprekidana bez njega. Pomeraj ugao i prati marker.</span><span lang="en">An end-on view of the loop. The sides of the loop are ⊙ and ⊗ (current out or in), the yellow arrows are Ampère forces, the white arrow n is the normal. On the graph the solid line is the torque with the commutator and the dashed line without it. Move the angle and follow the marker.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: koliki je moment kada je zavojak u neutralnom položaju (α = 0°), iako su Amperove sile na strane zavojka i dalje velike?</span><span lang="en">Think first: what is the torque when the loop is in the neutral position (α = 0°), even though the Ampère forces on the sides are still large?</span></summary>
+        <div class="ans">
+          <p lang="sr">Moment je nula. Sile i dalje postoje, ali leže na istom pravcu (duž ravni zavojka), pa je njihov krak nula. Sila bez kraka ne vrti.</p>
+          <p lang="en">The torque is zero. The forces still exist, but they lie along the same line (along the plane of the loop), so their arm is zero. A force with no arm does not turn anything.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="komutator" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">zašto se motor ne zaustavlja</span><span lang="en">why the motor does not stop</span></p>
+    <h2><span lang="sr">Komutator i četkice</span><span lang="en">The commutator and brushes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="intro">
+      <p lang="sr">Pogledaj grafik iz Dela 2. Bez komutatora moment menja znak: u prvoj polovini obrtaja zavojak je gurnut napred, a posle neutralnog položaja bi bio vraćen nazad. Zavojak se zato <strong>njiše</strong> oko neutralnog položaja i staje.</p>
+      <p lang="en">Look at the graph in Part 2. Without a commutator the torque changes sign: in the first half turn the loop is pushed forward, but past the neutral position it would be pushed back. The loop therefore <strong>swings</strong> about the neutral position and stops.</p>
+      <p lang="sr"><strong>Komutator</strong> je prsten podeljen na dve polovine (kolektorske lamele), od kojih je svaka vezana za jedan kraj zavojka. Dve nepokretne <strong>četkice</strong> naležu na prsten i dovode struju iz izvora. Kada zavojak prođe neutralni položaj, svaka polovina prelazi sa jedne četkice na drugu, pa se smer struje u zavojku obrne. Zahvaljujući tome moment uvek ima isti znak i rotor se vrti u istu stranu.</p>
+      <p lang="en">The <strong>commutator</strong> is a ring split into two halves (segments), each connected to one end of the loop. Two stationary <strong>brushes</strong> press against the ring and bring in current from the source. When the loop passes the neutral position, each half moves from one brush to the other, so the direction of the current in the loop reverses. Thanks to this the torque always has the same sign and the rotor turns the same way.</p>
+      <div class="rule-box green">
+        <p class="eyebrow"><span lang="sr">Kako se vidi u modelu</span><span lang="en">How to see it in the model</span></p>
+        <p lang="sr">U Delu 2 uključi automatsko okretanje i gledaj tačku u kojoj se ⊙ i ⊗ zamene mesta: to je uspravni zavojak, upravo trenutak kada četkice prelaze preko procepa komutatora.</p>
+        <p lang="en">In Part 2 switch on auto-rotate and watch the point where ⊙ and ⊗ swap places: that is the upright loop, exactly the moment the brushes cross the gap of the commutator.</p>
+      </div>
+      <p lang="sr">Stvarni motori imaju mnogo zavojaka pod različitim uglovima i mnogo lamela, pa je moment skoro konstantan. Postoje i motori naizmenične struje koji nemaju komutator jer se smer struje menja sam od sebe.</p>
+      <p lang="en">Real motors have many loops at different angles and many segments, so the torque is nearly constant. There are also AC motors that have no commutator because the current changes direction on its own.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="emsila" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">motor je i generator</span><span lang="en">a motor is also a generator</span></p>
+    <h2><span lang="sr">Protivelektromotorna sila i polazna struja</span><span lang="en">Back-EMF and the starting current</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Kada se zavojak vrti u magnetnom polju, njegov fluks se menja, pa se u njemu indukuje napon. Taj napon se suprotstavlja naponu izvora i zove se <strong>protivelektromotorna sila</strong> <span class="v">E</span>. Proporcionalna je brzini obrtanja: <span class="v">E</span> = <span class="v">k ω</span>.</p>
+      <p lang="en">When the loop turns in a magnetic field, its flux changes, so a voltage is induced in it. This voltage opposes the source voltage and is called the <strong>back-EMF</strong> <span class="v">E</span>. It is proportional to the speed: <span class="v">E</span> = <span class="v">k ω</span>.</p>
+      <p lang="sr">Struja kroz rotor zato zavisi od razlike napona izvora i protivelektromotorne sile (<span class="v">R</span> je otpor namotaja):</p>
+      <p lang="en">The current through the rotor therefore depends on the difference between the source voltage and the back-EMF (<span class="v">R</span> is the resistance of the winding):</p>
+      <div class="formula">
+        <div class="tex">\[ I = \frac{U - E}{R} \]</div>
+      </div>
+      <ul class="plain" lang="sr">
+        <li><strong>Pri pokretanju</strong> rotor miruje, <span class="v">E</span> = 0, pa je struja najveća: <span class="v">I</span> = <span class="v">U</span>/<span class="v">R</span>.</li>
+        <li><strong>Kako se motor ubrzava</strong>, <span class="v">E</span> raste, a struja i moment opadaju.</li>
+        <li><strong>U ustaljenom radu</strong> moment motora je jednak momentu opterećenja i trenja.</li>
+        <li><strong>Kod zaglavljenog rotora</strong> je <span class="v">E</span> = 0 i struja je velika, pa se namotaji pregreju.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li><strong>When starting</strong> the rotor is at rest, <span class="v">E</span> = 0, so the current is largest: <span class="v">I</span> = <span class="v">U</span>/<span class="v">R</span>.</li>
+        <li><strong>As the motor speeds up</strong>, <span class="v">E</span> grows, and the current and torque fall.</li>
+        <li><strong>In steady running</strong> the torque of the motor equals the torque of the load and friction.</li>
+        <li><strong>With a jammed rotor</strong> <span class="v">E</span> = 0 and the current is large, so the windings overheat.</li>
+      </ul>
+    </div>
+
+    <figure class="lab" id="lab-start">
+      <div class="plot short"><canvas aria-label="Struja pri pokretanju / current when starting"></canvas></div>
+      <div class="plot short" style="margin-top:8px"><canvas aria-label="Broj obrtaja pri pokretanju / speed when starting"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="s-u"><span lang="sr">Napon izvora U</span><span lang="en">Source voltage U</span></label><output id="s-u-out" for="s-u">12 V</output><input type="range" id="s-u" min="3" max="12" step="1" value="12"></div>
+        <div class="ctl"><label for="s-load"><span lang="sr">Opterećenje</span><span lang="en">Load</span></label><output id="s-load-out" for="s-load">0 mN·m</output><input type="range" id="s-load" min="0" max="100" step="5" value="0"></div>
+        <div class="btns"><label class="switch" for="s-stall"><input type="checkbox" id="s-stall"><span lang="sr">Zaglavi rotor</span><span lang="en">Jam the rotor</span></label></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="s-calc"></div><div class="result" id="s-result"></div></div>
+      <figcaption><span lang="sr">Simulacija motora (R = 3 Ω). Gornji grafik je struja, donji broj obrtaja posle uključivanja u trenutku t = 0. Struja je na početku velika, pa opada kako raste protivelektromotorna sila. Zaglavljen rotor ne stvara protivelektromotornu silu, pa struja ostaje velika.</span><span lang="en">A simulation of a motor (R = 3 Ω). The top graph is the current, the bottom one the speed after switching on at t = 0. The current is large at first and falls as the back-EMF grows. A jammed rotor creates no back-EMF, so the current stays large.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <div class="formula">
+        <div class="tex">\[ P_{mech} = M\,\omega = M\cdot\frac{2\pi n}{60} \]</div>
+        <dl class="legend">
+          <div><dt>P</dt><dd><span lang="sr">mehanička snaga na osovini</span><span lang="en">mechanical power at the shaft</span></dd><span class="unit">W</span></div>
+          <div><dt>ω</dt><dd><span lang="sr">ugaona brzina</span><span lang="en">angular velocity</span></dd><span class="unit">rad/s</span></div>
+          <div><dt>n</dt><dd><span lang="sr">broj obrtaja u minuti</span><span lang="en">revolutions per minute</span></dd><span class="unit">o/min</span></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="ex">
+        <h4><span lang="sr">Primer 1 · najveći moment</span><span lang="en">Example 1 · maximum torque</span></h4>
+        <p class="given" lang="sr">Dato: N = 100 navoja, B = 0,2 T, I = 3 A, površina navoja S = 50 cm², ravan zavojka je paralelna polju. Traži se M.</p>
+        <p class="given" lang="en">Given: N = 100 turns, B = 0.2 T, I = 3 A, area of a turn S = 50 cm², the plane of the loop is parallel to the field. Find M.</p>
+        <ol lang="sr">
+          <li>Površina u m²: <span class="u">S = 50·10<sup>−4</sup> = 0,005 m²</span>.</li>
+          <li>Ravan paralelna polju znači da je normala normalna na polje: α = 90°, sin α = 1.</li>
+          <li>\( M = N\,B\,I\,S\,\sin\alpha = 100\cdot 0{,}2\cdot 3\cdot 0{,}005\cdot 1 = 0{,}3\ \mathrm{N\cdot m} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Area in m²: <span class="u">S = 50·10<sup>−4</sup> = 0.005 m²</span>.</li>
+          <li>A plane parallel to the field means the normal is perpendicular to the field: α = 90°, sin α = 1.</li>
+          <li>\( M = N\,B\,I\,S\,\sin\alpha = 100\cdot 0.2\cdot 3\cdot 0.005\cdot 1 = 0.3\ \mathrm{N\cdot m} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">M = 0,3 N·m</span><span lang="en">M = 0.3 N·m</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 2 · zakrenut zavojak</span><span lang="en">Example 2 · a turned loop</span></h4>
+        <p class="given" lang="sr">Isti zavojak, ali je ugao između normale i polja α = 30°. Traži se M.</p>
+        <p class="given" lang="en">The same loop, but the angle between the normal and the field is α = 30°. Find M.</p>
+        <ol lang="sr">
+          <li>sin 30° = 0,5.</li>
+          <li>\( M = 0{,}3\cdot 0{,}5 = 0{,}15\ \mathrm{N\cdot m} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>sin 30° = 0.5.</li>
+          <li>\( M = 0.3\cdot 0.5 = 0.15\ \mathrm{N\cdot m} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">M = 0,15 N·m, polovina najvećeg.</span><span lang="en">M = 0.15 N·m, half of the maximum.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 3 · polazna struja</span><span lang="en">Example 3 · the starting current</span></h4>
+        <p class="given" lang="sr">Dato: motor ima otpor namotaja R = 2 Ω i priključen je na U = 12 V. Pri punoj brzini protivelektromotorna sila je E = 9 V. Traži se struja pri pokretanju i u ustaljenom radu.</p>
+        <p class="given" lang="en">Given: a motor has a winding resistance R = 2 Ω and is connected to U = 12 V. At full speed the back-EMF is E = 9 V. Find the current at start and in steady running.</p>
+        <ol lang="sr">
+          <li>Pri pokretanju je E = 0: \( I = \dfrac{U}{R} = \dfrac{12}{2} = 6\ \mathrm{A} \).</li>
+          <li>U ustaljenom radu: \( I = \dfrac{U-E}{R} = \dfrac{12-9}{2} = 1{,}5\ \mathrm{A} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>At start E = 0: \( I = \dfrac{U}{R} = \dfrac{12}{2} = 6\ \mathrm{A} \).</li>
+          <li>In steady running: \( I = \dfrac{U-E}{R} = \dfrac{12-9}{2} = 1.5\ \mathrm{A} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">6 A pri pokretanju, 1,5 A u radu: četiri puta manje.</span><span lang="en">6 A at start, 1.5 A when running: four times smaller.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 4 · mehanička snaga</span><span lang="en">Example 4 · mechanical power</span></h4>
+        <p class="given" lang="sr">Dato: motor daje moment M = 0,1 N·m pri n = 1200 o/min. Traži se mehanička snaga.</p>
+        <p class="given" lang="en">Given: a motor delivers a torque M = 0.1 N·m at n = 1200 rpm. Find the mechanical power.</p>
+        <ol lang="sr">
+          <li>Ugaona brzina: \( \omega = \dfrac{2\pi n}{60} = \dfrac{2\pi\cdot 1200}{60} = 125{,}7\ \mathrm{rad/s} \).</li>
+          <li>\( P = M\,\omega = 0{,}1\cdot 125{,}7 = 12{,}6\ \mathrm{W} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Angular velocity: \( \omega = \dfrac{2\pi n}{60} = \dfrac{2\pi\cdot 1200}{60} = 125.7\ \mathrm{rad/s} \).</li>
+          <li>\( P = M\,\omega = 0.1\cdot 125.7 = 12.6\ \mathrm{W} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">P ≈ 12,6 W</span><span lang="en">P ≈ 12.6 W</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <ul class="pitfalls" lang="sr">
+        <li><div><b>Ugao α je sa normalom.</b> U formuli <span class="v">M</span> = <span class="v">N B I S</span> sin <span class="v">α</span> ugao se meri između normale zavojka i polja, a ne između ravni zavojka i polja. Ako je dat ugao ravni i polja, koristi kosinus.</div></li>
+        <li><div><b>Zaboravljeno N.</b> Kod zavojka sa više navoja moment je N puta veći.</div></li>
+        <li><div><b>Površina u m².</b> 50 cm² je 0,005 m², a ne 0,5 m².</div></li>
+        <li><div><b>Obrtaji i rad/s.</b> Za snagu je potrebna ugaona brzina u rad/s: ω = 2πn/60. Broj 1200 o/min nije 1200 rad/s.</div></li>
+        <li><div><b>Struja nije stalna.</b> Pri pokretanju struja je velika, a u radu mala. Nemoj računati struju kao U/R u ustaljenom radu.</div></li>
+        <li><div><b>Komutator ne menja polje.</b> Komutator menja smer struje u zavojku, ne smer magnetnog polja.</div></li>
+      </ul>
+      <ul class="pitfalls" lang="en">
+        <li><div><b>The angle α is with the normal.</b> In <span class="v">M</span> = <span class="v">N B I S</span> sin <span class="v">α</span> the angle is measured between the normal of the loop and the field, not between the plane of the loop and the field. If the angle of the plane and the field is given, use the cosine.</div></li>
+        <li><div><b>Forgetting N.</b> For a loop with several turns the torque is N times larger.</div></li>
+        <li><div><b>Area in m².</b> 50 cm² is 0.005 m², not 0.5 m².</div></li>
+        <li><div><b>rpm and rad/s.</b> For power you need the angular velocity in rad/s: ω = 2πn/60. A speed of 1200 rpm is not 1200 rad/s.</div></li>
+        <li><div><b>The current is not constant.</b> It is large when starting and small when running. Do not calculate the running current as U/R.</div></li>
+        <li><div><b>The commutator does not change the field.</b> It changes the direction of the current in the loop, not the direction of the magnetic field.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="summary">
+        <ul lang="sr">
+          <li>Na strane zavojka sa strujom u polju deluju Amperove sile suprotnog smera. Zajedno su spreg koji vrti rotor.</li>
+          <li>Obrtni moment: \( M = N\,B\,I\,S\,\sin\alpha \). Najveći je kada je ravan zavojka paralelna polju (α = 90°), a nula u neutralnom položaju (α = 0°).</li>
+          <li>Komutator obrće smer struje svakih pola obrtaja, pa moment ima stalan znak. Bez njega bi se rotor njihao i stao.</li>
+          <li>Rotor koji se vrti indukuje protivelektromotornu silu \( E = k\omega \), pa je \( I = (U-E)/R \). Pri pokretanju je struja najveća.</li>
+          <li>Mehanička snaga: \( P = M\omega = M\cdot 2\pi n/60 \).</li>
+        </ul>
+        <ul lang="en">
+          <li>Ampère forces of opposite direction act on the sides of a current-carrying loop in a field. Together they are a couple that turns the rotor.</li>
+          <li>Torque: \( M = N\,B\,I\,S\,\sin\alpha \). It is largest when the plane of the loop is parallel to the field (α = 90°) and zero in the neutral position (α = 0°).</li>
+          <li>The commutator reverses the current every half turn, so the torque has a constant sign. Without it the rotor would swing and stop.</li>
+          <li>A turning rotor induces a back-EMF \( E = k\omega \), so \( I = (U-E)/R \). The current is largest when starting.</li>
+          <li>Mechanical power: \( P = M\omega = M\cdot 2\pi n/60 \).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" data-test="FIZ06" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/elektromotor.js"></script>
+</body>
+</html>

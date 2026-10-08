@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Pojava elektromagnetne indukcije i Faradejev zakon: magnet i kalem, Lencovo pravilo, provodnik u kretanju i generator naizmenične struje, sa animacijama, 3D modelom i rešenim primerima.">
+<title>Pojava elektromagnetne indukcije · lav</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="elektromagnetna-indukcija">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr">
+      <li>objasniš kada nastaje indukovani napon i zašto ga nema kada se fluks ne menja;</li>
+      <li>primeniš Faradejev zakon <span class="v">ε</span> = −<span class="v">N</span> Δ<span class="v">Φ</span>/Δ<span class="v">t</span> i izračunaš indukovani napon;</li>
+      <li>Lencovim pravilom odrediš smer indukovane struje i objasniš zašto se tu čuva energija;</li>
+      <li>izračunaš napon na provodniku koji se kreće u polju: <span class="v">ε</span> = <span class="v">B l v</span>;</li>
+      <li>objasniš kako generator pravi naizmeničnu struju i izračunaš njen maksimalni napon.</li>
+    </ul>
+    <ul lang="en">
+      <li>explain when an induced voltage appears and why there is none when the flux does not change;</li>
+      <li>apply Faraday's law <span class="v">ε</span> = −<span class="v">N</span> Δ<span class="v">Φ</span>/Δ<span class="v">t</span> and calculate the induced voltage;</li>
+      <li>use Lenz's rule to find the direction of the induced current and explain why energy is conserved;</li>
+      <li>calculate the voltage on a conductor moving in a field: <span class="v">ε</span> = <span class="v">B l v</span>;</li>
+      <li>explain how a generator makes alternating current and calculate its maximum voltage.</li>
+    </ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="ogled" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">Faradejev ogled, 1831.</span><span lang="en">Faraday's experiment, 1831</span></p>
+    <h2><span lang="sr">Magnet i kalem</span><span lang="en">A magnet and a coil</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Struja stvara magnetno polje. Da li polje može da stvori struju? Majkl Faradej je 1831. povezao kalem sa osetljivim galvanometrom i počeo da pomera magnet. Struja se pojavila, ali <strong>samo dok se magnet kretao</strong>.</p>
+      <p lang="en">A current creates a magnetic field. Can a field create a current? In 1831 Michael Faraday connected a coil to a sensitive galvanometer and began moving a magnet. A current appeared, but <strong>only while the magnet was moving</strong>.</p>
+      <ul class="plain" lang="sr">
+        <li>Magnet miruje u kalemu: nema struje, ma koliko jak bio.</li>
+        <li>Magnet se približava: struja ide u jednu stranu.</li>
+        <li>Magnet se udaljava: struja ide u suprotnu stranu.</li>
+        <li>Što se magnet kreće brže, struja je jača.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li>The magnet at rest in the coil: no current, however strong it is.</li>
+        <li>The magnet approaches: the current goes one way.</li>
+        <li>The magnet moves away: the current goes the opposite way.</li>
+        <li>The faster the magnet moves, the larger the current.</li>
+      </ul>
+      <p lang="sr">Zaključak: u kalemu nastaje napon, nazvan <strong>indukovani napon</strong>, kada se menja magnetni fluks kroz kalem. Ta pojava je <strong>elektromagnetna indukcija</strong>. Ako je kolo zatvoreno, kroz njega teče indukovana struja.</p>
+      <p lang="en">The conclusion: a voltage, called the <strong>induced voltage</strong>, appears in the coil when the magnetic flux through the coil changes. This effect is <strong>electromagnetic induction</strong>. If the circuit is closed, an induced current flows through it.</p>
+    </div>
+
+    <figure class="lab" id="lab-fara">
+      <div class="viewport"><canvas tabindex="0" aria-label="Magnet, kalem i galvanometar / magnet, coil and galvanometer"></canvas><span class="hint"><span lang="sr">Prevuci magnet</span><span lang="en">Drag the magnet</span></span></div>
+      <div class="plot short" style="margin-top:10px"><canvas aria-label="Napon u kalemu u vremenu / voltage in the coil over time"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="f-n"><span lang="sr">Broj zavojaka N</span><span lang="en">Number of turns N</span></label><output id="f-n-out" for="f-n">300</output><input type="range" id="f-n" min="50" max="600" step="50" value="300"></div>
+        <div class="ctl"><label for="f-v"><span lang="sr">Brzina automatskog kretanja</span><span lang="en">Speed of the automatic motion</span></label><output id="f-v-out" for="f-v">1</output><input type="range" id="f-v" min="0.4" max="2.4" step="0.2" value="1"></div>
+        <div class="btns">
+          <label class="switch" for="f-auto"><input type="checkbox" id="f-auto"><span lang="sr">Automatski ulaz i izlaz</span><span lang="en">Automatic in and out</span></label>
+          <button type="button" class="btn" id="f-flip">⇄ <span lang="sr">Okreni magnet</span><span lang="en">Flip the magnet</span></button>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="f-calc"></div><div class="result" id="f-result"></div></div>
+      <figcaption><span lang="sr">Prevuci magnet kroz kalem ili uključi automatsko kretanje. Igla galvanometra pokazuje smer i veličinu napona, a donji grafik njegovu istoriju. Obrati pažnju na to da se igla vraća na nulu čim se magnet zaustavi. Crveno i plavo kapice na kalemu su polovi koje sam kalem stvara indukovanom strujom.</span><span lang="en">Drag the magnet through the coil or switch on the automatic motion. The needle of the galvanometer shows the direction and size of the voltage, and the lower graph its history. Notice that the needle returns to zero as soon as the magnet stops. The red and blue caps on the coil are the poles the coil itself creates with the induced current.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: šta bi pokazao galvanometar ako umesto magneta pomeramo kalem, a magnet miruje?</span><span lang="en">Think first: what would the galvanometer show if we move the coil instead of the magnet, while the magnet stays still?</span></summary>
+        <div class="ans">
+          <p lang="sr">Isto što i pre. Bitno je samo <strong>relativno kretanje</strong>, jer se fluks kroz kalem menja u oba slučaja.</p>
+          <p lang="en">The same as before. Only the <strong>relative motion</strong> matters, because the flux through the coil changes in both cases.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faradej" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">oznaka ε · jedinica volt (V)</span><span lang="en">symbol ε · unit volt (V)</span></p>
+    <h2><span lang="sr">Faradejev zakon</span><span lang="en">Faraday's law</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Indukovani napon zavisi od toga <strong>koliko brzo</strong> se menja fluks. Što se fluks promeni više i za kraće vreme, napon je veći. Za kalem sa <span class="v">N</span> zavojaka:</p>
+      <p lang="en">The induced voltage depends on <strong>how fast</strong> the flux changes. The more the flux changes, and the shorter the time, the larger the voltage. For a coil with <span class="v">N</span> turns:</p>
+      <div class="formula">
+        <div class="tex">\[ \varepsilon = -N\,\frac{\Delta\Phi}{\Delta t} \]</div>
+        <dl class="legend">
+          <div><dt>ε</dt><dd><span lang="sr">indukovana elektromotorna sila (napon)</span><span lang="en">induced electromotive force (voltage)</span></dd><span class="unit">V</span></div>
+          <div><dt>N</dt><dd><span lang="sr">broj zavojaka</span><span lang="en">number of turns</span></dd><span class="unit">–</span></div>
+          <div><dt>ΔΦ</dt><dd><span lang="sr">promena fluksa</span><span lang="en">change of the flux</span></dd><span class="unit">Wb</span></div>
+          <div><dt>Δt</dt><dd><span lang="sr">vreme u kome se fluks menja</span><span lang="en">time over which the flux changes</span></dd><span class="unit">s</span></div>
+        </dl>
+      </div>
+      <p lang="sr">Znak minus je <strong>Lencovo pravilo</strong>: smer indukovane struje je takav da se suprotstavlja promeni fluksa koja ju je izazvala. Ako samo tražiš jačinu napona, zadrži apsolutnu vrednost. Jedinica je 1 V = 1 Wb/s.</p>
+      <p lang="en">The minus sign is <strong>Lenz's rule</strong>: the direction of the induced current is such that it opposes the change of flux that caused it. If you only need the magnitude of the voltage, keep the absolute value. The unit is 1 V = 1 Wb/s.</p>
+      <p lang="sr">Na grafiku fluksa u vremenu, napon je srazmeran <strong>nagibu</strong> krive: strma kriva daje veliki napon, ravna daje nulu.</p>
+      <p lang="en">On a graph of flux against time, the voltage is proportional to the <strong>slope</strong> of the curve: a steep curve gives a large voltage, a flat one gives zero.</p>
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Tri načina da se fluks promeni</span><span lang="en">Three ways to change the flux</span></p>
+        <p lang="sr">Fluks je \( \Phi = B\,S\cos\alpha \). Napon se indukuje kada se menja <span class="v">B</span> (pomeranje magneta, promena struje), <span class="v">S</span> (širenje ili sabijanje petlje) ili <span class="v">α</span> (okretanje petlje, kao kod generatora).</p>
+        <p lang="en">The flux is \( \Phi = B\,S\cos\alpha \). A voltage is induced when <span class="v">B</span> changes (moving a magnet, changing a current), <span class="v">S</span> changes (stretching or squeezing the loop) or <span class="v">α</span> changes (turning the loop, as in a generator).</p>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-slope">
+      <div class="plot short"><canvas aria-label="Fluks u vremenu / flux over time"></canvas></div>
+      <div class="plot short" style="margin-top:8px"><canvas aria-label="Napon u vremenu / voltage over time"></canvas></div>
+      <div class="controls">
+        <div class="btns">
+          <div class="seg" id="sl-shape" role="group" aria-label="Oblik / Shape">
+            <button type="button" data-v="ramp" aria-pressed="true"><span lang="sr">Rast pa stoji</span><span lang="en">Rise then hold</span></button>
+            <button type="button" data-v="tri" aria-pressed="false"><span lang="sr">Rast i pad</span><span lang="en">Rise and fall</span></button>
+            <button type="button" data-v="sin" aria-pressed="false"><span lang="sr">Sinusoida</span><span lang="en">Sine wave</span></button>
+          </div>
+        </div>
+        <div class="ctl"><label for="sl-n"><span lang="sr">Broj zavojaka N</span><span lang="en">Number of turns N</span></label><output id="sl-n-out" for="sl-n">100</output><input type="range" id="sl-n" min="1" max="500" step="1" value="100"></div>
+        <div class="ctl"><label for="sl-t"><span lang="sr">Trenutak t</span><span lang="en">Moment t</span></label><output id="sl-t-out" for="sl-t">1,5 s</output><input type="range" id="sl-t" min="0" max="4" step="0.05" value="1.5"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="sl-calc"></div><div class="result" id="sl-result"></div></div>
+      <figcaption><span lang="sr">Gore je magnetni fluks Φ(t) kroz kalem, dole indukovani napon ε(t) = −N·ΔΦ/Δt. Izaberi oblik i pomeraj trenutak: vidi da je napon nula svuda gde je fluks ravan, a najveći gde je najstrmiji.</span><span lang="en">Above is the magnetic flux Φ(t) through the coil, below the induced voltage ε(t) = −N·ΔΦ/Δt. Choose a shape and move the moment: see that the voltage is zero wherever the flux is flat, and largest where it is steepest.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="lenc" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">smer struje · provodnik u kretanju</span><span lang="en">direction of the current · a moving conductor</span></p>
+    <h2><span lang="sr">Lencovo pravilo: petlja kroz polje</span><span lang="en">Lenz's rule: a loop through a field</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Zamisli žičanu petlju koja klizi kroz oblast u kojoj postoji homogeno magnetno polje, usmereno u crtež (⊗). Pratimo šta se dešava u tri faze:</p>
+      <p lang="en">Imagine a wire loop sliding through a region with a uniform magnetic field directed into the page (⊗). We follow what happens in three phases:</p>
+      <ol class="steps-inline" lang="sr">
+        <li><span><strong>Ulazak.</strong> Fluks kroz petlju raste. Indukovana struja stvara polje <em>iz</em> crteža da se tome suprotstavi, pa teče <strong>suprotno od kazaljke na satu</strong>.</span></li>
+        <li><span><strong>Petlja potpuno u polju.</strong> Fluks je stalan, ΔΦ = 0, pa nema ni napona ni struje.</span></li>
+        <li><span><strong>Izlazak.</strong> Fluks opada. Struja stvara polje <em>u</em> crtež da nadoknadi gubitak, pa teče <strong>u smeru kazaljke na satu</strong>.</span></li>
+      </ol>
+      <ol class="steps-inline" lang="en">
+        <li><span><strong>Entering.</strong> The flux through the loop grows. The induced current creates a field <em>out of</em> the page to oppose this, so it flows <strong>anticlockwise</strong>.</span></li>
+        <li><span><strong>Loop fully inside.</strong> The flux is constant, ΔΦ = 0, so there is no voltage and no current.</span></li>
+        <li><span><strong>Leaving.</strong> The flux falls. The current creates a field <em>into</em> the page to make up the loss, so it flows <strong>clockwise</strong>.</span></li>
+      </ol>
+      <p lang="sr">Isti rezultat dobijamo i preko sile na naelektrisanja u strani koja se kreće. Za provodnik dužine <span class="v">l</span> koji se kreće brzinom <span class="v">v</span> normalno na polje, fluks se menja za Δ<span class="v">Φ</span> = <span class="v">B l v</span> Δ<span class="v">t</span>, pa je:</p>
+      <p lang="en">We get the same result from the force on the charges in the moving side. For a conductor of length <span class="v">l</span> moving at speed <span class="v">v</span> perpendicular to the field, the flux changes by Δ<span class="v">Φ</span> = <span class="v">B l v</span> Δ<span class="v">t</span>, so:</p>
+      <div class="formula">
+        <div class="tex">\[ \varepsilon = B\,l\,v\,\sin\alpha \]</div>
+      </div>
+      <div class="rule-box">
+        <p class="eyebrow"><span lang="sr">Pravilo desne ruke za indukovanu struju</span><span lang="en">Right-hand rule for the induced current</span></p>
+        <p lang="sr">Postavi desnu ruku tako da linije polja ulaze u dlan, a palac pokazuje smer kretanja provodnika. Ispruženi prsti tada pokazuju smer indukovane struje.</p>
+        <p lang="en">Hold your right hand so the field lines enter your palm and your thumb points along the motion of the conductor. Your outstretched fingers then show the direction of the induced current.</p>
+      </div>
+      <div class="rule-box green">
+        <p class="eyebrow"><span lang="sr">Zašto minus? Zakon održanja energije</span><span lang="en">Why the minus? Conservation of energy</span></p>
+        <p lang="sr">Struja u strani petlje koja je u polju trpi Amperovu silu <span class="v">F</span> = <span class="v">B I l</span>, i ta sila uvek <strong>koči</strong> kretanje. Mehanički rad koji utrošimo da bismo gurali petlju pretvara se u električnu energiju, i na kraju u toplotu u petlji. Kada bi struja imala suprotan smer, petlja bi se sama ubrzavala i dobijali bismo energiju iz ničega.</p>
+        <p lang="en">The current in the side of the loop that is in the field feels an Ampère force <span class="v">F</span> = <span class="v">B I l</span>, and this force always <strong>brakes</strong> the motion. The mechanical work we do to push the loop is turned into electrical energy, and finally into heat in the loop. If the current had the opposite direction, the loop would speed up by itself and we would get energy from nothing.</p>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-lenz">
+      <div class="viewport"><canvas tabindex="0" aria-label="Petlja prolazi kroz magnetno polje / a loop passes through a magnetic field"></canvas><span class="hint"><span lang="sr">Prevuci petlju kada je pauzirana</span><span lang="en">Drag the loop when paused</span></span></div>
+      <div class="plot short" style="margin-top:10px"><canvas aria-label="Napon u vremenu / voltage over time"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="l-v"><span lang="sr">Brzina v</span><span lang="en">Speed v</span></label><output id="l-v-out" for="l-v">0,30 m/s</output><input type="range" id="l-v" min="0.1" max="0.5" step="0.05" value="0.3"></div>
+        <div class="ctl"><label for="l-b"><span lang="sr">Indukcija B</span><span lang="en">Induction B</span></label><output id="l-b-out" for="l-b">0,5 T</output><input type="range" id="l-b" min="0.1" max="1" step="0.1" value="0.5"></div>
+        <div class="btns"><label class="switch" for="l-pause"><input type="checkbox" id="l-pause"><span lang="sr">Pauza</span><span lang="en">Pause</span></label></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="l-calc"></div><div class="result" id="l-result"></div></div>
+      <figcaption><span lang="sr">Kvadratna petlja stranice 10 cm i otpora 0,1 Ω prolazi kroz polje u crtež. Narandžaste tačke prikazuju indukovanu struju, a žuta strelica Amperovu silu koja koči petlju. Kada je cela petlja u polju, nema struje ni sile. Donji grafik prikazuje napon u poslednjih nekoliko sekundi.</span><span lang="en">A square loop of side 10 cm and resistance 0.1 Ω passes through a field directed into the page. The orange dots show the induced current, and the yellow arrow the Ampère force that brakes the loop. When the whole loop is in the field, there is no current and no force. The lower graph shows the voltage over the last few seconds.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="generator" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">okretanje zavojka</span><span lang="en">turning a loop</span></p>
+    <h2><span lang="sr">Generator naizmenične struje</span><span lang="en">The alternating-current generator</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Ako zavojak okrećemo u homogenom magnetnom polju, ugao <span class="v">α</span> se stalno menja, pa se menja i fluks \( \Phi = B S \cos\omega t \). Prema Faradejevom zakonu indukuje se napon koji je <strong>sinusoida</strong>:</p>
+      <p lang="en">If we turn a loop in a uniform magnetic field, the angle <span class="v">α</span> keeps changing, and so does the flux \( \Phi = B S \cos\omega t \). By Faraday's law a voltage is induced that is a <strong>sine wave</strong>:</p>
+      <div class="formula">
+        <div class="tex">\[ \varepsilon = N\,B\,S\,\omega\,\sin\omega t \qquad \varepsilon_{max}=N\,B\,S\,\omega \]</div>
+        <dl class="legend">
+          <div><dt>ω</dt><dd><span lang="sr">ugaona brzina, ω = 2πn/60 = 2πf</span><span lang="en">angular velocity, ω = 2πn/60 = 2πf</span></dd><span class="unit">rad/s</span></div>
+          <div><dt>f</dt><dd><span lang="sr">frekvencija (broj obrtaja u sekundi)</span><span lang="en">frequency (revolutions per second)</span></dd><span class="unit">Hz</span></div>
+        </dl>
+      </div>
+      <ul class="plain" lang="sr">
+        <li>Napon je <strong>najveći</strong> kada je fluks nula (ravan zavojka je paralelna polju) jer se tada fluks menja najbrže.</li>
+        <li>Napon je <strong>nula</strong> kada je fluks najveći (zavojak normalan na polje), jer fluks tada za trenutak miruje.</li>
+        <li>Svakih pola obrtaja napon menja znak: dobija se <strong>naizmenična struja</strong>.</li>
+        <li>Veći <span class="v">N</span>, <span class="v">B</span>, <span class="v">S</span> ili brže okretanje daju veći napon.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li>The voltage is <strong>largest</strong> when the flux is zero (the plane of the loop is parallel to the field) because the flux then changes fastest.</li>
+        <li>The voltage is <strong>zero</strong> when the flux is largest (the loop perpendicular to the field), because the flux then momentarily stands still.</li>
+        <li>Every half turn the voltage changes sign: this gives <strong>alternating current</strong>.</li>
+        <li>Larger <span class="v">N</span>, <span class="v">B</span>, <span class="v">S</span> or faster turning give a larger voltage.</li>
+      </ul>
+      <p lang="sr">Struju iz zavojka odvode klizni prstenovi (celi prstenovi, a ne podeljeni kao komutator) i četkice, pa na izlazu dobijamo naizmenični napon. Mreža u Srbiji ima frekvenciju 50 Hz i efektivni napon 230 V. Efektivni napon je \( U = \varepsilon_{max}/\sqrt{2} \).</p>
+      <p lang="en">The current is taken from the loop by slip rings (whole rings, not split like a commutator) and brushes, so the output is an alternating voltage. The mains in Serbia have a frequency of 50 Hz and an RMS voltage of 230 V. The RMS voltage is \( U = \varepsilon_{max}/\sqrt{2} \).</p>
+    </div>
+
+    <figure class="lab" id="lab-gen">
+      <div class="viewport"><canvas tabindex="0" aria-label="3D model: generator naizmenične struje / AC generator"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje</span><span lang="en">Drag to rotate</span></span></div>
+      <div class="plot short" style="margin-top:10px"><canvas aria-label="Napon generatora / generator voltage"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="g-n"><span lang="sr">Obrtaji n</span><span lang="en">Speed n</span></label><output id="g-n-out" for="g-n">60 o/min</output><input type="range" id="g-n" min="20" max="240" step="10" value="60"></div>
+        <div class="ctl"><label for="g-b"><span lang="sr">Indukcija B</span><span lang="en">Induction B</span></label><output id="g-b-out" for="g-b">0,5 T</output><input type="range" id="g-b" min="0.1" max="1" step="0.1" value="0.5"></div>
+        <div class="ctl"><label for="g-turns"><span lang="sr">Broj navoja N</span><span lang="en">Number of turns N</span></label><output id="g-turns-out" for="g-turns">100</output><input type="range" id="g-turns" min="10" max="200" step="10" value="100"></div>
+        <div class="btns"><label class="switch" for="g-run"><input type="checkbox" id="g-run" checked><span lang="sr">Okreće se</span><span lang="en">Running</span></label></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="g-calc"></div><div class="result" id="g-result"></div></div>
+      <figcaption><span lang="sr">Zavojak (N navoja, S = 0,02 m²) se okreće u polju. Klizni prstenovi vode napon do voltmetra. Tačka na grafiku prati trenutni napon: najveći je kada je zavojak paralelan polju. Obrtaji su usporeni radi vidljivosti.</span><span lang="en">A loop (N turns, S = 0.02 m²) turns in the field. Slip rings lead the voltage to a voltmeter. The dot on the graph follows the instantaneous voltage: it is largest when the loop is parallel to the field. The speed is slowed down so it is visible.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="ex">
+        <h4><span lang="sr">Primer 1 · Faradejev zakon</span><span lang="en">Example 1 · Faraday's law</span></h4>
+        <p class="given" lang="sr">Dato: kalem ima N = 200 zavojaka. Fluks kroz njega se za Δt = 0,1 s promeni za ΔΦ = 0,5 mWb. Traži se indukovani napon.</p>
+        <p class="given" lang="en">Given: a coil has N = 200 turns. The flux through it changes by ΔΦ = 0.5 mWb in Δt = 0.1 s. Find the induced voltage.</p>
+        <ol lang="sr">
+          <li>Jedinice: <span class="u">ΔΦ = 0,5·10<sup>−3</sup> Wb</span>.</li>
+          <li>\( |\varepsilon| = N\dfrac{\Delta\Phi}{\Delta t} = 200\cdot\dfrac{0{,}5\cdot 10^{-3}}{0{,}1} = 1\ \mathrm{V} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Units: <span class="u">ΔΦ = 0.5·10<sup>−3</sup> Wb</span>.</li>
+          <li>\( |\varepsilon| = N\dfrac{\Delta\Phi}{\Delta t} = 200\cdot\dfrac{0.5\cdot 10^{-3}}{0.1} = 1\ \mathrm{V} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">ε = 1 V. Ako se ista promena desi za 0,01 s, napon je 10 V.</span><span lang="en">ε = 1 V. If the same change happens in 0.01 s, the voltage is 10 V.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 2 · provodnik koji se kreće</span><span lang="en">Example 2 · a moving conductor</span></h4>
+        <p class="given" lang="sr">Dato: šipka dužine l = 50 cm kreće se brzinom v = 4 m/s normalno na polje B = 0,2 T. Šipka je deo kola otpora R = 2 Ω. Traži se napon, struja i sila kočenja.</p>
+        <p class="given" lang="en">Given: a rod of length l = 50 cm moves at v = 4 m/s perpendicular to a field B = 0.2 T. The rod is part of a circuit with resistance R = 2 Ω. Find the voltage, the current and the braking force.</p>
+        <ol lang="sr">
+          <li><span class="u">l = 0,5 m</span>. \( \varepsilon = B\,l\,v = 0{,}2\cdot 0{,}5\cdot 4 = 0{,}4\ \mathrm{V} \)</li>
+          <li> Omov zakon: \( I = \varepsilon/R = 0{,}4/2 = 0{,}2\ \mathrm{A} \).</li>
+          <li>Amperova sila: \( F = B\,I\,l = 0{,}2\cdot 0{,}2\cdot 0{,}5 = 0{,}02\ \mathrm{N} \), suprotno od brzine.</li>
+        </ol>
+        <ol lang="en">
+          <li><span class="u">l = 0.5 m</span>. \( \varepsilon = B\,l\,v = 0.2\cdot 0.5\cdot 4 = 0.4\ \mathrm{V} \)</li>
+          <li>Ohm's law: \( I = \varepsilon/R = 0.4/2 = 0.2\ \mathrm{A} \).</li>
+          <li>Ampère force: \( F = B\,I\,l = 0.2\cdot 0.2\cdot 0.5 = 0.02\ \mathrm{N} \), opposite to the velocity.</li>
+        </ol>
+        <p class="answer"><span lang="sr">ε = 0,4 V, I = 0,2 A, F = 20 mN. Snaga kočenja F·v = 0,08 W jednaka je Džulovoj snazi ε·I = 0,08 W.</span><span lang="en">ε = 0.4 V, I = 0.2 A, F = 20 mN. The braking power F·v = 0.08 W equals the Joule power ε·I = 0.08 W.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 3 · generator</span><span lang="en">Example 3 · a generator</span></h4>
+        <p class="given" lang="sr">Dato: zavojak ima N = 100 navoja, površinu S = 0,02 m², okreće se u polju B = 0,5 T brzinom n = 3000 o/min. Traži se maksimalni i efektivni napon i frekvencija.</p>
+        <p class="given" lang="en">Given: a loop has N = 100 turns, an area S = 0.02 m², and turns in a field B = 0.5 T at n = 3000 rpm. Find the maximum and RMS voltage and the frequency.</p>
+        <ol lang="sr">
+          <li>Frekvencija: \( f = n/60 = 3000/60 = 50\ \mathrm{Hz} \).</li>
+          <li>Ugaona brzina: \( \omega = 2\pi f = 314\ \mathrm{rad/s} \).</li>
+          <li>\( \varepsilon_{max} = N\,B\,S\,\omega = 100\cdot 0{,}5\cdot 0{,}02\cdot 314 = 314\ \mathrm{V} \)</li>
+          <li>Efektivni napon: \( U = \varepsilon_{max}/\sqrt{2} = 314/1{,}414 = 222\ \mathrm{V} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>Frequency: \( f = n/60 = 3000/60 = 50\ \mathrm{Hz} \).</li>
+          <li>Angular velocity: \( \omega = 2\pi f = 314\ \mathrm{rad/s} \).</li>
+          <li>\( \varepsilon_{max} = N\,B\,S\,\omega = 100\cdot 0.5\cdot 0.02\cdot 314 = 314\ \mathrm{V} \)</li>
+          <li>RMS voltage: \( U = \varepsilon_{max}/\sqrt{2} = 314/1.414 = 222\ \mathrm{V} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">ε<sub>max</sub> ≈ 314 V, U ≈ 222 V, f = 50 Hz</span><span lang="en">ε<sub>max</sub> ≈ 314 V, U ≈ 222 V, f = 50 Hz</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 4 · magnet se spušta u kalem</span><span lang="en">Example 4 · a magnet is lowered into a coil</span></h4>
+        <p class="given" lang="sr">Severni pol magneta se spušta u kalem od N = 500 zavojaka. Fluks kroz kalem poraste od 0 do 2 mWb za 0,05 s. Traži se napon i smer polja koje stvara kalem.</p>
+        <p class="given" lang="en">The north pole of a magnet is lowered into a coil of N = 500 turns. The flux through the coil rises from 0 to 2 mWb in 0.05 s. Find the voltage and the direction of the field created by the coil.</p>
+        <ol lang="sr">
+          <li>\( |\varepsilon| = N\dfrac{\Delta\Phi}{\Delta t} = 500\cdot\dfrac{2\cdot 10^{-3}}{0{,}05} = 20\ \mathrm{V} \)</li>
+          <li>Fluks raste, pa se kalem suprotstavlja: stvara polje usmereno od magneta. Gornji kraj kalema postaje severni pol i odbija magnet.</li>
+        </ol>
+        <ol lang="en">
+          <li>\( |\varepsilon| = N\dfrac{\Delta\Phi}{\Delta t} = 500\cdot\dfrac{2\cdot 10^{-3}}{0.05} = 20\ \mathrm{V} \)</li>
+          <li>The flux grows, so the coil opposes: it creates a field directed away from the magnet. The upper end of the coil becomes a north pole and repels the magnet.</li>
+        </ol>
+        <p class="answer"><span lang="sr">ε = 20 V. Kalem odbija magnet koji mu se približava.</span><span lang="en">ε = 20 V. The coil repels the magnet that approaches it.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <ul class="pitfalls" lang="sr">
+        <li><div><b>Veliki fluks ne znači veliki napon.</b> Napon zavisi od <em>brzine promene</em> fluksa, ne od njegove vrednosti. Konstantan fluks, ma kako veliki, ne daje napon.</div></li>
+        <li><div><b>Zaboravljeno N.</b> Kod kalema se napon množi brojem zavojaka.</div></li>
+        <li><div><b>Znak minus.</b> Minus pokazuje smer (Lencovo pravilo), a ne da je napon „negativan”. Jačina napona je uvek pozitivna.</div></li>
+        <li><div><b>Indukovano polje ne poništava polje.</b> Indukovana struja samo <em>usporava promenu</em> fluksa, ne poništava ga u potpunosti.</div></li>
+        <li><div><b>Leva i desna ruka.</b> Za silu na struju koristimo levu ruku, a za indukovanu struju u provodniku koji se kreće desnu ruku.</div></li>
+        <li><div><b>Efektivni i maksimalni napon.</b> U utičnici je 230 V efektivno. Maksimalni napon je 230·√2 ≈ 325 V.</div></li>
+      </ul>
+      <ul class="pitfalls" lang="en">
+        <li><div><b>A large flux does not mean a large voltage.</b> The voltage depends on the <em>rate of change</em> of the flux, not on its value. A constant flux, however large, gives no voltage.</div></li>
+        <li><div><b>Forgetting N.</b> For a coil the voltage is multiplied by the number of turns.</div></li>
+        <li><div><b>The minus sign.</b> The minus shows direction (Lenz's rule), not that the voltage is "negative". The magnitude of the voltage is always positive.</div></li>
+        <li><div><b>The induced field does not cancel the field.</b> The induced current only <em>slows the change</em> of the flux, it does not cancel it completely.</div></li>
+        <li><div><b>Left and right hand.</b> For the force on a current we use the left hand, and for the induced current in a moving conductor the right hand.</div></li>
+        <li><div><b>RMS and maximum voltage.</b> The socket gives 230 V RMS. The maximum voltage is 230·√2 ≈ 325 V.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="summary">
+        <ul lang="sr">
+          <li>Kada se magnetni fluks kroz kalem menja, indukuje se napon (elektromagnetna indukcija). Kada fluks miruje, napona nema.</li>
+          <li>Faradejev zakon: \( \varepsilon = -N\,\dfrac{\Delta\Phi}{\Delta t} \). Napon je srazmeran brzini promene fluksa i broju zavojaka.</li>
+          <li>Lencovo pravilo: indukovana struja se suprotstavlja promeni koja ju je izazvala. To je zakon održanja energije.</li>
+          <li>Provodnik dužine <span class="v">l</span> koji se kreće brzinom <span class="v">v</span> normalno na polje: \( \varepsilon = B\,l\,v \).</li>
+          <li>Generator: \( \varepsilon = N B S \omega \sin\omega t \), naizmenični (sinusni) napon sa \( \varepsilon_{max} = NBS\omega \) i \( U = \varepsilon_{max}/\sqrt{2} \).</li>
+        </ul>
+        <ul lang="en">
+          <li>When the magnetic flux through a coil changes, a voltage is induced (electromagnetic induction). When the flux is steady, there is no voltage.</li>
+          <li>Faraday's law: \( \varepsilon = -N\,\dfrac{\Delta\Phi}{\Delta t} \). The voltage is proportional to the rate of change of the flux and to the number of turns.</li>
+          <li>Lenz's rule: the induced current opposes the change that caused it. This is conservation of energy.</li>
+          <li>A conductor of length <span class="v">l</span> moving at speed <span class="v">v</span> perpendicular to the field: \( \varepsilon = B\,l\,v \).</li>
+          <li>Generator: \( \varepsilon = N B S \omega \sin\omega t \), an alternating (sine) voltage with \( \varepsilon_{max} = NBS\omega \) and \( U = \varepsilon_{max}/\sqrt{2} \).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" data-test="FIZ07" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/elektromagnetna-indukcija.js"></script>
+</body>
+</html>

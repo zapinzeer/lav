@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Magnetno polje strujnog provodnika: Erstedov ogled, pravilo desne ruke, indukcija pravog provodnika i kružnog zavojka, sa 3D modelom i rešenim primerima.">
+<title>Magnetno polje strujnog provodnika · lav</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="magnetno-polje-provodnika">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr">
+      <li>objasniš šta je pokazao Erstedov ogled i zašto struja stvara magnetno polje;</li>
+      <li>pravilom desne ruke odrediš smer linija polja oko provodnika, i u crtežu sa oznakama ⊙ i ⊗;</li>
+      <li>izračunaš <span class="v">B</span> = <span class="v">μ</span><sub>0</sub><span class="v">I</span> / (2π<span class="v">r</span>) i znaš da polje opada sa rastojanjem;</li>
+      <li>saberi polja dva provodnika kao vektore (princip superpozicije);</li>
+      <li>izračunaš indukciju u centru kružnog zavojka i kalema sa <span class="v">N</span> zavojaka.</li>
+    </ul>
+    <ul lang="en">
+      <li>explain what Ørsted's experiment showed and why a current creates a magnetic field;</li>
+      <li>use the right-hand rule to find the direction of the field lines around a wire, including in drawings with ⊙ and ⊗;</li>
+      <li>calculate <span class="v">B</span> = <span class="v">μ</span><sub>0</sub><span class="v">I</span> / (2π<span class="v">r</span>) and know that the field falls with distance;</li>
+      <li>add the fields of two wires as vectors (the superposition principle);</li>
+      <li>calculate the induction at the centre of a circular loop and of a coil with <span class="v">N</span> turns.</li>
+    </ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="erested" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">Erstedov ogled · pravilo desne ruke</span><span lang="en">Ørsted's experiment · right-hand rule</span></p>
+    <h2><span lang="sr">Struja stvara magnetno polje</span><span lang="en">A current creates a magnetic field</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Godine 1820. danski fizičar Hans Kristijan Ersted primetio je da se igla kompasa pomeri kada kroz obližnju žicu pusti struju. Tako je otkriveno da <strong>električna struja stvara magnetno polje</strong>. Do tada su se elektricitet i magnetizam smatrali potpuno odvojenim pojavama.</p>
+      <p lang="en">In 1820 the Danish physicist Hans Christian Ørsted noticed that a compass needle moved when he switched on a current in a nearby wire. This showed that <strong>an electric current creates a magnetic field</strong>. Until then electricity and magnetism had been thought to be completely separate phenomena.</p>
+      <p lang="sr">Oko pravog provodnika linije polja su <strong>koncentrični krugovi</strong>, a provodnik je u njihovom centru. Linije su zatvorene: nemaju početak ni kraj. Što smo dalje od provodnika, polje je slabije.</p>
+      <p lang="en">Around a straight wire the field lines are <strong>concentric circles</strong> with the wire at their centre. The lines are closed: they have no beginning and no end. The farther we are from the wire, the weaker the field.</p>
+      <div class="formula">
+        <div class="tex">\[ B = \frac{\mu_0\, I}{2\pi\, r} \]</div>
+        <dl class="legend">
+          <div><dt>B</dt><dd><span lang="sr">magnetna indukcija na rastojanju r</span><span lang="en">magnetic induction at distance r</span></dd><span class="unit">T</span></div>
+          <div><dt>μ<sub>0</sub></dt><dd><span lang="sr">magnetna permeabilnost vakuuma, 4π·10⁻⁷</span><span lang="en">permeability of free space, 4π·10⁻⁷</span></dd><span class="unit">T·m/A</span></div>
+          <div><dt>I</dt><dd><span lang="sr">jačina struje u provodniku</span><span lang="en">current in the wire</span></dd><span class="unit">A</span></div>
+          <div><dt>r</dt><dd><span lang="sr">rastojanje od ose provodnika</span><span lang="en">distance from the axis of the wire</span></dd><span class="unit">m</span></div>
+        </dl>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-wire">
+      <div class="viewport"><canvas tabindex="0" aria-label="3D model: prav provodnik sa kompasima oko njega / straight wire with compasses around it"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje</span><span lang="en">Drag to rotate</span></span></div>
+      <div class="controls">
+        <div class="ctl"><label for="w-current"><span lang="sr">Struja I</span><span lang="en">Current I</span></label><output id="w-current-out" for="w-current">10 A</output><input type="range" id="w-current" min="0" max="20" step="1" value="10"></div>
+        <div class="ctl"><label for="w-r"><span lang="sr">Rastojanje r</span><span lang="en">Distance r</span></label><output id="w-r-out" for="w-r">2 cm</output><input type="range" id="w-r" min="1" max="5" step="0.5" value="2"></div>
+        <div class="btns"><button type="button" class="btn" id="w-flip">⇅ <span lang="sr">Obrni smer struje</span><span lang="en">Reverse the current</span></button></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="w-calc"></div><div class="result" id="w-result"></div></div>
+      <figcaption><span lang="sr">Provodnik prolazi kroz sto sa kompasima. Bez struje sve igle pokazuju ka severu Zemlje. Pojačaj struju i gledaj kako se igle okreću duž linija polja, prvo one bliže provodniku. Bela tačka sa strelicom pokazuje vektor B na rastojanju r.</span><span lang="en">The wire passes through a table with compasses. With no current, every needle points to Earth's north. Turn up the current and watch the needles swing along the field lines, the ones closer to the wire first. The white dot with an arrow shows the vector B at distance r.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <div class="rule-box">
+        <p class="eyebrow"><span lang="sr">Pravilo desne ruke</span><span lang="en">Right-hand rule</span></p>
+        <p lang="sr">Obuhvati provodnik desnom šakom tako da ispruženi palac pokazuje smer struje. Savijeni prsti tada pokazuju smer linija polja.</p>
+        <p lang="en">Grip the wire with your right hand so your outstretched thumb points along the current. Your curled fingers then show the direction of the field lines.</p>
+      </div>
+      <p lang="sr">Na crtežima provodnik često gledamo „sa kraja”. Tada struju označavamo tačkom ako izlazi iz crteža prema nama (vrh strele), a krstićem ako ulazi u crtež (perje strele):</p>
+      <p lang="en">In drawings we often look at the wire "end-on". Then a dot means the current comes out of the page towards us (the tip of an arrow), and a cross means it goes into the page (the feathers of an arrow):</p>
+      <div class="xsec">
+        <figure>
+          <svg viewBox="0 0 150 150" role="img" aria-label="⊙">
+            <circle class="xs-line" cx="75" cy="75" r="36"/><circle class="xs-line" cx="75" cy="75" r="60"/>
+            <path class="xs-head" d="M69 39 L79 33 L79 45 Z M69 15 L79 9 L79 21 Z M81 111 L71 105 L71 117 Z M81 135 L71 129 L71 141 Z"/>
+            <circle class="xs-wire" cx="75" cy="75" r="13"/><circle class="xs-dot" cx="75" cy="75" r="3.6"/>
+          </svg>
+          <figcaption><span lang="sr">Struja izlazi iz crteža (⊙): linije idu suprotno od kazaljke na satu.</span><span lang="en">Current out of the page (⊙): the lines go anticlockwise.</span></figcaption>
+        </figure>
+        <figure>
+          <svg viewBox="0 0 150 150" role="img" aria-label="⊗">
+            <circle class="xs-line" cx="75" cy="75" r="36"/><circle class="xs-line" cx="75" cy="75" r="60"/>
+            <path class="xs-head" d="M81 39 L71 33 L71 45 Z M81 15 L71 9 L71 21 Z M69 111 L79 105 L79 117 Z M69 135 L79 129 L79 141 Z"/>
+            <circle class="xs-wire" cx="75" cy="75" r="13"/><path class="xs-mark" d="M68 68 L82 82 M82 68 L68 82"/>
+          </svg>
+          <figcaption><span lang="sr">Struja ulazi u crtež (⊗): linije idu u smeru kazaljke na satu.</span><span lang="en">Current into the page (⊗): the lines go clockwise.</span></figcaption>
+        </figure>
+      </div>
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: kompas se nalazi ispod provodnika kroz koji struja teče s leva na desno. Na koju stranu skreće severni kraj igle?</span><span lang="en">Think first: a compass sits under a wire carrying a current from left to right. Which way does the north end of the needle turn?</span></summary>
+        <div class="ans">
+          <p lang="sr">Palac desne ruke ide udesno. Gledano odozgo, savijeni prsti ispod provodnika idu <strong>od tebe</strong>, a iznad provodnika <strong>ka tebi</strong>. Ispod provodnika polje, a time i severni kraj igle, pokazuje u smeru pogleda, od posmatrača.</p>
+          <p lang="en">Your right thumb points to the right. Seen from above, the curled fingers go <strong>away from you</strong> below the wire and <strong>towards you</strong> above it. Below the wire the field, and so the north end of the needle, points along your line of sight, away from the viewer.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="zavisnost" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">od čega zavisi B</span><span lang="en">what B depends on</span></p>
+    <h2><span lang="sr">Polje opada sa rastojanjem</span><span lang="en">The field falls with distance</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">U formuli <span class="v">B</span> = <span class="v">μ</span><sub>0</sub><span class="v">I</span> / (2π<span class="v">r</span>) rastojanje <span class="v">r</span> stoji u imeniocu. To znači dve stvari:</p>
+      <p lang="en">In the formula <span class="v">B</span> = <span class="v">μ</span><sub>0</sub><span class="v">I</span> / (2π<span class="v">r</span>) the distance <span class="v">r</span> is in the denominator. That means two things:</p>
+      <ul class="plain" lang="sr">
+        <li>Dvostruko veća struja daje dvostruko jače polje (<span class="v">B</span> je srazmerno <span class="v">I</span>).</li>
+        <li>Dvostruko veće rastojanje daje <strong>dvostruko slabije</strong> polje (<span class="v">B</span> je obrnuto srazmerno <span class="v">r</span>).</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li>Twice the current gives twice the field (<span class="v">B</span> is proportional to <span class="v">I</span>).</li>
+        <li>Twice the distance gives <strong>half the field</strong> (<span class="v">B</span> is inversely proportional to <span class="v">r</span>).</li>
+      </ul>
+      <p lang="sr">Na grafiku se vidi kriva koja naglo raste kada se približiš provodniku i lagano se spljošti daleko od njega. Tačkasta vodoravna linija je magnetno polje Zemlje, oko 50 μT: već na desetak centimetara od provodnika sa 10 A polje provodnika jedva da je jače od njega.</p>
+      <p lang="en">The graph shows a curve that rises steeply close to the wire and flattens out far away. The dotted horizontal line is Earth's magnetic field, about 50 μT: already about ten centimetres from a wire carrying 10 A, the wire's field is barely stronger than it.</p>
+      <div class="tbl-wrap">
+        <table class="scale">
+          <caption><span lang="sr">Nekoliko vrednosti za pravi provodnik</span><span lang="en">A few values for a straight wire</span></caption>
+          <tbody>
+            <tr><td><span lang="sr">1 A na 1 m</span><span lang="en">1 A at 1 m</span></td><td>0,2 μT</td></tr>
+            <tr><td><span lang="sr">10 A na 2 cm</span><span lang="en">10 A at 2 cm</span></td><td>100 μT</td></tr>
+            <tr><td><span lang="sr">100 A na 10 cm</span><span lang="en">100 A at 10 cm</span></td><td>200 μT</td></tr>
+            <tr><td><span lang="sr">Dalekovod 1000 A, 10 m ispod</span><span lang="en">Power line 1000 A, 10 m below</span></td><td>20 μT</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-br">
+      <div class="plot"><canvas aria-label="Grafik B(r) / graph of B(r)"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="b-i"><span lang="sr">Struja I</span><span lang="en">Current I</span></label><output id="b-i-out" for="b-i">10 A</output><input type="range" id="b-i" min="1" max="20" step="1" value="10"></div>
+        <div class="ctl"><label for="b-r"><span lang="sr">Rastojanje r</span><span lang="en">Distance r</span></label><output id="b-r-out" for="b-r">2 cm</output><input type="range" id="b-r" min="0.5" max="10" step="0.5" value="2"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="b-calc"></div><div class="result" id="b-result"></div></div>
+      <figcaption><span lang="sr">Narandžasta tačka je izabrano rastojanje <span class="v">r</span>. Plava tačka je na dvostruko većem rastojanju: njena visina je tačno upola manja.</span><span lang="en">The orange dot is the chosen distance <span class="v">r</span>. The blue dot is at twice the distance: its height is exactly half.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Pazi na jedinice</span><span lang="en">Watch the units</span></p>
+        <p lang="sr">Rastojanje uvek pretvori u metre pre računanja: 2 cm = 0,02 m. Tada je rezultat u teslama. Za male vrednosti piši mT ili μT.</p>
+        <p lang="en">Always convert the distance to metres before calculating: 2 cm = 0.02 m. The result is then in teslas. For small values write mT or μT.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="superpozicija" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">princip superpozicije</span><span lang="en">the superposition principle</span></p>
+    <h2><span lang="sr">Dva provodnika: polja se sabiraju</span><span lang="en">Two wires: the fields add up</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Kada je blizu više provodnika, svaki od njih stvara svoje polje, kao da onih drugih nema. Ukupno polje u nekoj tački je <strong>vektorski zbir</strong> pojedinačnih polja:</p>
+      <p lang="en">When several wires are nearby, each of them creates its own field as if the others were not there. The total field at a point is the <strong>vector sum</strong> of the individual fields:</p>
+      <div class="formula"><div class="tex">\[ \vec B = \vec B_1 + \vec B_2 \]</div></div>
+      <p lang="sr">Zbir je vektorski, pa smer mora da se uzme u obzir. Ako dva polja u tački imaju isti smer, jačine se sabiraju. Ako imaju suprotan smer, oduzimaju se. Ako su pod pravim uglom, ukupna jačina je \( B=\sqrt{B_1^2+B_2^2} \).</p>
+      <p lang="en">The sum is a vector sum, so direction matters. If the two fields point the same way at a point, their magnitudes add. If they point in opposite ways, they subtract. If they are at a right angle, the total magnitude is \( B=\sqrt{B_1^2+B_2^2} \).</p>
+      <p lang="sr">U modelu su provodnici na rastojanju 10 cm. Probaj tri slučaja i povuci tačku <span class="v">P</span> između provodnika i van njih.</p>
+      <p lang="en">In the model the wires are 10 cm apart. Try three cases and drag the point <span class="v">P</span> between the wires and outside them.</p>
+      <div class="cases three">
+        <div><p class="h" lang="sr">Isti smer struja</p><p class="h" lang="en">Same direction</p><p class="note" lang="sr">Između provodnika polja se poništavaju (na sredini je B = 0). Van njih se sabiraju.</p><p class="note" lang="en">Between the wires the fields cancel (at the midpoint B = 0). Outside them they add.</p></div>
+        <div><p class="h" lang="sr">Suprotan smer struja</p><p class="h" lang="en">Opposite directions</p><p class="note" lang="sr">Između provodnika polja se sabiraju i polje je jako. Van njih se oduzimaju.</p><p class="note" lang="en">Between the wires the fields add and the field is strong. Outside they subtract.</p></div>
+        <div><p class="h" lang="sr">Samo jedan provodnik</p><p class="h" lang="en">Only one wire</p><p class="note" lang="sr">Vraća se na običan slučaj iz Dela 1: koncentrični krugovi.</p><p class="note" lang="en">Back to the simple case of Part 1: concentric circles.</p></div>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-two">
+      <div class="viewport"><canvas tabindex="0" aria-label="2D model: polja dva provodnika / fields of two wires"></canvas><span class="hint"><span lang="sr">Prevuci tačku P</span><span lang="en">Drag the point P</span></span></div>
+      <div class="controls">
+        <div class="ctl"><label for="t-i1"><span lang="sr">Struja I₁ (levo)</span><span lang="en">Current I₁ (left)</span></label><output id="t-i1-out" for="t-i1">10 A</output><input type="range" id="t-i1" min="-20" max="20" step="1" value="10"></div>
+        <div class="ctl"><label for="t-i2"><span lang="sr">Struja I₂ (desno)</span><span lang="en">Current I₂ (right)</span></label><output id="t-i2-out" for="t-i2">10 A</output><input type="range" id="t-i2" min="-20" max="20" step="1" value="10"></div>
+        <div class="btns">
+          <div class="seg" id="t-pre" role="group" aria-label="Primeri / Presets">
+            <button type="button" data-v="same" aria-pressed="true"><span lang="sr">Isti smer</span><span lang="en">Same direction</span></button>
+            <button type="button" data-v="opp" aria-pressed="false"><span lang="sr">Suprotan smer</span><span lang="en">Opposite</span></button>
+            <button type="button" data-v="one" aria-pressed="false"><span lang="sr">Jedan provodnik</span><span lang="en">One wire</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="t-calc"></div><div class="result" id="t-result"></div></div>
+      <figcaption><span lang="sr">Pogled sa kraja na dva provodnika. ⊙ znači da struja izlazi iz crteža, ⊗ da ulazi. Narandžasta strelica je <span class="v">B</span><sub>1</sub>, ljubičasta <span class="v">B</span><sub>2</sub>, a bela je njihov vektorski zbir u tački P. Negativna struja znači suprotan smer.</span><span lang="en">An end-on view of two wires. ⊙ means the current comes out of the page, ⊗ that it goes in. The orange arrow is <span class="v">B</span><sub>1</sub>, the violet one <span class="v">B</span><sub>2</sub>, and the white one is their vector sum at the point P. A negative current means the opposite direction.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="zavojak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">prvi korak ka kalemu</span><span lang="en">the first step towards a coil</span></p>
+    <h2><span lang="sr">Kružni zavojak</span><span lang="en">A circular loop</span></h2>
+  </div>
+  <div class="grid wide">
+    <div class="intro">
+      <p lang="sr">Ako žicu savijemo u krug poluprečnika <span class="v">R</span>, polja svih delova žice se u <strong>centru</strong> zavojka sabiraju i usmerena su na istu stranu:</p>
+      <p lang="en">If we bend the wire into a circle of radius <span class="v">R</span>, the fields from every part of the wire add up at the <strong>centre</strong> of the loop and all point the same way:</p>
+      <div class="formula">
+        <div class="tex">\[ B = \frac{\mu_0\, I}{2R} \]</div>
+        <dl class="legend">
+          <div><dt>R</dt><dd><span lang="sr">poluprečnik zavojka</span><span lang="en">radius of the loop</span></dd><span class="unit">m</span></div>
+        </dl>
+      </div>
+      <p lang="sr">Ako imamo kalem od <span class="v">N</span> tesno namotanih zavojaka istog poluprečnika, svaki doprinosi isto, pa je polje <span class="v">N</span> puta jače:</p>
+      <p lang="en">If we have a coil of <span class="v">N</span> tightly wound turns of the same radius, each one contributes equally, so the field is <span class="v">N</span> times stronger:</p>
+      <div class="formula"><div class="tex">\[ B = \frac{\mu_0\, N\, I}{2R} \]</div></div>
+      <div class="rule-box">
+        <p class="eyebrow"><span lang="sr">Smer polja kroz zavojak</span><span lang="en">Direction of the field through a loop</span></p>
+        <p lang="sr">Obuhvati zavojak desnom šakom tako da savijeni prsti prate smer struje. Ispruženi palac pokazuje smer polja kroz zavojak.</p>
+        <p lang="en">Wrap your right hand around the loop so your curled fingers follow the current. Your outstretched thumb points along the field through the loop.</p>
+      </div>
+      <p lang="sr">Zašto je polje u unutrašnjosti jako? Zamisli zavojak presečen po sredini. Presek izgleda kao dva provodnika sa suprotnim strujama (⊙ i ⊗). Iz Dela 3 znamo da se između provodnika sa suprotnim strujama polja <strong>sabiraju</strong>.</p>
+      <p lang="en">Why is the field inside strong? Imagine the loop cut through its middle. The cut looks like two wires with opposite currents (⊙ and ⊗). From Part 3 we know that between wires with opposite currents the fields <strong>add</strong>.</p>
+    </div>
+    <figure class="fig">
+      <svg class="dg" viewBox="0 0 320 230" role="img" aria-label="Kružni zavojak sa strujom I i poljem B u centru / circular loop with current I and field B at the centre">
+        <defs>
+          <marker id="lh1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" class="fillf"/></marker>
+          <marker id="lh2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" class="fillc"/></marker>
+        </defs>
+        <ellipse class="wc" cx="160" cy="135" rx="104" ry="38" style="stroke-width:4"/>
+        <path class="wc" d="M146 173 L174 173" marker-end="url(#lh2)" style="stroke-width:4"/>
+        <path class="wc" d="M262 128 L262 110" marker-end="url(#lh2)" style="stroke-width:4"/>
+        <path class="wc" d="M58 142 L58 160" marker-end="url(#lh2)" style="stroke-width:4"/>
+        <line class="wf" x1="160" y1="135" x2="160" y2="30" marker-end="url(#lh1)" style="stroke-width:3"/>
+        <line class="dash" x1="160" y1="135" x2="264" y2="135"/>
+        <circle class="fillk" cx="160" cy="135" r="3"/>
+        <text class="it fl" x="170" y="40">B</text>
+        <text class="it cu" x="190" y="196">I</text>
+        <text class="it" x="214" y="128">R</text>
+        <text class="sm mu" x="160" y="222" text-anchor="middle">B = μ₀·I / (2R)</text>
+      </svg>
+      <figcaption><span lang="sr">Zavojak sa strujom (narandžasto) i polje <span class="v">B</span> u njegovom centru (plavo). Struja ide suprotno od kazaljke na satu gledano odozgo, pa polje ide nagore.</span><span lang="en">A loop with a current (orange) and the field <span class="v">B</span> at its centre (blue). The current goes anticlockwise seen from above, so the field points up.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="ex">
+        <h4><span lang="sr">Primer 1 · polje pravog provodnika</span><span lang="en">Example 1 · field of a straight wire</span></h4>
+        <p class="given" lang="sr">Dato: kroz dugačak prav provodnik teče struja I = 15 A. Traži se B na rastojanju r = 5 cm.</p>
+        <p class="given" lang="en">Given: a current I = 15 A flows through a long straight wire. Find B at a distance r = 5 cm.</p>
+        <ol lang="sr">
+          <li>Rastojanje u metrima: <span class="u">r = 0,05 m</span>.</li>
+          <li>\( B = \dfrac{\mu_0 I}{2\pi r} = \dfrac{4\pi\cdot 10^{-7}\cdot 15}{2\pi\cdot 0{,}05} \)</li>
+          <li>Skratimo π: \( B = \dfrac{2\cdot 10^{-7}\cdot 15}{0{,}05} = 6\cdot 10^{-5}\ \mathrm{T} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Distance in metres: <span class="u">r = 0.05 m</span>.</li>
+          <li>\( B = \dfrac{\mu_0 I}{2\pi r} = \dfrac{4\pi\cdot 10^{-7}\cdot 15}{2\pi\cdot 0.05} \)</li>
+          <li>Cancel π: \( B = \dfrac{2\cdot 10^{-7}\cdot 15}{0.05} = 6\cdot 10^{-5}\ \mathrm{T} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">B = 60 μT, što je malo više od magnetnog polja Zemlje.</span><span lang="en">B = 60 μT, which is a little more than Earth's magnetic field.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 2 · koja struja je potrebna</span><span lang="en">Example 2 · which current is needed</span></h4>
+        <p class="given" lang="sr">Dato: B = 1 mT na rastojanju r = 4 cm od provodnika. Traži se I.</p>
+        <p class="given" lang="en">Given: B = 1 mT at a distance r = 4 cm from the wire. Find I.</p>
+        <ol lang="sr">
+          <li>Iz formule izrazimo struju: \( I = \dfrac{2\pi r B}{\mu_0} \).</li>
+          <li>Jedinice: <span class="u">r = 0,04 m</span>, <span class="u">B = 10<sup>−3</sup> T</span>.</li>
+          <li>\( I = \dfrac{2\pi\cdot 0{,}04\cdot 10^{-3}}{4\pi\cdot 10^{-7}} = \dfrac{0{,}04\cdot 10^{-3}}{2\cdot 10^{-7}} = 200\ \mathrm{A} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Solve the formula for the current: \( I = \dfrac{2\pi r B}{\mu_0} \).</li>
+          <li>Units: <span class="u">r = 0.04 m</span>, <span class="u">B = 10<sup>−3</sup> T</span>.</li>
+          <li>\( I = \dfrac{2\pi\cdot 0.04\cdot 10^{-3}}{4\pi\cdot 10^{-7}} = \dfrac{0.04\cdot 10^{-3}}{2\cdot 10^{-7}} = 200\ \mathrm{A} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">I = 200 A. Za jako polje je potrebna velika struja.</span><span lang="en">I = 200 A. A strong field needs a large current.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 3 · dva provodnika</span><span lang="en">Example 3 · two wires</span></h4>
+        <p class="given" lang="sr">Dato: dva paralelna provodnika na rastojanju 10 cm, u svakom teče 10 A. Traži se ukupno B na sredini između njih ako su struje (a) istog smera, (b) suprotnog smera.</p>
+        <p class="given" lang="en">Given: two parallel wires 10 cm apart, each carrying 10 A. Find the total B at the midpoint between them if the currents are (a) in the same direction, (b) in opposite directions.</p>
+        <ol lang="sr">
+          <li>Svaki provodnik je na rastojanju <span class="u">r = 0,05 m</span> od sredine.</li>
+          <li>\( B_1 = B_2 = \dfrac{2\cdot 10^{-7}\cdot 10}{0{,}05} = 4\cdot 10^{-5}\ \mathrm{T} = 40\ \mu\mathrm{T} \)</li>
+          <li>(a) Isti smer: u tački između provodnika polja imaju suprotan smer, pa \( B = B_1 - B_2 = 0 \).</li>
+          <li>(b) Suprotan smer: polja imaju isti smer, pa \( B = B_1 + B_2 = 80\ \mu\mathrm{T} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>Each wire is at a distance <span class="u">r = 0.05 m</span> from the midpoint.</li>
+          <li>\( B_1 = B_2 = \dfrac{2\cdot 10^{-7}\cdot 10}{0.05} = 4\cdot 10^{-5}\ \mathrm{T} = 40\ \mu\mathrm{T} \)</li>
+          <li>(a) Same direction: at a point between the wires the fields point in opposite ways, so \( B = B_1 - B_2 = 0 \).</li>
+          <li>(b) Opposite directions: the fields point the same way, so \( B = B_1 + B_2 = 80\ \mu\mathrm{T} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">(a) B = 0, (b) B = 80 μT</span><span lang="en">(a) B = 0, (b) B = 80 μT</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 4 · kalem od zavojaka</span><span lang="en">Example 4 · a coil of turns</span></h4>
+        <p class="given" lang="sr">Dato: kružni kalem poluprečnika R = 5 cm sa N = 100 zavojaka, struja I = 2 A. Traži se B u centru.</p>
+        <p class="given" lang="en">Given: a circular coil of radius R = 5 cm with N = 100 turns, current I = 2 A. Find B at the centre.</p>
+        <ol lang="sr">
+          <li><span class="u">R = 0,05 m</span>.</li>
+          <li>\( B = \dfrac{\mu_0 N I}{2R} = \dfrac{4\pi\cdot 10^{-7}\cdot 100\cdot 2}{2\cdot 0{,}05} \)</li>
+          <li>\( B = \dfrac{4\pi\cdot 10^{-7}\cdot 200}{0{,}1} = 2{,}51\cdot 10^{-3}\ \mathrm{T} \)</li>
+        </ol>
+        <ol lang="en">
+          <li><span class="u">R = 0.05 m</span>.</li>
+          <li>\( B = \dfrac{\mu_0 N I}{2R} = \dfrac{4\pi\cdot 10^{-7}\cdot 100\cdot 2}{2\cdot 0.05} \)</li>
+          <li>\( B = \dfrac{4\pi\cdot 10^{-7}\cdot 200}{0.1} = 2.51\cdot 10^{-3}\ \mathrm{T} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">B ≈ 2,5 mT, oko 50 puta jače od polja Zemlje.</span><span lang="en">B ≈ 2.5 mT, about 50 times stronger than Earth's field.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <ul class="pitfalls" lang="sr">
+        <li><div><b>Centimetri u formuli.</b> Rastojanje mora u metre. Ako zameniš 5 umesto 0,05, polje ispadne sto puta slabije.</div></li>
+        <li><div><b>Zaboravljeno 2π.</b> U imeniocu je 2π<span class="v">r</span>, a ne samo <span class="v">r</span>. Ako staviš μ<sub>0</sub> = 4π·10⁻⁷, jedno π se skrati i ostaje 2·10⁻⁷.</div></li>
+        <li><div><b>1/r², a ne 1/r.</b> Kod pravog provodnika polje opada kao 1/<span class="v">r</span>, ne kao 1/<span class="v">r</span>². Kvadrat se javlja kod tačkastog naelektrisanja.</div></li>
+        <li><div><b>Smer linija.</b> Linije polja nisu radijalne, nego kružne. Vektor <span class="v">B</span> je uvek tangenta na krug, a ne usmeren ka provodniku ili od njega.</div></li>
+        <li><div><b>Sabiranje intenziteta.</b> Dva polja se sabiraju kao vektori. Prvo odredi smer svakog polja u tački, pa tek onda sabiraj ili oduzimaj jačine.</div></li>
+      </ul>
+      <ul class="pitfalls" lang="en">
+        <li><div><b>Centimetres in the formula.</b> The distance must be in metres. If you substitute 5 instead of 0.05, the field comes out a hundred times too weak.</div></li>
+        <li><div><b>Forgetting 2π.</b> The denominator is 2π<span class="v">r</span>, not just <span class="v">r</span>. If you put μ<sub>0</sub> = 4π·10⁻⁷, one π cancels and 2·10⁻⁷ remains.</div></li>
+        <li><div><b>1/r², not 1/r.</b> For a straight wire the field falls as 1/<span class="v">r</span>, not 1/<span class="v">r</span>². The square appears for a point charge.</div></li>
+        <li><div><b>Direction of the lines.</b> Field lines are not radial but circular. The vector <span class="v">B</span> is always a tangent to the circle, never pointing towards or away from the wire.</div></li>
+        <li><div><b>Adding magnitudes.</b> Two fields add as vectors. First find the direction of each field at the point, and only then add or subtract the magnitudes.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="summary">
+        <ul lang="sr">
+          <li>Struja stvara magnetno polje (Erstedov ogled). Linije polja pravog provodnika su koncentrični krugovi, smer daje pravilo desne ruke.</li>
+          <li>Pravi provodnik: \( B = \dfrac{\mu_0 I}{2\pi r} \). Polje je srazmerno struji i obrnuto srazmerno rastojanju.</li>
+          <li>Polja više provodnika sabiraju se kao vektori (superpozicija). Isti smer struja: polja se između provodnika poništavaju. Suprotan smer: sabiraju se.</li>
+          <li>Kružni zavojak, centar: \( B = \dfrac{\mu_0 I}{2R} \), a za <span class="v">N</span> zavojaka \( B = \dfrac{\mu_0 N I}{2R} \).</li>
+          <li>μ<sub>0</sub> = 4π·10⁻⁷ T·m/A. Rastojanja uvek u metrima.</li>
+        </ul>
+        <ul lang="en">
+          <li>A current creates a magnetic field (Ørsted's experiment). The field lines of a straight wire are concentric circles, with the direction from the right-hand rule.</li>
+          <li>Straight wire: \( B = \dfrac{\mu_0 I}{2\pi r} \). The field is proportional to the current and inversely proportional to the distance.</li>
+          <li>The fields of several wires add as vectors (superposition). Currents in the same direction: the fields cancel between the wires. Opposite directions: they add.</li>
+          <li>Circular loop, centre: \( B = \dfrac{\mu_0 I}{2R} \), and for <span class="v">N</span> turns \( B = \dfrac{\mu_0 N I}{2R} \).</li>
+          <li>μ<sub>0</sub> = 4π·10⁻⁷ T·m/A. Distances always in metres.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" data-test="FIZ03" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/magnetno-polje-provodnika.js"></script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Amperova sila: sila magnetnog polja na provodnik sa strujom, pravilo leve ruke, zavisnost od ugla i sila između dva paralelna provodnika.">
+<title>Amperova sila · lav</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="amperova-sila">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr">
+      <li>objasniš zašto magnetno polje deluje silom na provodnik sa strujom;</li>
+      <li>izračunaš silu <span class="v">F</span> = <span class="v">B I l</span> sin <span class="v">α</span> i proveriš jedinice;</li>
+      <li>pravilom leve ruke odrediš smer sile, i kada je provodnik prikazan sa kraja (⊙ i ⊗);</li>
+      <li>kažeš kada je sila najveća, a kada jednaka nuli;</li>
+      <li>objasniš zašto se dva paralelna provodnika privlače ili odbijaju i izračunaš silu po metru dužine.</li>
+    </ul>
+    <ul lang="en">
+      <li>explain why a magnetic field exerts a force on a wire carrying a current;</li>
+      <li>calculate the force <span class="v">F</span> = <span class="v">B I l</span> sin <span class="v">α</span> and check the units;</li>
+      <li>use the left-hand rule to find the direction of the force, also when the wire is shown end-on (⊙ and ⊗);</li>
+      <li>say when the force is largest and when it is zero;</li>
+      <li>explain why two parallel wires attract or repel each other and calculate the force per metre of length.</li>
+    </ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="sila" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">oznaka F · jedinica njutn (N)</span><span lang="en">symbol F · unit newton (N)</span></p>
+    <h2><span lang="sr">Sila na provodnik sa strujom</span><span lang="en">The force on a current-carrying wire</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Struja je kretanje naelektrisanih čestica. Kada se one kreću u magnetnom polju, polje na svaku od njih deluje silom, a zbir tih sila deluje na ceo provodnik. To je <strong>Amperova sila</strong>. Provodnik u kome nema struje, ili koji miruje van polja, nema na šta da deluje.</p>
+      <p lang="en">A current is the motion of charged particles. When they move in a magnetic field, the field exerts a force on each of them, and the sum of those forces acts on the whole wire. This is the <strong>Ampère force</strong>. A wire with no current, or one outside the field, has nothing to act on.</p>
+      <div class="formula">
+        <div class="tex">\[ F = B\,I\,l\,\sin\alpha \]</div>
+        <dl class="legend">
+          <div><dt>F</dt><dd><span lang="sr">sila na provodnik</span><span lang="en">force on the wire</span></dd><span class="unit">N</span></div>
+          <div><dt>B</dt><dd><span lang="sr">magnetna indukcija polja</span><span lang="en">magnetic induction of the field</span></dd><span class="unit">T</span></div>
+          <div><dt>I</dt><dd><span lang="sr">jačina struje</span><span lang="en">current</span></dd><span class="unit">A</span></div>
+          <div><dt>l</dt><dd><span lang="sr">dužina dela provodnika koji je u polju</span><span lang="en">length of the part of the wire that is in the field</span></dd><span class="unit">m</span></div>
+          <div><dt>α</dt><dd><span lang="sr">ugao između provodnika (smera struje) i linija polja</span><span lang="en">angle between the wire (direction of the current) and the field lines</span></dd><span class="unit">°</span></div>
+        </dl>
+      </div>
+      <p lang="sr">Za provodnik koji je normalan na polje je <span class="v">α</span> = 90°, sin <span class="v">α</span> = 1, pa je sila najveća: <span class="v">F</span> = <span class="v">B I l</span>. Iz ove formule sledi da je tesla jedinica <strong>N/(A·m)</strong>.</p>
+      <p lang="en">For a wire perpendicular to the field <span class="v">α</span> = 90°, sin <span class="v">α</span> = 1, so the force is largest: <span class="v">F</span> = <span class="v">B I l</span>. This formula shows that the tesla is the unit <strong>N/(A·m)</strong>.</p>
+      <div class="rule-box">
+        <p class="eyebrow"><span lang="sr">Pravilo leve ruke</span><span lang="en">Left-hand rule</span></p>
+        <p lang="sr">Postavi levu ruku tako da linije polja ulaze u dlan, a ispruženi prsti pokazuju smer struje. Palac, ispružen u stranu, pokazuje smer sile.</p>
+        <p lang="en">Hold your left hand so the field lines enter your palm and your outstretched fingers point along the current. Your thumb, held out to the side, shows the direction of the force.</p>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-rod">
+      <div class="viewport"><canvas tabindex="0" aria-label="3D model: šipka na šinama u magnetnom polju / a rod on rails in a magnetic field"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje</span><span lang="en">Drag to rotate</span></span></div>
+      <div class="controls">
+        <div class="ctl"><label for="r-b"><span lang="sr">Indukcija B</span><span lang="en">Induction B</span></label><output id="r-b-out" for="r-b">0,5 T</output><input type="range" id="r-b" min="0.1" max="1" step="0.1" value="0.5"></div>
+        <div class="ctl"><label for="r-i"><span lang="sr">Struja I</span><span lang="en">Current I</span></label><output id="r-i-out" for="r-i">5 A</output><input type="range" id="r-i" min="0" max="10" step="1" value="5"></div>
+        <div class="btns"><button type="button" class="btn" id="r-flip">⇄ <span lang="sr">Obrni smer struje</span><span lang="en">Reverse the current</span></button></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="r-calc"></div><div class="result" id="r-result"></div></div>
+      <figcaption><span lang="sr">Metalna šipka (m = 50 g) leži na dve šine koje su na rastojanju l = 20 cm. Polje B ide naviše. Kada kroz šipku teče struja, sila je kotrlja duž šina. Kretanje je usporeno oko 5 puta da bi se videlo. Obrni struju i šipka ide na drugu stranu.</span><span lang="en">A metal rod (m = 50 g) lies on two rails l = 20 cm apart. The field B points upwards. When a current flows through the rod, the force rolls it along the rails. The motion is slowed down about 5 times so you can see it. Reverse the current and the rod goes the other way.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <p lang="sr">Na crtežima često gledamo provodnik „sa kraja”. Ako je polje u ravni crteža, a struja izlazi ili ulazi, sila je u ravni crteža i normalna na polje:</p>
+      <p lang="en">In drawings we often look at the wire "end-on". If the field is in the plane of the page and the current comes out of or goes into the page, the force is in the plane of the page and perpendicular to the field:</p>
+      <div class="xsec">
+        <figure>
+          <svg class="dg" viewBox="0 0 150 150" role="img" aria-label="B →, I ⊙, F ↑">
+            <defs>
+              <marker id="ax1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="fillf"/></marker>
+              <marker id="ax2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:#c8921a"/></marker>
+            </defs>
+            <g class="wf"><line x1="8" y1="30" x2="142" y2="30" marker-end="url(#ax1)"/><line x1="8" y1="75" x2="52" y2="75" marker-end="url(#ax1)"/><line x1="98" y1="75" x2="142" y2="75" marker-end="url(#ax1)"/><line x1="8" y1="120" x2="142" y2="120" marker-end="url(#ax1)"/></g>
+            <circle class="xs-wire" cx="75" cy="75" r="13"/><circle class="xs-dot" cx="75" cy="75" r="3.6"/>
+            <line x1="75" y1="58" x2="75" y2="20" marker-end="url(#ax2)" style="stroke:#c8921a;stroke-width:3.2;fill:none"/>
+            <text class="it fl" x="14" y="21">B</text>
+            <text class="it" x="84" y="30" style="fill:#c8921a">F</text>
+          </svg>
+          <figcaption><span lang="sr">Polje udesno, struja izlazi (⊙): sila je naviše.</span><span lang="en">Field to the right, current out (⊙): the force is upwards.</span></figcaption>
+        </figure>
+        <figure>
+          <svg class="dg" viewBox="0 0 150 150" role="img" aria-label="B →, I ⊗, F ↓">
+            <g class="wf"><line x1="8" y1="30" x2="142" y2="30" marker-end="url(#ax1)"/><line x1="8" y1="75" x2="52" y2="75" marker-end="url(#ax1)"/><line x1="98" y1="75" x2="142" y2="75" marker-end="url(#ax1)"/><line x1="8" y1="120" x2="142" y2="120" marker-end="url(#ax1)"/></g>
+            <circle class="xs-wire" cx="75" cy="75" r="13"/><path class="xs-mark" d="M68 68 L82 82 M82 68 L68 82"/>
+            <line x1="75" y1="92" x2="75" y2="130" marker-end="url(#ax2)" style="stroke:#c8921a;stroke-width:3.2;fill:none"/>
+            <text class="it fl" x="14" y="21">B</text>
+            <text class="it" x="84" y="138" style="fill:#c8921a">F</text>
+          </svg>
+          <figcaption><span lang="sr">Polje udesno, struja ulazi (⊗): sila je naniže.</span><span lang="en">Field to the right, current in (⊗): the force is downwards.</span></figcaption>
+        </figure>
+      </div>
+      <p lang="sr">Ako obrneš struju ili polje, sila menja smer. Ako obrneš oba odjednom, smer sile ostaje isti.</p>
+      <p lang="en">If you reverse the current or the field, the force reverses. If you reverse both at once, the direction of the force stays the same.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="ugao" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">sin α</span><span lang="en">sin α</span></p>
+    <h2><span lang="sr">Kako sila zavisi od ugla</span><span lang="en">How the force depends on the angle</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Samo komponenta struje koja je <strong>normalna na polje</strong> daje silu. Zato se u formuli pojavljuje sin <span class="v">α</span>, gde je <span class="v">α</span> ugao između provodnika i linija polja.</p>
+      <p lang="en">Only the component of the current that is <strong>perpendicular to the field</strong> gives a force. That is why sin <span class="v">α</span> appears in the formula, where <span class="v">α</span> is the angle between the wire and the field lines.</p>
+      <div class="cases three">
+        <div><p class="h">α = 0°</p><p><span class="v">F</span> = 0</p><p class="note" lang="sr">Provodnik je paralelan sa poljem. Nema sile.</p><p class="note" lang="en">The wire is parallel to the field. No force.</p></div>
+        <div><p class="h">α = 30°</p><p><span class="v">F</span> = ½ <span class="v">B I l</span></p><p class="note" lang="sr">sin 30° = 0,5, polovina najveće sile.</p><p class="note" lang="en">sin 30° = 0.5, half of the maximum force.</p></div>
+        <div><p class="h">α = 90°</p><p><span class="v">F</span> = <span class="v">B I l</span></p><p class="note" lang="sr">Provodnik je normalan na polje. Sila je najveća.</p><p class="note" lang="en">The wire is perpendicular to the field. The force is largest.</p></div>
+      </div>
+      <p lang="sr">Smer sile je uvek <strong>normalan i na provodnik i na polje</strong>. Sila nikada nije paralelna sa poljem, niti sa strujom.</p>
+      <p lang="en">The force is always <strong>perpendicular to both the wire and the field</strong>. It is never parallel to the field or to the current.</p>
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: provodnik dužine 20 cm nalazi se u polju od 0,5 T, a kroz njega teče 5 A. Pod kojim uglom je sila jednaka nuli?</span><span lang="en">Think first: a 20 cm wire sits in a 0.5 T field and carries 5 A. At which angle is the force zero?</span></summary>
+        <div class="ans">
+          <p lang="sr">Za α = 0° (i 180°), kada je provodnik paralelan sa linijama polja. Bez obzira na to koliko su veliki <span class="v">B</span> i <span class="v">I</span>, sin 0° = 0.</p>
+          <p lang="en">At α = 0° (and 180°), when the wire is parallel to the field lines. No matter how large <span class="v">B</span> and <span class="v">I</span> are, sin 0° = 0.</p>
+        </div>
+      </details>
+    </div>
+
+    <figure class="lab" id="lab-ang">
+      <div class="plot"><canvas aria-label="Grafik F(α) / graph of F(α)"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="g-a"><span lang="sr">Ugao α</span><span lang="en">Angle α</span></label><output id="g-a-out" for="g-a">30°</output><input type="range" id="g-a" min="0" max="180" step="1" value="30"></div>
+        <div class="ctl"><label for="g-b"><span lang="sr">Indukcija B</span><span lang="en">Induction B</span></label><output id="g-b-out" for="g-b">0,5 T</output><input type="range" id="g-b" min="0.1" max="1" step="0.1" value="0.5"></div>
+        <div class="ctl"><label for="g-i"><span lang="sr">Struja I</span><span lang="en">Current I</span></label><output id="g-i-out" for="g-i">5 A</output><input type="range" id="g-i" min="1" max="10" step="1" value="5"></div>
+        <div class="ctl"><label for="g-l"><span lang="sr">Dužina l</span><span lang="en">Length l</span></label><output id="g-l-out" for="g-l">20 cm</output><input type="range" id="g-l" min="5" max="50" step="5" value="20"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="g-calc"></div><div class="result" id="g-result"></div></div>
+      <figcaption><span lang="sr">Grafik pokazuje F u zavisnosti od ugla. Najviša tačka je B·I·l. Pomeraj ugao i vidi gde je sila nula, a gde najveća.</span><span lang="en">The graph shows F as a function of the angle. The highest point is B·I·l. Move the angle and see where the force is zero and where it is largest.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="paralelni" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">struje deluju jedna na drugu</span><span lang="en">currents act on each other</span></p>
+    <h2><span lang="sr">Dva paralelna provodnika</span><span lang="en">Two parallel wires</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Prvi provodnik stvara magnetno polje <span class="v">B</span><sub>1</sub> = <span class="v">μ</span><sub>0</sub><span class="v">I</span><sub>1</sub> / (2π<span class="v">d</span>) na mestu drugog provodnika. To polje deluje Amperovom silom na struju <span class="v">I</span><sub>2</sub>. Isto važi i obrnuto, pa provodnici deluju jedan na drugi silama jednakog intenziteta i suprotnog smera (zakon akcije i reakcije).</p>
+      <p lang="en">The first wire creates a magnetic field <span class="v">B</span><sub>1</sub> = <span class="v">μ</span><sub>0</sub><span class="v">I</span><sub>1</sub> / (2π<span class="v">d</span>) at the position of the second wire. That field acts on the current <span class="v">I</span><sub>2</sub> through the Ampère force. The same holds the other way round, so the wires act on each other with forces of equal magnitude and opposite direction (action and reaction).</p>
+      <p lang="sr">Polje je normalno na provodnik, pa je <span class="v">α</span> = 90° i sila na dužinu <span class="v">l</span> je <span class="v">F</span> = <span class="v">B</span><sub>1</sub><span class="v">I</span><sub>2</sub><span class="v">l</span>. Sila po jedinici dužine je:</p>
+      <p lang="en">The field is perpendicular to the wire, so <span class="v">α</span> = 90° and the force on a length <span class="v">l</span> is <span class="v">F</span> = <span class="v">B</span><sub>1</sub><span class="v">I</span><sub>2</sub><span class="v">l</span>. The force per unit length is:</p>
+      <div class="formula">
+        <div class="tex">\[ \frac{F}{l} = \frac{\mu_0\, I_1\, I_2}{2\pi\, d} \]</div>
+        <dl class="legend">
+          <div><dt>F/l</dt><dd><span lang="sr">sila po jedinici dužine</span><span lang="en">force per unit length</span></dd><span class="unit">N/m</span></div>
+          <div><dt>I<sub>1</sub>, I<sub>2</sub></dt><dd><span lang="sr">struje u provodnicima</span><span lang="en">currents in the wires</span></dd><span class="unit">A</span></div>
+          <div><dt>d</dt><dd><span lang="sr">rastojanje između provodnika</span><span lang="en">distance between the wires</span></dd><span class="unit">m</span></div>
+        </dl>
+      </div>
+      <div class="rule-box green">
+        <p class="eyebrow"><span lang="sr">Isti smer privlači</span><span lang="en">Same direction attracts</span></p>
+        <p lang="sr">Struje <strong>istog smera</strong> se privlače. Struje <strong>suprotnog smera</strong> se odbijaju. (Kod naelektrisanja je obrnuto: istoimena se odbijaju.)</p>
+        <p lang="en">Currents in the <strong>same direction</strong> attract. Currents in <strong>opposite directions</strong> repel. (For electric charges it is the other way round: like charges repel.)</p>
+      </div>
+      <p lang="sr">Ova pojava je nekada služila za definiciju ampera: struja koja kroz dva beskonačno dugačka provodnika na rastojanju 1 m daje silu 2·10⁻⁷ N po metru dužine iznosi 1 A. Danas se amper definiše preko elementarnog naelektrisanja, ali ta vrednost sile i dalje važi.</p>
+      <p lang="en">This effect was once used to define the ampere: the current that gives a force of 2·10⁻⁷ N per metre of length in two infinitely long wires 1 m apart is 1 A. Today the ampere is defined through the elementary charge, but that value of the force still holds.</p>
+    </div>
+
+    <figure class="lab" id="lab-par">
+      <div class="viewport"><canvas tabindex="0" aria-label="2D model: dva paralelna provodnika / two parallel wires"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="p-i1"><span lang="sr">Struja I₁ (levo)</span><span lang="en">Current I₁ (left)</span></label><output id="p-i1-out" for="p-i1">10 A</output><input type="range" id="p-i1" min="-20" max="20" step="1" value="10"></div>
+        <div class="ctl"><label for="p-i2"><span lang="sr">Struja I₂ (desno)</span><span lang="en">Current I₂ (right)</span></label><output id="p-i2-out" for="p-i2">10 A</output><input type="range" id="p-i2" min="-20" max="20" step="1" value="10"></div>
+        <div class="ctl"><label for="p-d"><span lang="sr">Rastojanje d</span><span lang="en">Distance d</span></label><output id="p-d-out" for="p-d">5 cm</output><input type="range" id="p-d" min="2" max="10" step="0.5" value="5"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="p-calc"></div><div class="result" id="p-result"></div></div>
+      <figcaption><span lang="sr">Pogled sa kraja. Plava strelica je polje <span class="v">B</span><sub>1</sub> prvog provodnika na mestu drugog (i obrnuto), a žuta strelica je Amperova sila na provodnik. Strelice sile su srazmerne jačini sile.</span><span lang="en">An end-on view. The blue arrow is the field <span class="v">B</span><sub>1</sub> of the first wire at the position of the second (and vice versa), and the yellow arrow is the Ampère force on the wire. The force arrows are proportional to the strength of the force.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="ex">
+        <h4><span lang="sr">Primer 1 · provodnik normalan na polje</span><span lang="en">Example 1 · a wire perpendicular to the field</span></h4>
+        <p class="given" lang="sr">Dato: B = 0,8 T, I = 6 A, l = 15 cm, provodnik je normalan na linije polja. Traži se F.</p>
+        <p class="given" lang="en">Given: B = 0.8 T, I = 6 A, l = 15 cm, the wire is perpendicular to the field lines. Find F.</p>
+        <ol lang="sr">
+          <li>Dužina u metrima: <span class="u">l = 0,15 m</span>.</li>
+          <li>Normalan provodnik znači α = 90°, pa je sin α = 1.</li>
+          <li>\( F = B\,I\,l\,\sin\alpha = 0{,}8\cdot 6\cdot 0{,}15\cdot 1 = 0{,}72\ \mathrm{N} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Length in metres: <span class="u">l = 0.15 m</span>.</li>
+          <li>A perpendicular wire means α = 90°, so sin α = 1.</li>
+          <li>\( F = B\,I\,l\,\sin\alpha = 0.8\cdot 6\cdot 0.15\cdot 1 = 0.72\ \mathrm{N} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">F = 0,72 N</span><span lang="en">F = 0.72 N</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 2 · nagnut provodnik</span><span lang="en">Example 2 · a tilted wire</span></h4>
+        <p class="given" lang="sr">Dato: B = 0,5 T, I = 10 A, l = 40 cm, ugao između provodnika i polja je α = 30°. Traži se F.</p>
+        <p class="given" lang="en">Given: B = 0.5 T, I = 10 A, l = 40 cm, the angle between the wire and the field is α = 30°. Find F.</p>
+        <ol lang="sr">
+          <li><span class="u">l = 0,4 m</span>, sin 30° = 0,5.</li>
+          <li>\( F = 0{,}5\cdot 10\cdot 0{,}4\cdot 0{,}5 = 1\ \mathrm{N} \)</li>
+        </ol>
+        <ol lang="en">
+          <li><span class="u">l = 0.4 m</span>, sin 30° = 0.5.</li>
+          <li>\( F = 0.5\cdot 10\cdot 0.4\cdot 0.5 = 1\ \mathrm{N} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">F = 1 N. Da je provodnik normalan na polje, sila bi bila 2 N.</span><span lang="en">F = 1 N. If the wire were perpendicular to the field, the force would be 2 N.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 3 · ubrzanje šipke</span><span lang="en">Example 3 · acceleration of a rod</span></h4>
+        <p class="given" lang="sr">Dato: šipka mase m = 40 g i dužine l = 20 cm leži normalno na polje B = 0,4 T. Struja je I = 5 A. Zanemari trenje. Traži se ubrzanje.</p>
+        <p class="given" lang="en">Given: a rod of mass m = 40 g and length l = 20 cm lies perpendicular to a field B = 0.4 T. The current is I = 5 A. Ignore friction. Find the acceleration.</p>
+        <ol lang="sr">
+          <li>Jedinice: <span class="u">m = 0,04 kg</span>, <span class="u">l = 0,2 m</span>.</li>
+          <li>\( F = B\,I\,l = 0{,}4\cdot 5\cdot 0{,}2 = 0{,}4\ \mathrm{N} \)</li>
+          <li>Drugi Njutnov zakon: \( a = \dfrac{F}{m} = \dfrac{0{,}4}{0{,}04} = 10\ \mathrm{m/s^2} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Units: <span class="u">m = 0.04 kg</span>, <span class="u">l = 0.2 m</span>.</li>
+          <li>\( F = B\,I\,l = 0.4\cdot 5\cdot 0.2 = 0.4\ \mathrm{N} \)</li>
+          <li>Newton's second law: \( a = \dfrac{F}{m} = \dfrac{0.4}{0.04} = 10\ \mathrm{m/s^2} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">a = 10 m/s², približno kao slobodan pad.</span><span lang="en">a = 10 m/s², about the same as free fall.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 4 · dva provodnika</span><span lang="en">Example 4 · two wires</span></h4>
+        <p class="given" lang="sr">Dato: dva paralelna provodnika na rastojanju d = 2 cm, u oba teče I = 50 A u istom smeru. Traži se sila po metru dužine i da li se privlače ili odbijaju.</p>
+        <p class="given" lang="en">Given: two parallel wires d = 2 cm apart, both carrying I = 50 A in the same direction. Find the force per metre of length and whether they attract or repel.</p>
+        <ol lang="sr">
+          <li><span class="u">d = 0,02 m</span>.</li>
+          <li>\( \dfrac{F}{l} = \dfrac{\mu_0 I_1 I_2}{2\pi d} = \dfrac{2\cdot 10^{-7}\cdot 50\cdot 50}{0{,}02} = 0{,}025\ \mathrm{N/m} \)</li>
+          <li>Struje su istog smera, pa se provodnici privlače.</li>
+        </ol>
+        <ol lang="en">
+          <li><span class="u">d = 0.02 m</span>.</li>
+          <li>\( \dfrac{F}{l} = \dfrac{\mu_0 I_1 I_2}{2\pi d} = \dfrac{2\cdot 10^{-7}\cdot 50\cdot 50}{0.02} = 0.025\ \mathrm{N/m} \)</li>
+          <li>The currents are in the same direction, so the wires attract.</li>
+        </ol>
+        <p class="answer"><span lang="sr">F/l = 25 mN/m, privlačenje.</span><span lang="en">F/l = 25 mN/m, attraction.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <ul class="pitfalls" lang="sr">
+        <li><div><b>Sila nije duž polja.</b> Amperova sila je uvek normalna na linije polja. Ne očekuj da provodnik „klizi” duž linija polja.</div></li>
+        <li><div><b>Pogrešan ugao.</b> U formuli je α ugao između provodnika i polja. Ako je provodnik normalan na polje, α = 90°, a ne 0°.</div></li>
+        <li><div><b>Centimetri.</b> Dužinu provodnika pretvori u metre pre računanja.</div></li>
+        <li><div><b>Dužina u polju.</b> Računa se samo deo provodnika koji je u polju, ne cela dužina žice.</div></li>
+        <li><div><b>Leva ili desna ruka.</b> Za silu koristimo pravilo leve ruke. Pravilo desne ruke koristimo za smer polja oko provodnika.</div></li>
+        <li><div><b>Paralelne struje.</b> Istosmerne struje se privlače, suprotnosmerne odbijaju. Kod naelektrisanja je obrnuto, pa lako dođe do zabune.</div></li>
+      </ul>
+      <ul class="pitfalls" lang="en">
+        <li><div><b>The force is not along the field.</b> The Ampère force is always perpendicular to the field lines. Do not expect the wire to "slide" along the field lines.</div></li>
+        <li><div><b>Wrong angle.</b> In the formula α is the angle between the wire and the field. If the wire is perpendicular to the field, α = 90°, not 0°.</div></li>
+        <li><div><b>Centimetres.</b> Convert the length of the wire to metres before calculating.</div></li>
+        <li><div><b>Length in the field.</b> Only the part of the wire that is in the field counts, not the whole length of the wire.</div></li>
+        <li><div><b>Left or right hand.</b> For the force we use the left-hand rule. The right-hand rule is for the direction of the field around a wire.</div></li>
+        <li><div><b>Parallel currents.</b> Currents in the same direction attract, in opposite directions repel. For electric charges it is the other way round, so it is easy to mix up.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="summary">
+        <ul lang="sr">
+          <li>Magnetno polje deluje na provodnik sa strujom Amperovom silom: \( F = B\,I\,l\,\sin\alpha \). 1 T = 1 N/(A·m).</li>
+          <li>Sila je najveća za α = 90°, a nula za provodnik paralelan sa poljem (α = 0°).</li>
+          <li>Smer sile daje pravilo leve ruke. Sila je normalna i na provodnik i na polje.</li>
+          <li>Dva paralelna provodnika: \( \dfrac{F}{l} = \dfrac{\mu_0 I_1 I_2}{2\pi d} \). Istosmerne struje se privlače, suprotnosmerne odbijaju.</li>
+        </ul>
+        <ul lang="en">
+          <li>A magnetic field exerts the Ampère force on a current-carrying wire: \( F = B\,I\,l\,\sin\alpha \). 1 T = 1 N/(A·m).</li>
+          <li>The force is largest for α = 90° and zero for a wire parallel to the field (α = 0°).</li>
+          <li>The direction of the force is given by the left-hand rule. The force is perpendicular to both the wire and the field.</li>
+          <li>Two parallel wires: \( \dfrac{F}{l} = \dfrac{\mu_0 I_1 I_2}{2\pi d} \). Currents in the same direction attract, in opposite directions repel.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" data-test="FIZ05" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/amperova-sila.js"></script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Grecov (mosni) usmerivač: putanja struje kroz četiri diode u obe poluperiode, napon, talasanje i inverzni napon, poređenje sa poluperiodnim usmerivačem i usmerivačem sa srednjim izvodom, napajanje 5 V sa stabilizatorom.">
+<title>Grecov usmerivač · lav</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="grecov-usmerivac">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr">
+      <li>objasniš kako četiri diode u mostu koriste obe poluperiode i pratiš putanju struje u svakoj od njih;</li>
+      <li>izračunaš \( U_{dc} = 2U_m/\pi \), \( U_{ef} = U_m/\sqrt{2} \), učestanost talasanja 100 Hz i inverzni napon diode;</li>
+      <li>uporediš poluperiodni usmerivač, usmerivač sa srednjim izvodom i mosni usmerivač;</li>
+      <li>proceniš talasanje \( \Delta u \approx I/(2fC) \) i izabereš kondenzator i diode;</li>
+      <li>proveriš da li stabilizator 7805 ostaje u regulaciji i koliko se greje;</li>
+      <li>prepoznaš prekinutu diodu u mostu po talasanju od 50 Hz.</li>
+    </ul>
+    <ul lang="en">
+      <li>explain how four diodes in a bridge use both half-cycles and follow the current path in each of them;</li>
+      <li>calculate \( U_{dc} = 2U_m/\pi \), \( U_{rms} = U_m/\sqrt{2} \), the ripple frequency of 100 Hz and the reverse voltage of a diode;</li>
+      <li>compare the half-wave rectifier, the centre-tap rectifier and the bridge rectifier;</li>
+      <li>estimate the ripple \( \Delta u \approx I/(2fC) \) and choose the capacitor and the diodes;</li>
+      <li>check whether a 7805 regulator stays in regulation and how hot it gets;</li>
+      <li>recognise an open diode in a bridge by a ripple of 50 Hz.</li>
+    </ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="most" data-toc data-toc-sr="Mosni spoj" data-toc-en="The bridge">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">iskoristi obe poluperiode</span><span lang="en">use both half-cycles</span></p>
+    <h2><span lang="sr">Grecov (mosni) usmerivač</span><span lang="en">The Graetz (bridge) rectifier</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Poluperiodni usmerivač baca polovinu svake periode. Prirodno pitanje je: može li se i <em>negativna</em> poluperioda „okrenuti” i iskoristiti? Može, pomoću četiri diode vezane u obliku romba. To je <strong>Grecov</strong> ili <strong>mosni usmerivač</strong> (po nemačkom fizičaru Leu Grecu, engl. <em>Graetz</em>).</p>
+      <p lang="en">A half-wave rectifier throws away half of every period. A natural question is: can the <em>negative</em> half-cycle be "turned over" and used too? It can, with four diodes connected in a diamond. This is the <strong>Graetz</strong> or <strong>bridge rectifier</strong> (after the German physicist Leo Graetz).</p>
+      <p lang="sr">Most ima dva <strong>naizmenična</strong> priključka (ka izvoru) i dva <strong>jednosmerna</strong> (ka opterećenju). Diode su vezane tako da se kraj izvora koji je trenutno pozitivan uvek spaja sa plusom opterećenja, a negativan sa minusom:</p>
+      <p lang="en">The bridge has two <strong>alternating</strong> terminals (to the source) and two <strong>direct</strong> ones (to the load). The diodes are connected so that the end of the source that is currently positive is always joined to the plus of the load, and the negative one to the minus:</p>
+      <ul class="plain" lang="sr">
+        <li><strong>Gornji kraj izvora je +</strong>: struja ide kroz <strong>D1</strong>, preko opterećenja odozgo naniže, pa nazad kroz <strong>D4</strong>.</li>
+        <li><strong>Donji kraj izvora je +</strong>: struja ide kroz <strong>D2</strong>, preko opterećenja opet odozgo naniže, pa nazad kroz <strong>D3</strong>.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li><strong>The upper end of the source is +</strong>: the current goes through <strong>D1</strong>, across the load from top to bottom, and back through <strong>D4</strong>.</li>
+        <li><strong>The lower end of the source is +</strong>: the current goes through <strong>D2</strong>, across the load again from top to bottom, and back through <strong>D3</strong>.</li>
+      </ul>
+      <p lang="sr">U obe poluperiode struja kroz opterećenje ima <strong>isti smer</strong>, pa je izlazni napon jednosmeran, a pulsevi dolaze dvaput češće: 100 puta u sekundi. U svakom trenutku kroz izvor i opterećenje su na red <strong>dve diode</strong>, pa se gubi pad od dvaput 0,7 V.</p>
+      <p lang="en">In both half-cycles the current through the load has the <strong>same direction</strong>, so the output voltage is unidirectional, and the pulses come twice as often: 100 times per second. At every moment <strong>two diodes</strong> are in series with the source and the load, so a drop of twice 0.7 V is lost.</p>
+      <div class="formula">
+        <div class="tex">\[ U_m = U_2\sqrt{2} \qquad U_{dc} = \frac{2U_m}{\pi} \approx 0{,}637\,U_m \qquad U_{ef} = \frac{U_m}{\sqrt{2}} = U_2 \]</div>
+        <div class="tex">\[ I_{dc} = \frac{U_{dc}}{R} \qquad f_p = 2f = 100\ \mathrm{Hz} \qquad \mathrm{PIV} = U_m \qquad I_{D(dc)} = \frac{I_{dc}}{2} \]</div>
+        <dl class="legend">
+          <div><dt>U<sub>dc</sub></dt><dd><span lang="sr">srednja vrednost izlaza; sa stvarnim diodama oko \( 2(U_m - 2U_\gamma)/\pi \)</span><span lang="en">average value of the output; with real diodes about \( 2(U_m - 2U_\gamma)/\pi \)</span></dd><span class="unit">V</span></div>
+          <div><dt>f<sub>p</sub></dt><dd><span lang="sr">učestanost pulseva: dvostruko veća od mrežne</span><span lang="en">pulse frequency: twice the mains frequency</span></dd><span class="unit">Hz</span></div>
+          <div><dt>PIV</dt><dd><span lang="sr">najveći inverzni napon na jednoj diodi</span><span lang="en">peak inverse voltage on one diode</span></dd><span class="unit">V</span></div>
+          <div><dt>I<sub>D(dc)</sub></dt><dd><span lang="sr">srednja struja jedne diode: svaka vodi samo svaku drugu poluperiodu</span><span lang="en">mean current of one diode: each conducts only every second half-cycle</span></dd><span class="unit">A</span></div>
+        </dl>
+      </div>
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: u negativnoj poluperiodi donji kraj izvora je +. Koje diode vode i u kom smeru teče struja kroz opterećenje?</span><span lang="en">Think first: in the negative half-cycle the lower end of the source is +. Which diodes conduct and in which direction does the current flow through the load?</span></summary>
+        <div class="ans">
+          <p lang="sr">Vode D2 i D3. Struja izlazi iz donjeg kraja izvora, ide kroz D2 do plusa opterećenja, kroz opterećenje <strong>odozgo naniže</strong> (isti smer kao malopre), pa kroz D3 nazad do gornjeg kraja izvora.</p>
+          <p lang="en">D2 and D3 conduct. The current leaves the lower end of the source, goes through D2 to the plus of the load, through the load <strong>from top to bottom</strong> (the same direction as before), and through D3 back to the upper end of the source.</p>
+        </div>
+      </details>
+    </div>
+
+    <figure class="lab" id="lab-bridge">
+      <div class="viewport" style="aspect-ratio:380/268"><canvas tabindex="0" aria-label="Mosni usmerivač sa četiri diode, izvorom i opterećenjem / a bridge rectifier with four diodes, a source and a load"></canvas></div>
+      <div class="plot" style="margin-top:10px"><canvas aria-label="Apsolutna vrednost napona izvora i izlazni napon / the absolute value of the source voltage and the output voltage"></canvas></div>
+      <div class="plot short" style="margin-top:10px"><canvas aria-label="Struje parova dioda D1 i D4, odnosno D2 i D3 / the currents of the diode pairs D1 and D4, and D2 and D3"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="b-um"><span lang="sr">Amplituda U<sub>m</sub></span><span lang="en">Amplitude U<sub>m</sub></span></label><output id="b-um-out" for="b-um">17 V</output><input type="range" id="b-um" min="2" max="30" step="1" value="17"></div>
+        <div class="ctl"><label for="b-r">R</label><output id="b-r-out" for="b-r">100 Ω</output><input type="range" id="b-r" min="10" max="1000" step="10" value="100"></div>
+        <div class="ctl" style="grid-column:1/-1"><label for="b-c"><span lang="sr">Kondenzator C</span><span lang="en">Capacitor C</span></label><output id="b-c-out" for="b-c"></output><input type="range" id="b-c" min="0" max="6" step="1" value="0"></div>
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Poluperioda</span><span lang="en">Half-cycle</span></span>
+          <div class="seg" id="b-mode" role="group" aria-label="Poluperioda / Half-cycle">
+            <button type="button" data-v="auto" aria-pressed="true"><span lang="sr">Stalno</span><span lang="en">Running</span></button>
+            <button type="button" data-v="pos" aria-pressed="false">+</button>
+            <button type="button" data-v="neg" aria-pressed="false">−</button>
+          </div>
+          <label class="switch" for="b-fault"><input type="checkbox" id="b-fault"><span lang="sr">Prekinuta dioda D3</span><span lang="en">Open diode D3</span></label>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="b-calc"></div><div class="result" id="b-result"></div><div class="calc" id="b-note"></div></div>
+      <figcaption><span lang="sr">Narandžaste tačkice su struja izvora i opterećenja. Zelena dioda provodi. Dole su napon (narandžasta kriva) i struje dioda: zeleno su D1 i D4, ljubičasto D2 i D3. Probaj: (1) pritisni „+” pa „−” i prati putanju kroz različite diode, a struja kroz R ostaje ista po smeru, (2) uključi kondenzator i gledaj dopunu 100 puta u sekundi, (3) prekini diodu D3 i vidi kako se most pretvara u poluperiodni usmerivač.</span><span lang="en">The orange dots are the current of the source and the load. A green diode is conducting. Below are the voltage (the orange curve) and the diode currents: green are D1 and D4, violet D2 and D3. Try: (1) press "+" then "−" and follow the path through different diodes, while the direction of the current through R stays the same, (2) switch the capacitor on and watch the top-up 100 times per second, (3) open the diode D3 and see how the bridge turns into a half-wave rectifier.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Kako zapamtiti putanju</span><span lang="en">How to remember the path</span></p>
+        <p lang="sr">Struja izlazi iz pozitivnog kraja izvora, prolazi kroz onu od dve „gornje” diode (D1 ili D2) koja je povezana sa tim krajem, kroz opterećenje, pa kroz onu od dve „donje” diode (D3 ili D4) koja vodi ka negativnom kraju izvora. Dve gornje diode imaju zajedničke <em>katode</em> (to je plus izlaza), a dve donje zajedničke <em>anode</em> (minus izlaza).</p>
+        <p lang="en">The current leaves the positive end of the source, passes through that one of the two "upper" diodes (D1 or D2) that is connected to this end, through the load, and then through that one of the two "lower" diodes (D3 or D4) that leads to the negative end of the source. The two upper diodes have common <em>cathodes</em> (this is the output plus), and the two lower ones common <em>anodes</em> (the output minus).</p>
+      </div>
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: izvor daje 12 V (efektivno). Koliki je srednji napon na izlazu idealnog mosta? Koliko je to puta više nego kod poluperiodnog?</span><span lang="en">Think first: the source gives 12 V (RMS). What is the average output voltage of an ideal bridge? How many times more is that than for a half-wave rectifier?</span></summary>
+        <div class="ans">
+          <p lang="sr">\( U_m = 12\sqrt{2} = 17\ \mathrm{V} \), pa je \( U_{dc} = 2\cdot 17/\pi = 10{,}8\ \mathrm{V} \). Poluperiodni daje \( 17/\pi = 5{,}4\ \mathrm{V} \), dakle tačno dvaput manje.</p>
+          <p lang="en">\( U_m = 12\sqrt{2} = 17\ \mathrm{V} \), so \( U_{dc} = 2\cdot 17/\pi = 10.8\ \mathrm{V} \). A half-wave rectifier gives \( 17/\pi = 5.4\ \mathrm{V} \), so exactly half as much.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="poredjenje" data-toc data-toc-sr="Poređenje" data-toc-en="Comparison">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">tri načina da se ispravi napon</span><span lang="en">three ways to rectify a voltage</span></p>
+    <h2><span lang="sr">Poluperiodni, srednji izvod ili most</span><span lang="en">Half-wave, centre tap or bridge</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Pored mosta, obe poluperiode koristi i <strong>usmerivač sa srednjim izvodom</strong>: sekundar transformatora ima izvod na sredini, svaka polovina napaja po jednu diodu. <strong>D1</strong> vodi kada je gornji kraj pozitivan prema sredini, a <strong>D2</strong> kada je donji. Katode su spojene i čine plus izlaza, a srednji izvod je minus.</p>
+      <p lang="en">Besides the bridge, a <strong>centre-tap rectifier</strong> also uses both half-cycles: the transformer secondary has a tap in the middle and each half feeds one diode. <strong>D1</strong> conducts when the upper end is positive relative to the middle, and <strong>D2</strong> when the lower one is. The cathodes are joined and form the output plus, and the centre tap is the minus.</p>
+      <p lang="sr">Sve što smo naučili za izlaz važi za oba punotalasna usmerivača:</p>
+      <p lang="en">Everything we learnt about the output holds for both full-wave rectifiers:</p>
+      <div class="formula">
+        <div class="tex">\[ U_{dc} = \frac{2U_m}{\pi} \qquad U_{ef} = \frac{U_m}{\sqrt{2}} \]</div>
+        <div class="tex">\[ \gamma = \sqrt{\left(\frac{U_{ef}}{U_{dc}}\right)^2 - 1} = 0{,}48 \qquad \eta = \frac{P_{dc}}{P_{ac}} = \frac{8}{\pi^2} = 81{,}1\ \% \]</div>
+      </div>
+      <p lang="sr">Faktor talasanja 0,48 je skoro tri puta manji od 1,21 kod poluperiodnog, a stepen iskorišćenja je dvostruko veći. Sa kondenzatorom je prednost još veća: isti kondenzator se dopunjava <strong>dvaput češće</strong>, pa je talasanje upola manje.</p>
+      <p lang="en">A ripple factor of 0.48 is almost three times smaller than 1.21 for a half-wave rectifier, and the efficiency is twice as large. With a capacitor the advantage is even larger: the same capacitor is topped up <strong>twice as often</strong>, so the ripple is half as large.</p>
+      <details class="think">
+        <summary><span lang="sr">Za radoznale: odakle 2/π i 0,48?</span><span lang="en">For the curious: where do 2/π and 0.48 come from?</span></summary>
+        <div class="ans">
+          <p lang="sr">Izlaz je \( |U_m\sin\omega t| \) sa periodom \( T/2 \). Srednja vrednost je površina jednog „brega” podeljena njegovim trajanjem:</p>
+          <p lang="en">The output is \( |U_m\sin\omega t| \) with period \( T/2 \). The average is the area of one "hump" divided by its duration:</p>
+          <div class="tex">\[ U_{dc} = \frac{1}{T/2}\int_0^{T/2} U_m\sin\omega t\,dt = \frac{2}{T}\cdot U_m\cdot\frac{T}{\pi} = \frac{2U_m}{\pi} \]</div>
+          <p lang="sr">Kvadrat sinusa ima istu srednju vrednost \( U_m^2/2 \) bez obzira na znak, pa je \( U_{ef} = U_m/\sqrt{2} \). Zato je \( \gamma = \sqrt{\dfrac{\pi^2}{8} - 1} = 0{,}48 \), a \( \eta = U_{dc}^2/U_{ef}^2 = \dfrac{8}{\pi^2} \).</p>
+          <p lang="en">The square of a sine has the same mean \( U_m^2/2 \) regardless of the sign, so \( U_{rms} = U_m/\sqrt{2} \). That is why \( \gamma = \sqrt{\dfrac{\pi^2}{8} - 1} = 0.48 \), and \( \eta = U_{dc}^2/U_{rms}^2 = \dfrac{8}{\pi^2} \).</p>
+        </div>
+      </details>
+    </div>
+
+    <figure class="lab" id="lab-cmp">
+      <div class="plot tall"><canvas aria-label="Izlazni naponi poluperiodnog i mosnog usmerivača sa istim kondenzatorom / the output voltages of a half-wave and a bridge rectifier with the same capacitor"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="c-um"><span lang="sr">Amplituda U<sub>m</sub></span><span lang="en">Amplitude U<sub>m</sub></span></label><output id="c-um-out" for="c-um">17 V</output><input type="range" id="c-um" min="2" max="30" step="1" value="17"></div>
+        <div class="ctl"><label for="c-r">R</label><output id="c-r-out" for="c-r">100 Ω</output><input type="range" id="c-r" min="10" max="1000" step="10" value="100"></div>
+        <div class="ctl" style="grid-column:1/-1"><label for="c-c"><span lang="sr">Kondenzator C</span><span lang="en">Capacitor C</span></label><output id="c-c-out" for="c-c"></output><input type="range" id="c-c" min="0" max="6" step="1" value="4"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="c-calc"></div><div class="result" id="c-result"></div><div class="calc" id="c-note"></div></div>
+      <figcaption><span lang="sr">Plava kriva je poluperiodni usmerivač, narandžasta mosni, oba sa istim U<sub>m</sub>, R i C. Isprekidane linije su srednje vrednosti. Smanji C na „bez C” i vidi razliku u srednjem naponu, pa vrati C i uporedi talasanje: kod mosta je testera upola niža i dvaput češća.</span><span lang="en">The blue curve is the half-wave rectifier, the orange one the bridge, both with the same U<sub>m</sub>, R and C. The dashed lines are the average values. Set C to "no C" and see the difference in the average voltage, then restore C and compare the ripple: for the bridge the sawtooth is half as tall and twice as frequent.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <div class="tbl-wrap">
+        <table class="scale num">
+          <caption><span lang="sr">Tri usmerivača (idealne diode, otporno opterećenje)</span><span lang="en">Three rectifiers (ideal diodes, resistive load)</span></caption>
+          <thead><tr><th></th><th><span lang="sr">Poluperiodni</span><span lang="en">Half-wave</span></th><th><span lang="sr">Srednji izvod</span><span lang="en">Centre tap</span></th><th><span lang="sr">Mosni</span><span lang="en">Bridge</span></th></tr></thead>
+          <tbody>
+            <tr><td><span lang="sr">Broj dioda</span><span lang="en">Number of diodes</span></td><td>1</td><td>2</td><td>4</td></tr>
+            <tr><td>U<sub>dc</sub></td><td>0,318 U<sub>m</sub></td><td>0,637 U<sub>m</sub></td><td>0,637 U<sub>m</sub></td></tr>
+            <tr><td><span lang="sr">Učestanost talasanja</span><span lang="en">Ripple frequency</span></td><td>50 Hz</td><td>100 Hz</td><td>100 Hz</td></tr>
+            <tr><td><span lang="sr">Faktor talasanja γ</span><span lang="en">Ripple factor γ</span></td><td>1,21</td><td>0,48</td><td>0,48</td></tr>
+            <tr><td><span lang="sr">Stepen iskorišćenja η</span><span lang="en">Efficiency η</span></td><td>40,5 %</td><td>81,1 %</td><td>81,1 %</td></tr>
+            <tr><td>PIV</td><td>U<sub>m</sub></td><td>2 U<sub>m</sub></td><td>U<sub>m</sub></td></tr>
+            <tr><td><span lang="sr">Pad na diodama</span><span lang="en">Drop on the diodes</span></td><td>1 × U<sub>γ</sub></td><td>1 × U<sub>γ</sub></td><td>2 × U<sub>γ</sub></td></tr>
+            <tr><td><span lang="sr">Transformator</span><span lang="en">Transformer</span></td><td><span lang="sr">običan</span><span lang="en">ordinary</span></td><td><span lang="sr">sa srednjim izvodom</span><span lang="en">with a centre tap</span></td><td><span lang="sr">običan</span><span lang="en">ordinary</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p lang="sr">U koloni „srednji izvod” \( U_m \) je vrh napona <em>jedne polovine</em> sekundara. Zato je inverzni napon \( 2U_m \): zakočena dioda vidi napon cele sekundarne namotaje. Most nema tu manu, ali ima dva pada napona umesto jednog, što je važno kada su naponi mali.</p>
+      <p lang="en">In the "centre tap" column \( U_m \) is the peak voltage of <em>one half</em> of the secondary. That is why the reverse voltage is \( 2U_m \): a blocked diode sees the voltage of the whole secondary winding. The bridge does not have this flaw, but it has two voltage drops instead of one, which matters when the voltages are small.</p>
+      <figure class="fig" style="max-width:420px">
+        <svg class="dg" viewBox="0 0 340 204" role="img" aria-label="Usmerivač sa srednjim izvodom: dve diode, transformator sa izvodom i opterećenje / a centre-tap rectifier: two diodes, a tapped transformer and a load">
+          <path class="wc" d="M40 24q12 9 0 18q12 9 0 18q12 9 0 18q12 9 0 18q12 9 0 18q12 9 0 18q12 9 0 18q12 9 0 18"/>
+          <path class="w" d="M40 24H70M70 24H88M106 24H150M40 168H70M70 168H88M106 168H150M150 24V168M150 96H230M280 96H310V192H14V96H40"/>
+          <path class="box" d="M88 14V34L106 24Z"/>
+          <path class="w" d="M106 14V34"/>
+          <path class="box" d="M88 158V178L106 168Z"/>
+          <path class="w" d="M106 158V178"/>
+          <rect class="box" x="230" y="84" width="50" height="24" rx="3"/>
+          <circle class="fillk" cx="150" cy="96" r="3.4"/>
+          <circle class="fillk" cx="40" cy="96" r="3.4"/>
+          <text class="it" x="97" y="9" text-anchor="middle">D<tspan font-size="10" dy="3">1</tspan></text>
+          <text class="it" x="97" y="153" text-anchor="middle">D<tspan font-size="10" dy="3">2</tspan></text>
+          <text class="it" x="255" y="78" text-anchor="middle">R</text>
+          <text class="sm cu" x="62" y="62">u₂/2</text>
+          <text class="sm cu" x="62" y="134">u₂/2</text>
+          <text class="sm rd" x="160" y="88">+</text>
+          <text class="sm bl" x="22" y="88">−</text>
+        </svg>
+        <figcaption><span lang="sr">Usmerivač sa srednjim izvodom. Gornja polovina sekundara napaja D1, donja D2. Katode su spojene (plus), srednji izvod je minus. Svaka polovina radi samo pola vremena.</span><span lang="en">A centre-tap rectifier. The upper half of the secondary feeds D1, the lower one D2. The cathodes are joined (plus), the centre tap is the minus. Each half works only half of the time.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="filtar" data-toc data-toc-sr="Napajanje 5 V" data-toc-en="A 5 V supply">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">filter i stabilizator</span><span lang="en">filter and regulator</span></p>
+    <h2><span lang="sr">Most, kondenzator i stabilizator</span><span lang="en">Bridge, capacitor and regulator</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Kompletno napajanje je lanac: <strong>transformator → most → kondenzator → stabilizator</strong>. Račun za kondenzator je isti kao kod poluperiodnog, samo je učestanost talasanja <strong>2f = 100 Hz</strong>:</p>
+      <p lang="en">A complete power supply is a chain: <strong>transformer → bridge → capacitor → regulator</strong>. The calculation for the capacitor is the same as for a half-wave rectifier, only the ripple frequency is <strong>2f = 100 Hz</strong>:</p>
+      <div class="formula">
+        <div class="tex">\[ \Delta u \approx \frac{I_{dc}}{2f\,C} \qquad C \ge \frac{I_{dc}}{2f\,\Delta u} \qquad U_{dc} \approx U_m - 2U_\gamma - \frac{\Delta u}{2} \]</div>
+        <div class="tex">\[ U_{in,min} = U_m - 2U_\gamma - \Delta u \qquad P_{reg} = (U_{dc} - U_{out})\,I_{dc} \]</div>
+        <dl class="legend">
+          <div><dt>U<sub>in,min</sub></dt><dd><span lang="sr">najniži napon na ulazu stabilizatora (dno testere)</span><span lang="en">the lowest voltage at the regulator input (the bottom of the sawtooth)</span></dd><span class="unit">V</span></div>
+          <div><dt>U<sub>out</sub></dt><dd><span lang="sr">izlazni napon stabilizatora (5 V za 7805)</span><span lang="en">output voltage of the regulator (5 V for a 7805)</span></dd><span class="unit">V</span></div>
+          <div><dt>P<sub>reg</sub></dt><dd><span lang="sr">snaga koja se na stabilizatoru pretvara u toplotu</span><span lang="en">power converted to heat in the regulator</span></dd><span class="unit">W</span></div>
+        </dl>
+      </div>
+      <h3><span lang="sr">Izbor elemenata</span><span lang="en">Choosing the parts</span></h3>
+      <ol class="steps-inline" lang="sr">
+        <li><span><strong>Vrh:</strong> \( U_m = U_2\sqrt{2} \), pa najveći napon posle mosta \( U_m - 2U_\gamma \).</span></li>
+        <li><span><strong>Kondenzator:</strong> \( C \ge I_{dc}/(2f\,\Delta u) \), zaokruži nagore na standardnu vrednost. Radni napon bar \( 1{,}5\,U_m \).</span></li>
+        <li><span><strong>Diode:</strong> inverzni napon \( U_{RRM} \ge U_m \) (uzmi bar \( 1{,}5U_m \) za rezervu), a struja \( I_{F(AV)} \) bar \( I_{dc} \): svaka dioda nosi samo \( I_{dc}/2 \), ali u kratkim jakim impulsima.</span></li>
+        <li><span><strong>Stabilizator:</strong> ulaz mora ostati iznad \( U_{out} \) plus pad na stabilizatoru. Za 7805 je to oko 7 V, pa je uslov \( U_{in,min} \ge 7\ \mathrm{V} \). Ulaz ne sme da pređe 35 V.</span></li>
+      </ol>
+      <ol class="steps-inline" lang="en">
+        <li><span><strong>Peak:</strong> \( U_m = U_2\sqrt{2} \), so the largest voltage after the bridge is \( U_m - 2U_\gamma \).</span></li>
+        <li><span><strong>Capacitor:</strong> \( C \ge I_{dc}/(2f\,\Delta u) \), round up to a standard value. A voltage rating of at least \( 1.5\,U_m \).</span></li>
+        <li><span><strong>Diodes:</strong> reverse voltage \( U_{RRM} \ge U_m \) (take at least \( 1.5U_m \) as a margin), and the current \( I_{F(AV)} \) at least \( I_{dc} \): every diode carries only \( I_{dc}/2 \), but in short strong pulses.</span></li>
+        <li><span><strong>Regulator:</strong> the input must stay above \( U_{out} \) plus the drop across the regulator. For a 7805 it is about 7 V, so the condition is \( U_{in,min} \ge 7\ \mathrm{V} \). The input must not exceed 35 V.</span></li>
+      </ol>
+      <div class="rule-box warn">
+        <p class="eyebrow"><span lang="sr">Stabilizator se greje</span><span lang="en">The regulator gets hot</span></p>
+        <p lang="sr">Linearni stabilizator „skida” višak napona kao toplotu: \( P = (U_{dc} - U_{out})\,I \). Što je ulaz viši od potrebnog, to se više greje. Preko oko 1 W treba mu <strong>hladnjak</strong>. Zato se ulaz bira tek malo iznad praga, a ne „što veće”.</p>
+        <p lang="en">A linear regulator "burns off" the surplus voltage as heat: \( P = (U_{dc} - U_{out})\,I \). The higher the input is above what is needed, the hotter it gets. Above about 1 W it needs a <strong>heatsink</strong>. That is why the input is chosen only a little above the threshold, not "as high as possible".</p>
+      </div>
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: kako se promeni talasanje ako isti kondenzator pređe sa poluperiodnog usmerivača na most?</span><span lang="en">Think first: how does the ripple change if the same capacitor moves from a half-wave rectifier to a bridge?</span></summary>
+        <div class="ans">
+          <p lang="sr">Prepolovi se. Kondenzator se dopunjava na svakih 10 ms umesto na svakih 20 ms, pa ima upola manje vremena da se isprazni: \( \Delta u = I/(2fC) \) umesto \( I/(fC) \).</p>
+          <p lang="en">It halves. The capacitor is topped up every 10 ms instead of every 20 ms, so it has half the time to discharge: \( \Delta u = I/(2fC) \) instead of \( I/(fC) \).</p>
+        </div>
+      </details>
+    </div>
+
+    <figure class="lab" id="lab-psu">
+      <div class="plot tall"><canvas aria-label="Ulaz i izlaz stabilizatora 7805 iza mosta i kondenzatora / the input and the output of a 7805 regulator behind the bridge and the capacitor"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="p-u">U<sub>2</sub></label><output id="p-u-out" for="p-u">9 V</output><input type="range" id="p-u" min="0" max="5" step="1" value="2"></div>
+        <div class="ctl"><label for="p-i">I<sub>dc</sub></label><output id="p-i-out" for="p-i">300 mA</output><input type="range" id="p-i" min="0" max="5" step="1" value="2"></div>
+        <div class="ctl" style="grid-column:1/-1"><label for="p-c">C</label><output id="p-c-out" for="p-c">2200 μF</output><input type="range" id="p-c" min="0" max="4" step="1" value="2"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="p-calc"></div><div class="result" id="p-result"></div><div class="calc" id="p-note"></div></div>
+      <figcaption><span lang="sr">Narandžasta kriva je napon posle mosta i kondenzatora (ulaz stabilizatora), zelena je izlaz stabilizatora 7805. Crvena isprekidana linija je najmanji dozvoljeni ulaz od 7 V. Probaj: (1) smanji U<sub>2</sub> na 6 V: dno talasanja padne ispod crvene linije i izlaz više nije ravan, (2) vrati U<sub>2</sub> pa povećaj struju na 1000 mA, (3) uzmi U<sub>2</sub> = 18 V: izlaz je savršeno ravan, ali pogledaj koliko se stabilizator greje.</span><span lang="en">The orange curve is the voltage after the bridge and the capacitor (the regulator input), the green one is the output of the 7805 regulator. The red dashed line is the lowest allowed input of 7 V. Try: (1) reduce U<sub>2</sub> to 6 V: the bottom of the ripple falls below the red line and the output is no longer flat, (2) restore U<sub>2</sub> and increase the current to 1000 mA, (3) take U<sub>2</sub> = 18 V: the output is perfectly flat, but look at how hot the regulator gets.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <div class="tbl-wrap">
+        <table class="scale num">
+          <caption><span lang="sr">Mosni usmerivači u jednom kućištu</span><span lang="en">Bridge rectifiers in a single package</span></caption>
+          <thead><tr><th><span lang="sr">Oznaka</span><span lang="en">Part</span></th><th>U<sub>RRM</sub> (V)</th><th>I<sub>F(AV)</sub> (A)</th></tr></thead>
+          <tbody>
+            <tr><td>DB107</td><td>1000</td><td>1</td></tr>
+            <tr><td>GBU808</td><td>800</td><td>8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Priključci mosnog modula</span><span lang="en">The terminals of a bridge module</span></p>
+        <p lang="sr">Modul ima četiri nožice: dve označene sa <strong>~</strong> (naizmenični ulaz, bez polariteta) i dve označene sa <strong>+</strong> i <strong>−</strong> (jednosmerni izlaz). Ako se izvor priključi na + i −, nastaje kratak spoj preko dioda i modul se uništava. Isto radi i most od četiri odvojene diode (npr. 1N4007).</p>
+        <p lang="en">The module has four pins: two marked <strong>~</strong> (the alternating input, without polarity) and two marked <strong>+</strong> and <strong>−</strong> (the direct output). If the source is connected to + and −, a short circuit forms across the diodes and the module is destroyed. A bridge of four separate diodes (e.g. 1N4007) does the same job.</p>
+      </div>
+      <p lang="sr">Stabilizator sa fiksnim izlazom (7805, 7812) ima tri nožice: ulaz, masa i izlaz. Uz njega se obično stavljaju mali kondenzatori (0,1 μF do 0,33 μF) bliže nožicama, koji sprečavaju oscilovanje.</p>
+      <p lang="en">A fixed-output regulator (7805, 7812) has three pins: input, ground and output. Small capacitors (0.1 μF to 0.33 μF) are usually placed near its pins to prevent oscillation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc data-toc-sr="Primeri" data-toc-en="Examples">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">rešeni zadaci</span><span lang="en">worked exercises</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="ex field">
+        <h4><span lang="sr">Primer 1 · most bez filtra</span><span lang="en">Example 1 · a bridge without a filter</span></h4>
+        <p class="given" lang="sr">Dato: \( U_2 = 12\ \mathrm{V} \) (ef.), R = 100 Ω, silicijumske diode. Traže se vrh izlaza, \( U_{dc} \), \( I_{dc} \), PIV i srednja struja jedne diode.</p>
+        <p class="given" lang="en">Given: \( U_2 = 12\ \mathrm{V} \) (RMS), R = 100 Ω, silicon diodes. Find the output peak, \( U_{dc} \), \( I_{dc} \), PIV and the mean current of one diode.</p>
+        <ol lang="sr">
+          <li>\( U_m = 12\sqrt{2} = 16{,}97\ \mathrm{V} \). Vrh izlaza: \( 16{,}97 - 2\cdot 0{,}7 = 15{,}57\ \mathrm{V} \).</li>
+          <li>\( U_{dc} \approx \dfrac{2\cdot 15{,}57}{\pi} = 9{,}9\ \mathrm{V} \). (Tačniji račun i simulator daju 9,4 V, jer diode ne vode dok napon ne pređe 1,4 V.)</li>
+          <li>\( I_{dc} = \dfrac{9{,}9}{100} \approx 99\ \mathrm{mA} \), a srednja struja jedne diode je \( I_{dc}/2 \approx 50\ \mathrm{mA} \).</li>
+          <li>\( \mathrm{PIV} = U_m \approx 17\ \mathrm{V} \). Učestanost pulseva je 100 Hz.</li>
+        </ol>
+        <ol lang="en">
+          <li>\( U_m = 12\sqrt{2} = 16.97\ \mathrm{V} \). The output peak: \( 16.97 - 2\cdot 0.7 = 15.57\ \mathrm{V} \).</li>
+          <li>\( U_{dc} \approx \dfrac{2\cdot 15.57}{\pi} = 9.9\ \mathrm{V} \). (A more exact calculation and the simulator give 9.4 V, because the diodes do not conduct until the voltage exceeds 1.4 V.)</li>
+          <li>\( I_{dc} = \dfrac{9.9}{100} \approx 99\ \mathrm{mA} \), and the mean current of one diode is \( I_{dc}/2 \approx 50\ \mathrm{mA} \).</li>
+          <li>\( \mathrm{PIV} = U_m \approx 17\ \mathrm{V} \). The pulse frequency is 100 Hz.</li>
+        </ol>
+        <p class="answer"><span lang="sr">Vrh 15,6 V, U<sub>dc</sub> ≈ 9,9 V (skoro dvaput više nego poluperiodni sa 5,2 V), I<sub>dc</sub> ≈ 99 mA, PIV = 17 V</span><span lang="en">Peak 15.6 V, U<sub>dc</sub> ≈ 9.9 V (almost twice as much as the half-wave 5.2 V), I<sub>dc</sub> ≈ 99 mA, PIV = 17 V</span></p>
+      </div>
+      <div class="ex field">
+        <h4><span lang="sr">Primer 2 · most sa filtrom</span><span lang="en">Example 2 · a bridge with a filter</span></h4>
+        <p class="given" lang="sr">Dato: isti uslovi kao u zadatku iz lekcije o usmerivaču: \( U_2 = 12\ \mathrm{V} \), \( I_{dc} = 200\ \mathrm{mA} \), talasanje najviše 1 V. Izaberi C, diode i radni napon kondenzatora, izračunaj \( U_{dc} \) i R.</p>
+        <p class="given" lang="en">Given: the same conditions as in the exercise from the lesson on the rectifier: \( U_2 = 12\ \mathrm{V} \), \( I_{dc} = 200\ \mathrm{mA} \), a ripple of at most 1 V. Choose C, the diodes and the voltage rating of the capacitor, and calculate \( U_{dc} \) and R.</p>
+        <ol lang="sr">
+          <li>\( C \ge \dfrac{I_{dc}}{2f\,\Delta u} = \dfrac{0{,}2}{100\cdot 1} = 2\ \mathrm{mF} = 2000\ \mu\mathrm{F} \). Prva standardna vrednost je <strong>2200 μF</strong>.</li>
+          <li>Stvarno talasanje: \( \Delta u = \dfrac{0{,}2}{100\cdot 2{,}2\cdot 10^{-3}} = 0{,}91\ \mathrm{V} \).</li>
+          <li>\( U_{dc} \approx 16{,}97 - 1{,}4 - \dfrac{0{,}91}{2} = 15{,}1\ \mathrm{V} \), pa je \( R = \dfrac{15{,}1}{0{,}2} = 75\ \Omega \).</li>
+          <li>Kondenzator: \( 1{,}5\cdot 17 = 25{,}5\ \mathrm{V} \), uzimamo <strong>35 V</strong>.</li>
+          <li>Diode: \( U_{RRM} \ge 17\ \mathrm{V} \), \( I_{F(AV)} > 0{,}2\ \mathrm{A} \): <strong>1N4007</strong> je više nego dovoljna.</li>
+        </ol>
+        <ol lang="en">
+          <li>\( C \ge \dfrac{I_{dc}}{2f\,\Delta u} = \dfrac{0.2}{100\cdot 1} = 2\ \mathrm{mF} = 2000\ \mu\mathrm{F} \). The first standard value is <strong>2200 μF</strong>.</li>
+          <li>The real ripple: \( \Delta u = \dfrac{0.2}{100\cdot 2.2\cdot 10^{-3}} = 0.91\ \mathrm{V} \).</li>
+          <li>\( U_{dc} \approx 16.97 - 1.4 - \dfrac{0.91}{2} = 15.1\ \mathrm{V} \), so \( R = \dfrac{15.1}{0.2} = 75\ \Omega \).</li>
+          <li>The capacitor: \( 1.5\cdot 17 = 25.5\ \mathrm{V} \), we take <strong>35 V</strong>.</li>
+          <li>Diodes: \( U_{RRM} \ge 17\ \mathrm{V} \), \( I_{F(AV)} > 0.2\ \mathrm{A} \): the <strong>1N4007</strong> is more than enough.</li>
+        </ol>
+        <p class="answer"><span lang="sr">C = 2200 μF / 35 V, 1N4007, U<sub>dc</sub> ≈ 15,1 V, R ≈ 75 Ω. Poluperiodni usmerivač za isti zadatak traži 4700 μF.</span><span lang="en">C = 2200 μF / 35 V, 1N4007, U<sub>dc</sub> ≈ 15.1 V, R ≈ 75 Ω. A half-wave rectifier for the same task needs 4700 μF.</span></p>
+      </div>
+      <div class="ex field">
+        <h4><span lang="sr">Primer 3 · srednji izvod ili most</span><span lang="en">Example 3 · centre tap or bridge</span></h4>
+        <p class="given" lang="sr">Dato: sekundar od 24 V (ef.) sa srednjim izvodom (2 × 12 V). Uporedi usmerivač sa srednjim izvodom i mosni usmerivač priključen na celih 24 V: \( U_{dc} \) i PIV (bez filtra, Si diode).</p>
+        <p class="given" lang="en">Given: a 24 V (RMS) secondary with a centre tap (2 × 12 V). Compare a centre-tap rectifier with a bridge rectifier connected to the whole 24 V: \( U_{dc} \) and PIV (no filter, Si diodes).</p>
+        <ol lang="sr">
+          <li>Srednji izvod: \( U_m = 12\sqrt{2} = 17\ \mathrm{V} \), vrh \( 17 - 0{,}7 = 16{,}3\ \mathrm{V} \), \( U_{dc} \approx \dfrac{2\cdot 16{,}3}{\pi} = 10{,}4\ \mathrm{V} \), \( \mathrm{PIV} = 2U_m = 34\ \mathrm{V} \).</li>
+          <li>Most: \( U_m = 24\sqrt{2} = 33{,}9\ \mathrm{V} \), vrh \( 33{,}9 - 1{,}4 = 32{,}5\ \mathrm{V} \), \( U_{dc} \approx \dfrac{2\cdot 32{,}5}{\pi} = 20{,}7\ \mathrm{V} \), \( \mathrm{PIV} = U_m = 33{,}9\ \mathrm{V} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>Centre tap: \( U_m = 12\sqrt{2} = 17\ \mathrm{V} \), peak \( 17 - 0.7 = 16.3\ \mathrm{V} \), \( U_{dc} \approx \dfrac{2\cdot 16.3}{\pi} = 10.4\ \mathrm{V} \), \( \mathrm{PIV} = 2U_m = 34\ \mathrm{V} \).</li>
+          <li>Bridge: \( U_m = 24\sqrt{2} = 33.9\ \mathrm{V} \), peak \( 33.9 - 1.4 = 32.5\ \mathrm{V} \), \( U_{dc} \approx \dfrac{2\cdot 32.5}{\pi} = 20.7\ \mathrm{V} \), \( \mathrm{PIV} = U_m = 33.9\ \mathrm{V} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">Isti transformator i isti inverzni napon od oko 34 V, ali most daje dvaput veći napon (20,7 V prema 10,4 V), jer stalno koristi ceo namotaj.</span><span lang="en">The same transformer and the same reverse voltage of about 34 V, but the bridge gives twice the voltage (20.7 V against 10.4 V), because it uses the whole winding all the time.</span></p>
+      </div>
+      <div class="ex violet">
+        <h4><span lang="sr">Primer 4 · napajanje 5 V sa 7805</span><span lang="en">Example 4 · a 5 V supply with a 7805</span></h4>
+        <p class="given" lang="sr">Dato: \( U_2 = 9\ \mathrm{V} \), struja \( I_{dc} = 300\ \mathrm{mA} \), \( C = 2200\ \mu\mathrm{F} \), most od silicijumskih dioda, stabilizator 7805 (ulaz najmanje 7 V). Proveri da li stabilizator ostaje u regulaciji i koliko snage troši.</p>
+        <p class="given" lang="en">Given: \( U_2 = 9\ \mathrm{V} \), a current \( I_{dc} = 300\ \mathrm{mA} \), \( C = 2200\ \mu\mathrm{F} \), a bridge of silicon diodes, a 7805 regulator (input at least 7 V). Check whether the regulator stays in regulation and how much power it dissipates.</p>
+        <ol lang="sr">
+          <li>\( U_m = 9\sqrt{2} = 12{,}73\ \mathrm{V} \), vrh posle mosta \( 12{,}73 - 1{,}4 = 11{,}33\ \mathrm{V} \).</li>
+          <li>\( \Delta u = \dfrac{0{,}3}{100\cdot 2{,}2\cdot 10^{-3}} = 1{,}36\ \mathrm{V} \).</li>
+          <li>\( U_{in,min} = 11{,}33 - 1{,}36 = 9{,}97\ \mathrm{V} \ge 7\ \mathrm{V} \): stabilizator <strong>ostaje u regulaciji</strong>.</li>
+          <li>\( U_{dc} \approx 11{,}33 - 0{,}68 = 10{,}65\ \mathrm{V} \), pa je \( P_{reg} = (10{,}65 - 5)\cdot 0{,}3 = 1{,}7\ \mathrm{W} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>\( U_m = 9\sqrt{2} = 12.73\ \mathrm{V} \), the peak after the bridge \( 12.73 - 1.4 = 11.33\ \mathrm{V} \).</li>
+          <li>\( \Delta u = \dfrac{0.3}{100\cdot 2.2\cdot 10^{-3}} = 1.36\ \mathrm{V} \).</li>
+          <li>\( U_{in,min} = 11.33 - 1.36 = 9.97\ \mathrm{V} \ge 7\ \mathrm{V} \): the regulator <strong>stays in regulation</strong>.</li>
+          <li>\( U_{dc} \approx 11.33 - 0.68 = 10.65\ \mathrm{V} \), so \( P_{reg} = (10.65 - 5)\cdot 0.3 = 1.7\ \mathrm{W} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">U<sub>in,min</sub> ≈ 10 V ≥ 7 V, izlaz je stabilnih 5 V. Stabilizator troši oko 1,7 W, pa mu treba hladnjak.</span><span lang="en">U<sub>in,min</sub> ≈ 10 V ≥ 7 V, the output is a stable 5 V. The regulator dissipates about 1.7 W, so it needs a heatsink.</span></p>
+      </div>
+      <div class="ex violet">
+        <h4><span lang="sr">Primer 5 · transformator je premali</span><span lang="en">Example 5 · the transformer is too small</span></h4>
+        <p class="given" lang="sr">Dato: isto napajanje kao u primeru 4, ali sa \( U_2 = 6\ \mathrm{V} \). Šta se dešava i može li se popraviti većim kondenzatorom?</p>
+        <p class="given" lang="en">Given: the same supply as in example 4, but with \( U_2 = 6\ \mathrm{V} \). What happens, and can it be fixed with a larger capacitor?</p>
+        <ol lang="sr">
+          <li>\( U_m = 6\sqrt{2} = 8{,}49\ \mathrm{V} \), vrh posle mosta \( 8{,}49 - 1{,}4 = 7{,}09\ \mathrm{V} \).</li>
+          <li>Isto talasanje od 1,36 V daje \( U_{in,min} = 7{,}09 - 1{,}36 = 5{,}7\ \mathrm{V} < 7\ \mathrm{V} \). Na dnu testere stabilizator ispada iz regulacije i izlaz pada na oko \( 5{,}7 - 2 = 3{,}7\ \mathrm{V} \).</li>
+          <li>Da bi dno bilo na 7 V, talasanje bi smelo da bude samo \( 7{,}09 - 7 = 0{,}09\ \mathrm{V} \), to jest \( C \ge \dfrac{0{,}3}{100\cdot 0{,}09} \approx 33\,000\ \mu\mathrm{F} \). To nije razumno.</li>
+        </ol>
+        <ol lang="en">
+          <li>\( U_m = 6\sqrt{2} = 8.49\ \mathrm{V} \), the peak after the bridge \( 8.49 - 1.4 = 7.09\ \mathrm{V} \).</li>
+          <li>The same ripple of 1.36 V gives \( U_{in,min} = 7.09 - 1.36 = 5.7\ \mathrm{V} < 7\ \mathrm{V} \). At the bottom of the sawtooth the regulator drops out of regulation and the output falls to about \( 5.7 - 2 = 3.7\ \mathrm{V} \).</li>
+          <li>For the bottom to be at 7 V, the ripple could only be \( 7.09 - 7 = 0.09\ \mathrm{V} \), that is \( C \ge \dfrac{0.3}{100\cdot 0.09} \approx 33\,000\ \mu\mathrm{F} \). That is not reasonable.</li>
+        </ol>
+        <p class="answer"><span lang="sr">Ne može se popraviti kondenzatorom. Treba veći napon sekundara (npr. 9 V).</span><span lang="en">It cannot be fixed with a capacitor. A larger secondary voltage is needed (e.g. 9 V).</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 6 · merenje osciloskopom na izlazu mosta</span><span lang="en">Example 6 · measuring the bridge output with an oscilloscope</span></h4>
+        <p class="given" lang="sr">Dato: izlaz filtriranog mosta sa \( C = 2200\ \mu\mathrm{F} \). DC sprega, 5 V/div: vrh je 3,1 podeoka iznad nule. AC sprega, 0,2 V/div, 5 ms/div: talasanje je 4 podeoka vrh–vrh, a jedna perioda 2 podeoka. Traže se \( \Delta u \), f, približno \( U_{dc} \) i struja opterećenja.</p>
+        <p class="given" lang="en">Given: the output of a filtered bridge with \( C = 2200\ \mu\mathrm{F} \). DC coupling, 5 V/div: the peak is 3.1 divisions above zero. AC coupling, 0.2 V/div, 5 ms/div: the ripple is 4 divisions peak to peak, and one period is 2 divisions. Find \( \Delta u \), f, the approximate \( U_{dc} \) and the load current.</p>
+        <ol lang="sr">
+          <li>Vrh: \( 3{,}1\cdot 5 = 15{,}5\ \mathrm{V} \). Talasanje: \( \Delta u = 4\cdot 0{,}2 = 0{,}8\ \mathrm{V} \).</li>
+          <li>\( T = 2\cdot 5 = 10\ \mathrm{ms} \), pa je \( f = 100\ \mathrm{Hz} \): to je punotalasni usmerivač (most ili srednji izvod).</li>
+          <li>\( U_{dc} \approx 15{,}5 - \dfrac{0{,}8}{2} = 15{,}1\ \mathrm{V} \).</li>
+          <li>Iz \( \Delta u = I/(2fC) \) sledi \( I = \Delta u\cdot 2fC = 0{,}8\cdot 100\cdot 2{,}2\cdot 10^{-3} = 0{,}176\ \mathrm{A} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>Peak: \( 3.1\cdot 5 = 15.5\ \mathrm{V} \). Ripple: \( \Delta u = 4\cdot 0.2 = 0.8\ \mathrm{V} \).</li>
+          <li>\( T = 2\cdot 5 = 10\ \mathrm{ms} \), so \( f = 100\ \mathrm{Hz} \): it is a full-wave rectifier (a bridge or a centre tap).</li>
+          <li>\( U_{dc} \approx 15.5 - \dfrac{0.8}{2} = 15.1\ \mathrm{V} \).</li>
+          <li>From \( \Delta u = I/(2fC) \) it follows \( I = \Delta u\cdot 2fC = 0.8\cdot 100\cdot 2.2\cdot 10^{-3} = 0.176\ \mathrm{A} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">Δu = 0,8 V, f = 100 Hz, U<sub>dc</sub> ≈ 15,1 V, I<sub>dc</sub> ≈ 176 mA</span><span lang="en">Δu = 0.8 V, f = 100 Hz, U<sub>dc</sub> ≈ 15.1 V, I<sub>dc</sub> ≈ 176 mA</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 7 · kvar: talasanje od 50 Hz</span><span lang="en">Example 7 · a fault: a ripple of 50 Hz</span></h4>
+        <p class="given" lang="sr">Dato: isto napajanje kao u primeru 6 posle nekog vremena pokazuje talasanje od 1,6 V sa periodom 20 ms, a srednji napon je pao na 14,7 V. Šta se desilo?</p>
+        <p class="given" lang="en">Given: the same supply as in example 6 shows after some time a ripple of 1.6 V with a period of 20 ms, and the average voltage has fallen to 14.7 V. What happened?</p>
+        <ol lang="sr">
+          <li>Period 20 ms znači \( f = 50\ \mathrm{Hz} \), a ne 100 Hz. Obe poluperiode se više ne koriste.</li>
+          <li>Talasanje se udvostručilo, \( 0{,}8\ \mathrm{V} \to 1{,}6\ \mathrm{V} \), kao što i treba kada kondenzator dobija dopunu upola ređe.</li>
+          <li>Zaključak: u mostu je jedna dioda <strong>prekinuta</strong> (otvorena). Most radi kao poluperiodni usmerivač.</li>
+        </ol>
+        <ol lang="en">
+          <li>A period of 20 ms means \( f = 50\ \mathrm{Hz} \), not 100 Hz. Both half-cycles are no longer used.</li>
+          <li>The ripple has doubled, \( 0.8\ \mathrm{V} \to 1.6\ \mathrm{V} \), exactly as expected when the capacitor is topped up half as often.</li>
+          <li>Conclusion: one diode in the bridge is <strong>open</strong>. The bridge works as a half-wave rectifier.</li>
+        </ol>
+        <p class="answer"><span lang="sr">Prekinuta dioda u mostu. Proveri svaku diodu multimetrom na režimu diode (vežba 8): treba da pokaže oko 0,6 V u jednom i prekid u drugom smeru.</span><span lang="en">An open diode in the bridge. Check every diode with a multimeter in the diode mode (exercise 8): it should show about 0.6 V in one direction and an open circuit in the other.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <ul class="pitfalls" lang="sr">
+        <li><div><b>Izvor na + i − mosta.</b> Naizmenični ulaz ide na priključke ~, a opterećenje na + i −. Obrnuto je kratak spoj kroz diode.</div></li>
+        <li><div><b>Zaboravljena dva pada napona.</b> U mostu su uvek dve diode u seriji, pa je vrh izlaza \( U_m - 1{,}4\ \mathrm{V} \), a ne \( U_m - 0{,}7\ \mathrm{V} \).</div></li>
+        <li><div><b>PIV jednak \( 2U_m \) kod mosta.</b> Kod mosta je \( \mathrm{PIV} = U_m \). Dvostruko veći je kod usmerivača sa srednjim izvodom.</div></li>
+        <li><div><b>Učestanost 50 Hz u formuli.</b> Kod punotalasnog usmerivača je talasanje na 100 Hz: \( \Delta u = I/(2fC) \). Ako uzmeš f = 50 Hz, kondenzator ispadne dvaput veći nego što treba.</div></li>
+        <li><div><b>Srednja struja diode.</b> Svaka dioda mosta nosi \( I_{dc}/2 \) u proseku, ali u kratkim jakim impulsima sa filtrom. Izaberi diodu sa velikom rezervom.</div></li>
+        <li><div><b>Obrnut elektrolitski kondenzator.</b> Ima plus i minus. Pogrešan polaritet ga naduva i može da ga raznese.</div></li>
+        <li><div><b>Efektivna vrednost umesto vrha.</b> Sve se dimenzioniše prema \( U_m = U_2\sqrt{2} \).</div></li>
+        <li><div><b>Preniski ulaz stabilizatora.</b> Računaj dno testere: \( U_m - 2U_\gamma - \Delta u \) mora ostati iznad 7 V (za 7805).</div></li>
+        <li><div><b>Previsok ulaz stabilizatora.</b> Višak napona se pretvara u toplotu: \( P = (U_{dc} - U_{out})\,I \). Dodaj hladnjak ili smanji napon sekundara.</div></li>
+        <li><div><b>Masa osciloskopa na izlazu mosta.</b> Masa sonde je spojena sa uzemljenjem. Ako je kolo već uzemljeno na drugom mestu (npr. minus izlaza), masa na naizmeničnom priključku mosta kratko spaja jednu diodu. Masu sonde stavi na minus izlaza, a ulaz mosta ne meri običnom sondom.</div></li>
+        <li><div><b>Mreža bez transformatora.</b> Most priključen direktno na 230 V nije odvojen od mreže i opasan je po život. Eksperimentiši samo na malom naponu iza transformatora.</div></li>
+      </ul>
+      <ul class="pitfalls" lang="en">
+        <li><div><b>The source on + and − of the bridge.</b> The alternating input goes to the ~ terminals and the load to + and −. The other way round is a short circuit through the diodes.</div></li>
+        <li><div><b>Forgetting two voltage drops.</b> In a bridge there are always two diodes in series, so the output peak is \( U_m - 1.4\ \mathrm{V} \), not \( U_m - 0.7\ \mathrm{V} \).</div></li>
+        <li><div><b>PIV equal to \( 2U_m \) for a bridge.</b> For a bridge \( \mathrm{PIV} = U_m \). The double value belongs to the centre-tap rectifier.</div></li>
+        <li><div><b>50 Hz in the formula.</b> In a full-wave rectifier the ripple is at 100 Hz: \( \Delta u = I/(2fC) \). If you take f = 50 Hz, the capacitor comes out twice as large as needed.</div></li>
+        <li><div><b>The mean current of a diode.</b> Each bridge diode carries \( I_{dc}/2 \) on average, but in short strong pulses with a filter. Choose a diode with a large margin.</div></li>
+        <li><div><b>A reversed electrolytic capacitor.</b> It has a plus and a minus. The wrong polarity bloats it and it can burst.</div></li>
+        <li><div><b>RMS instead of the peak.</b> Everything is dimensioned from \( U_m = U_2\sqrt{2} \).</div></li>
+        <li><div><b>Too low a regulator input.</b> Calculate the bottom of the sawtooth: \( U_m - 2U_\gamma - \Delta u \) must stay above 7 V (for a 7805).</div></li>
+        <li><div><b>Too high a regulator input.</b> The surplus voltage turns into heat: \( P = (U_{dc} - U_{out})\,I \). Add a heatsink or reduce the secondary voltage.</div></li>
+        <li><div><b>The oscilloscope ground on the bridge output.</b> The probe ground is connected to the earth. If the circuit is already earthed somewhere else (e.g. the minus of the output), a ground clip on an alternating terminal of the bridge shorts one diode. Put the probe ground on the minus of the output, and do not measure the bridge input with an ordinary probe.</div></li>
+        <li><div><b>Mains without a transformer.</b> A bridge connected directly to 230 V is not isolated from the mains and is dangerous to life. Experiment only at low voltage behind a transformer.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="summary">
+        <ul lang="sr">
+          <li>Grecov (mosni) usmerivač ima četiri diode. Kada je gornji kraj izvora +, vode D1 i D4, a kada je donji +, vode D2 i D3. Struja kroz opterećenje uvek ima isti smer.</li>
+          <li>Izlaz: \( U_{dc} = 2U_m/\pi \approx 0{,}637\,U_m \), \( U_{ef} = U_m/\sqrt{2} \), učestanost talasanja \( 2f = 100\ \mathrm{Hz} \), \( \gamma = 0{,}48 \), \( \eta = 81{,}1\ \% \), \( \mathrm{PIV} = U_m \).</li>
+          <li>U svakom trenutku vode dve diode u seriji, pa je pad \( 2U_\gamma \approx 1{,}4\ \mathrm{V} \). Svaka dioda vodi pola vremena, srednja struja je \( I_{dc}/2 \).</li>
+          <li>Usmerivač sa srednjim izvodom ima 2 diode i jedan pad, ali traži transformator sa izvodom i \( \mathrm{PIV} = 2U_m \).</li>
+          <li>Sa kondenzatorom: \( \Delta u \approx I_{dc}/(2fC) \), upola manje nego kod poluperiodnog. \( U_{dc} \approx U_m - 2U_\gamma - \Delta u/2 \).</li>
+          <li>Napajanje je lanac transformator → most → kondenzator → stabilizator. Za 7805 mora biti \( U_{in,min} \ge 7\ \mathrm{V} \), a stabilizator troši \( P = (U_{dc} - 5)\,I \).</li>
+          <li>Talasanje od 50 Hz umesto 100 Hz znači da je jedna dioda u mostu prekinuta.</li>
+        </ul>
+        <ul lang="en">
+          <li>The Graetz (bridge) rectifier has four diodes. When the upper end of the source is +, D1 and D4 conduct, and when the lower one is +, D2 and D3 conduct. The current through the load always has the same direction.</li>
+          <li>Output: \( U_{dc} = 2U_m/\pi \approx 0.637\,U_m \), \( U_{rms} = U_m/\sqrt{2} \), ripple frequency \( 2f = 100\ \mathrm{Hz} \), \( \gamma = 0.48 \), \( \eta = 81.1\ \% \), \( \mathrm{PIV} = U_m \).</li>
+          <li>At every moment two diodes conduct in series, so the drop is \( 2U_\gamma \approx 1.4\ \mathrm{V} \). Each diode conducts half of the time, its mean current is \( I_{dc}/2 \).</li>
+          <li>A centre-tap rectifier has 2 diodes and one drop, but needs a tapped transformer and \( \mathrm{PIV} = 2U_m \).</li>
+          <li>With a capacitor: \( \Delta u \approx I_{dc}/(2fC) \), half of that for a half-wave rectifier. \( U_{dc} \approx U_m - 2U_\gamma - \Delta u/2 \).</li>
+          <li>A power supply is the chain transformer → bridge → capacitor → regulator. For a 7805 it must hold \( U_{in,min} \ge 7\ \mathrm{V} \), and the regulator dissipates \( P = (U_{dc} - 5)\,I \).</li>
+          <li>A ripple of 50 Hz instead of 100 Hz means that one diode in the bridge is open.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" data-test="ELE02" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/rectsim.js"></script>
+<script src="../assets/js/lessons/grecov-usmerivac.js"></script>
+</body>
+</html>

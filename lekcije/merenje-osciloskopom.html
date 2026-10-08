@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Vežba: merenje napona na otporniku, kalemu i kondenzatoru osciloskopom. V/div i t/div, okidanje, sprega, fazni stav, reaktansa i serijsko RLC kolo, sa virtuelnim osciloskopom, animacijama i rešenim primerima.">
+<title>Merenje osciloskopom · lav</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="merenje-osciloskopom">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove vežbe umeš da</span><span lang="en">After this exercise you can</span></p>
+    <ul lang="sr">
+      <li>očitaš amplitudu, periodu i frekvenciju sa ekrana pomoću V/div i t/div;</li>
+      <li>podesiš okidanje i spregu (DC, AC, GND) da dobiješ stabilnu sliku;</li>
+      <li>izmeriš fazni stav između napona i struje i prepoznaš otpornik, kalem i kondenzator;</li>
+      <li>izračunaš reaktanse kalema i kondenzatora i impedansu serijskog RLC kola;</li>
+      <li>objasniš zašto se naponi na R, L i C ne sabiraju aritmetički;</li>
+      <li>bezbedno priključiš sonde (zajednička masa) i obradiš rezultate.</li>
+    </ul>
+    <ul lang="en">
+      <li>read the amplitude, period and frequency from the screen using V/div and t/div;</li>
+      <li>set the trigger and the coupling (DC, AC, GND) to get a stable picture;</li>
+      <li>measure the phase shift between voltage and current and recognise a resistor, a coil and a capacitor;</li>
+      <li>calculate the reactances of a coil and a capacitor and the impedance of a series RLC circuit;</li>
+      <li>explain why the voltages on R, L and C do not add arithmetically;</li>
+      <li>connect the probes safely (a common ground) and process the results.</li>
+    </ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="ekran" data-toc data-toc-sr="Osciloskop" data-toc-en="The oscilloscope">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">ekran i komande</span><span lang="en">the screen and the controls</span></p>
+    <h2><span lang="sr">Kako se čita osciloskop</span><span lang="en">How to read an oscilloscope</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Osciloskop crta <strong>grafik napona u vremenu</strong>. Horizontalna osa je vreme, a vertikalna napon. Ekran je podeljen mrežom na <strong>podeoke</strong> (engl. <em>div</em>): obično 10 horizontalnih i 8 vertikalnih. Dva dugmeta određuju šta jedan podeok znači:</p>
+      <p lang="en">An oscilloscope draws a <strong>graph of voltage against time</strong>. The horizontal axis is time and the vertical axis is voltage. The screen is divided by a grid into <strong>divisions</strong> (<em>div</em>): usually 10 horizontal and 8 vertical. Two knobs decide what one division means:</p>
+      <ul class="plain" lang="sr">
+        <li><strong>V/div</strong> (vertikalna osetljivost): koliko volti vredi jedan vertikalni podeok.</li>
+        <li><strong>t/div</strong> (vremenska baza): koliko vremena vredi jedan horizontalni podeok.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li><strong>V/div</strong> (vertical sensitivity): how many volts one vertical division is worth.</li>
+        <li><strong>t/div</strong> (time base): how much time one horizontal division is worth.</li>
+      </ul>
+      <p lang="sr">Merenje je zapravo brojanje podeoka, pa množenje podešenom vrednošću:</p>
+      <p lang="en">Measuring is really counting divisions and multiplying by the set value:</p>
+      <div class="formula">
+        <div class="tex">\[ U_{pp} = n_y\cdot\mathrm{V/div} \qquad T = n_x\cdot\mathrm{t/div} \qquad f = \frac{1}{T} \]</div>
+        <div class="tex">\[ U_m = \frac{U_{pp}}{2} \qquad U = \frac{U_m}{\sqrt{2}}\ \ (\text{sinusoida / sine wave}) \]</div>
+        <dl class="legend">
+          <div><dt>n<sub>y</sub></dt><dd><span lang="sr">broj vertikalnih podeoka od najnižeg do najvišeg vrha</span><span lang="en">number of vertical divisions from the lowest to the highest peak</span></dd><span class="unit">div</span></div>
+          <div><dt>n<sub>x</sub></dt><dd><span lang="sr">broj horizontalnih podeoka koje zauzima jedna perioda</span><span lang="en">number of horizontal divisions taken by one period</span></dd><span class="unit">div</span></div>
+        </dl>
+      </div>
+      <h3><span lang="sr">Sprega ulaza: DC, AC, GND</span><span lang="en">Input coupling: DC, AC, GND</span></h3>
+      <ul class="plain" lang="sr">
+        <li><strong>DC</strong>: prikazuje se ceo signal, i jednosmerna i naizmenična komponenta.</li>
+        <li><strong>AC</strong>: kondenzator na ulazu zaustavlja jednosmernu komponentu. Koristi se kada je mali naizmenični signal „nasađen” na veliki jednosmerni napon (npr. talasanje napajanja).</li>
+        <li><strong>GND</strong>: ulaz je uzemljen, vidiš liniju nula volti. Služi da nađeš gde je nula pre merenja.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li><strong>DC</strong>: the whole signal is shown, both the direct and the alternating component.</li>
+        <li><strong>AC</strong>: a capacitor at the input stops the direct component. It is used when a small alternating signal "rides" on a large direct voltage (e.g. supply ripple).</li>
+        <li><strong>GND</strong>: the input is grounded, you see the line of zero volts. It is used to find where zero is before measuring.</li>
+      </ul>
+      <h3><span lang="sr">Okidanje (trigger)</span><span lang="en">The trigger</span></h3>
+      <p lang="sr">Okidanje određuje <strong>u kom trenutku počinje svako crtanje</strong>. Biraš nivo (napon) i nagib (signal raste ↗ ili opada ↘). Kada signal prođe kroz taj nivo u tom smeru, ekran počinje crtanje iz početka, pa se svaka perioda crta preko prethodne i slika stoji mirno. Ako je nivo van opsega signala, nema okidanja i slika „beži”.</p>
+      <p lang="en">The trigger decides <strong>at what moment each sweep starts</strong>. You choose a level (a voltage) and a slope (the signal rising ↗ or falling ↘). When the signal passes through that level in that direction, the screen starts drawing from the beginning, so every period is drawn on top of the previous one and the picture stands still. If the level is outside the range of the signal, there is no trigger and the picture "runs".</p>
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Podešavanje za dobro očitavanje</span><span lang="en">Setting up for a good reading</span></p>
+        <p lang="sr">Izaberi V/div tako da signal zauzme 60 do 80 % visine ekrana. Izaberi t/div tako da se vide 2 do 3 periode. Očitavaj na središnjim osama, gde su sitne crtice na po 0,2 podeoka.</p>
+        <p lang="en">Choose V/div so that the signal fills 60 to 80 % of the screen height. Choose t/div so that 2 to 3 periods are visible. Read at the central axes, where the small ticks are at 0.2 division.</p>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-scope">
+      <div class="viewport"><canvas tabindex="0" aria-label="Virtuelni osciloskop sa jednim kanalom / a virtual single-channel oscilloscope"></canvas></div>
+      <div class="controls">
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Generator</span><span lang="en">Generator</span></span>
+          <div class="seg" id="s-shape" role="group" aria-label="Oblik signala / Signal shape">
+            <button type="button" data-v="sin" aria-pressed="true"><span lang="sr">Sinusni</span><span lang="en">Sine</span></button>
+            <button type="button" data-v="tri" aria-pressed="false"><span lang="sr">Trougaoni</span><span lang="en">Triangle</span></button>
+            <button type="button" data-v="sqr" aria-pressed="false"><span lang="sr">Pravougaoni</span><span lang="en">Square</span></button>
+          </div>
+        </div>
+        <div class="ctl"><label for="s-um"><span lang="sr">Amplituda U<sub>m</sub></span><span lang="en">Amplitude U<sub>m</sub></span></label><output id="s-um-out" for="s-um">2 V</output><input type="range" id="s-um" min="0" max="6" step="1" value="4"></div>
+        <div class="ctl"><label for="s-f"><span lang="sr">Frekvencija f</span><span lang="en">Frequency f</span></label><output id="s-f-out" for="s-f">500 Hz</output><input type="range" id="s-f" min="0" max="5" step="1" value="3"></div>
+        <div class="ctl" style="grid-column:1/-1"><label for="s-off"><span lang="sr">Jednosmerna komponenta</span><span lang="en">Direct (DC) component</span></label><output id="s-off-out" for="s-off">0 V</output><input type="range" id="s-off" min="-4" max="4" step="1" value="0"></div>
+        <div class="ctl"><label for="s-vd">V/div</label><output id="s-vd-out" for="s-vd">1 V/div</output><input type="range" id="s-vd" min="0" max="6" step="1" value="4"></div>
+        <div class="ctl"><label for="s-td">t/div</label><output id="s-td-out" for="s-td">0,5 ms/div</output><input type="range" id="s-td" min="0" max="8" step="1" value="2"></div>
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Sprega</span><span lang="en">Coupling</span></span>
+          <div class="seg" id="s-coup" role="group" aria-label="Sprega / Coupling">
+            <button type="button" data-v="dc" aria-pressed="true">DC</button>
+            <button type="button" data-v="ac" aria-pressed="false">AC</button>
+            <button type="button" data-v="gnd" aria-pressed="false">GND</button>
+          </div>
+        </div>
+        <div class="ctl"><label for="s-lvl"><span lang="sr">Nivo okidanja</span><span lang="en">Trigger level</span></label><output id="s-lvl-out" for="s-lvl">0 div</output><input type="range" id="s-lvl" min="-4" max="4" step="0.25" value="0"></div>
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Nagib</span><span lang="en">Slope</span></span>
+          <div class="seg" id="s-slope" role="group" aria-label="Nagib okidanja / Trigger slope">
+            <button type="button" data-v="up" aria-pressed="true">↗</button>
+            <button type="button" data-v="down" aria-pressed="false">↘</button>
+          </div>
+          <button type="button" class="btn" id="s-auto"><span lang="sr">Autoset</span><span lang="en">Autoset</span></button>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="s-calc"></div><div class="result" id="s-result"></div><div class="calc" id="s-note"></div></div>
+      <figcaption><span lang="sr">Sav generator je na ulazu kanala 1. Pokušaj redom: (1) postavi V/div i t/div tako da se signal lepo vidi, (2) prebaci sa DC na AC dok signal ima jednosmernu komponentu, (3) pomeri nivo okidanja van signala i gledaj kako slika „beži”, (4) pritisni Autoset.</span><span lang="en">The whole generator is at the input of channel 1. Try in turn: (1) set V/div and t/div so that the signal is clearly visible, (2) switch from DC to AC while the signal has a direct component, (3) move the trigger level outside the signal and watch the picture "run", (4) press Autoset.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <div class="rule-box warn">
+        <p class="eyebrow"><span lang="sr">Sonda ×10</span><span lang="en">The ×10 probe</span></p>
+        <p lang="sr">Sonda ×10 slabi signal 10 puta (a ulazni otpor povećava na 10 MΩ). Ako kanal nije podešen na sondu ×10, <strong>očitanu vrednost množi sa 10</strong>. Najbolje je da se podešavanje kanala poklapa sa sondom.</p>
+        <p lang="en">A ×10 probe attenuates the signal 10 times (and raises the input resistance to 10 MΩ). If the channel is not set to a ×10 probe, <strong>multiply the reading by 10</strong>. It is best if the channel setting matches the probe.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="rlc" data-toc data-toc-sr="R, L i C" data-toc-en="R, L and C">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">napon i struja na elementima</span><span lang="en">voltage and current on the elements</span></p>
+    <h2><span lang="sr">Otpornik, kalem i kondenzator na ekranu</span><span lang="en">A resistor, a coil and a capacitor on the screen</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Osciloskop meri samo napon, a mi želimo da vidimo i struju. Rešenje: u kolo se na red sa elementom veže mali otpornik <span class="v">R<sub>s</sub></span> = 10 Ω. Napon na njemu je srazmeran struji, <span class="v">u<sub>Rs</sub></span> = <span class="v">i</span> · <span class="v">R<sub>s</sub></span>, i u fazi je sa njom. Tako na istom ekranu vidiš napon (kanal 1) i struju (kanal 2).</p>
+      <p lang="en">An oscilloscope only measures voltage, but we also want to see the current. The solution: a small resistor <span class="v">R<sub>s</sub></span> = 10 Ω is connected in series with the element. The voltage on it is proportional to the current, <span class="v">u<sub>Rs</sub></span> = <span class="v">i</span> · <span class="v">R<sub>s</sub></span>, and is in phase with it. So on the same screen you see the voltage (channel 1) and the current (channel 2).</p>
+      <div class="tbl-wrap">
+        <table class="scale num">
+          <thead><tr><th><span lang="sr">Element</span><span lang="en">Element</span></th><th><span lang="sr">Veza</span><span lang="en">Relation</span></th><th><span lang="sr">Struja prema naponu</span><span lang="en">Current vs voltage</span></th></tr></thead>
+          <tbody>
+            <tr><td><span lang="sr">Otpornik</span><span lang="en">Resistor</span></td><td>u = R·i</td><td><span lang="sr">u fazi, φ = 0°</span><span lang="en">in phase, φ = 0°</span></td></tr>
+            <tr><td><span lang="sr">Kalem</span><span lang="en">Coil</span></td><td>u = L·di/dt</td><td><span lang="sr">kasni 90°, φ = +90°</span><span lang="en">lags 90°, φ = +90°</span></td></tr>
+            <tr><td><span lang="sr">Kondenzator</span><span lang="en">Capacitor</span></td><td>i = C·du/dt</td><td><span lang="sr">prednjači 90°, φ = −90°</span><span lang="en">leads 90°, φ = −90°</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p lang="sr">Fazni stav <span class="v">φ</span> je ugao za koji struja kasni za naponom (pozitivan kod kalema). Meri se preko <strong>vremenskog kašnjenja</strong> Δ<span class="v">t</span> između istih tačaka obe krive (npr. prolaza kroz nulu naviše):</p>
+      <p lang="en">The phase angle <span class="v">φ</span> is the angle by which the current lags behind the voltage (positive for a coil). It is measured through the <strong>time delay</strong> Δ<span class="v">t</span> between the same points of both traces (e.g. the upward zero crossings):</p>
+      <div class="formula">
+        <div class="tex">\[ \varphi = \frac{\Delta t}{T}\cdot 360^\circ \qquad Z = \frac{U_m}{I_m} \qquad I_m = \frac{U_{m,Rs}}{R_s} \]</div>
+        <dl class="legend">
+          <div><dt>Δt</dt><dd><span lang="sr">kašnjenje druge krive za prvom</span><span lang="en">delay of the second trace after the first</span></dd><span class="unit">s</span></div>
+          <div><dt>Z</dt><dd><span lang="sr">impedansa (odnos amplituda napona i struje)</span><span lang="en">impedance (ratio of the voltage and current amplitudes)</span></dd><span class="unit">Ω</span></div>
+        </dl>
+      </div>
+      <div class="rule-box green">
+        <p class="eyebrow"><span lang="sr">Kako zapamtiti</span><span lang="en">How to remember</span></p>
+        <p lang="sr">Kalem: <strong>napon prednjači</strong>, struja kasni. Kondenzator: <strong>struja prednjači</strong>, napon kasni. Na ekranu ona kriva koja ranije prolazi kroz nulu naviše prednjači. Na engleskom se pamti „ELI the ICE man”: u L napon E prednjači struji I, u C struja I prednjači naponu E.</p>
+        <p lang="en">Coil: <strong>the voltage leads</strong>, the current lags. Capacitor: <strong>the current leads</strong>, the voltage lags. On the screen the trace that crosses zero upward earlier is the one that leads. Remember it as "ELI the ICE man": in L the voltage E leads the current I, in C the current I leads the voltage E.</p>
+      </div>
+      <p lang="sr">Druga metoda je <strong>XY režim</strong>: kanal 1 ide na horizontalu, kanal 2 na vertikalu. Dobija se elipsa (Lisažuova slika), a fazni stav je \( \varphi = \arcsin(b/a) \), gde je <span class="v">b</span> presek elipse sa vertikalnom osom, a <span class="v">a</span> njena najveća visina. Ova metoda ne kaže da li struja kasni ili prednjači.</p>
+      <p lang="en">Another method is the <strong>XY mode</strong>: channel 1 goes to the horizontal, channel 2 to the vertical. The result is an ellipse (a Lissajous figure), and the phase is \( \varphi = \arcsin(b/a) \), where <span class="v">b</span> is where the ellipse crosses the vertical axis and <span class="v">a</span> is its greatest height. This method does not tell whether the current lags or leads.</p>
+    </div>
+
+    <figure class="lab" id="lab-rlc">
+      <div class="viewport"><canvas tabindex="0" aria-label="Osciloskop sa dva kanala: napon i struja / a two-channel oscilloscope: voltage and current"></canvas></div>
+      <div class="controls">
+        <div class="btns">
+          <span class="lbl"><span lang="sr">Element</span><span lang="en">Element</span></span>
+          <div class="seg" id="r-el" role="group" aria-label="Element / Element">
+            <button type="button" data-v="R" aria-pressed="true">R</button>
+            <button type="button" data-v="L" aria-pressed="false">L</button>
+            <button type="button" data-v="C" aria-pressed="false">C</button>
+            <button type="button" data-v="RL" aria-pressed="false">R + L</button>
+            <button type="button" data-v="RC" aria-pressed="false">R + C</button>
+          </div>
+        </div>
+        <div class="ctl"><label for="r-f"><span lang="sr">Frekvencija f</span><span lang="en">Frequency f</span></label><output id="r-f-out" for="r-f">1 kHz</output><input type="range" id="r-f" min="0" max="5" step="1" value="3"></div>
+        <div class="ctl"><label for="r-um"><span lang="sr">Napon U<sub>m</sub></span><span lang="en">Voltage U<sub>m</sub></span></label><output id="r-um-out" for="r-um">5 V</output><input type="range" id="r-um" min="0" max="3" step="1" value="2"></div>
+        <div class="btns">
+          <label class="switch" for="r-cur"><input type="checkbox" id="r-cur"><span lang="sr">Kursori</span><span lang="en">Cursors</span></label>
+          <label class="switch" for="r-xy"><input type="checkbox" id="r-xy"><span lang="sr">XY režim</span><span lang="en">XY mode</span></label>
+        </div>
+        <div class="controls one" id="r-cursors" hidden style="grid-column:1/-1;padding:0">
+          <div class="ctl"><label for="r-c1"><span lang="sr">Kursor 1</span><span lang="en">Cursor 1</span></label><output id="r-c1-out" for="r-c1">1 div</output><input type="range" id="r-c1" min="0" max="10" step="0.05" value="1"></div>
+          <div class="ctl"><label for="r-c2"><span lang="sr">Kursor 2</span><span lang="en">Cursor 2</span></label><output id="r-c2-out" for="r-c2">2 div</output><input type="range" id="r-c2" min="0" max="10" step="0.05" value="2"></div>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="r-calc"></div><div class="result" id="r-result"></div><div class="calc" id="r-note"></div></div>
+      <figcaption><span lang="sr">Žuta kriva je napon generatora (kanal 1), plava je napon na R<sub>s</sub>, to jest struja (kanal 2). Skale se same biraju. Kolo koristi R = 100 Ω, L = 20 mH i C = 1 μF. Uključi kursore, postavi prvi na prolaz kroz nulu žute krive, a drugi na plave, i izmeri φ.</span><span lang="en">The yellow trace is the generator voltage (channel 1), the blue one is the voltage on R<sub>s</sub>, that is the current (channel 2). The scales choose themselves. The circuit uses R = 100 Ω, L = 20 mH and C = 1 μF. Switch on the cursors, put the first on the zero crossing of the yellow trace and the second on that of the blue one, and measure φ.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="reaktansa" data-toc data-toc-sr="Reaktansa" data-toc-en="Reactance">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">otpor naizmenične struje</span><span lang="en">resistance to alternating current</span></p>
+    <h2><span lang="sr">Reaktansa i frekvencija</span><span lang="en">Reactance and frequency</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Kalem i kondenzator se naizmeničnoj struji suprotstavljaju, ali ne kao otpornik. Njihov otpor zovemo <strong>reaktansa</strong>, a zavisi od frekvencije:</p>
+      <p lang="en">A coil and a capacitor oppose alternating current, but not like a resistor. We call their opposition <strong>reactance</strong>, and it depends on the frequency:</p>
+      <div class="formula">
+        <div class="tex">\[ X_L = \omega L = 2\pi f L \qquad X_C = \frac{1}{\omega C} = \frac{1}{2\pi f C} \]</div>
+        <dl class="legend">
+          <div><dt>X<sub>L</sub></dt><dd><span lang="sr">induktivna reaktansa, raste sa frekvencijom</span><span lang="en">inductive reactance, rises with frequency</span></dd><span class="unit">Ω</span></div>
+          <div><dt>X<sub>C</sub></dt><dd><span lang="sr">kapacitivna reaktansa, opada sa frekvencijom</span><span lang="en">capacitive reactance, falls with frequency</span></dd><span class="unit">Ω</span></div>
+          <div><dt>L, C</dt><dd><span lang="sr">induktivnost (H), kapacitivnost (F)</span><span lang="en">inductance (H), capacitance (F)</span></dd><span class="unit">H, F</span></div>
+        </dl>
+      </div>
+      <ul class="plain" lang="sr">
+        <li><strong>Kalem</strong> propušta jednosmernu struju (<span class="v">X<sub>L</sub></span> = 0), a sa porastom frekvencije sve jače guši struju.</li>
+        <li><strong>Kondenzator</strong> ne propušta jednosmernu struju (<span class="v">X<sub>C</sub></span> beskonačno), a sa porastom frekvencije sve bolje je propušta.</li>
+        <li>Omov zakon važi za amplitude i za efektivne vrednosti: <span class="v">I</span> = <span class="v">U</span>/<span class="v">X</span>.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li>A <strong>coil</strong> passes direct current (<span class="v">X<sub>L</sub></span> = 0), and as the frequency rises it chokes the current more and more.</li>
+        <li>A <strong>capacitor</strong> does not pass direct current (<span class="v">X<sub>C</sub></span> is infinite), and as the frequency rises it passes it better and better.</li>
+        <li>Ohm's law holds for amplitudes and for RMS values: <span class="v">I</span> = <span class="v">U</span>/<span class="v">X</span>.</li>
+      </ul>
+      <p lang="sr">Kada se otpornik veže na red sa kalemom ili kondenzatorom, otpori se ne sabiraju aritmetički. Rezultat je <strong>impedansa</strong> sa faznim stavom između 0° i 90°:</p>
+      <p lang="en">When a resistor is connected in series with a coil or a capacitor, the resistances do not add arithmetically. The result is an <strong>impedance</strong> with a phase between 0° and 90°:</p>
+      <div class="formula">
+        <div class="tex">\[ Z = \sqrt{R^2 + X^2} \qquad \varphi = \arctan\frac{X}{R} \qquad X = X_L\ \text{ili / or}\ -X_C \]</div>
+      </div>
+      <div class="rule-box green">
+        <p class="eyebrow"><span lang="sr">Reaktansa ne troši snagu</span><span lang="en">Reactance does not use up power</span></p>
+        <p lang="sr">Idealni kalem i kondenzator ne razvijaju toplotu. Oni samo skladište energiju u polju i vraćaju je izvoru. Toplotu razvija samo otpornik, pa je snaga \( P = I^2 R \).</p>
+        <p lang="en">An ideal coil and capacitor produce no heat. They only store energy in a field and give it back to the source. Only the resistor produces heat, so the power is \( P = I^2 R \).</p>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-xf">
+      <div class="plot tall"><canvas aria-label="Reaktanse kalema i kondenzatora u funkciji frekvencije / reactances of a coil and a capacitor against frequency"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="x-l">L</label><output id="x-l-out" for="x-l">20 mH</output><input type="range" id="x-l" min="0" max="4" step="1" value="2"></div>
+        <div class="ctl"><label for="x-c">C</label><output id="x-c-out" for="x-c">1 μF</output><input type="range" id="x-c" min="0" max="5" step="1" value="3"></div>
+        <div class="ctl" style="grid-column:1/-1"><label for="x-f"><span lang="sr">Frekvencija f</span><span lang="en">Frequency f</span></label><output id="x-f-out" for="x-f">1 kHz</output><input type="range" id="x-f" min="50" max="5000" step="50" value="1000"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="x-calc"></div><div class="result" id="x-result"></div></div>
+      <figcaption><span lang="sr">Zelena kriva je X<sub>L</sub>, plava X<sub>C</sub>, a narandžasta isprekidana linija je otpornik od 100 Ω koji ne zavisi od frekvencije. U tački preseka X<sub>L</sub> = X<sub>C</sub> nalazi se frekvencija f<sub>0</sub> (rezonancija). Grafik je isečen na 600 Ω.</span><span lang="en">The green curve is X<sub>L</sub>, the blue one X<sub>C</sub>, and the dashed orange line is a 100 Ω resistor that does not depend on frequency. At the crossing X<sub>L</sub> = X<sub>C</sub> lies the frequency f<sub>0</sub> (resonance). The graph is clipped at 600 Ω.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="serijsko" data-toc data-toc-sr="Serijsko RLC" data-toc-en="Series RLC">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">naponi se sabiraju kao vektori</span><span lang="en">voltages add as vectors</span></p>
+    <h2><span lang="sr">Serijsko RLC kolo</span><span lang="en">The series RLC circuit</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr">Kada su <span class="v">R</span>, <span class="v">L</span> i <span class="v">C</span> vezani na red, kroz sve teče ista struja. Zato je struja polazna (referentna) veličina, a naponi na elementima imaju različit fazni stav prema njoj:</p>
+      <p lang="en">When <span class="v">R</span>, <span class="v">L</span> and <span class="v">C</span> are connected in series, the same current flows through all of them. So the current is the reference quantity, and the voltages on the elements have different phases relative to it:</p>
+      <ul class="plain" lang="sr">
+        <li><span class="v">U<sub>R</sub></span> je u fazi sa strujom.</li>
+        <li><span class="v">U<sub>L</sub></span> prednjači struji za 90°.</li>
+        <li><span class="v">U<sub>C</sub></span> kasni za strujom 90°, to jest suprotan je naponu <span class="v">U<sub>L</sub></span>.</li>
+      </ul>
+      <ul class="plain" lang="en">
+        <li><span class="v">U<sub>R</sub></span> is in phase with the current.</li>
+        <li><span class="v">U<sub>L</sub></span> leads the current by 90°.</li>
+        <li><span class="v">U<sub>C</sub></span> lags the current by 90°, that is it is opposite to <span class="v">U<sub>L</sub></span>.</li>
+      </ul>
+      <div class="formula">
+        <div class="tex">\[ X = X_L - X_C \qquad Z = \sqrt{R^2 + X^2} \qquad I = \frac{U}{Z} \qquad \varphi = \arctan\frac{X_L - X_C}{R} \]</div>
+        <div class="tex">\[ U_R = I R \quad U_L = I X_L \quad U_C = I X_C \qquad U = \sqrt{U_R^2 + (U_L - U_C)^2} \]</div>
+      </div>
+      <p lang="sr">Pošto naponi nisu u fazi, <strong>ne sabiraju se aritmetički</strong>: \( U \ne U_R + U_L + U_C \). Njihov zbir se crta kao <strong>fazorski dijagram</strong>: strelice čija je dužina amplituda, a smer fazni stav. Strelice rotiraju ugaonom brzinom <span class="v">ω</span>, a njihova vertikalna projekcija je trenutna vrednost napona.</p>
+      <p lang="en">Because the voltages are not in phase, they <strong>do not add arithmetically</strong>: \( U \ne U_R + U_L + U_C \). Their sum is drawn as a <strong>phasor diagram</strong>: arrows whose length is the amplitude and whose direction is the phase. The arrows rotate with the angular velocity <span class="v">ω</span>, and their vertical projection is the instantaneous voltage.</p>
+      <div class="rule-box blue">
+        <p class="eyebrow"><span lang="sr">Rezonancija</span><span lang="en">Resonance</span></p>
+        <p lang="sr">Kada je \( X_L = X_C \), reaktanse se poništavaju: \( Z = R \) je najmanja, struja najveća, a \( \varphi = 0 \). To se dešava na frekvenciji \( f_0 = \dfrac{1}{2\pi\sqrt{LC}} \). Tada su \( U_L \) i \( U_C \) jednaki i mogu biti veći od napona izvora.</p>
+        <p lang="en">When \( X_L = X_C \), the reactances cancel: \( Z = R \) is smallest, the current is largest, and \( \varphi = 0 \). This happens at the frequency \( f_0 = \dfrac{1}{2\pi\sqrt{LC}} \). Then \( U_L \) and \( U_C \) are equal and can be larger than the source voltage.</p>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-series">
+      <div class="viewport"><canvas tabindex="0" aria-label="Fazorski dijagram serijskog RLC kola / the phasor diagram of a series RLC circuit"></canvas></div>
+      <div class="plot" style="margin-top:10px"><canvas aria-label="Naponi na R, L i C u funkciji ugla ωt / the voltages on R, L and C against the angle ωt"></canvas></div>
+      <div class="controls">
+        <div class="ctl"><label for="q-r">R</label><output id="q-r-out" for="q-r">100 Ω</output><input type="range" id="q-r" min="10" max="500" step="10" value="100"></div>
+        <div class="ctl"><label for="q-um"><span lang="sr">Napon izvora U<sub>m</sub></span><span lang="en">Source voltage U<sub>m</sub></span></label><output id="q-um-out" for="q-um">10 V</output><input type="range" id="q-um" min="1" max="20" step="1" value="10"></div>
+        <div class="ctl"><label for="q-l">L</label><output id="q-l-out" for="q-l">20 mH</output><input type="range" id="q-l" min="0" max="4" step="1" value="2"></div>
+        <div class="ctl"><label for="q-c">C</label><output id="q-c-out" for="q-c">1 μF</output><input type="range" id="q-c" min="0" max="5" step="1" value="3"></div>
+        <div class="ctl" style="grid-column:1/-1"><label for="q-f"><span lang="sr">Frekvencija f</span><span lang="en">Frequency f</span></label><output id="q-f-out" for="q-f">1 kHz</output><input type="range" id="q-f" min="100" max="5000" step="50" value="1000"></div>
+        <div class="ctl" style="grid-column:1/-1"><label for="q-th">ωt</label><output id="q-th-out" for="q-th">29°</output><input type="range" id="q-th" min="0" max="360" step="1" value="29"></div>
+        <div class="btns">
+          <label class="switch" for="q-run"><input type="checkbox" id="q-run" checked><span lang="sr">Rotira</span><span lang="en">Rotating</span></label>
+          <button type="button" class="btn" id="q-res"><span lang="sr">Postavi f = f₀</span><span lang="en">Set f = f₀</span></button>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="q-calc"></div><div class="result" id="q-result"></div><div class="calc" id="q-note"></div></div>
+      <figcaption><span lang="sr">Gore: fazorski dijagram. Narandžasta je U<sub>R</sub>, zelena U<sub>L</sub>, plava U<sub>C</sub>, a bela je napon izvora U, zbir svih strelica. Tačkice levo su projekcije, to jest trenutne vrednosti. Dole su odgovarajući talasni oblici. Zaustavi rotaciju i pomeraj ωt ručno.</span><span lang="en">Above: the phasor diagram. Orange is U<sub>R</sub>, green U<sub>L</sub>, blue U<sub>C</sub>, and white is the source voltage U, the sum of all the arrows. The dots at the left are the projections, that is the instantaneous values. Below are the matching waveforms. Stop the rotation and move ωt by hand.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="tok" data-toc data-toc-sr="Tok vežbe" data-toc-en="The procedure">
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežba korak po korak</span><span lang="en">the exercise step by step</span></p>
+    <h2><span lang="sr">Tok vežbe</span><span lang="en">The procedure</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="intro">
+      <p lang="sr"><strong>Cilj vežbe:</strong> osciloskopom izmeriti napon na otporniku, kalemu i kondenzatoru, odrediti amplitudu, frekvenciju i fazni stav, i izračunati impedansu elemenata.</p>
+      <p lang="en"><strong>Aim of the exercise:</strong> to measure with an oscilloscope the voltage on a resistor, a coil and a capacitor, to determine the amplitude, the frequency and the phase, and to calculate the impedance of the elements.</p>
+      <div class="cols2">
+        <div>
+          <h3><span lang="sr">Pribor</span><span lang="en">Equipment</span></h3>
+          <ul class="plain" lang="sr">
+            <li>Dvokanalni osciloskop i dve sonde (1:1 / 10:1).</li>
+            <li>Funkcijski generator, sinusni signal, 1 kHz.</li>
+            <li>Otpornik R = 100 Ω, kalem L = 20 mH, kondenzator C = 1 μF.</li>
+            <li>Merni otpornik R<sub>s</sub> = 10 Ω.</li>
+            <li>Provodnici i protobord.</li>
+          </ul>
+          <ul class="plain" lang="en">
+            <li>A two-channel oscilloscope and two probes (1:1 / 10:1).</li>
+            <li>A function generator, sine signal, 1 kHz.</li>
+            <li>A resistor R = 100 Ω, a coil L = 20 mH, a capacitor C = 1 μF.</li>
+            <li>A sense resistor R<sub>s</sub> = 10 Ω.</li>
+            <li>Leads and a breadboard.</li>
+          </ul>
+        </div>
+        <figure class="fig">
+          <svg class="dg" viewBox="0 0 360 200" role="img" aria-label="Priključenje sondi osciloskopa / connecting the oscilloscope probes">
+            <circle class="box" cx="40" cy="100" r="22"/>
+            <path class="w" d="M30 100 q5 -10 10 0 t10 0"/>
+            <path class="w" d="M40 78 V40 H140 M190 40 H220 V70 M220 130 V170 H40 V122"/>
+            <rect class="box" x="140" y="28" width="50" height="24" rx="3"/>
+            <text class="it" x="165" y="45" text-anchor="middle">X</text>
+            <rect class="box" x="208" y="70" width="24" height="60" rx="3"/>
+            <text class="it" x="246" y="104">R<tspan font-size="10" dy="3">s</tspan></text>
+            <circle class="fillk" cx="100" cy="40" r="3"/>
+            <circle class="fillk" cx="220" cy="40" r="3"/>
+            <circle class="fillk" cx="150" cy="170" r="3.4"/>
+            <rect class="box" x="262" y="56" width="90" height="78" rx="6"/>
+            <text class="sm" x="307" y="100" text-anchor="middle">OSC</text>
+            <path class="wc" d="M100 40 V14 H300 V56"/>
+            <path class="wf" d="M220 40 V26 H280 V56"/>
+            <text class="sm cu" x="200" y="10" text-anchor="middle">CH1</text>
+            <text class="sm fl" x="250" y="22" text-anchor="middle">CH2</text>
+            <path class="wg" d="M320 134 V184 H150 V170"/>
+            <text class="sm go" x="235" y="180" text-anchor="middle" lang="sr">zajednička masa</text>
+            <text class="sm go" x="235" y="180" text-anchor="middle" lang="en">common ground</text>
+          </svg>
+          <figcaption><span lang="sr">Generator, element X (R, L ili C) i merni otpornik R<sub>s</sub> prema masi. Kanal 1 meri napon na elementu (generatora), kanal 2 napon na R<sub>s</sub>. Obe mase sondi idu na istu tačku.</span><span lang="en">The generator, the element X (R, L or C) and the sense resistor R<sub>s</sub> to ground. Channel 1 measures the voltage on the element (the generator), channel 2 the voltage on R<sub>s</sub>. Both probe grounds go to the same point.</span></figcaption>
+        </figure>
+      </div>
+      <div class="rule-box warn">
+        <p class="eyebrow"><span lang="sr">Masa osciloskopa</span><span lang="en">The oscilloscope ground</span></p>
+        <p lang="sr">Mase obe sonde su međusobno spojene i povezane sa uzemljenjem. Ako masu sonde priključiš na tačku u kolu koja nije masa, napravićeš kratak spoj. Zato se mere naponi u odnosu na zajedničku masu, a napon između dve tačke, od kojih nijedna nije masa, dobija se razlikom kanala (CH1 − CH2).</p>
+        <p lang="en">The grounds of both probes are connected to each other and to the earth. If you connect a probe ground to a point in the circuit that is not ground, you will make a short circuit. That is why voltages are measured relative to the common ground, and the voltage between two points, neither of which is ground, is obtained as the difference of the channels (CH1 − CH2).</p>
+      </div>
+      <h3><span lang="sr">Koraci</span><span lang="en">Steps</span></h3>
+      <ol class="steps-inline" lang="sr">
+        <li><span>Priključi sondu na izlaz „CAL” osciloskopa (pravougaoni signal) i podesi kompenzaciju sonde 10:1 da vrhovi budu ravni.</span></li>
+        <li><span>Sastavi kolo sa slike sa otpornikom kao elementom X. Generator podesi na sinus, 1 kHz, oko 5 V amplitude.</span></li>
+        <li><span>Obe sprege postavi na GND i pomeri linije na sredinu ekrana, pa vrati na DC. Okidanje: izvor CH1, nagib ↗, nivo 0.</span></li>
+        <li><span>Podesi V/div i t/div da se vide 2 do 3 periode. Očitaj amplitudu napona <span class="v">U<sub>m</sub></span> sa kanala 1 i <span class="v">U<sub>m,Rs</sub></span> sa kanala 2. Izračunaj <span class="v">I<sub>m</sub></span> = <span class="v">U<sub>m,Rs</sub></span>/<span class="v">R<sub>s</sub></span> i <span class="v">Z</span>.</span></li>
+        <li><span>Izmeri kašnjenje Δ<span class="v">t</span> između prolaza kroz nulu naviše i izračunaj <span class="v">φ</span>. Zapiši da li struja kasni ili prednjači.</span></li>
+        <li><span>Ponovi sa kalemom, pa sa kondenzatorom. Isključi generator pre svake promene kola.</span></li>
+        <li><span>Opciono: izmeri na 100 Hz i 5 kHz i uporedi reaktanse.</span></li>
+      </ol>
+      <ol class="steps-inline" lang="en">
+        <li><span>Connect a probe to the "CAL" output of the oscilloscope (a square signal) and adjust the compensation of the 10:1 probe so that the tops are flat.</span></li>
+        <li><span>Build the circuit from the figure with the resistor as the element X. Set the generator to a sine, 1 kHz, about 5 V amplitude.</span></li>
+        <li><span>Set both couplings to GND and move the lines to the middle of the screen, then return to DC. Trigger: source CH1, slope ↗, level 0.</span></li>
+        <li><span>Set V/div and t/div so that 2 to 3 periods are visible. Read the voltage amplitude <span class="v">U<sub>m</sub></span> from channel 1 and <span class="v">U<sub>m,Rs</sub></span> from channel 2. Calculate <span class="v">I<sub>m</sub></span> = <span class="v">U<sub>m,Rs</sub></span>/<span class="v">R<sub>s</sub></span> and <span class="v">Z</span>.</span></li>
+        <li><span>Measure the delay Δ<span class="v">t</span> between the upward zero crossings and calculate <span class="v">φ</span>. Write down whether the current lags or leads.</span></li>
+        <li><span>Repeat with the coil, then with the capacitor. Switch off the generator before every change of the circuit.</span></li>
+        <li><span>Optional: measure at 100 Hz and 5 kHz and compare the reactances.</span></li>
+      </ol>
+      <h3><span lang="sr">Primer popunjene tabele (f = 1 kHz)</span><span lang="en">An example of a filled-in table (f = 1 kHz)</span></h3>
+      <div class="tbl-wrap">
+        <table class="scale num">
+          <thead><tr><th><span lang="sr">Element</span><span lang="en">Element</span></th><th>U<sub>m</sub> (V)</th><th>U<sub>m,Rs</sub> (V)</th><th>I<sub>m</sub> (mA)</th><th>Z (Ω)</th><th>Δt (μs)</th><th>φ (°)</th></tr></thead>
+          <tbody>
+            <tr><td>R</td><td>5,0</td><td>0,50</td><td>50</td><td>100</td><td>0</td><td>0</td></tr>
+            <tr><td>L</td><td>5,0</td><td>0,40</td><td>40</td><td>125</td><td>250</td><td>+90</td></tr>
+            <tr><td>C</td><td>5,0</td><td>0,31</td><td>31</td><td>161</td><td>−250</td><td>−90</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p lang="sr">Iz izmerenih impedansi dobijaju se vrednosti elemenata: \( L = \dfrac{X_L}{2\pi f} = \dfrac{125}{6283} = 19{,}9\ \mathrm{mH} \) i \( C = \dfrac{1}{2\pi f X_C} = \dfrac{1}{6283\cdot 161} = 0{,}99\ \mu\mathrm{F} \). Poređenjem sa oznakama na elementima dobijaš relativnu grešku merenja.</p>
+      <p lang="en">The values of the elements follow from the measured impedances: \( L = \dfrac{X_L}{2\pi f} = \dfrac{125}{6283} = 19.9\ \mathrm{mH} \) and \( C = \dfrac{1}{2\pi f X_C} = \dfrac{1}{6283\cdot 161} = 0.99\ \mu\mathrm{F} \). Comparing with the markings on the elements gives the relative error of the measurement.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="ex">
+        <h4><span lang="sr">Primer 1 · amplituda i frekvencija sa ekrana</span><span lang="en">Example 1 · amplitude and frequency from the screen</span></h4>
+        <p class="given" lang="sr">Dato: kanal podešen na 2 V/div, vremenska baza 0,5 ms/div. Sinusoida od najnižeg do najvišeg vrha zauzima 5 podeoka, a jedna perioda 4 podeoka. Traže se U<sub>pp</sub>, U<sub>m</sub>, U, T i f.</p>
+        <p class="given" lang="en">Given: the channel is set to 2 V/div, the time base is 0.5 ms/div. The sine from the lowest to the highest peak takes 5 divisions, and one period 4 divisions. Find U<sub>pp</sub>, U<sub>m</sub>, U, T and f.</p>
+        <ol lang="sr">
+          <li>\( U_{pp} = n_y\cdot\mathrm{V/div} = 5\cdot 2 = 10\ \mathrm{V} \), pa je \( U_m = 5\ \mathrm{V} \).</li>
+          <li>\( U = U_m/\sqrt{2} = 5/1{,}414 = 3{,}54\ \mathrm{V} \).</li>
+          <li>\( T = n_x\cdot\mathrm{t/div} = 4\cdot 0{,}5 = 2\ \mathrm{ms} \), pa je \( f = 1/T = 500\ \mathrm{Hz} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>\( U_{pp} = n_y\cdot\mathrm{V/div} = 5\cdot 2 = 10\ \mathrm{V} \), so \( U_m = 5\ \mathrm{V} \).</li>
+          <li>\( U = U_m/\sqrt{2} = 5/1.414 = 3.54\ \mathrm{V} \).</li>
+          <li>\( T = n_x\cdot\mathrm{t/div} = 4\cdot 0.5 = 2\ \mathrm{ms} \), so \( f = 1/T = 500\ \mathrm{Hz} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">U<sub>pp</sub> = 10 V, U<sub>m</sub> = 5 V, U = 3,54 V, T = 2 ms, f = 500 Hz</span><span lang="en">U<sub>pp</sub> = 10 V, U<sub>m</sub> = 5 V, U = 3.54 V, T = 2 ms, f = 500 Hz</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 2 · sonda ×10</span><span lang="en">Example 2 · the ×10 probe</span></h4>
+        <p class="given" lang="sr">Dato: sonda je ×10, a kanal nije podešen na sondu. Na 5 V/div signal od vrha do vrha zauzima 4,4 podeoka. Koliki je napon?</p>
+        <p class="given" lang="en">Given: the probe is ×10, and the channel is not set for the probe. At 5 V/div the signal from peak to peak takes 4.4 divisions. What is the voltage?</p>
+        <ol lang="sr">
+          <li>Na ekranu: \( 4{,}4\cdot 5 = 22\ \mathrm{V} \).</li>
+          <li>Sonda slabi 10 puta: \( U_{pp} = 22\cdot 10 = 220\ \mathrm{V} \).</li>
+          <li>\( U_m = 110\ \mathrm{V} \), \( U = 110/1{,}414 = 77{,}8\ \mathrm{V} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>On the screen: \( 4.4\cdot 5 = 22\ \mathrm{V} \).</li>
+          <li>The probe attenuates 10 times: \( U_{pp} = 22\cdot 10 = 220\ \mathrm{V} \).</li>
+          <li>\( U_m = 110\ \mathrm{V} \), \( U = 110/1.414 = 77.8\ \mathrm{V} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">U<sub>pp</sub> = 220 V, U<sub>m</sub> = 110 V, U ≈ 78 V</span><span lang="en">U<sub>pp</sub> = 220 V, U<sub>m</sub> = 110 V, U ≈ 78 V</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 3 · izbor skala</span><span lang="en">Example 3 · choosing the scales</span></h4>
+        <p class="given" lang="sr">Dato: treba prikazati sinusoidu 50 Hz amplitude 12 V. Skale su u nizu 1, 2, 5. Koje V/div i t/div izabrati?</p>
+        <p class="given" lang="en">Given: a 50 Hz sine of amplitude 12 V is to be displayed. The scales come in the series 1, 2, 5. Which V/div and t/div should be chosen?</p>
+        <ol lang="sr">
+          <li>\( U_{pp} = 24\ \mathrm{V} \). Za oko 5 podeoka treba 24/5 ≈ 5 V/div, pa biramo <strong>5 V/div</strong> (4,8 podeoka).</li>
+          <li>\( T = 1/50 = 20\ \mathrm{ms} \). Za 2 do 3 periode na 10 podeoka jedna perioda zauzima 3 do 5 podeoka: \( 20/4 = 5\ \mathrm{ms/div} \), pa biramo <strong>5 ms/div</strong>.</li>
+        </ol>
+        <ol lang="en">
+          <li>\( U_{pp} = 24\ \mathrm{V} \). For about 5 divisions we need 24/5 ≈ 5 V/div, so we choose <strong>5 V/div</strong> (4.8 divisions).</li>
+          <li>\( T = 1/50 = 20\ \mathrm{ms} \). For 2 to 3 periods over 10 divisions one period takes 3 to 5 divisions: \( 20/4 = 5\ \mathrm{ms/div} \), so we choose <strong>5 ms/div</strong>.</li>
+        </ol>
+        <p class="answer"><span lang="sr">5 V/div i 5 ms/div. Jedna perioda zauzima 4 podeoka, a signal 4,8 podeoka po visini.</span><span lang="en">5 V/div and 5 ms/div. One period takes 4 divisions, and the signal 4.8 divisions in height.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 4 · tipično očitavanje faze i određivanje L</span><span lang="en">Example 4 · reading a phase and finding L</span></h4>
+        <p class="given" lang="sr">Dato: na 0,5 ms/div jedna perioda zauzima 8 podeoka. Kriva struje (kanal 2) prolazi kroz nulu naviše 1,2 podeoka posle krive napona (kanal 1). Poznato je da je u kolu R = 100 Ω. Traže se φ, X<sub>L</sub> i L.</p>
+        <p class="given" lang="en">Given: at 0.5 ms/div one period takes 8 divisions. The current trace (channel 2) crosses zero upward 1.2 divisions after the voltage trace (channel 1). The circuit is known to contain R = 100 Ω. Find φ, X<sub>L</sub> and L.</p>
+        <ol lang="sr">
+          <li>\( T = 8\cdot 0{,}5 = 4\ \mathrm{ms} \), \( f = 250\ \mathrm{Hz} \), \( \Delta t = 1{,}2\cdot 0{,}5 = 0{,}6\ \mathrm{ms} \).</li>
+          <li>\( \varphi = \dfrac{\Delta t}{T}\cdot 360^\circ = \dfrac{0{,}6}{4}\cdot 360^\circ = 54^\circ \). Struja kasni, pa je kolo induktivno (R + L).</li>
+          <li>\( X_L = R\tan\varphi = 100\cdot 1{,}376 = 138\ \Omega \).</li>
+          <li>\( L = \dfrac{X_L}{2\pi f} = \dfrac{138}{2\pi\cdot 250} = 0{,}088\ \mathrm{H} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>\( T = 8\cdot 0.5 = 4\ \mathrm{ms} \), \( f = 250\ \mathrm{Hz} \), \( \Delta t = 1.2\cdot 0.5 = 0.6\ \mathrm{ms} \).</li>
+          <li>\( \varphi = \dfrac{\Delta t}{T}\cdot 360^\circ = \dfrac{0.6}{4}\cdot 360^\circ = 54^\circ \). The current lags, so the circuit is inductive (R + L).</li>
+          <li>\( X_L = R\tan\varphi = 100\cdot 1.376 = 138\ \Omega \).</li>
+          <li>\( L = \dfrac{X_L}{2\pi f} = \dfrac{138}{2\pi\cdot 250} = 0.088\ \mathrm{H} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">φ = 54° (struja kasni), X<sub>L</sub> = 138 Ω, L ≈ 88 mH</span><span lang="en">φ = 54° (the current lags), X<sub>L</sub> = 138 Ω, L ≈ 88 mH</span></p>
+      </div>
+      <div class="ex field">
+        <h4><span lang="sr">Primer 5 · AC sprega i talasanje</span><span lang="en">Example 5 · AC coupling and ripple</span></h4>
+        <p class="given" lang="sr">Dato: napajanje od 12 V ima talasanje oko 100 mV (vrh–vrh). Kako ga izmeriti osciloskopom?</p>
+        <p class="given" lang="en">Given: a 12 V supply has a ripple of about 100 mV (peak to peak). How can it be measured with an oscilloscope?</p>
+        <ol lang="sr">
+          <li>Jednosmernu vrednost izmeri sa DC spregom na 2 V/div: kriva je 6 podeoka iznad nule, 12 V.</li>
+          <li>Za talasanje pređi na <strong>AC spregu</strong>, koja uklanja 12 V, i smanji skalu na 20 mV/div. Talasanje zauzima \( 100/20 = 5 \) podeoka.</li>
+        </ol>
+        <ol lang="en">
+          <li>Measure the direct value with DC coupling at 2 V/div: the trace is 6 divisions above zero, 12 V.</li>
+          <li>For the ripple switch to <strong>AC coupling</strong>, which removes the 12 V, and reduce the scale to 20 mV/div. The ripple takes \( 100/20 = 5 \) divisions.</li>
+        </ol>
+        <p class="answer"><span lang="sr">DC sprega i 2 V/div za 12 V, AC sprega i 20 mV/div za talasanje od 100 mV.</span><span lang="en">DC coupling and 2 V/div for 12 V, AC coupling and 20 mV/div for the 100 mV ripple.</span></p>
+      </div>
+      <div class="ex field">
+        <h4><span lang="sr">Primer 6 · reaktanse</span><span lang="en">Example 6 · reactances</span></h4>
+        <p class="given" lang="sr">Dato: L = 20 mH i C = 1 μF. Izračunaj reaktanse na 100 Hz i na 1 kHz.</p>
+        <p class="given" lang="en">Given: L = 20 mH and C = 1 μF. Calculate the reactances at 100 Hz and at 1 kHz.</p>
+        <ol lang="sr">
+          <li>100 Hz: \( X_L = 2\pi\cdot 100\cdot 0{,}02 = 12{,}6\ \Omega \), \( X_C = \dfrac{1}{2\pi\cdot 100\cdot 10^{-6}} = 1592\ \Omega \).</li>
+          <li>1 kHz: \( X_L = 2\pi\cdot 1000\cdot 0{,}02 = 125{,}7\ \Omega \), \( X_C = \dfrac{1}{2\pi\cdot 1000\cdot 10^{-6}} = 159{,}2\ \Omega \).</li>
+        </ol>
+        <ol lang="en">
+          <li>100 Hz: \( X_L = 2\pi\cdot 100\cdot 0.02 = 12.6\ \Omega \), \( X_C = \dfrac{1}{2\pi\cdot 100\cdot 10^{-6}} = 1592\ \Omega \).</li>
+          <li>1 kHz: \( X_L = 2\pi\cdot 1000\cdot 0.02 = 125.7\ \Omega \), \( X_C = \dfrac{1}{2\pi\cdot 1000\cdot 10^{-6}} = 159.2\ \Omega \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">Frekvencija 10 puta veća: X<sub>L</sub> 10 puta veća, X<sub>C</sub> 10 puta manja.</span><span lang="en">A frequency 10 times higher: X<sub>L</sub> 10 times larger, X<sub>C</sub> 10 times smaller.</span></p>
+      </div>
+      <div class="ex violet">
+        <h4><span lang="sr">Primer 7 · serijsko RLC kolo</span><span lang="en">Example 7 · a series RLC circuit</span></h4>
+        <p class="given" lang="sr">Dato: R = 100 Ω, L = 20 mH, C = 1 μF, f = 1 kHz, efektivni napon izvora U = 10 V. Traže se Z, I, U<sub>R</sub>, U<sub>L</sub>, U<sub>C</sub> i φ.</p>
+        <p class="given" lang="en">Given: R = 100 Ω, L = 20 mH, C = 1 μF, f = 1 kHz, RMS source voltage U = 10 V. Find Z, I, U<sub>R</sub>, U<sub>L</sub>, U<sub>C</sub> and φ.</p>
+        <ol lang="sr">
+          <li>\( X_L = 125{,}7\ \Omega \), \( X_C = 159{,}2\ \Omega \), \( X = X_L - X_C = -33{,}5\ \Omega \).</li>
+          <li>\( Z = \sqrt{R^2 + X^2} = \sqrt{100^2 + 33{,}5^2} = 105{,}5\ \Omega \).</li>
+          <li>\( I = U/Z = 10/105{,}5 = 0{,}0948\ \mathrm{A} \).</li>
+          <li>\( U_R = I R = 9{,}48\ \mathrm{V} \), \( U_L = I X_L = 11{,}9\ \mathrm{V} \), \( U_C = I X_C = 15{,}1\ \mathrm{V} \).</li>
+          <li>\( \varphi = \arctan(X/R) = \arctan(-0{,}335) = -18{,}5^\circ \) (kolo je kapacitivno, struja prednjači).</li>
+          <li>Provera: \( \sqrt{9{,}48^2 + (11{,}9 - 15{,}1)^2} = 10{,}0\ \mathrm{V} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>\( X_L = 125.7\ \Omega \), \( X_C = 159.2\ \Omega \), \( X = X_L - X_C = -33.5\ \Omega \).</li>
+          <li>\( Z = \sqrt{R^2 + X^2} = \sqrt{100^2 + 33.5^2} = 105.5\ \Omega \).</li>
+          <li>\( I = U/Z = 10/105.5 = 0.0948\ \mathrm{A} \).</li>
+          <li>\( U_R = I R = 9.48\ \mathrm{V} \), \( U_L = I X_L = 11.9\ \mathrm{V} \), \( U_C = I X_C = 15.1\ \mathrm{V} \).</li>
+          <li>\( \varphi = \arctan(X/R) = \arctan(-0.335) = -18.5^\circ \) (the circuit is capacitive, the current leads).</li>
+          <li>Check: \( \sqrt{9.48^2 + (11.9 - 15.1)^2} = 10.0\ \mathrm{V} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">Z = 105,5 Ω, I = 94,8 mA, U<sub>R</sub> = 9,5 V, U<sub>L</sub> = 11,9 V, U<sub>C</sub> = 15,1 V, φ = −18,5°. Napon na kondenzatoru je veći od napona izvora.</span><span lang="en">Z = 105.5 Ω, I = 94.8 mA, U<sub>R</sub> = 9.5 V, U<sub>L</sub> = 11.9 V, U<sub>C</sub> = 15.1 V, φ = −18.5°. The voltage on the capacitor is larger than the source voltage.</span></p>
+      </div>
+      <div class="ex violet">
+        <h4><span lang="sr">Primer 8 · rezonancija</span><span lang="en">Example 8 · resonance</span></h4>
+        <p class="given" lang="sr">Dato: isto kolo kao u primeru 7. Na kojoj frekvenciji je rezonancija i koliki su struja i naponi na L i C?</p>
+        <p class="given" lang="en">Given: the same circuit as in example 7. At what frequency is the resonance, and what are the current and the voltages on L and C?</p>
+        <ol lang="sr">
+          <li>\( f_0 = \dfrac{1}{2\pi\sqrt{LC}} = \dfrac{1}{2\pi\sqrt{0{,}02\cdot 10^{-6}}} = 1125\ \mathrm{Hz} \).</li>
+          <li>Tada je \( Z = R = 100\ \Omega \), pa je \( I = 10/100 = 0{,}1\ \mathrm{A} \).</li>
+          <li>\( X_L = 2\pi\cdot 1125\cdot 0{,}02 = 141\ \Omega = X_C \), pa je \( U_L = U_C = 0{,}1\cdot 141 = 14{,}1\ \mathrm{V} \).</li>
+        </ol>
+        <ol lang="en">
+          <li>\( f_0 = \dfrac{1}{2\pi\sqrt{LC}} = \dfrac{1}{2\pi\sqrt{0.02\cdot 10^{-6}}} = 1125\ \mathrm{Hz} \).</li>
+          <li>Then \( Z = R = 100\ \Omega \), so \( I = 10/100 = 0.1\ \mathrm{A} \).</li>
+          <li>\( X_L = 2\pi\cdot 1125\cdot 0.02 = 141\ \Omega = X_C \), so \( U_L = U_C = 0.1\cdot 141 = 14.1\ \mathrm{V} \).</li>
+        </ol>
+        <p class="answer"><span lang="sr">f<sub>0</sub> = 1125 Hz, I = 100 mA, U<sub>L</sub> = U<sub>C</sub> = 14,1 V, što je više od napona izvora od 10 V.</span><span lang="en">f<sub>0</sub> = 1125 Hz, I = 100 mA, U<sub>L</sub> = U<sub>C</sub> = 14.1 V, which is more than the 10 V source voltage.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <ul class="pitfalls" lang="sr">
+        <li><div><b>Zaboravljen V/div ili t/div.</b> Broj podeoka nije napon ni vreme. Uvek pomnoži sa podešenom vrednošću.</div></li>
+        <li><div><b>U<sub>pp</sub> uzet kao U<sub>m</sub>.</b> Sa ekrana čitaš razmak od vrha do vrha. Amplituda je njegova polovina.</div></li>
+        <li><div><b>Zaboravljena sonda ×10.</b> Očitanu vrednost množi sa 10 ako kanal nije podešen na sondu.</div></li>
+        <li><div><b>Efektivna i vršna vrednost.</b> Osciloskop pokazuje vršnu, a instrumenti i utičnica efektivnu. \( U = U_m/\sqrt{2} \).</div></li>
+        <li><div><b>Masa sonde na pogrešnoj tački.</b> To pravi kratak spoj. Mase obe sonde idu na zajedničku masu kola.</div></li>
+        <li><div><b>Slika „beži”.</b> Nivo okidanja je van signala ili je izabran pogrešan izvor okidanja. Postavi nivo u opseg signala.</div></li>
+        <li><div><b>DC sprega za malo talasanje.</b> Veliki jednosmerni napon nameće veliku skalu, pa se talasanje ne vidi. Pređi na AC spregu.</div></li>
+        <li><div><b>Pogrešan smer faze.</b> Kriva koja ranije prolazi kroz nulu naviše prednjači. Kod kalema napon prednjači, kod kondenzatora struja.</div></li>
+        <li><div><b>Sabiranje napona aritmetički.</b> Naponi na R, L i C se sabiraju vektorski: \( U \ne U_R + U_L + U_C \).</div></li>
+        <li><div><b>Mešanje reaktanse i otpora.</b> Reaktansa zavisi od frekvencije i ne razvija toplotu. Impedansa je \( Z = \sqrt{R^2 + X^2} \), a ne \( R + X \).</div></li>
+        <li><div><b>Signal van ekrana.</b> Ako vrhovi izlaze iz mreže, očitavanje nije moguće. Povećaj V/div.</div></li>
+      </ul>
+      <ul class="pitfalls" lang="en">
+        <li><div><b>Forgetting V/div or t/div.</b> A number of divisions is neither voltage nor time. Always multiply by the set value.</div></li>
+        <li><div><b>U<sub>pp</sub> taken as U<sub>m</sub>.</b> From the screen you read the distance from peak to peak. The amplitude is its half.</div></li>
+        <li><div><b>Forgetting the ×10 probe.</b> Multiply the reading by 10 if the channel is not set for the probe.</div></li>
+        <li><div><b>RMS and peak value.</b> The oscilloscope shows the peak, while instruments and the wall socket give RMS. \( U = U_m/\sqrt{2} \).</div></li>
+        <li><div><b>A probe ground on the wrong point.</b> That makes a short circuit. The grounds of both probes go to the common ground of the circuit.</div></li>
+        <li><div><b>The picture "runs".</b> The trigger level is outside the signal or the wrong trigger source is selected. Put the level inside the signal range.</div></li>
+        <li><div><b>DC coupling for a small ripple.</b> A large direct voltage forces a large scale, so the ripple is not seen. Switch to AC coupling.</div></li>
+        <li><div><b>The wrong direction of the phase.</b> The trace that crosses zero upward earlier leads. In a coil the voltage leads, in a capacitor the current.</div></li>
+        <li><div><b>Adding voltages arithmetically.</b> The voltages on R, L and C add as vectors: \( U \ne U_R + U_L + U_C \).</div></li>
+        <li><div><b>Mixing reactance and resistance.</b> Reactance depends on frequency and produces no heat. The impedance is \( Z = \sqrt{R^2 + X^2} \), not \( R + X \).</div></li>
+        <li><div><b>A signal off the screen.</b> If the peaks leave the grid, reading is impossible. Increase V/div.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="summary">
+        <ul lang="sr">
+          <li>Osciloskop crta napon u vremenu. Očitavanje: \( U_{pp} = n_y\cdot\mathrm{V/div} \), \( T = n_x\cdot\mathrm{t/div} \), \( f = 1/T \), \( U_m = U_{pp}/2 \).</li>
+          <li>Sprega: DC (sve), AC (bez jednosmerne komponente), GND (nula). Okidanje određuje nivo i nagib na kojima počinje crtanje.</li>
+          <li>Struja se vidi kao napon na malom otporniku R<sub>s</sub>. Fazni stav: \( \varphi = \Delta t/T\cdot 360^\circ \).</li>
+          <li>Otpornik: u fazi. Kalem: struja kasni 90°, \( X_L = 2\pi f L \). Kondenzator: struja prednjači 90°, \( X_C = 1/(2\pi f C) \).</li>
+          <li>Serijsko RLC: \( Z = \sqrt{R^2 + (X_L - X_C)^2} \), \( I = U/Z \), naponi se sabiraju kao vektori. Rezonancija: \( f_0 = 1/(2\pi\sqrt{LC}) \), \( Z = R \).</li>
+          <li>Mase sondi su zajedničke i povezane sa uzemljenjem, pa pazi gde ih priključuješ.</li>
+        </ul>
+        <ul lang="en">
+          <li>An oscilloscope draws voltage against time. Reading: \( U_{pp} = n_y\cdot\mathrm{V/div} \), \( T = n_x\cdot\mathrm{t/div} \), \( f = 1/T \), \( U_m = U_{pp}/2 \).</li>
+          <li>Coupling: DC (everything), AC (without the direct component), GND (zero). The trigger sets the level and the slope at which drawing starts.</li>
+          <li>The current is seen as the voltage on a small resistor R<sub>s</sub>. The phase: \( \varphi = \Delta t/T\cdot 360^\circ \).</li>
+          <li>Resistor: in phase. Coil: the current lags 90°, \( X_L = 2\pi f L \). Capacitor: the current leads 90°, \( X_C = 1/(2\pi f C) \).</li>
+          <li>Series RLC: \( Z = \sqrt{R^2 + (X_L - X_C)^2} \), \( I = U/Z \), the voltages add as vectors. Resonance: \( f_0 = 1/(2\pi\sqrt{LC}) \), \( Z = R \).</li>
+          <li>The probe grounds are common and connected to the earth, so watch where you connect them.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" data-test="OSN02" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/merenje-osciloskopom.js"></script>
+</body>
+</html>

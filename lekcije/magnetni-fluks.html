@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Magnetni fluks, normala na površinu i ugao: lekcija sa 3D modelom petlje u polju, rešenim primerima i testom.">
+<title>Magnetni fluks · lav</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="magnetni-fluks">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr">
+      <li>objasniš magnetni fluks kao „broj linija polja” kroz površinu;</li>
+      <li>odrediš ugao između normale i polja i izračunaš <span class="v">Φ</span> = <span class="v">B S</span> cos <span class="v">α</span>;</li>
+      <li>kažeš kada je fluks najveći, a kada jednak nuli;</li>
+      <li>navedeš tri načina da se fluks promeni i zašto je to važno za indukciju.</li>
+    </ul>
+    <ul lang="en">
+      <li>explain magnetic flux as the "number of field lines" through a surface;</li>
+      <li>find the angle between the normal and the field and calculate <span class="v">Φ</span> = <span class="v">B S</span> cos <span class="v">α</span>;</li>
+      <li>say when the flux is largest and when it is zero;</li>
+      <li>name three ways to change the flux and why that matters for induction.</li>
+    </ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="fluks" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">oznaka Φ · jedinica veber (Wb)</span><span lang="en">symbol Φ · unit weber (Wb)</span></p>
+    <h2><span lang="sr">Šta je magnetni fluks?</span><span lang="en">What is magnetic flux?</span></h2>
+  </div>
+  <div class="grid">
+    <div class="intro">
+      <p lang="sr"><strong>Magnetni fluks</strong> <span class="v">Φ</span> govori koliko magnetnog polja prolazi kroz neku površinu, na primer kroz žičanu petlju. Najlakše ga je zamisliti kao <strong>broj linija polja</strong> koje prolaze kroz tu površinu.</p>
+      <p lang="en"><strong>Magnetic flux</strong> <span class="v">Φ</span> tells us how much magnetic field passes through a surface, for example through a wire loop. The easiest way to picture it is as the <strong>number of field lines</strong> that pass through that surface.</p>
+      <p lang="sr">Zamisli kišu i obruč. Ako obruč držiš vodoravno, kroz njega prođe najviše kapi. Ako ga nagneš, prođe manje. Kada ga okreneš tako da je ivicom okrenut ka kapima, kroz njega ne prođe nijedna. Linije polja su „kapi”, a petlja je obruč.</p>
+      <p lang="en">Picture rain and a hoop. Hold the hoop flat and the most drops pass through. Tilt it and fewer pass. Turn it edge-on to the rain and none pass through. The field lines are the "drops", and the loop is the hoop.</p>
+      <div class="formula">
+        <div class="tex">\[ \Phi = B\,S\cos\alpha \]</div>
+        <dl class="legend">
+          <div><dt>Φ</dt><dd><span lang="sr">magnetni fluks</span><span lang="en">magnetic flux</span></dd><span class="unit">Wb</span></div>
+          <div><dt>B</dt><dd><span lang="sr">magnetna indukcija</span><span lang="en">magnetic induction</span></dd><span class="unit">T</span></div>
+          <div><dt>S</dt><dd><span lang="sr">površina</span><span lang="en">area of the surface</span></dd><span class="unit">m²</span></div>
+          <div><dt>α</dt><dd><span lang="sr">ugao između linija polja i normale na površinu</span><span lang="en">angle between the field lines and the normal to the surface</span></dd><span class="unit">°</span></div>
+        </dl>
+      </div>
+    </div>
+
+    <figure class="lab" id="lab-flux">
+      <div class="viewport"><canvas tabindex="0" aria-label="3D model: žičana petlja u homogenom magnetnom polju / wire loop in a uniform magnetic field"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje</span><span lang="en">Drag to rotate</span></span></div>
+      <div class="controls">
+        <div class="ctl"><label for="x-angle"><span lang="sr">Ugao α (normala i polje)</span><span lang="en">Angle α (normal and field)</span></label><output id="x-angle-out" for="x-angle">30°</output><input type="range" id="x-angle" min="0" max="90" step="1" value="30"></div>
+        <div class="ctl"><label for="x-b"><span lang="sr">Indukcija B</span><span lang="en">Induction B</span></label><output id="x-b-out" for="x-b">0,5 T</output><input type="range" id="x-b" min="0.2" max="1" step="0.1" value="0.5"></div>
+      </div>
+      <div class="readout" aria-live="polite"><div class="calc" id="x-calc"></div><div class="result" id="x-result"></div></div>
+      <figcaption><span lang="sr">Kvadratna petlja stranice 20 cm (S = 0,04 m²) u homogenom polju. Osvetljene linije prolaze kroz petlju. Jače polje znači gušće linije, a nagnuta petlja hvata manje linija.</span><span lang="en">A square loop with 20 cm sides (S = 0.04 m²) in a uniform field. The bright lines pass through the loop. A stronger field means denser lines, and a tilted loop catches fewer lines.</span></figcaption>
+    </figure>
+
+    <div class="rest">
+      <p lang="sr"><strong>Normala</strong> je zamišljena strelica koja stoji pod pravim uglom na površinu. U modelu je to bela strelica <span class="v">n</span>. Ugao <span class="v">α</span> merimo između normale i linija polja.</p>
+      <p lang="en">The <strong>normal</strong> is an imaginary arrow standing at a right angle to the surface. In the model it is the white arrow <span class="v">n</span>. We measure the angle <span class="v">α</span> between the normal and the field lines.</p>
+      <div class="cases">
+        <div><p class="h">α = 0° · cos α = 1</p><p><span class="v">Φ</span> = <span class="v">B</span>·<span class="v">S</span></p><p class="note" lang="sr">Površina stoji poprečno na polje i hvata najviše linija. Fluks je najveći.</p><p class="note" lang="en">The surface faces the field head-on and catches the most lines. The flux is largest.</p></div>
+        <div><p class="h">α = 90° · cos α = 0</p><p><span class="v">Φ</span> = 0</p><p class="note" lang="sr">Linije klize pored površine i nijedna ne prolazi kroz nju.</p><p class="note" lang="en">The lines slide past the surface and none pass through it.</p></div>
+      </div>
+      <div class="formula"><div class="tex">\[ 1\,\mathrm{Wb} = 1\,\mathrm{T\cdot m^2} \]</div></div>
+      <p lang="sr">Fluks se menja kada se promeni jačina polja <span class="v">B</span>, površina <span class="v">S</span> ili ugao <span class="v">α</span>. Ta tri „dugmeta” su jedini načini da se fluks promeni.</p>
+      <p lang="en">The flux changes when the field strength <span class="v">B</span>, the area <span class="v">S</span> or the angle <span class="v">α</span> changes. Those three "knobs" are the only ways to change the flux.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="ugao" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">najčešća zabuna</span><span lang="en">the most common confusion</span></p>
+    <h2><span lang="sr">Ugao sa normalom ili sa površinom?</span><span lang="en">Angle with the normal or with the surface?</span></h2>
+  </div>
+  <div class="grid wide">
+    <div class="intro">
+      <p lang="sr">U formuli <span class="v">Φ</span> = <span class="v">B S</span> cos <span class="v">α</span> ugao <span class="v">α</span> je ugao između polja i <strong>normale</strong>. Neki zadaci umesto toga daju ugao <span class="v">β</span> između polja i same <strong>površine</strong>. Ta dva ugla se dopunjuju do 90°, pa se kosinus pretvara u sinus:</p>
+      <p lang="en">In the formula <span class="v">Φ</span> = <span class="v">B S</span> cos <span class="v">α</span> the angle <span class="v">α</span> is the angle between the field and the <strong>normal</strong>. Some problems give instead the angle <span class="v">β</span> between the field and the <strong>surface</strong> itself. The two angles add up to 90°, so the cosine turns into a sine:</p>
+      <div class="formula"><div class="tex">\[ \alpha + \beta = 90^\circ \quad\Rightarrow\quad \Phi = B\,S\cos\alpha = B\,S\sin\beta \]</div></div>
+      <div class="rule-box">
+        <p class="eyebrow"><span lang="sr">Proveri zdravim razumom</span><span lang="en">Check with common sense</span></p>
+        <p lang="sr">Kada je površina okrenuta licem ka polju, fluks mora biti najveći. Ako ti formula za taj slučaj da nulu, zamenio si sinus i kosinus.</p>
+        <p lang="en">When the surface faces the field head-on the flux must be largest. If your formula gives zero for that case, you swapped sine and cosine.</p>
+      </div>
+    </div>
+    <figure class="fig">
+      <svg class="dg" viewBox="0 0 320 210" role="img" aria-label="α, β">
+        <defs>
+          <marker id="ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillf"/></marker>
+          <marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillk"/></marker>
+        </defs>
+        <g class="wf" marker-end="url(#ah1)"><line x1="14" y1="40" x2="300" y2="40" marker-end="url(#ah1)"/><line x1="14" y1="100" x2="108" y2="100" marker-end="url(#ah1)"/><line x1="14" y1="160" x2="300" y2="160" marker-end="url(#ah1)"/></g>
+        <path class="wf" d="M190 100H300" marker-end="url(#ah1)"/>
+        <line class="wc" x1="115" y1="142" x2="185" y2="58" style="stroke-width:5"/>
+        <line class="w" x1="150" y1="100" x2="196" y2="139" marker-end="url(#ah2)"/>
+        <text class="it" x="204" y="148">n</text>
+        <path class="thin" d="M178 100A28 28 0 0 1 171 118"/>
+        <path class="thin" d="M178 100A28 28 0 0 0 168 79"/>
+        <text class="it fl" x="183" y="116" style="font-size:16px">α</text>
+        <text class="it cu" x="181" y="88" style="font-size:16px">β</text>
+        <text class="it fl" x="20" y="30">B</text>
+        <text class="sm mu" x="170" y="198" text-anchor="middle">α + β = 90°</text>
+      </svg>
+      <figcaption><span lang="sr">Površina (debela linija), njena normala n i linije polja B. α je ugao normale i polja, β je ugao površine i polja.</span><span lang="en">The surface (thick line), its normal n and the field lines B. α is the angle between normal and field, β between surface and field.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="zavojci" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">pogled unapred</span><span lang="en">looking ahead</span></p>
+    <h2><span lang="sr">Fluks kroz kalem i zašto je važan</span><span lang="en">Flux through a coil, and why it matters</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="intro">
+      <p lang="sr">Ako umesto jedne petlje imamo kalem sa <span class="v">N</span> zavojaka, kroz svaki zavojak prolazi isti fluks <span class="v">Φ</span>. Ukupni „obuhvaćeni” fluks je <span class="v">N</span> puta veći:</p>
+      <p lang="en">If instead of one loop we have a coil of <span class="v">N</span> turns, the same flux <span class="v">Φ</span> passes through every turn. The total "linked" flux is <span class="v">N</span> times larger:</p>
+      <div class="formula" style="max-width:420px"><div class="tex">\[ \Psi = N\,\Phi \]</div></div>
+      <div class="rule-box green">
+        <p class="eyebrow"><span lang="sr">Zašto je fluks važan?</span><span lang="en">Why does flux matter?</span></p>
+        <p lang="sr">Kada se fluks kroz kalem menja, u kalemu nastaje (indukuje se) napon. Na toj pojavi, elektromagnetnoj indukciji, rade generatori u elektranama i transformatori. Pogledaj lekciju „Pojava elektromagnetne indukcije”.</p>
+        <p lang="en">When the flux through a coil changes, a voltage appears (is induced) in the coil. Generators in power plants and transformers work on this effect, called electromagnetic induction. See the lesson "Electromagnetic induction".</p>
+      </div>
+      <details class="think">
+        <summary><span lang="sr">Pomisli prvo: nabrojaj sve načine da se promeni fluks kroz petlju koja stoji u polju magneta.</span><span lang="en">Think first: list every way to change the flux through a loop sitting in a magnet's field.</span></summary>
+        <div class="ans">
+          <p lang="sr">Tri: (1) promeniti polje <span class="v">B</span>, na primer približiti ili udaljiti magnet; (2) promeniti površinu <span class="v">S</span>, na primer stisnuti petlju; (3) promeniti ugao <span class="v">α</span>, na primer okretati petlju.</p>
+          <p lang="en">Three: (1) change the field <span class="v">B</span>, for example move the magnet closer or away; (2) change the area <span class="v">S</span>, for example squeeze the loop; (3) change the angle <span class="v">α</span>, for example rotate the loop.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="ex">
+        <h4><span lang="sr">Primer 1 · najveći fluks</span><span lang="en">Example 1 · maximum flux</span></h4>
+        <p class="given" lang="sr">Dato: pravougaona petlja 10 cm × 20 cm, B = 0,5 T, linije polja su normalne na petlju. Traži se Φ.</p>
+        <p class="given" lang="en">Given: a rectangular loop 10 cm × 20 cm, B = 0.5 T, the field lines are perpendicular to the loop. Find Φ.</p>
+        <ol lang="sr">
+          <li>Površina: \( S = 0{,}1\cdot 0{,}2 = 0{,}02\ \mathrm{m^2} \).</li>
+          <li>Linije su normalne na petlju, pa je normala paralelna sa poljem: α = 0°, cos α = 1.</li>
+          <li>\( \Phi = B\,S\cos\alpha = 0{,}5\cdot 0{,}02\cdot 1 = 0{,}01\ \mathrm{Wb} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Area: \( S = 0.1\cdot 0.2 = 0.02\ \mathrm{m^2} \).</li>
+          <li>The lines are perpendicular to the loop, so the normal is parallel to the field: α = 0°, cos α = 1.</li>
+          <li>\( \Phi = B\,S\cos\alpha = 0.5\cdot 0.02\cdot 1 = 0.01\ \mathrm{Wb} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">Φ = 0,01 Wb = 10 mWb</span><span lang="en">Φ = 0.01 Wb = 10 mWb</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 2 · okrenuta petlja</span><span lang="en">Example 2 · a turned loop</span></h4>
+        <p class="given" lang="sr">Ista petlja, ali je okrenuta tako da je ugao između normale i polja 60°.</p>
+        <p class="given" lang="en">The same loop, but turned so the angle between the normal and the field is 60°.</p>
+        <ol lang="sr">
+          <li>cos 60° = 0,5.</li>
+          <li>\( \Phi = 0{,}5\cdot 0{,}02\cdot 0{,}5 = 0{,}005\ \mathrm{Wb} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>cos 60° = 0.5.</li>
+          <li>\( \Phi = 0.5\cdot 0.02\cdot 0.5 = 0.005\ \mathrm{Wb} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">Φ = 5 mWb, tačno polovina prethodnog.</span><span lang="en">Φ = 5 mWb, exactly half of the previous value.</span></p>
+      </div>
+      <div class="ex">
+        <h4><span lang="sr">Primer 3 · jedinice površine</span><span lang="en">Example 3 · area units</span></h4>
+        <p class="given" lang="sr">Dato: kružna petlja poluprečnika 5 cm u polju B = 0,2 T, ugao između površine i polja je β = 30°. Traži se Φ.</p>
+        <p class="given" lang="en">Given: a circular loop of radius 5 cm in a field B = 0.2 T, the angle between the surface and the field is β = 30°. Find Φ.</p>
+        <ol lang="sr">
+          <li>Poluprečnik u metrima: <span class="u">r = 0,05 m</span>. Površina: \( S = \pi r^2 = \pi\cdot 0{,}05^2 = 7{,}85\cdot 10^{-3}\ \mathrm{m^2} \).</li>
+          <li>Dat je ugao sa <em>površinom</em>, pa koristimo sinus: \( \Phi = B\,S\sin\beta \).</li>
+          <li>\( \Phi = 0{,}2\cdot 7{,}85\cdot 10^{-3}\cdot 0{,}5 = 7{,}85\cdot 10^{-4}\ \mathrm{Wb} \)</li>
+        </ol>
+        <ol lang="en">
+          <li>Radius in metres: <span class="u">r = 0.05 m</span>. Area: \( S = \pi r^2 = \pi\cdot 0.05^2 = 7.85\cdot 10^{-3}\ \mathrm{m^2} \).</li>
+          <li>The angle is given with the <em>surface</em>, so we use the sine: \( \Phi = B\,S\sin\beta \).</li>
+          <li>\( \Phi = 0.2\cdot 7.85\cdot 10^{-3}\cdot 0.5 = 7.85\cdot 10^{-4}\ \mathrm{Wb} \)</li>
+        </ol>
+        <p class="answer"><span lang="sr">Φ ≈ 0,79 mWb</span><span lang="en">Φ ≈ 0.79 mWb</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <ul class="pitfalls" lang="sr">
+        <li><div><b>Sinus umesto kosinusa.</b> Ako je dat ugao sa normalom, ide kosinus. Ako je dat ugao sa površinom, ide sinus.</div></li>
+        <li><div><b>Santimetri kvadratni.</b> 1 cm² = 10<sup>−4</sup> m², ne 10<sup>−2</sup> m². Površinu uvek pretvori u m² pre računanja.</div></li>
+        <li><div><b>Fluks nije vektor.</b> Može biti pozitivan ili negativan zavisno od smera normale, ali nema pravac kao indukcija B.</div></li>
+        <li><div><b>Fluks nije isto što i polje.</b> Veliko polje ne daje fluks ako su linije paralelne sa površinom (α = 90°).</div></li>
+      </ul>
+      <ul class="pitfalls" lang="en">
+        <li><div><b>Sine instead of cosine.</b> If the angle with the normal is given, use the cosine. If the angle with the surface is given, use the sine.</div></li>
+        <li><div><b>Square centimetres.</b> 1 cm² = 10<sup>−4</sup> m², not 10<sup>−2</sup> m². Always convert the area to m² before calculating.</div></li>
+        <li><div><b>Flux is not a vector.</b> It can be positive or negative depending on the direction of the normal, but it has no direction like the induction B.</div></li>
+        <li><div><b>Flux is not the same as the field.</b> A strong field gives no flux if the lines are parallel to the surface (α = 90°).</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+    <div class="rest">
+      <div class="summary">
+        <ul lang="sr">
+          <li>Magnetni fluks je „broj linija polja” kroz površinu: \( \Phi = B\,S\cos\alpha \), jedinica veber (1 Wb = 1 T·m²).</li>
+          <li>α je ugao između polja i <strong>normale</strong>. Ako je dat ugao sa površinom, koristi sinus.</li>
+          <li>Fluks je najveći za α = 0°, a nula za α = 90°.</li>
+          <li>Fluks menjamo preko <span class="v">B</span>, <span class="v">S</span> ili <span class="v">α</span>. Promena fluksa stvara napon: to je elektromagnetna indukcija.</li>
+        </ul>
+        <ul lang="en">
+          <li>Magnetic flux is the "number of field lines" through a surface: \( \Phi = B\,S\cos\alpha \), unit weber (1 Wb = 1 T·m²).</li>
+          <li>α is the angle between the field and the <strong>normal</strong>. If the angle with the surface is given, use the sine.</li>
+          <li>Flux is largest for α = 0° and zero for α = 90°.</li>
+          <li>We change the flux through <span class="v">B</span>, <span class="v">S</span> or <span class="v">α</span>. A changing flux creates a voltage: that is electromagnetic induction.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" data-test="FIZ02" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/magnetni-fluks.js"></script>
+</body>
+</html>
