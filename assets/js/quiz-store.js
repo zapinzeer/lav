@@ -2,9 +2,10 @@
 'use strict';
 
 var cfg = window.LAV_CONFIG || {};
-var dbUrl = String(cfg.databaseURL || '').replace(/\/+$/, '');
+var A = window.LAV.auth;
+var dbUrl = String(cfg.databaseURL || '').trim().replace(/\/+$/, '');
 var root = cfg.dataPath || 'lav';
-var remote = /^https:\/\/[^\s]+$/.test(dbUrl);
+var remote = A.enabled;
 var builtin = window.LAV_QUIZZES || {};
 var ALPHA = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 
@@ -70,20 +71,40 @@ function normSub(id, s) {
 }
 
 function req(method, path, body, query) {
-  var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
-  var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 15000);
-  var opt = { method: method };
-  if (ctrl) opt.signal = ctrl.signal;
-  if (body !== undefined) { opt.headers = { 'Content-Type': 'application/json' }; opt.body = JSON.stringify(body); }
-  return fetch(dbUrl + '/' + root + '/' + path + '.json' + (query || ''), opt).then(function (r) {
-    clearTimeout(timer);
-    if (!r.ok) throw new Error('http ' + r.status);
-    return r.json();
-  }, function (e) {
-    clearTimeout(timer);
-    throw e;
+  return A.token().then(function (tok) {
+    var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 15000);
+    var opt = { method: method };
+    if (ctrl) opt.signal = ctrl.signal;
+    if (body !== undefined) { opt.headers = { 'Content-Type': 'application/json' }; opt.body = JSON.stringify(body); }
+    var q = query || '';
+    if (tok) q += (q ? '&' : '?') + 'auth=' + encodeURIComponent(tok);
+    return fetch(dbUrl + '/' + root + (path ? '/' + path : '') + '.json' + q, opt).then(function (r) {
+      clearTimeout(timer);
+      if (!r.ok) {
+        var e = new Error('http ' + r.status);
+        e.status = r.status;
+        e.denied = r.status === 401 || r.status === 403;
+        throw e;
+      }
+      return r.json();
+    }, function (e) {
+      clearTimeout(timer);
+      throw e;
+    });
   });
 }
+
+function me() {
+  var u = A.user();
+  return u ? u.uid : null;
+}
+function asMe(fn) {
+  var id = me();
+  if (!id) { var e = new Error('not signed in'); e.denied = true; e.status = 401; return Promise.reject(e); }
+  return fn(id);
+}
+function multi(updates) { return req('PATCH', '', updates); }
 
 var mem = { quizzes: {}, subs: {} };
 function lread() {
@@ -122,8 +143,19 @@ function get(code) {
 function list() {
   var base = builtinList();
   var load;
-  if (remote) load = req('GET', 'quizzes').then(function (o) { return o || {}; });
-  else { lread(); load = Promise.resolve(mem.quizzes); }
+  if (remote) {
+    var id = me();
+    load = !id ? Promise.resolve({}) : req('GET', 'users/' + id + '/quizzes').then(function (idx) {
+      var codes = Object.keys(idx || {});
+      return Promise.all(codes.map(function (c) {
+        return req('GET', 'quizzes/' + c).then(function (q) { return q ? [c, q] : null; });
+      })).then(function (pairs) {
+        var o = {};
+        pairs.forEach(function (p) { if (p) o[p[0]] = p[1]; });
+        return o;
+      });
+    });
+  } else { lread(); load = Promise.resolve(mem.quizzes); }
   return load.then(function (o) {
     var created = Object.keys(o).map(function (c) { return { code: c, quiz: normQuiz(o[c]), builtin: false }; })
       .filter(function (x) { return x.quiz; })
@@ -134,7 +166,13 @@ function list() {
 
 function save(code, quiz) {
   var body = JSON.parse(JSON.stringify(quiz));
-  if (remote) return req('PUT', 'quizzes/' + code, body).then(function () { return code; });
+  if (remote) return asMe(function (id) {
+    body.owner = id;
+    var up = {};
+    up['quizzes/' + code] = body;
+    up['users/' + id + '/quizzes/' + code] = true;
+    return multi(up).then(function () { return code; });
+  });
   lread();
   mem.quizzes[code] = body;
   lwrite();
@@ -156,7 +194,13 @@ function patch(code, obj) {
 }
 
 function remove(code) {
-  if (remote) return req('DELETE', 'quizzes/' + code).then(function () { return req('DELETE', 'subs/' + code); });
+  if (remote) return asMe(function (id) {
+    var up = {};
+    up['quizzes/' + code] = null;
+    up['subs/' + code] = null;
+    up['users/' + id + '/quizzes/' + code] = null;
+    return multi(up);
+  });
   lread();
   delete mem.quizzes[code];
   delete mem.subs[code];
@@ -180,15 +224,29 @@ function newCode() {
   return attempt(0);
 }
 
-function submit(code, sub) {
+function submit(code, sub, meta) {
   var body = JSON.parse(JSON.stringify(sub));
-  if (remote) return req('POST', 'subs/' + code, body).then(function (r) { return r && r.name; });
+  if (remote) {
+    var who = me();
+    var sid = uid();
+    var up = {};
+    if (who) body.uid = who;
+    up['subs/' + code + '/' + sid] = body;
+    if (who) {
+      var h = JSON.parse(JSON.stringify(sub));
+      h.code = code;
+      h.title = (meta && meta.title) || '';
+      h.titleEn = (meta && meta.titleEn) || h.title;
+      up['users/' + who + '/history/' + sid] = h;
+    }
+    return multi(up).then(function () { return { id: sid, saved: !!who }; });
+  }
   lread();
   var id = uid();
   mem.subs[code] = mem.subs[code] || {};
   mem.subs[code][id] = body;
   lwrite();
-  return Promise.resolve(id);
+  return Promise.resolve({ id: id, saved: false });
 }
 
 function subs(code) {
@@ -214,6 +272,51 @@ function removeSub(code, id) {
   return Promise.resolve();
 }
 
+function normHist(id, h) {
+  var s = normSub(id, h);
+  s.code = h.code || '';
+  s.title = h.title || '';
+  s.titleEn = h.titleEn || h.title || '';
+  return s;
+}
+
+function history() {
+  if (!remote) return Promise.resolve([]);
+  var id = me();
+  if (!id) return Promise.resolve([]);
+  return req('GET', 'users/' + id + '/history').then(function (o) {
+    o = o || {};
+    return Object.keys(o).map(function (k) { return normHist(k, o[k]); }).sort(function (a, b) { return b.at - a.at; });
+  });
+}
+
+function removeHistory(hid) {
+  return asMe(function (id) { return req('DELETE', 'users/' + id + '/history/' + hid); });
+}
+
+function wipeAccount() {
+  return asMe(function (id) {
+    return req('GET', 'users/' + id + '/quizzes', undefined, '?shallow=true').then(function (idx) {
+      var up = {};
+      Object.keys(idx || {}).forEach(function (c) {
+        up['quizzes/' + c] = null;
+        up['subs/' + c] = null;
+      });
+      up['users/' + id] = null;
+      return multi(up);
+    });
+  });
+}
+
+function isAdmin() {
+  if (!remote || !me()) return Promise.resolve(false);
+  return req('GET', 'admins/' + me()).then(function (v) { return v === true; }).catch(function () { return false; });
+}
+
+function claimAdmin() {
+  return asMe(function (id) { return req('PUT', 'admins/' + id, true).then(function () { return true; }); });
+}
+
 window.LAV.store = {
   remote: remote,
   get: get,
@@ -227,6 +330,11 @@ window.LAV.store = {
   subs: subs,
   subCount: subCount,
   removeSub: removeSub,
+  history: history,
+  removeHistory: removeHistory,
+  wipeAccount: wipeAccount,
+  isAdmin: isAdmin,
+  claimAdmin: claimAdmin,
   norm: normQuiz
 };
 })();

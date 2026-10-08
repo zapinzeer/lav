@@ -15,6 +15,11 @@ function locHtml(x) {
   return both(esc(x.sr || ''), esc(x.en || x.sr || ''));
 }
 function locText(x) { return L.loc(x); }
+function titleText(x, lng) {
+  if (x == null) return '';
+  if (typeof x === 'string') return x;
+  return x[lng] || x.sr || x.en || '';
+}
 function ptsLabel(n) {
   return both(n + (n === 1 ? ' poen' : ' poena'), n + (n === 1 ? ' point' : ' points'));
 }
@@ -144,8 +149,8 @@ document.addEventListener('keydown', function (e) {
 function localBanner() {
   if (S.remote) return '';
   return '<div class="banner">' + icon('info') + '<div>' + both(
-    '<b>Lokalni režim.</b> Ova stranica još nije povezana sa serverom, pa se kvizovi i odgovori čuvaju samo na ovom uređaju. Autor mora da poveže Firebase da bi sobe radile između uređaja.',
-    '<b>Local mode.</b> This site is not connected to a server yet, so quizzes and answers are stored only on this device. The author needs to connect Firebase for rooms to work across devices.') + '</div></div>';
+    '<b>Lokalni režim.</b> Ova stranica još nije povezana sa serverom, pa se kvizovi i odgovori čuvaju samo na ovom uređaju. Autor mora da poveže Firebase (databaseURL i apiKey u config.js) da bi sobe i nalozi radili između uređaja.',
+    '<b>Local mode.</b> This site is not connected to a server yet, so quizzes and answers are stored only on this device. The author needs to connect Firebase (databaseURL and apiKey in config.js) for rooms and accounts to work across devices.') + '</div></div>';
 }
 function errBanner(sr, en) {
   return '<div class="banner bad" role="alert">' + icon('info') + '<div>' + both(sr, en) + '</div></div>';
@@ -218,6 +223,13 @@ function modeLabel(v) {
   return { off: both('isključeno', 'off'), optional: both('opciono', 'optional'), required: both('obavezno', 'required') }[v];
 }
 
+function joinAccountLine() {
+  if (!L.auth.enabled) return '';
+  var u = L.auth.user();
+  if (u) return '<p class="help" id="j-accline">' + icon('check').replace('<svg', '<svg width="14" height="14" style="stroke:var(--good);fill:none;stroke-width:2.4;vertical-align:-2px;margin-right:6px"') + both('Rezultat se čuva na nalogu ' + esc(u.email) + '.', 'The result is saved to the account ' + esc(u.email) + '.') + '</p>';
+  return '<p class="help" id="j-accline">' + both('Bez naloga se rezultat ne čuva u istoriji. ', 'Without an account the result is not kept in your history. ') + '<a href="#" id="j-acc">' + both('Prijavi se', 'Sign in') + '</a></p>';
+}
+
 function openJoin(prefill) {
   var m = openModal({ cls: 'compact' });
   m.setHead('Pridruži se sobi', 'Join a room');
@@ -230,12 +242,28 @@ function openJoin(prefill) {
     '<div class="field-row"><label for="j-name">' + both('Korisničko ime', 'Username') + '</label>' +
     '<input id="j-name" class="input" type="text" maxlength="32" autocomplete="nickname" data-ph-sr="Kako da te zovemo?" data-ph-en="What should we call you?">' +
     '<p class="help">' + both('Ovo ime će autor kviza videti uz tvoje odgovore.', 'The quiz author will see this name next to your answers.') + '</p></div>' +
+    joinAccountLine() +
     '<div id="j-err"></div>';
   m.setFoot('<button type="button" class="btn" id="j-cancel">' + both('Otkaži', 'Cancel') + '</button><button type="button" class="btn primary" id="j-go">' + icon('join') + both('Uđi u sobu', 'Enter room') + '</button>');
   L.applyAttrs(m.root);
   var codeEl = $(m.root, '#j-code'), nameEl = $(m.root, '#j-name'), errEl = $(m.root, '#j-err'), go = $(m.root, '#j-go');
   codeEl.value = (prefill || '').toUpperCase();
-  nameEl.value = savedName;
+  var acct = L.auth.user();
+  nameEl.value = acct && acct.name ? acct.name : savedName;
+  var jl = $(m.root, '#j-acc');
+  if (jl) jl.addEventListener('click', function (e) { e.preventDefault(); L.account.open('in', { onDone: function () {} }); });
+  var unsub = function () { m.root.isConnected && repaintJoin(); };
+  function repaintJoin() {
+    var line = $(m.root, '#j-accline');
+    if (!line) return;
+    line.outerHTML = joinAccountLine();
+    var a = $(m.root, '#j-acc');
+    if (a) a.addEventListener('click', function (e) { e.preventDefault(); L.account.open('in', { onDone: function () {} }); });
+    var u = L.auth.user();
+    if (u && u.name && !nameEl.value.trim()) nameEl.value = u.name;
+    L.applyAttrs(m.root);
+  }
+  L.auth.onChange(unsub);
   codeEl.addEventListener('input', function () { codeEl.value = codeEl.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); });
   $(m.root, '#j-cancel').addEventListener('click', function () { m.close(); });
   function submit() {
@@ -392,18 +420,35 @@ function renderPlayer(m, code, quiz, name) {
       answers: ans.map(function (x) { return { a: x.a == null ? '' : x.a, t: x.t, f: x.f, w: x.w }; })
     };
     send.disabled = true;
-    S.submit(code, payload).then(function () {
-      showPlayerResult(m, code, quiz, name, ans, score, max, lesson);
-    }).catch(function () {
+    S.submit(code, payload, { title: titleText(quiz.title, 'sr'), titleEn: titleText(quiz.title, 'en') }).then(function (r) {
+      showPlayerResult(m, code, quiz, name, ans, score, max, lesson, r.saved);
+    }).catch(function (e) {
       send.disabled = false;
-      warn.innerHTML = errBanner('Odgovori nisu poslati jer server nije dostupan. Tvoji odgovori su i dalje ovde: pokušaj ponovo.', 'The answers were not sent because the server is unreachable. Your answers are still here: try again.');
+      warn.innerHTML = e && e.denied
+        ? errBanner('Odgovori nisu poslati: soba je zatvorena ili je prijava istekla. Tvoji odgovori su i dalje ovde. Pokušaj ponovo.', 'The answers were not sent: the room is closed or your sign-in expired. Your answers are still here. Try again.')
+        : errBanner('Odgovori nisu poslati jer server nije dostupan. Tvoji odgovori su i dalje ovde: pokušaj ponovo.', 'The answers were not sent because the server is unreachable. Your answers are still here: try again.');
       warn.scrollIntoView({ block: 'center' });
     });
   });
 }
 
-function showPlayerResult(m, code, quiz, name, ans, score, max, lesson) {
-  var qs = quiz.questions;
+function reviewHtml(quiz, ans, lesson) {
+  var html = '<div class="qlist">';
+  quiz.questions.forEach(function (q, qi) {
+    var a = (ans[qi] || {}).a;
+    var ok = grade(q, a);
+    html += '<section class="qq ' + (ok ? 'ok' : 'no') + '"><div class="qq-top"><span class="qq-n">' + both('Pitanje ' + (qi + 1), 'Question ' + (qi + 1)) + '</span><span class="tag ' + (ok ? '' : 'plain') + '" style="' + (ok ? 'background:var(--good);color:#fff' : 'color:var(--bad);border-color:var(--bad)') + '">' + (ok ? both('Tačno', 'Correct') : both('Netačno', 'Wrong')) + '</span></div>' +
+      '<div class="qq-text">' + locHtml(q.text) + '</div>' +
+      '<div class="qq-fb"><div><b>' + both('Tvoj odgovor: ', 'Your answer: ') + '</b>' + ansHtml(q, a) + '</div>' +
+      (ok ? '' : '<div><b>' + both('Tačan odgovor: ', 'Correct answer: ') + '</b>' + correctHtml(q) + '</div>');
+    if (q.explain) html += '<div>' + locHtml(q.explain) + '</div>';
+    if (q.ref && lesson) html += '<a href="' + L.lessonUrl(lesson.slug) + '#' + esc(q.ref) + '">' + both('Pogledaj u lekciji →', 'Review in the lesson →') + '</a>';
+    html += '</div></section>';
+  });
+  return html + '</div>';
+}
+
+function showPlayerResult(m, code, quiz, name, ans, score, max, lesson, saved) {
   var show = quiz.settings.showAnswers;
   var html = '<div class="done-score"><span class="eyebrow">' + both('Odgovori su poslati', 'Answers sent') + '</span>';
   if (show) {
@@ -412,20 +457,12 @@ function showPlayerResult(m, code, quiz, name, ans, score, max, lesson) {
     html += '<p>' + both('Autor kviza je isključio prikaz rezultata. Hvala na učešću, ' + esc(name) + '.', 'The quiz author has turned off result display. Thank you for taking part, ' + esc(name) + '.') + '</p>';
   }
   html += '</div>';
-  if (show) {
-    html += '<div class="qlist">';
-    qs.forEach(function (q, qi) {
-      var ok = grade(q, ans[qi].a);
-      html += '<section class="qq ' + (ok ? 'ok' : 'no') + '"><div class="qq-top"><span class="qq-n">' + both('Pitanje ' + (qi + 1), 'Question ' + (qi + 1)) + '</span><span class="tag ' + (ok ? '' : 'plain') + '" style="' + (ok ? 'background:var(--good);color:#fff' : 'color:var(--bad);border-color:var(--bad)') + '">' + (ok ? both('Tačno', 'Correct') : both('Netačno', 'Wrong')) + '</span></div>' +
-        '<div class="qq-text">' + locHtml(q.text) + '</div>' +
-        '<div class="qq-fb"><div><b>' + both('Tvoj odgovor: ', 'Your answer: ') + '</b>' + ansHtml(q, ans[qi].a) + '</div>' +
-        (ok ? '' : '<div><b>' + both('Tačan odgovor: ', 'Correct answer: ') + '</b>' + correctHtml(q) + '</div>');
-      if (q.explain) html += '<div>' + locHtml(q.explain) + '</div>';
-      if (q.ref && lesson) html += '<a href="' + L.lessonUrl(lesson.slug) + '#' + esc(q.ref) + '">' + both('Pogledaj u lekciji →', 'Review in the lesson →') + '</a>';
-      html += '</div></section>';
-    });
-    html += '</div>';
+  if (L.auth.enabled) {
+    html += saved
+      ? '<div class="banner ok">' + icon('check') + '<div>' + both('Rezultat je sačuvan u istoriji tvog naloga.', 'The result is saved in your account history.') + ' <a href="#" id="pr-hist">' + both('Moji rezultati', 'My results') + '</a></div></div>'
+      : '<div class="banner">' + icon('info') + '<div>' + both('Bez naloga se rezultat ne čuva u istoriji.', 'Without an account the result is not kept in your history.') + ' <a href="#" id="pr-acc">' + both('Prijavi se ili napravi nalog', 'Sign in or create an account') + '</a></div></div>';
   }
+  if (show) html += reviewHtml(quiz, ans, lesson);
   m.body.innerHTML = html;
   m.body.scrollTop = 0;
   L.renderMath(m.body);
@@ -435,13 +472,21 @@ function showPlayerResult(m, code, quiz, name, ans, score, max, lesson) {
   m.setFoot(foot);
   $(m.root, '#pr-close').addEventListener('click', function () { m.close(); });
   $(m.root, '#pr-again').addEventListener('click', function () { m.close(); openJoin(code); });
+  var h = $(m.root, '#pr-hist'), a = $(m.root, '#pr-acc');
+  if (h) h.addEventListener('click', function (e) { e.preventDefault(); m.close(); L.account.open('history'); });
+  if (a) a.addEventListener('click', function (e) { e.preventDefault(); L.account.open('in', { onDone: function () {} }); });
 }
 
 function authed() {
   try { return sessionStorage.getItem('lav-auth') === '1'; } catch (e) { return false; }
 }
+function ensureAccount(next) {
+  if (!S.remote || L.auth.user()) { next(); return; }
+  L.account.open('in', { required: true, onDone: next });
+}
+
 function openCreate() {
-  if (authed()) { openDashboard(); return; }
+  if (authed()) { ensureAccount(openDashboard); return; }
   var m = openModal({ cls: 'compact' });
   m.setHead('Napravi kviz', 'Create a quiz');
   m.body.innerHTML =
@@ -458,7 +503,7 @@ function openCreate() {
       if (h === String(L.config.creatorPasswordHash || '').toLowerCase()) {
         try { sessionStorage.setItem('lav-auth', '1'); } catch (e) {}
         m.close();
-        openDashboard();
+        ensureAccount(openDashboard);
       } else {
         err.innerHTML = errBanner('Pogrešna lozinka.', 'Wrong password.');
         pw.select();
@@ -470,16 +515,26 @@ function openCreate() {
   setTimeout(function () { pw.focus(); }, 60);
 }
 
+function dashAccount() {
+  if (!S.remote) return '';
+  var u = L.auth.user();
+  return '<p class="help" style="margin:0 0 10px">' + icon('user').replace('<svg', '<svg width="14" height="14" style="stroke:currentColor;fill:none;stroke-width:2;vertical-align:-2px;margin-right:6px"') +
+    (u ? both('Kvizovi su vezani za nalog ' + esc(u.email) + '. Samo ti vidiš odgovore na njih.', 'Your quizzes belong to the account ' + esc(u.email) + '. Only you can see the answers to them.') : both('Nisi prijavljen. ', 'You are not signed in. ') + '<a href="#" id="d-signin">' + both('Prijavi se', 'Sign in') + '</a>') + '</p>';
+}
+
 function openDashboard() {
   var m = openModal({ cls: 'wide' });
+  var admin = false;
   function show() {
     m.setCls('wide');
     m.setHead('Moji kvizovi', 'My quizzes', '<span class="eyebrow">' + both('Prostor autora', 'Author space') + '</span>');
-    m.body.innerHTML = localBanner() + '<div class="row sp"><button type="button" class="btn primary" id="d-new">' + icon('plus') + both('Novi kviz', 'New quiz') + '</button>' +
+    m.body.innerHTML = localBanner() + dashAccount() + '<div class="row sp"><button type="button" class="btn primary" id="d-new">' + icon('plus') + both('Novi kviz', 'New quiz') + '</button>' +
       '<div class="row"><button type="button" class="btn small" id="d-refresh">' + icon('refresh') + both('Osveži', 'Refresh') + '</button><button type="button" class="btn small" id="d-lock">' + icon('lock') + both('Zaključaj', 'Lock') + '</button></div></div>' +
       '<div id="d-list"><div class="center"><span class="spin"></span></div></div>';
     m.setFoot('');
-    $(m.root, '#d-new').addEventListener('click', function () { openBuilder(m, null, show); });
+    $(m.root, '#d-new').addEventListener('click', function () { ensureAccount(function () { openBuilder(m, null, show); }); });
+    var si = $(m.root, '#d-signin');
+    if (si) si.addEventListener('click', function (e) { e.preventDefault(); L.account.open('in', { required: true, onDone: show }); });
     $(m.root, '#d-refresh').addEventListener('click', load);
     $(m.root, '#d-lock').addEventListener('click', function () {
       try { sessionStorage.removeItem('lav-auth'); } catch (e) {}
@@ -490,15 +545,33 @@ function openDashboard() {
   function load() {
     var host = $(m.root, '#d-list');
     if (!host) return;
-    S.list().then(function (rows) {
+    Promise.all([S.list(), S.isAdmin()]).then(function (res) {
       if (m.closed) return;
+      var rows = res[0];
+      admin = res[1];
       var created = rows.filter(function (r) { return !r.builtin; });
       var lessons = rows.filter(function (r) { return r.builtin; });
       var html = '<h3 class="lab-l" style="margin-top:6px">' + both('Moji kvizovi', 'My quizzes') + '</h3>';
       html += created.length ? '<div class="qlist">' + created.map(rowHtml).join('') + '</div>' : '<p class="help">' + both('Još nema kvizova. Pritisni „Novi kviz”.', 'No quizzes yet. Press “New quiz”.') + '</p>';
-      html += '<h3 class="lab-l" style="margin-top:14px">' + both('Testovi uz lekcije', 'Lesson tests') + '</h3><div class="qlist">' + lessons.map(rowHtml).join('') + '</div>';
+      html += '<h3 class="lab-l" style="margin-top:14px">' + both('Testovi uz lekcije', 'Lesson tests') + '</h3>';
+      if (S.remote && !admin) {
+        html += '<div class="banner" style="margin-bottom:10px">' + icon('shield') + '<div>' + both('Odgovore na testove uz lekcije vidi samo administrator sajta. Prvi nalog koji pritisne ovo dugme postaje administrator.', 'Only the site administrator can see the answers to the lesson tests. The first account to press this button becomes the administrator.') +
+          '<div style="margin-top:8px"><button type="button" class="btn small" id="d-claim">' + both('Postani administrator', 'Become administrator') + '</button></div></div></div>';
+      }
+      html += '<div class="qlist">' + lessons.map(rowHtml).join('') + '</div>';
       host.innerHTML = html;
       L.applyAttrs(host);
+      var claim = $(host, '#d-claim');
+      if (claim) claim.addEventListener('click', function () {
+        claim.disabled = true;
+        S.claimAdmin().then(function () {
+          L.toast('Sada si administrator.', 'You are now the administrator.');
+          load();
+        }).catch(function () {
+          claim.disabled = false;
+          L.toast('Administrator već postoji.', 'An administrator already exists.');
+        });
+      });
       host.querySelectorAll('[data-count]').forEach(function (el) {
         var c = el.getAttribute('data-count');
         S.subCount(c).then(function (n) { el.innerHTML = both(n + (n === 1 ? ' odgovor' : ' odgovora'), n + (n === 1 ? ' answer' : ' answers')); }).catch(function () { el.textContent = '–'; });
@@ -506,14 +579,17 @@ function openDashboard() {
       host.querySelectorAll('[data-act]').forEach(function (b) {
         b.addEventListener('click', function () { rowAction(b.getAttribute('data-act'), b.getAttribute('data-code'), rows); });
       });
-    }).catch(function () {
-      host.innerHTML = errBanner('Server nije dostupan. Proveri vezu i pokušaj ponovo.', 'The server is unreachable. Check your connection and try again.');
+    }).catch(function (e) {
+      host.innerHTML = e && e.denied
+        ? errBanner('Prijava je istekla. Prijavi se ponovo da vidiš svoje kvizove.', 'Your sign-in has expired. Sign in again to see your quizzes.')
+        : errBanner('Server nije dostupan. Proveri vezu i pokušaj ponovo.', 'The server is unreachable. Check your connection and try again.');
     });
   }
   function rowHtml(r) {
     var q = r.quiz;
     var open = q.settings.open;
-    var acts = '<button type="button" class="btn small" data-act="results" data-code="' + r.code + '">' + both('Odgovori', 'Answers') + '</button>';
+    var seeAnswers = !r.builtin || !S.remote || admin;
+    var acts = seeAnswers ? '<button type="button" class="btn small" data-act="results" data-code="' + r.code + '">' + both('Odgovori', 'Answers') + '</button>' : '';
     if (r.builtin) {
       acts += '<button type="button" class="btn small" data-act="dup" data-code="' + r.code + '">' + icon('dup') + both('Dupliraj', 'Duplicate') + '</button>';
     } else {
@@ -524,7 +600,7 @@ function openDashboard() {
     if (!r.builtin) acts += '<button type="button" class="btn small danger" data-act="delete" data-code="' + r.code + '">' + icon('trash') + '</button>';
     return '<div class="qrow"><div><h3>' + locHtml(q.title) + '</h3><div class="meta"><span class="code-chip">' + r.code + '</span>' +
       '<span class="tag plain">' + both(q.questions.length + ' pitanja', q.questions.length + ' questions') + '</span>' +
-      '<span class="tag plain" data-count="' + r.code + '">…</span>' +
+      (seeAnswers ? '<span class="tag plain" data-count="' + r.code + '">…</span>' : '') +
       (r.builtin ? '<span class="tag">' + both('Lekcija', 'Lesson') + '</span>' : '') +
       (!open ? '<span class="tag plain" style="color:var(--bad)">' + both('zatvorena', 'closed') + '</span>' : '') +
       '</div></div><div class="acts">' + acts + '</div></div>';
@@ -869,9 +945,11 @@ function openResults(m, code, quiz, back) {
       load.sig = sig;
       subsData = rows;
       if (!same || !$(m.root, '#r-list .sub')) draw();
-    }).catch(function () {
+    }).catch(function (e) {
       var host = $(m.root, '#r-list');
-      if (host && !subsData.length) host.innerHTML = errBanner('Server nije dostupan. Proveri vezu i pokušaj ponovo.', 'The server is unreachable. Check your connection and try again.');
+      if (host && !subsData.length) host.innerHTML = e && e.denied
+        ? errBanner('Nemaš dozvolu da vidiš ove odgovore. Prijavi se nalogom koji je napravio kviz.', 'You are not allowed to see these answers. Sign in with the account that created the quiz.')
+        : errBanner('Server nije dostupan. Proveri vezu i pokušaj ponovo.', 'The server is unreachable. Check your connection and try again.');
     });
   }
   $(m.root, '#r-refresh').addEventListener('click', function () { load.sig = null; load(); });
@@ -909,5 +987,10 @@ function openResults(m, code, quiz, back) {
   m.timers.push(setInterval(load, 6000));
 }
 
-L.quiz = { openJoin: openJoin, openCreate: openCreate, grade: grade };
+L.quiz = {
+  openJoin: openJoin,
+  openCreate: openCreate,
+  grade: grade,
+  ui: { openModal: openModal, errBanner: errBanner, reviewHtml: reviewHtml, locHtml: locHtml, titleText: titleText }
+};
 })();

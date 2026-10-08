@@ -536,6 +536,33 @@ footer.site a{color:inherit}
 .qrow .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px}
 .qrow .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 @media (max-width:640px){.qrow{grid-template-columns:minmax(0,1fr)}.qrow .acts{justify-content:flex-start}}
+.modal-body>.seg{justify-self:start;max-width:100%}
+.tool.on{border-color:var(--good)}
+.tool.on svg{stroke:var(--good)}
+.tool .lbl:empty{display:none}
+.acct-head{display:flex;gap:14px;align-items:center}
+.acct-head b{font-size:1.1rem;overflow-wrap:anywhere}
+.avatar{width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font:800 1.3rem/1 var(--display);flex:none}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stats>div{border:1px solid var(--rule);border-radius:12px;background:var(--paper);padding:12px 14px;display:grid;gap:4px}
+.stats .big{font-family:var(--display);font-stretch:125%;font-weight:800;font-size:1.7rem;line-height:1}
+.hist-list{display:grid;gap:10px;margin-top:12px}
+.hist{border:1px solid var(--rule);border-radius:12px;background:var(--paper);overflow:hidden}
+.hist>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 16px;align-items:center;padding:12px 14px;min-height:54px}
+.hist>summary::-webkit-details-marker{display:none}
+.hist .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.hist-score{display:flex;gap:10px;align-items:center;font-family:var(--mono)}
+.hist-score b{font-size:1rem;white-space:nowrap}
+.bar{width:84px;height:8px;border-radius:99px;background:var(--rule);overflow:hidden;flex:none}
+.bar i{display:block;height:100%;background:var(--good);border-radius:99px}
+.hist-body{padding:0 14px 14px;display:grid;gap:12px}
+.danger-zone{border:1px solid color-mix(in srgb,var(--bad) 40%,var(--rule));border-radius:12px;padding:14px;display:grid;gap:8px;justify-items:start}
+@media (max-width:640px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hist>summary{grid-template-columns:minmax(0,1fr)}
+  .bar{width:100%;flex:1}
+  .hist-score{width:100%}
+}
 .sub-list{display:grid;gap:10px}
 .sub{border:1px solid var(--rule);border-radius:12px;background:var(--paper);overflow:hidden}
 .sub>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:12px 14px;min-height:54px}

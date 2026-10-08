@@ -33,7 +33,12 @@ var ICONS = {
   lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
   book: '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/>',
   cube: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>',
-  quiz: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/>'
+  quiz: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  logout: '<path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+  shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>'
 };
 function icon(name, cls) {
   return '<svg viewBox="0 0 24 24" aria-hidden="true"' + (cls ? ' class="' + cls + '"' : '') + '>' + ICONS[name] + '</svg>';
@@ -157,9 +162,11 @@ function loadData() {
 function loadQuiz() {
   if (!quizReady) {
     quizReady = loadData()
+      .then(function () { return loadScript('assets/js/auth.js'); })
       .then(function () { return loadScript('assets/js/quiz-store.js'); })
       .then(function () { return loadScript('assets/js/mathbox.js'); })
-      .then(function () { return loadScript('assets/js/quiz.js'); });
+      .then(function () { return loadScript('assets/js/quiz.js'); })
+      .then(function () { return loadScript('assets/js/account.js'); });
     quizReady.catch(function () { quizReady = null; });
   }
   return quizReady;
@@ -169,6 +176,39 @@ function openJoin(code) {
 }
 function openCreate() {
   loadQuiz().then(function () { window.LAV.quiz.openCreate(); }).catch(function () { toast('Kviz se nije učitao. Proveri vezu.', 'The quiz did not load. Check your connection.'); });
+}
+
+function openAccount(tab) {
+  loadQuiz().then(function () { window.LAV.account.open(tab); }).catch(function () { toast('Nalog se nije učitao. Proveri vezu.', 'The account page did not load. Check your connection.'); });
+}
+function accountsOn() {
+  var c = window.LAV_CONFIG || {};
+  return /^https:\/\/[^\s]+$/.test(String(c.databaseURL || '').trim()) && String(c.apiKey || '').trim().length > 0;
+}
+function storedUser() {
+  try {
+    var s = JSON.parse(localStorage.getItem('lav-session') || 'null');
+    return s && s.uid ? s : null;
+  } catch (e) { return null; }
+}
+function paintAccount() {
+  var b = document.getElementById('btn-account');
+  if (!b) return;
+  var u = storedUser();
+  var lbl = b.querySelector('.lbl');
+  if (u) {
+    var nm = String(u.name || u.email || '').split('@')[0].split(' ')[0].slice(0, 14);
+    lbl.textContent = nm;
+    b.classList.add('on');
+    b.setAttribute('data-aria-sr', 'Nalog: ' + (u.name || u.email));
+    b.setAttribute('data-aria-en', 'Account: ' + (u.name || u.email));
+  } else {
+    lbl.innerHTML = both('Prijava', 'Sign in');
+    b.classList.remove('on');
+    b.setAttribute('data-aria-sr', 'Prijava ili nalog');
+    b.setAttribute('data-aria-en', 'Sign in or account');
+  }
+  applyAttrs(b);
 }
 
 function buildHeader() {
@@ -183,6 +223,7 @@ function buildHeader() {
     '</nav>' +
     '<div class="top-tools">' +
     '<div class="lang" role="group" aria-label="Jezik / Language"><button type="button" data-set-lang="sr" aria-pressed="true">SR</button><button type="button" data-set-lang="en" aria-pressed="false">EN</button></div>' +
+    (accountsOn() ? '<button type="button" class="tool" id="btn-account" data-title-on>' + icon('user') + '<span class="lbl"></span></button>' : '') +
     '<button type="button" class="tool" id="btn-join" data-aria-sr="Pridruži se sobi" data-aria-en="Join a room" data-title-on>' + icon('join') + '<span class="lbl">' + both('Pridruži se', 'Join room') + '</span></button>' +
     '<button type="button" class="tool primary" id="btn-create" data-aria-sr="Napravi kviz" data-aria-en="Create a quiz" data-title-on>' + icon('plus') + '<span class="lbl">' + both('Napravi kviz', 'Create quiz') + '</span></button>' +
     '</div></div></header>';
@@ -191,6 +232,13 @@ function buildHeader() {
   });
   document.getElementById('btn-join').addEventListener('click', function () { openJoin(); });
   document.getElementById('btn-create').addEventListener('click', function () { openCreate(); });
+  var acc = document.getElementById('btn-account');
+  if (acc) {
+    acc.addEventListener('click', function () { openAccount(); });
+    paintAccount();
+    window.addEventListener('lav-auth', paintAccount);
+    window.addEventListener('storage', function (e) { if (e.key === 'lav-session') paintAccount(); });
+  }
 }
 function buildFooter() {
   var host = document.getElementById('site-footer');
@@ -364,6 +412,8 @@ window.LAV = {
   lessonUrl: lessonUrl,
   openJoin: openJoin,
   openCreate: openCreate,
+  openAccount: openAccount,
+  accountsOn: accountsOn,
   loadData: loadData,
   watch: watch,
   loop: loop,
