@@ -149,8 +149,8 @@ document.addEventListener('keydown', function (e) {
 function localBanner() {
   if (S.remote) return '';
   return '<div class="banner">' + icon('info') + '<div>' + both(
-    '<b>Lokalni režim.</b> Ova stranica još nije povezana sa serverom, pa se kvizovi i odgovori čuvaju samo na ovom uređaju. Autor mora da poveže Firebase (databaseURL i apiKey u config.js) da bi sobe i nalozi radili između uređaja.',
-    '<b>Local mode.</b> This site is not connected to a server yet, so quizzes and answers are stored only on this device. The author needs to connect Firebase (databaseURL and apiKey in config.js) for rooms and accounts to work across devices.') + '</div></div>';
+    '<b>Lokalni režim.</b> Ova stranica još nije povezana sa serverom, pa se kvizovi i odgovori čuvaju samo na ovom uređaju. Da bi sobe i nalozi radili i između uređaja, autor treba da poveže Firebase (databaseURL i apiKey u config.js).',
+    '<b>Local mode.</b> This site is not connected to a server yet, so quizzes and answers are stored only on this device. For rooms and accounts to work across devices, the author needs to connect Firebase (databaseURL and apiKey in config.js).') + '</div></div>';
 }
 function errBanner(sr, en) {
   return '<div class="banner bad" role="alert">' + icon('info') + '<div>' + both(sr, en) + '</div></div>';
@@ -227,7 +227,7 @@ function joinAccountLine() {
   if (!L.auth.enabled) return '';
   var u = L.auth.user();
   if (u) return '<p class="help" id="j-accline">' + icon('check').replace('<svg', '<svg width="14" height="14" style="stroke:var(--good);fill:none;stroke-width:2.4;vertical-align:-2px;margin-right:6px"') + both('Rezultat se čuva na nalogu ' + esc(u.email) + '.', 'The result is saved to the account ' + esc(u.email) + '.') + '</p>';
-  return '<p class="help" id="j-accline">' + both('Bez naloga se rezultat ne čuva u istoriji. ', 'Without an account the result is not kept in your history. ') + '<a href="#" id="j-acc">' + both('Prijavi se', 'Sign in') + '</a></p>';
+  return '<p class="help" id="j-accline">' + both('Bez prijave se rezultat ne pamti u istoriji. ', 'If you are not signed in, your result will not be saved to your history. ') + '<a href="#" id="j-acc">' + both('Prijavi se', 'Sign in') + '</a></p>';
 }
 
 function openJoin(prefill) {
@@ -282,7 +282,7 @@ function openJoin(prefill) {
       renderPlayer(m, code, quiz, name);
     }).catch(function () {
       go.disabled = false;
-      errEl.innerHTML = errBanner('Server nije dostupan. Proveri vezu i pokušaj ponovo.', 'The server is unreachable. Check your connection and try again.');
+      errEl.innerHTML = errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.');
     });
   }
   go.addEventListener('click', submit);
@@ -395,7 +395,7 @@ function renderPlayer(m, code, quiz, name) {
     });
     if (blockers.length) {
       blockers.forEach(function (qi) { $(m.body, '.qq[data-qi="' + qi + '"]').classList.add('miss'); });
-      warn.innerHTML = errBanner('Neka pitanja traže formulu ili postupak. Popuni obeležena pitanja.', 'Some questions need a formula or working. Fill in the highlighted questions.');
+      warn.innerHTML = errBanner('Za neka pitanja treba i formula ili postupak. Dopuni ona koja su označena.', 'A few questions also need a formula or working. Fill in the ones that are highlighted.');
       $(m.body, '.qq[data-qi="' + blockers[0] + '"]').scrollIntoView({ block: 'center', behavior: L.reduce ? 'auto' : 'smooth' });
       return;
     }
@@ -425,8 +425,8 @@ function renderPlayer(m, code, quiz, name) {
     }).catch(function (e) {
       send.disabled = false;
       warn.innerHTML = e && e.denied
-        ? errBanner('Odgovori nisu poslati: soba je zatvorena ili je prijava istekla. Tvoji odgovori su i dalje ovde. Pokušaj ponovo.', 'The answers were not sent: the room is closed or your sign-in expired. Your answers are still here. Try again.')
-        : errBanner('Odgovori nisu poslati jer server nije dostupan. Tvoji odgovori su i dalje ovde: pokušaj ponovo.', 'The answers were not sent because the server is unreachable. Your answers are still here: try again.');
+        ? errBanner('Odgovori nisu poslati. Možda je soba u međuvremenu zatvorena ili ti je istekla prijava. Ništa se nije izgubilo, odgovori su još tu, pa probaj ponovo.', 'Your answers did not go through. The room may have closed, or your sign-in may have expired. Nothing is lost, your answers are still here, so try again.')
+        : errBanner('Odgovori nisu poslati jer nema veze sa serverom. Ništa se nije izgubilo, odgovori su još tu, pa probaj ponovo.', 'Your answers did not go through because the server could not be reached. Nothing is lost, so try again.');
       warn.scrollIntoView({ block: 'center' });
     });
   });
@@ -452,7 +452,7 @@ function showPlayerResult(m, code, quiz, name, ans, score, max, lesson, saved) {
   var show = quiz.settings.showAnswers;
   var html = '<div class="done-score"><span class="eyebrow">' + both('Odgovori su poslati', 'Answers sent') + '</span>';
   if (show) {
-    html += '<span class="big">' + score + ' / ' + max + '</span><p>' + both('Bodovi za konačne odgovore. Formule i postupak pregleda autor kviza.', 'Points for the final answers. The quiz author reviews formulas and working.') + '</p>';
+    html += '<span class="big">' + score + ' / ' + max + '</span><p>' + both('Ovo su bodovi za konačne odgovore. Formule i postupak autor kviza pregleda posebno.', 'These are the points for your final answers. The quiz author checks the formulas and working separately.') + '</p>';
   } else {
     html += '<p>' + both('Autor kviza je isključio prikaz rezultata. Hvala na učešću, ' + esc(name) + '.', 'The quiz author has turned off result display. Thank you for taking part, ' + esc(name) + '.') + '</p>';
   }
@@ -460,7 +460,7 @@ function showPlayerResult(m, code, quiz, name, ans, score, max, lesson, saved) {
   if (L.auth.enabled) {
     html += saved
       ? '<div class="banner ok">' + icon('check') + '<div>' + both('Rezultat je sačuvan u istoriji tvog naloga.', 'The result is saved in your account history.') + ' <a href="#" id="pr-hist">' + both('Moji rezultati', 'My results') + '</a></div></div>'
-      : '<div class="banner">' + icon('info') + '<div>' + both('Bez naloga se rezultat ne čuva u istoriji.', 'Without an account the result is not kept in your history.') + ' <a href="#" id="pr-acc">' + both('Prijavi se ili napravi nalog', 'Sign in or create an account') + '</a></div></div>';
+      : '<div class="banner">' + icon('info') + '<div>' + both('Bez prijave se rezultat ne pamti u istoriji.', 'If you are not signed in, your result will not be saved to your history.') + ' <a href="#" id="pr-acc">' + both('Prijavi se ili napravi nalog', 'Sign in or create an account') + '</a></div></div>';
   }
   if (show) html += reviewHtml(quiz, ans, lesson);
   m.body.innerHTML = html;
@@ -491,7 +491,7 @@ function openCreate() {
   m.setHead('Napravi kviz', 'Create a quiz');
   m.body.innerHTML =
     localBanner() +
-    '<p>' + both('Upiši lozinku autora da bi napravio kviz i video odgovore.', 'Enter the author password to create a quiz and see the answers.') + '</p>' +
+    '<p>' + both('Upiši lozinku autora da napraviš kviz i vidiš odgovore.', 'Enter the author password to make a quiz and see the answers.') + '</p>' +
     '<div class="field-row"><label for="p-pw">' + both('Lozinka', 'Password') + '</label>' +
     '<input id="p-pw" class="input" type="password" autocomplete="current-password" data-ph-sr="Lozinka" data-ph-en="Password"></div><div id="p-err"></div>';
   m.setFoot('<button type="button" class="btn" id="p-cancel">' + both('Otkaži', 'Cancel') + '</button><button type="button" class="btn primary" id="p-go">' + icon('lock') + both('Nastavi', 'Continue') + '</button>');
@@ -552,10 +552,10 @@ function openDashboard() {
       var created = rows.filter(function (r) { return !r.builtin; });
       var lessons = rows.filter(function (r) { return r.builtin; });
       var html = '<h3 class="lab-l" style="margin-top:6px">' + both('Moji kvizovi', 'My quizzes') + '</h3>';
-      html += created.length ? '<div class="qlist">' + created.map(rowHtml).join('') + '</div>' : '<p class="help">' + both('Još nema kvizova. Pritisni „Novi kviz”.', 'No quizzes yet. Press “New quiz”.') + '</p>';
+      html += created.length ? '<div class="qlist">' + created.map(rowHtml).join('') + '</div>' : '<p class="help">' + both('Još nemaš nijedan kviz. Pritisni „Novi kviz” da napraviš prvi.', 'You have not made a quiz yet. Press “New quiz” to make your first one.') + '</p>';
       html += '<h3 class="lab-l" style="margin-top:14px">' + both('Testovi uz lekcije', 'Lesson tests') + '</h3>';
       if (S.remote && !admin) {
-        html += '<div class="banner" style="margin-bottom:10px">' + icon('shield') + '<div>' + both('Odgovore na testove uz lekcije vidi samo administrator sajta. Prvi nalog koji pritisne ovo dugme postaje administrator.', 'Only the site administrator can see the answers to the lesson tests. The first account to press this button becomes the administrator.') +
+        html += '<div class="banner" style="margin-bottom:10px">' + icon('shield') + '<div>' + both('Odgovore na testove uz lekcije vidi samo administrator sajta. Ko prvi pritisne ovo dugme, postaje administrator.', 'Only the site administrator can see the answers to the lesson tests. Whoever presses this button first becomes the administrator.') +
           '<div style="margin-top:8px"><button type="button" class="btn small" id="d-claim">' + both('Postani administrator', 'Become administrator') + '</button></div></div></div>';
       }
       html += '<div class="qlist">' + lessons.map(rowHtml).join('') + '</div>';
@@ -582,7 +582,7 @@ function openDashboard() {
     }).catch(function (e) {
       host.innerHTML = e && e.denied
         ? errBanner('Prijava je istekla. Prijavi se ponovo da vidiš svoje kvizove.', 'Your sign-in has expired. Sign in again to see your quizzes.')
-        : errBanner('Server nije dostupan. Proveri vezu i pokušaj ponovo.', 'The server is unreachable. Check your connection and try again.');
+        : errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.');
     });
   }
   function rowHtml(r) {
@@ -854,7 +854,7 @@ function openBuilder(m, ctx, back) {
       showSaved(m, code, quiz, back);
     }).catch(function () {
       btn.disabled = false;
-      errEl.innerHTML = errBanner('Kviz nije sačuvan jer server nije dostupan. Proveri vezu i pokušaj ponovo.', 'The quiz was not saved because the server is unreachable. Check your connection and try again.');
+      errEl.innerHTML = errBanner('Kviz nije sačuvan jer nema veze sa serverom. Proveri internet pa probaj ponovo.', 'The quiz was not saved because the server could not be reached. Check your connection and try again.');
     });
   });
 }
@@ -863,7 +863,7 @@ function showSaved(m, code, quiz, back) {
   m.setCls('mid');
   m.setHead('Kviz je sačuvan', 'Quiz saved');
   m.body.innerHTML = localBanner() +
-    '<p>' + both('Podeli ovaj kod. Učenici ga upisuju posle dugmeta „Pridruži se”.', 'Share this code. Students enter it after pressing “Join room”.') + '</p>' +
+    '<p>' + both('Pošalji ovaj kod učenicima. Oni ga upišu kad pritisnu „Pridruži se”.', 'Send this code to your students. They type it in after pressing “Join room”.') + '</p>' +
     '<div class="code-big" id="sv-code">' + esc(code) + '</div>' +
     '<div class="row"><button type="button" class="btn" id="sv-copy">' + icon('copy') + both('Kopiraj kod', 'Copy code') + '</button>' +
     '<button type="button" class="btn" id="sv-link">' + icon('link') + both('Kopiraj link', 'Copy link') + '</button></div>';
@@ -948,8 +948,8 @@ function openResults(m, code, quiz, back) {
     }).catch(function (e) {
       var host = $(m.root, '#r-list');
       if (host && !subsData.length) host.innerHTML = e && e.denied
-        ? errBanner('Nemaš dozvolu da vidiš ove odgovore. Prijavi se nalogom koji je napravio kviz.', 'You are not allowed to see these answers. Sign in with the account that created the quiz.')
-        : errBanner('Server nije dostupan. Proveri vezu i pokušaj ponovo.', 'The server is unreachable. Check your connection and try again.');
+        ? errBanner('Ne možeš da vidiš ove odgovore. Prijavi se nalogom kojim je kviz napravljen.', 'You cannot see these answers. Sign in with the account that the quiz was made with.')
+        : errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.');
     });
   }
   $(m.root, '#r-refresh').addEventListener('click', function () { load.sig = null; load(); });

@@ -333,8 +333,8 @@ function buildTestCta() {
       '<p class="eyebrow">' + both('Proveri znanje', 'Check what you know') + '</p>' +
       '<h2>' + both('Mali test', 'A small test') + '</h2>' +
       '<p>' + both(
-        (n ? n + ' vrlo lakih pitanja. ' : 'Vrlo laka pitanja. ') + 'Test se radi u kviz sobi: upišeš korisničko ime, a iznad svakog odgovora imaš polje za formulu (otkucaj <b>\\</b> da vidiš funkcije). Formule iz lekcije ti ne prikazujemo, pa pokušaj da ih se setiš.',
-        (n ? n + ' very easy questions. ' : 'Very easy questions. ') + 'The test runs in a quiz room: enter a username, and above every answer you get a formula box (type <b>\\</b> to see the functions). We do not show the lesson formulas there, so try to remember them.'
+        (n ? n + ' vrlo lakih pitanja. ' : 'Vrlo laka pitanja. ') + 'Upišeš korisničko ime i odgovaraš u kviz sobi. Iznad svakog odgovora je polje za formulu: otkucaj <b>\\</b> i izaberi funkciju. Formule iz lekcije se tu ne prikazuju, pa probaj da ih se setiš.',
+        (n ? n + ' very easy questions. ' : 'Very easy questions. ') + 'You enter a username and answer in a quiz room. There is a formula box above every answer: type <b>\\</b> and pick a function. The formulas from the lesson are not shown there, so try to remember them.'
       ) + '</p>' +
       '</div><div class="test-side">' +
       '<div class="room"><span class="code" aria-label="Kod sobe">' + esc(code) + '</span></div>' +

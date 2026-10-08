@@ -29,7 +29,7 @@ var ERRORS = {
   OPERATION_NOT_ALLOWED: ['Prijava emailom nije uključena u Firebase-u. Vlasnik sajta treba da uključi Email/Password.', 'Email sign-in is not enabled in Firebase. The site owner must enable Email/Password.'],
   API_KEY_INVALID: ['API ključ u config.js nije ispravan.', 'The API key in config.js is not valid.'],
   CREDENTIAL_TOO_OLD_LOGIN_AGAIN: ['Zbog bezbednosti se prijavi ponovo, pa pokušaj još jednom.', 'For security, sign in again and then try once more.'],
-  NETWORK: ['Server nije dostupan. Proveri vezu i pokušaj ponovo.', 'The server is unreachable. Check your connection and try again.']
+  NETWORK: ['Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.']
 };
 function authError(e) {
   var m = ERRORS[e && e.code];
@@ -63,7 +63,7 @@ function renderOut(m, mode, opts) {
   m.setCls('mid');
   m.setHead(up ? 'Napravi nalog' : 'Prijava', up ? 'Create an account' : 'Sign in', '<span class="eyebrow">' + both('Nalog', 'Account') + '</span>');
   m.body.innerHTML =
-    (opts.required ? '<div class="banner">' + icon('info') + '<div>' + both('Da bi pravio kvizove i video odgovore, prijavi se nalogom. Kvizovi i odgovori se vezuju za tvoj nalog i niko drugi ih ne vidi.', 'To create quizzes and see the answers, sign in with an account. Quizzes and answers belong to your account and nobody else can see them.') + '</div></div>' : '') +
+    (opts.required ? '<div class="banner">' + icon('info') + '<div>' + both('Za pravljenje kvizova i pregled odgovora treba ti nalog. Kvizovi i odgovori su vezani za tvoj nalog i niko drugi ih ne vidi.', 'To make quizzes and see their answers you need an account. Your quizzes and their answers belong to your account and nobody else can see them.') + '</div></div>' : '') +
     '<div class="seg" role="group" aria-label="Nalog / Account"><button type="button" data-mode="in" aria-pressed="' + (!up) + '">' + both('Prijava', 'Sign in') + '</button><button type="button" data-mode="up" aria-pressed="' + up + '">' + both('Novi nalog', 'New account') + '</button></div>' +
     '<form id="a-form" novalidate class="stack" style="display:grid;gap:14px">' +
     (up ? '<div class="field-row"><label for="a-name">' + both('Korisničko ime', 'Username') + '</label><input id="a-name" class="input" type="text" maxlength="32" autocomplete="nickname" data-ph-sr="Kako da te zovemo?" data-ph-en="What should we call you?"></div>' : '') +
@@ -73,7 +73,7 @@ function renderOut(m, mode, opts) {
     '<div id="a-err"></div>' +
     '<button type="submit" class="sr-only" tabindex="-1">OK</button></form>' +
     (up ? '' : '<p class="help"><a href="#" id="a-forgot">' + both('Zaboravljena lozinka?', 'Forgot your password?') + '</a></p>') +
-    '<p class="help">' + icon('lock').replace('<svg', '<svg width="14" height="14" style="stroke:currentColor;fill:none;stroke-width:2;vertical-align:-2px;margin-right:6px"') + both('Lozinku obrađuje Firebase Authentication (Google) i zapisuje je kao heš. Ovaj sajt je nikada ne vidi niti čuva.', 'Your password is handled by Firebase Authentication (Google) and stored only as a hash. This site never sees or stores it.') + '</p>';
+    '<p class="help">' + icon('lock').replace('<svg', '<svg width="14" height="14" style="stroke:currentColor;fill:none;stroke-width:2;vertical-align:-2px;margin-right:6px"') + both('Lozinku čuva Google (Firebase Authentication), i to samo kao heš. Ovaj sajt je nikad ne vidi.', 'Your password is kept by Google (Firebase Authentication), and only as a hash. This site never sees it.') + '</p>';
   m.setFoot('<button type="button" class="btn" id="a-cancel">' + both('Otkaži', 'Cancel') + '</button><button type="button" class="btn primary" id="a-go">' + icon('user') + (up ? both('Napravi nalog', 'Create account') : both('Prijavi se', 'Sign in')) + '</button>');
   L.applyAttrs(m.root);
   var email = $(m.root, '#a-email'), pw = $(m.root, '#a-pw'), nm = $(m.root, '#a-name'), err = $(m.root, '#a-err'), go = $(m.root, '#a-go');
@@ -122,7 +122,7 @@ function renderReset(m, mode, opts, prefill) {
   m.view = 'out';
   m.setHead('Zaboravljena lozinka', 'Forgot your password', '<span class="eyebrow">' + both('Nalog', 'Account') + '</span>');
   m.body.innerHTML =
-    '<p>' + both('Upiši email adresu naloga. Firebase će ti poslati poruku sa linkom za novu lozinku.', 'Enter the email address of your account. Firebase will send you a message with a link to set a new password.') + '</p>' +
+    '<p>' + both('Upiši email svog naloga i dobićeš poruku sa linkom za novu lozinku.', 'Enter your account\'s email and you will get a message with a link to set a new password.') + '</p>' +
     '<div class="field-row"><label for="r-email">Email</label><input id="r-email" class="input" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false"></div><div id="r-err"></div>';
   m.setFoot('<button type="button" class="btn" id="r-back">' + both('Nazad', 'Back') + '</button><button type="button" class="btn primary" id="r-go">' + icon('mail') + both('Pošalji link', 'Send link') + '</button>');
   L.applyAttrs(m.root);
@@ -187,7 +187,7 @@ function historyPane(m, host) {
   S.history().then(function (rows) {
     if (m.closed || !$(m.root, '#ac-pane')) return;
     if (!rows.length) {
-      host.innerHTML = '<div class="center"><p>' + both('Još nema rezultata. Kad završiš test dok si prijavljen, pojaviće se ovde.', 'No results yet. When you finish a test while signed in, it will show up here.') + '</p>' +
+      host.innerHTML = '<div class="center"><p>' + both('Još nema rezultata. Čim uradiš neki test sa ovog naloga, pojaviće se ovde.', 'No results yet. As soon as you take a test while signed in to this account, it will show up here.') + '</p>' +
         '<a class="btn" href="' + L.base + 'biblioteka.html">' + icon('book') + both('Otvori biblioteku', 'Open the library') + '</a></div>';
       return;
     }
@@ -223,7 +223,7 @@ function historyPane(m, host) {
     if (m.closed) return;
     host.innerHTML = e && e.denied
       ? errBanner('Prijava je istekla. Odjavi se pa se prijavi ponovo.', 'Your sign-in has expired. Sign out and sign in again.')
-      : errBanner('Server nije dostupan. Proveri vezu i pokušaj ponovo.', 'The server is unreachable. Check your connection and try again.');
+      : errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.');
   });
 }
 
@@ -245,7 +245,7 @@ function fillReview(d, rows) {
   host.innerHTML = '<div class="center"><span class="spin"></span></div>';
   S.get(r.code).then(function (quiz) {
     if (!quiz) {
-      host.innerHTML = '<p class="help">' + both('Ovaj kviz više ne postoji, pa pregled odgovora nije dostupan.', 'This quiz no longer exists, so the answer review is not available.') + '</p>';
+      host.innerHTML = '<p class="help">' + both('Ovaj kviz je u međuvremenu obrisan, pa nema pregleda za prikaz.', 'This quiz has since been deleted, so there is no review to show.') + '</p>';
       return;
     }
     if (!quiz.settings.showAnswers) {
@@ -265,11 +265,11 @@ function settingsPane(m, host) {
     '<div class="stack" style="display:grid;gap:18px">' +
     '<div class="field-row"><label for="s-name">' + both('Korisničko ime', 'Username') + '</label>' +
     '<div class="row" style="flex-wrap:nowrap"><input id="s-name" class="input" type="text" maxlength="32" autocomplete="nickname" style="flex:1;min-width:0"><button type="button" class="btn" id="s-save">' + both('Sačuvaj', 'Save') + '</button></div>' +
-    '<p class="help">' + both('Ovo ime se podrazumevano upisuje kad uđeš u sobu.', 'This name is filled in by default when you join a room.') + '</p></div>' +
+    '<p class="help">' + both('Ovo ime se samo upiše kad uđeš u sobu.', 'This name is filled in for you when you join a room.') + '</p></div>' +
     '<div id="s-err"></div>' +
     '<div class="field-row"><label>' + both('Email', 'Email') + '</label><div class="help">' + esc(u.email) + '</div></div>' +
     '<div class="field-row"><label>' + both('Lozinka', 'Password') + '</label><div><button type="button" class="btn small" id="s-reset">' + icon('mail') + both('Pošalji link za novu lozinku', 'Email me a password-reset link') + '</button></div></div>' +
-    '<div class="danger-zone"><b>' + both('Brisanje naloga', 'Delete account') + '</b><p class="help">' + both('Briše nalog, istoriju rezultata i sve kvizove koje si napravio zajedno sa odgovorima na njih. Ovo se ne može poništiti.', 'Deletes your account, your results history and every quiz you created together with its answers. This cannot be undone.') + '</p>' +
+    '<div class="danger-zone"><b>' + both('Brisanje naloga', 'Delete account') + '</b><p class="help">' + both('Briše tvoj nalog, istoriju rezultata i sve kvizove koje si napravio, zajedno sa odgovorima. Posle toga nema povratka.', 'This deletes your account, your results history and every quiz you made, along with their answers. There is no undo.') + '</p>' +
     '<button type="button" class="btn small danger" id="s-del">' + icon('trash') + both('Obriši nalog', 'Delete account') + '</button></div></div>';
   L.applyAttrs(host);
   var nm = $(host, '#s-name'), err = $(host, '#s-err');

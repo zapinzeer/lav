@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Otvorena biblioteka školskih lekcija iz fizike i elektronike: formule, 3D modeli, animacije i kviz sobe. Na srpskom i engleskom.">
+<meta name="description" content="Lekcije iz fizike i elektronike sa formulama, 3D modelima, animacijama i malim testom na kraju. Na srpskom i engleskom.">
 <title>lav · otvorena biblioteka lekcija</title>
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,10 +19,10 @@
   <canvas id="filings" aria-hidden="true"></canvas>
   <div class="hero-in">
     <div class="hero-copy">
-      <p class="eyebrow"><span lang="sr">Otvorena biblioteka · fizika i elektronika</span><span lang="en">An open library · physics and electronics</span></p>
+      <p class="eyebrow"><span lang="sr">Otvorena biblioteka za fiziku i elektroniku</span><span lang="en">An open library for physics and electronics</span></p>
       <h1>lav</h1>
-      <p class="lead" lang="sr">Detaljne školske lekcije sa formulama, rešenim primerima, 3D modelima i animacijama. Na kraju svake čeka te mali test u kviz sobi.</p>
-      <p class="lead" lang="en">Detailed school lessons with formulas, worked examples, 3D models and animations. A small test waits at the end of each one, in a quiz room.</p>
+      <p class="lead" lang="sr">Lekcije iz fizike i elektronike, objašnjene korak po korak. Uz formule i rešene primere tu su 3D modeli i animacije koje možeš da pomeraš, a na kraju svake lekcije je mali test da vidiš šta ti je ostalo u glavi.</p>
+      <p class="lead" lang="en">Physics and electronics lessons, explained one step at a time. Besides the formulas and worked examples there are 3D models and animations you can move around, and a small test at the end of every lesson to see what stuck.</p>
       <div class="hero-cta">
         <a class="btn primary" href="biblioteka.html"><span lang="sr">Otvori biblioteku</span><span lang="en">Open the library</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <button type="button" class="btn" id="hero-join"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg><span lang="sr">Pridruži se kvizu</span><span lang="en">Join a quiz</span></button>
@@ -35,30 +35,30 @@
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow"><span lang="sr">Kako se uči ovde</span><span lang="en">How learning works here</span></p>
-        <h2><span lang="sr">Čitaj, eksperimentiši, proveri se</span><span lang="en">Read, experiment, check yourself</span></h2>
+        <p class="eyebrow"><span lang="sr">Kako izgleda lekcija</span><span lang="en">What a lesson looks like</span></p>
+        <h2><span lang="sr">Svaka lekcija ima tri dela</span><span lang="en">Every lesson has three parts</span></h2>
       </div>
       <ol class="steps">
         <li>
           <span class="n">01</span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M9 8h6M9 12h6"/></svg>
-          <h3><span lang="sr">Čitaj</span><span lang="en">Read</span></h3>
-          <p lang="sr">Svaka lekcija ide korak po korak: ciljevi, objašnjenje, formule sa legendom, rešeni primeri i česte greške.</p>
-          <p lang="en">Every lesson goes step by step: goals, explanation, formulas with a legend, worked examples and common mistakes.</p>
+          <h3><span lang="sr">Pročitaj</span><span lang="en">Read</span></h3>
+          <p lang="sr">Lekcija kreće od osnovne ideje i polako stiže do rešenih primera. Uz svaku formulu piše šta znači svaka oznaka, a na kraju su greške koje se najčešće prave.</p>
+          <p lang="en">A lesson starts from the basic idea and builds up to worked examples. Every formula comes with a note on what each symbol means, and the last part covers the mistakes people make most often.</p>
         </li>
         <li>
           <span class="n">02</span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>
-          <h3><span lang="sr">Eksperimentiši</span><span lang="en">Experiment</span></h3>
-          <p lang="sr">Okreći 3D modele, pomeraj klizače i gledaj animacije: motor koji se vrti, struja u petlji, talasi usmerivača, ekran osciloskopa.</p>
-          <p lang="en">Rotate 3D models, drag the sliders and watch animations: a spinning motor, current in a loop, rectifier waves, an oscilloscope screen.</p>
+          <h3><span lang="sr">Isprobaj</span><span lang="en">Try it</span></h3>
+          <p lang="sr">Okreni 3D model, pomeri klizač i vidi šta se menja: motor koji se vrti, struja u petlji, talasi na usmerivaču, ekran osciloskopa.</p>
+          <p lang="en">Turn a 3D model, drag a slider and see what changes: a spinning motor, a current in a loop, the waves on a rectifier, an oscilloscope screen.</p>
         </li>
         <li>
           <span class="n">03</span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg>
-          <h3><span lang="sr">Proveri se</span><span lang="en">Check yourself</span></h3>
-          <p lang="sr">Mali test sa vrlo lakim pitanjima radi se u kviz sobi. Uz odgovor možeš da napišeš i formulu koju si koristio.</p>
-          <p lang="en">A small test of very easy questions runs in a quiz room. Next to your answer you can write the formula you used.</p>
+          <h3><span lang="sr">Proveri</span><span lang="en">Check</span></h3>
+          <p lang="sr">Test na kraju ima samo laka pitanja i radi se u kviz sobi. Uz odgovor možeš da upišeš i formulu kojom si došao do njega.</p>
+          <p lang="en">The test at the end has only easy questions and runs in a quiz room. Along with your answer you can write down the formula that got you there.</p>
         </li>
       </ol>
     </div>
@@ -68,7 +68,7 @@
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow"><span lang="sr">Predmeti</span><span lang="en">Classes</span></p>
-        <h2><span lang="sr">Šta je u biblioteci</span><span lang="en">What is in the library</span></h2>
+        <h2><span lang="sr">Šta ima u biblioteci</span><span lang="en">What's in the library</span></h2>
       </div>
       <div class="class-grid" id="class-grid"></div>
     </div>
@@ -79,16 +79,16 @@
       <div class="quiz-band">
         <div>
           <p class="eyebrow"><span lang="sr">Kviz sobe</span><span lang="en">Quiz rooms</span></p>
-          <h2><span lang="sr">Napravi svoj kviz i gledaj odgovore uživo</span><span lang="en">Make your own quiz and watch the answers come in</span></h2>
-          <p lang="sr">Autor postavlja pitanja, bira vrstu odgovora i da li se traži formula ili postupak, pa dobija kratak kod sobe. Učenici ukucaju kod i korisničko ime, a autor vidi ko je šta odgovorio.</p>
-          <p lang="en">The author writes the questions, picks the answer type and whether a formula or working is required, and gets a short room code. Students enter the code and a username, and the author sees who answered what.</p>
+          <h2><span lang="sr">Napravi kviz i vidi ko je šta odgovorio</span><span lang="en">Make a quiz and see who answered what</span></h2>
+          <p lang="sr">Napišeš pitanja, izabereš kako se odgovara i da li treba upisati formulu ili postupak, i dobiješ kratak kod sobe. Ostali ukucaju kod i korisničko ime, a ti vidiš odgovore čim stignu.</p>
+          <p lang="en">You write the questions, choose how they are answered and whether a formula or working is needed, and you get a short room code. Everyone else types in the code and a username, and you see the answers as they arrive.</p>
         </div>
         <div class="quiz-band-act">
           <div class="quiz-band-row">
             <button type="button" class="btn light" id="band-create"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span lang="sr">Napravi kviz</span><span lang="en">Create a quiz</span></button>
             <button type="button" class="btn" id="band-join"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg><span lang="sr">Pridruži se sobi</span><span lang="en">Join a room</span></button>
           </div>
-          <p class="note" style="color:inherit;opacity:.7"><span lang="sr">Pravljenje kviza traži lozinku autora.</span><span lang="en">Creating a quiz needs the author password.</span></p>
+          <p class="note" style="color:inherit;opacity:.7"><span lang="sr">Za pravljenje kviza treba lozinka autora.</span><span lang="en">Making a quiz needs the author password.</span></p>
         </div>
       </div>
     </div>
