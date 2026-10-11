@@ -219,7 +219,7 @@ function remember(it) {
 }
 function itemName(it) { return L.lang() === 'sr' ? it.sr : it.en; }
 function coarse() { try { return window.matchMedia('(pointer: coarse)').matches; } catch (e) { return false; } }
-function sheetMode() { try { return window.matchMedia('(max-width: 640px)').matches; } catch (e) { return false; } }
+function sheetMode() { try { return window.matchMedia('(max-width: 760px), (max-height: 500px), (pointer: coarse) and (max-width: 1100px)').matches; } catch (e) { return false; } }
 
 var menu = null;
 var uid = 0;
@@ -259,6 +259,7 @@ function ensureMenu() {
   menu.xEl.addEventListener('click', function () { closeMenu(true); });
   back.addEventListener('pointerdown', function (e) { e.preventDefault(); closeMenu(true); });
   menu.inEl.addEventListener('input', function () {
+    if (menu.inEl.value.indexOf('/') >= 0) { closeMenu(true); return; }
     menu.q = menu.inEl.value.replace(/^\\+/, '');
     menu.sel = 0;
     refresh(true);
@@ -299,6 +300,10 @@ function ensureMenu() {
     if (menu.open && !menu.el.contains(e.target) && !(menu.target && menu.target.anchor.contains(e.target)) && !e.target.closest('[data-mmenu-btn]')) closeMenu(false);
   }, true);
   window.addEventListener('resize', function () { if (menu.open) place(); });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', function () { if (menu.open) place(); });
+    window.visualViewport.addEventListener('scroll', function () { if (menu.open) place(); });
+  }
   window.addEventListener('scroll', function () { if (menu.open && !sheetMode()) place(); }, true);
   L.onLang(function () { if (menu.open) { paintStatic(); buildTabs(); refresh(false); } });
   return menu;
@@ -403,11 +408,22 @@ function place() {
   var el = m.el;
   if (sheetMode()) {
     el.classList.add('sheet');
-    ['left', 'top', 'bottom', 'width', 'maxHeight'].forEach(function (p) { el.style[p] = ''; });
+    var v = window.visualViewport;
+    el.style.top = 'auto';
+    if (v) {
+      el.style.left = Math.max(0, v.offsetLeft) + 'px';
+      el.style.width = v.width + 'px';
+      el.style.right = 'auto';
+      el.style.bottom = Math.max(0, window.innerHeight - (v.height + v.offsetTop)) + 'px';
+      el.style.maxHeight = Math.max(240, Math.floor(v.height * 0.86)) + 'px';
+    } else {
+      ['left', 'right', 'bottom', 'width', 'maxHeight'].forEach(function (p) { el.style[p] = ''; });
+    }
     m.back.hidden = false;
     return;
   }
   el.classList.remove('sheet');
+  el.style.right = '';
   m.back.hidden = true;
   if (!m.target) return;
   var r = (m.target.box || m.target.anchor).getBoundingClientRect();
@@ -467,7 +483,7 @@ function onKey(e) {
   if (!m || !m.open) return;
   var k = e.key;
   var inInput = e.target === m.inEl;
-  if (k === 'Escape') { e.preventDefault(); e.stopPropagation(); closeMenu(true); return; }
+  if (k === 'Escape' || (k === '/' && !e.ctrlKey && !e.metaKey && !e.altKey)) { e.preventDefault(); e.stopPropagation(); closeMenu(true); return; }
   if (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp') {
     if (!m.items.length) return;
     e.preventDefault();
@@ -509,8 +525,8 @@ function insertIntoTextarea(ta, tex) {
 }
 
 function hintHtml() {
-  if (coarse()) return L.both('Dodirni ƒ za sve funkcije ili koristi prečice.', 'Tap ƒ for every function, or use the shortcuts.');
-  return L.both('Prečice ubacuju odmah. Otkucaj <kbd>\\</kbd> u polju za sve funkcije.', 'Shortcuts insert instantly. Type <kbd>\\</kbd> in the box for every function.');
+  if (coarse()) return L.both('Dodirni ƒ ili ukucaj / za sve funkcije, ili koristi prečice.', 'Tap ƒ or type / for every function, or use the shortcuts.');
+  return L.both('Prečice ubacuju odmah. Pritisni <kbd>/</kbd> u polju da otvoriš ili zatvoriš listu funkcija.', 'Shortcuts insert instantly. Press <kbd>/</kbd> in the box to open or close the function list.');
 }
 
 function quickBar(row, target) {
@@ -576,6 +592,10 @@ function create(host, opt) {
   Promise.all([needKatex(), needMathlive()]).then(function (r) {
     var M = r[1];
     var target;
+    function toggle() {
+      if (menu && menu.open && menu.target === target) closeMenu(true);
+      else openMenu(target);
+    }
     if (M && customElements.get('math-field')) {
       var mf = new M();
       mf.className = 'mf';
@@ -590,13 +610,16 @@ function create(host, opt) {
         btn: btn,
         box: wrap,
         insert: function (tex) { mf.insert(tex, { format: 'latex', selectionMode: 'placeholder', focus: true }); },
-        focus: function () { mf.focus(); }
+        focus: function () {
+          mf.focus();
+          setTimeout(function () { if (!mf.hasFocus()) { mf.blur(); mf.focus(); } }, 60);
+        }
       };
       mf.addEventListener('keydown', function (e) {
-        if (e.key === '\\' && !e.metaKey) { e.preventDefault(); e.stopPropagation(); openMenu(target); }
+        if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); e.stopPropagation(); toggle(); }
       }, true);
       mf.addEventListener('beforeinput', function (e) {
-        if (e.data === '\\') { e.preventDefault(); e.stopPropagation(); openMenu(target); }
+        if (e.data === '/') { e.preventDefault(); e.stopPropagation(); toggle(); }
       }, true);
       mf.addEventListener('input', fire);
       api.get = function () { return cleanLatex(mf.getValue('latex')).trim(); };
@@ -624,17 +647,14 @@ function create(host, opt) {
         focus: function () { ta.focus(); }
       };
       ta.addEventListener('keydown', function (e) {
-        if (e.key === '\\') { e.preventDefault(); openMenu(target); }
+        if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); toggle(); }
       }, true);
       api.get = function () { return ta.value.trim(); };
       api.set = function (v) { ta.value = v || ''; upd(); };
       api.focus = function () { ta.focus(); };
       upd();
     }
-    btn.addEventListener('click', function () {
-      if (menu && menu.open && menu.target === target) { closeMenu(true); return; }
-      openMenu(target);
-    });
+    btn.addEventListener('click', toggle);
     quickBar(row, target);
   });
   wrap.appendChild(bar);
