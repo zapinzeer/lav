@@ -200,63 +200,162 @@ function needMathlive() {
   return mlPromise;
 }
 
+var RECENT_KEY = 'lav-mb-recent';
+var BYKEY = {};
+ITEMS.forEach(function (it) { it.key = it.cat + ':' + it.cmd; BYKEY[it.key] = it; });
+var QUICK = ['basic:frac', 'basic:pow', 'basic:sub', 'basic:sqrt', 'basic:pow10', 'basic:cdot', 'basic:times', 'basic:pm', 'greek:pi', 'greek:omega', 'greek:Delta', 'trig:sin', 'trig:cos', 'trig:tan', 'basic:circ', 'phys:ohm'];
+
+function recents() {
+  try {
+    var a = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
+    return (Array.isArray(a) ? a : []).filter(function (k) { return BYKEY[k]; });
+  } catch (e) { return []; }
+}
+function remember(it) {
+  if (!it) return;
+  var a = recents().filter(function (k) { return k !== it.key; });
+  a.unshift(it.key);
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(a.slice(0, 12))); } catch (e) {}
+}
+function itemName(it) { return L.lang() === 'sr' ? it.sr : it.en; }
+function coarse() { try { return window.matchMedia('(pointer: coarse)').matches; } catch (e) { return false; } }
+function sheetMode() { try { return window.matchMedia('(max-width: 640px)').matches; } catch (e) { return false; } }
+
 var menu = null;
+var uid = 0;
 function ensureMenu() {
   if (menu) return menu;
+  var id = 'mmenu' + (++uid);
+  var back = document.createElement('div');
+  back.className = 'mmenu-back';
+  back.hidden = true;
   var el = document.createElement('div');
   el.className = 'mmenu';
-  el.setAttribute('role', 'listbox');
+  el.id = id;
+  el.setAttribute('role', 'dialog');
+  el.setAttribute('aria-label', L.tr('Funkcije i simboli', 'Functions and symbols'));
+  el.tabIndex = -1;
   el.hidden = true;
   el.innerHTML =
-    '<div class="mmenu-q"><b>\\</b><span class="q"></span><span class="ph"></span></div>' +
-    '<div class="mmenu-tabs"></div><div class="mmenu-list"></div>';
+    '<div class="mmenu-grip" aria-hidden="true"></div>' +
+    '<div class="mmenu-head">' +
+      '<label class="mmenu-search"><span class="sr-only"></span>' +
+        '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="M13.2 13.2 17 17"/></svg>' +
+        '<input type="search" class="mmenu-in" role="combobox" aria-expanded="true" aria-autocomplete="list" aria-controls="' + id + '-list" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done">' +
+      '</label>' +
+      '<button type="button" class="mmenu-x"></button>' +
+    '</div>' +
+    '<div class="mmenu-tabs" role="tablist"></div>' +
+    '<div class="mmenu-list" role="listbox" id="' + id + '-list"></div>' +
+    '<div class="mmenu-foot" aria-hidden="true"></div>' +
+    '<div class="sr-only" aria-live="polite" role="status"></div>';
+  document.body.appendChild(back);
   document.body.appendChild(el);
   menu = {
-    el: el, open: false, q: '', tab: 'all', sel: 0, items: [], target: null,
-    qEl: el.querySelector('.q'), phEl: el.querySelector('.ph'), tabsEl: el.querySelector('.mmenu-tabs'), listEl: el.querySelector('.mmenu-list')
+    el: el, back: back, id: id, open: false, q: '', tab: 'all', sel: 0, items: [], target: null,
+    inEl: el.querySelector('.mmenu-in'), lblEl: el.querySelector('.mmenu-search .sr-only'), xEl: el.querySelector('.mmenu-x'),
+    tabsEl: el.querySelector('.mmenu-tabs'), listEl: el.querySelector('.mmenu-list'), footEl: el.querySelector('.mmenu-foot'), liveEl: el.querySelector('[role=status]')
   };
-  CATS.forEach(function (c) {
-    var b = document.createElement('button');
-    b.type = 'button';
-    b.setAttribute('data-cat', c[0]);
-    b.innerHTML = L.both(c[1], c[2]);
-    menu.tabsEl.appendChild(b);
-  });
-  el.addEventListener('pointerdown', function (e) { if (!e.target.closest('.mmenu-tabs, .mmenu-list')) e.preventDefault(); else if (e.target.closest('button')) e.preventDefault(); });
-  menu.tabsEl.addEventListener('click', function (e) {
-    var b = e.target.closest('button');
-    if (!b) return;
-    menu.tab = b.getAttribute('data-cat');
-    menu.q = '';
+  menu.xEl.addEventListener('click', function () { closeMenu(true); });
+  back.addEventListener('pointerdown', function (e) { e.preventDefault(); closeMenu(true); });
+  menu.inEl.addEventListener('input', function () {
+    menu.q = menu.inEl.value.replace(/^\\+/, '');
     menu.sel = 0;
-    refresh();
-    if (menu.target) menu.target.focus();
+    refresh(true);
+  });
+  menu.tabsEl.addEventListener('click', function (e) {
+    var b = e.target.closest('[role=tab]');
+    if (!b) return;
+    setTab(b.getAttribute('data-cat'));
+    b.focus();
+  });
+  menu.tabsEl.addEventListener('keydown', function (e) {
+    var tabs = Array.prototype.slice.call(menu.tabsEl.querySelectorAll('[role=tab]'));
+    var i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : -1;
+    if (n < 0) return;
+    e.preventDefault();
+    n = (n + tabs.length) % tabs.length;
+    setTab(tabs[n].getAttribute('data-cat'));
+    menu.tabsEl.querySelector('[data-cat="' + tabs[n].getAttribute('data-cat') + '"]').focus();
   });
   menu.listEl.addEventListener('click', function (e) {
     var b = e.target.closest('.mmenu-item');
-    if (!b) return;
-    pick(menu.items[+b.getAttribute('data-i')]);
+    if (b) pick(menu.items[+b.getAttribute('data-i')]);
   });
   menu.listEl.addEventListener('pointermove', function (e) {
+    if (e.pointerType === 'touch') return;
     var b = e.target.closest('.mmenu-item');
     if (!b) return;
     var i = +b.getAttribute('data-i');
     if (i !== menu.sel) { menu.sel = i; markSel(false); }
   });
-  document.addEventListener('keydown', onKey, true);
+  menu.listEl.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'touch' && e.target.closest('.mmenu-item')) e.preventDefault();
+  });
+  el.addEventListener('keydown', onKey);
   document.addEventListener('pointerdown', function (e) {
-    if (menu.open && !menu.el.contains(e.target) && !(menu.target && menu.target.anchor.contains(e.target)) && !e.target.closest('[data-mmenu-btn]')) closeMenu();
+    if (menu.open && !menu.el.contains(e.target) && !(menu.target && menu.target.anchor.contains(e.target)) && !e.target.closest('[data-mmenu-btn]')) closeMenu(false);
   }, true);
   window.addEventListener('resize', function () { if (menu.open) place(); });
-  window.addEventListener('scroll', function () { if (menu.open) place(); }, true);
-  L.onLang(function () { if (menu.open) refresh(); });
+  window.addEventListener('scroll', function () { if (menu.open && !sheetMode()) place(); }, true);
+  L.onLang(function () { if (menu.open) { paintStatic(); buildTabs(); refresh(false); } });
   return menu;
+}
+
+function paintStatic() {
+  var m = menu;
+  m.lblEl.textContent = L.tr('Pretraži funkcije', 'Search functions');
+  m.inEl.placeholder = L.tr('Pretraži: razlomak, sin, integral…', 'Search: fraction, sin, integral…');
+  m.xEl.setAttribute('aria-label', L.tr('Zatvori', 'Close'));
+  m.xEl.innerHTML = '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg>';
+  m.footEl.innerHTML = coarse() ? '' : L.both('<kbd>↑</kbd><kbd>↓</kbd> biraj · <kbd>Enter</kbd> ubaci · <kbd>Esc</kbd> zatvori', '<kbd>↑</kbd><kbd>↓</kbd> choose · <kbd>Enter</kbd> insert · <kbd>Esc</kbd> close');
+  m.footEl.hidden = coarse();
+}
+
+function buildTabs() {
+  var m = menu;
+  var cats = CATS.slice();
+  if (recents().length) cats.unshift(['recent', 'Nedavno', 'Recent']);
+  if (!cats.some(function (c) { return c[0] === m.tab; })) m.tab = 'all';
+  m.tabsEl.innerHTML = '';
+  cats.forEach(function (c) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'tab');
+    b.setAttribute('data-cat', c[0]);
+    b.innerHTML = L.both(c[1], c[2]);
+    m.tabsEl.appendChild(b);
+  });
+  markTabs();
+}
+function markTabs() {
+  var m = menu;
+  m.tabsEl.querySelectorAll('[role=tab]').forEach(function (b) {
+    var on = (m.q ? 'all' : m.tab) === b.getAttribute('data-cat') && !m.q;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.tabIndex = on || (m.q && b.getAttribute('data-cat') === 'all') ? 0 : -1;
+    b.classList.toggle('on', on);
+  });
+  if (!m.tabsEl.querySelector('[tabindex="0"]')) { var f = m.tabsEl.querySelector('[role=tab]'); if (f) f.tabIndex = 0; }
+}
+function setTab(cat) {
+  var m = menu;
+  m.tab = cat;
+  m.q = '';
+  m.inEl.value = '';
+  m.sel = 0;
+  refresh(false);
 }
 
 function filtered() {
   var q = menu.q.trim().toLowerCase();
   var lang = L.lang();
-  if (!q) return ITEMS.filter(function (it) { return menu.tab === 'all' || it.cat === menu.tab; });
+  if (!q) {
+    if (menu.tab === 'recent') return recents().map(function (k) { return BYKEY[k]; });
+    return ITEMS.filter(function (it) { return menu.tab === 'all' || it.cat === menu.tab; });
+  }
   var scored = [];
   ITEMS.forEach(function (it) {
     var s = -1;
@@ -271,23 +370,22 @@ function filtered() {
   return scored.map(function (x) { return x[1]; });
 }
 
-function refresh() {
+function refresh(announce) {
   var m = menu;
   m.items = filtered();
   if (m.sel >= m.items.length) m.sel = Math.max(0, m.items.length - 1);
-  m.qEl.textContent = m.q;
-  m.phEl.textContent = m.q ? '' : L.tr('piši za pretragu', 'type to search');
-  m.tabsEl.querySelectorAll('button').forEach(function (b) {
-    b.setAttribute('aria-pressed', (m.q ? 'all' : m.tab) === b.getAttribute('data-cat') ? 'true' : 'false');
-  });
-  var lang = L.lang();
+  markTabs();
   var html = '';
   m.items.forEach(function (it, i) {
-    html += '<button type="button" class="mmenu-item' + (i === m.sel ? ' on' : '') + '" data-i="' + i + '" role="option"><span class="pv">' + preview(it) + '</span><span class="nm">' + L.esc(lang === 'sr' ? it.sr : it.en) + '<span class="cmd">\\' + L.esc(it.cmd) + '</span></span></button>';
+    html += '<div class="mmenu-item' + (i === m.sel ? ' on' : '') + '" id="' + m.id + '-o' + i + '" data-i="' + i + '" role="option" aria-selected="' + (i === m.sel) + '"><span class="pv" aria-hidden="true">' + preview(it) + '</span><span class="nm">' + L.esc(itemName(it)) + '<span class="cmd">\\' + L.esc(it.cmd) + '</span></span></div>';
   });
-  if (!m.items.length) html = '<div class="mmenu-empty">' + L.tr('Nema rezultata. Enter ubacuje \\' + L.esc(m.q), 'No results. Enter inserts \\' + L.esc(m.q)) + '</div>';
+  if (!m.items.length) {
+    html = '<div class="mmenu-empty">' + (m.q ? L.tr('Nema rezultata. Enter ubacuje \\' + L.esc(m.q), 'No results. Enter inserts \\' + L.esc(m.q)) : L.tr('Ovde će se pojaviti funkcije koje često koristiš.', 'Functions you use often will show up here.')) + '</div>';
+  }
   m.listEl.innerHTML = html;
   m.listEl.scrollTop = 0;
+  m.inEl.setAttribute('aria-activedescendant', m.items.length ? m.id + '-o' + m.sel : '');
+  if (announce) m.liveEl.textContent = m.items.length ? L.tr(m.items.length + ' rezultata', m.items.length + ' results') : L.tr('Nema rezultata', 'No results');
   place();
 }
 function markSel(scroll) {
@@ -295,95 +393,101 @@ function markSel(scroll) {
   m.listEl.querySelectorAll('.mmenu-item').forEach(function (b) {
     var on = +b.getAttribute('data-i') === m.sel;
     b.classList.toggle('on', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
     if (on && scroll) b.scrollIntoView({ block: 'nearest' });
   });
+  m.inEl.setAttribute('aria-activedescendant', m.items.length ? m.id + '-o' + m.sel : '');
 }
 function place() {
   var m = menu;
-  if (!m.target) return;
-  var r = m.target.anchor.getBoundingClientRect();
-  var vw = window.innerWidth, vh = window.innerHeight;
-  var kb = 0;
-  try {
-    var vk = window.mathVirtualKeyboard;
-    if (vk && vk.visible) kb = vh - vk.boundingRect.top;
-  } catch (e) {}
-  var w = Math.min(380, vw - 16);
-  var left = Math.max(8, Math.min(r.left, vw - w - 8));
-  var below = vh - kb - r.bottom - 8;
-  var above = r.top - 8;
   var el = m.el;
+  if (sheetMode()) {
+    el.classList.add('sheet');
+    ['left', 'top', 'bottom', 'width', 'maxHeight'].forEach(function (p) { el.style[p] = ''; });
+    m.back.hidden = false;
+    return;
+  }
+  el.classList.remove('sheet');
+  m.back.hidden = true;
+  if (!m.target) return;
+  var r = (m.target.box || m.target.anchor).getBoundingClientRect();
+  var vw = window.innerWidth, vh = window.innerHeight;
+  var w = Math.min(420, vw - 16);
+  var left = Math.max(8, Math.min(r.left, vw - w - 8));
+  var below = vh - r.bottom - 8;
+  var above = r.top - 8;
   el.style.left = left + 'px';
   el.style.width = w + 'px';
-  if (below >= 230 || below >= above) {
+  if (below >= 300 || below >= above) {
     el.style.top = (r.bottom + 6) + 'px';
     el.style.bottom = 'auto';
-    el.style.maxHeight = Math.max(160, Math.min(420, below)) + 'px';
+    el.style.maxHeight = Math.max(220, Math.min(480, below)) + 'px';
   } else {
     el.style.bottom = (vh - r.top + 6) + 'px';
     el.style.top = 'auto';
-    el.style.maxHeight = Math.max(160, Math.min(420, above)) + 'px';
+    el.style.maxHeight = Math.max(220, Math.min(480, above)) + 'px';
   }
 }
-function openMenu(target) {
+function openMenu(target, query) {
   var m = ensureMenu();
   m.target = target;
-  m.q = '';
-  m.tab = 'all';
+  m.q = query || '';
   m.sel = 0;
+  m.tab = recents().length ? 'recent' : 'all';
   m.open = true;
+  m.inEl.value = m.q;
+  paintStatic();
+  buildTabs();
   m.el.hidden = false;
-  refresh();
+  refresh(false);
+  if (target.btn) target.btn.setAttribute('aria-expanded', 'true');
+  if (coarse()) m.el.focus({ preventScroll: true });
+  else m.inEl.focus({ preventScroll: true });
 }
-function closeMenu() {
+function closeMenu(refocus) {
   if (!menu || !menu.open) return;
   menu.open = false;
   menu.el.hidden = true;
+  menu.back.hidden = true;
+  var t = menu.target;
+  if (t && t.btn) t.btn.setAttribute('aria-expanded', 'false');
+  if (refocus && t) t.focus();
 }
 function pick(item) {
   var t = menu.target;
   var q = menu.q;
-  closeMenu();
+  closeMenu(false);
   if (!t) return;
-  if (item) t.insert(item.tex);
+  if (item) { remember(item); t.insert(item.tex); }
   else if (q) t.insert('\\' + q + ' ');
   t.focus();
 }
 function onKey(e) {
-  if (!menu || !menu.open) return;
-  var k = e.key;
   var m = menu;
-  var cols = m.listEl.clientWidth > 300 ? 2 : 1;
-  function eat() { e.preventDefault(); e.stopImmediatePropagation(); }
-  if (k === 'Escape') { eat(); closeMenu(); if (m.target) m.target.focus(); return; }
-  if (k === 'ArrowDown') { eat(); m.sel = Math.min(m.items.length - 1, m.sel + cols); markSel(true); return; }
-  if (k === 'ArrowUp') { eat(); m.sel = Math.max(0, m.sel - cols); markSel(true); return; }
-  if (k === 'ArrowRight') { eat(); m.sel = Math.min(m.items.length - 1, m.sel + 1); markSel(true); return; }
-  if (k === 'ArrowLeft') { eat(); m.sel = Math.max(0, m.sel - 1); markSel(true); return; }
-  if (k === 'Enter' || k === 'Tab') { eat(); pick(m.items[m.sel]); return; }
-  if (k === 'Backspace') {
-    eat();
-    if (!m.q) { closeMenu(); return; }
-    m.q = m.q.slice(0, -1);
-    m.sel = 0;
-    refresh();
+  if (!m || !m.open) return;
+  var k = e.key;
+  var inInput = e.target === m.inEl;
+  if (k === 'Escape') { e.preventDefault(); e.stopPropagation(); closeMenu(true); return; }
+  if (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp') {
+    if (!m.items.length) return;
+    e.preventDefault();
+    var step = k === 'PageDown' || k === 'PageUp' ? 5 : 1;
+    var dir = k === 'ArrowDown' || k === 'PageDown' ? 1 : -1;
+    m.sel = Math.max(0, Math.min(m.items.length - 1, m.sel + dir * step));
+    markSel(true);
     return;
   }
-  if (k === ' ') {
-    eat();
-    if (m.q) pick(m.items[m.sel]); else closeMenu();
+  if (k === 'Enter' && (inInput || e.target === m.el)) { e.preventDefault(); pick(m.items[m.sel]); return; }
+  if (k === 'Tab') {
+    var f = [m.inEl, m.tabsEl.querySelector('[tabindex="0"]'), m.xEl].filter(Boolean);
+    var i = f.indexOf(document.activeElement);
+    if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+    else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
     return;
   }
-  if (k === '\\') { eat(); return; }
-  if (k.length === 1 && !e.metaKey && (!e.ctrlKey || e.altKey)) {
-    eat();
-    m.q += k;
-    m.sel = 0;
-    refresh();
-    return;
+  if (e.target === m.el && k.length === 1 && !e.metaKey && !e.ctrlKey) {
+    m.inEl.focus();
   }
-  if (k === 'Shift' || k === 'Alt' || k === 'AltGraph' || k === 'Control' || k === 'CapsLock' || k === 'Dead') return;
-  closeMenu();
 }
 
 function insertIntoTextarea(ta, tex) {
@@ -405,7 +509,52 @@ function insertIntoTextarea(ta, tex) {
 }
 
 function hintHtml() {
-  return L.both('Otkucaj <kbd>\\</kbd> za funkcije: razlomak, stepen, koren, sin, integral, grčka slova…', 'Type <kbd>\\</kbd> for functions: fraction, power, root, sin, integral, Greek letters…');
+  if (coarse()) return L.both('Dodirni ƒ za sve funkcije ili koristi prečice.', 'Tap ƒ for every function, or use the shortcuts.');
+  return L.both('Prečice ubacuju odmah. Otkucaj <kbd>\\</kbd> u polju za sve funkcije.', 'Shortcuts insert instantly. Type <kbd>\\</kbd> in the box for every function.');
+}
+
+function quickBar(row, target) {
+  row.innerHTML = '';
+  QUICK.forEach(function (k, i) {
+    var it = BYKEY[k];
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'mq';
+    b.tabIndex = i ? -1 : 0;
+    b.setAttribute('data-key', k);
+    b.innerHTML = preview(it);
+    row.appendChild(b);
+  });
+  function label() {
+    row.setAttribute('aria-label', L.tr('Brze funkcije', 'Quick functions'));
+    row.querySelectorAll('.mq').forEach(function (b) {
+      var it = BYKEY[b.getAttribute('data-key')];
+      b.setAttribute('aria-label', itemName(it));
+      b.title = itemName(it);
+    });
+  }
+  label();
+  L.onLang(label);
+  row.addEventListener('pointerdown', function (e) { if (e.target.closest('.mq')) e.preventDefault(); });
+  row.addEventListener('click', function (e) {
+    var b = e.target.closest('.mq');
+    if (!b) return;
+    var it = BYKEY[b.getAttribute('data-key')];
+    remember(it);
+    target.insert(it.tex);
+  });
+  row.addEventListener('keydown', function (e) {
+    var all = Array.prototype.slice.call(row.querySelectorAll('.mq'));
+    var i = all.indexOf(document.activeElement);
+    if (i < 0) return;
+    var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? all.length - 1 : -1;
+    if (n < 0) return;
+    e.preventDefault();
+    n = Math.max(0, Math.min(all.length - 1, n));
+    all[i].tabIndex = -1;
+    all[n].tabIndex = 0;
+    all[n].focus();
+  });
 }
 
 function create(host, opt) {
@@ -416,12 +565,17 @@ function create(host, opt) {
   var api = { el: wrap, get: function () { return ''; }, set: function () {}, focus: function () {}, onChange: opt.onChange || null };
   var bar = document.createElement('div');
   bar.className = 'mbox-bar';
-  bar.innerHTML = '<button type="button" class="btn small" data-mmenu-btn><span style="font-family:var(--math);font-style:italic;font-size:1.1em">ƒ</span> ' + L.both('Funkcije', 'Functions') + '</button><span class="mbox-hint">' + hintHtml() + '</span>';
-  var btn = bar.querySelector('button');
+  bar.innerHTML = '<button type="button" class="mq-all" data-mmenu-btn aria-haspopup="dialog" aria-expanded="false"><span class="fn" aria-hidden="true">ƒ</span><span>' + L.both('Funkcije', 'Functions') + '</span></button><div class="mq-row" role="toolbar"></div>';
+  var hint = document.createElement('div');
+  hint.className = 'mbox-hint';
+  hint.innerHTML = hintHtml();
+  var btn = bar.querySelector('.mq-all');
+  var row = bar.querySelector('.mq-row');
   function fire() { if (api.onChange) api.onChange(api.get()); }
 
   Promise.all([needKatex(), needMathlive()]).then(function (r) {
     var M = r[1];
+    var target;
     if (M && customElements.get('math-field')) {
       var mf = new M();
       mf.className = 'mf';
@@ -431,8 +585,10 @@ function create(host, opt) {
       mf.smartFence = true;
       mf.menuItems = [];
       if (opt.value) mf.value = opt.value;
-      var target = {
+      target = {
         anchor: mf,
+        btn: btn,
+        box: wrap,
         insert: function (tex) { mf.insert(tex, { format: 'latex', selectionMode: 'placeholder', focus: true }); },
         focus: function () { mf.focus(); }
       };
@@ -443,11 +599,6 @@ function create(host, opt) {
         if (e.data === '\\') { e.preventDefault(); e.stopPropagation(); openMenu(target); }
       }, true);
       mf.addEventListener('input', fire);
-      btn.addEventListener('click', function () {
-        if (menu && menu.open) { closeMenu(); return; }
-        mf.focus();
-        openMenu(target);
-      });
       api.get = function () { return cleanLatex(mf.getValue('latex')).trim(); };
       api.set = function (v) { mf.value = v || ''; };
       api.focus = function () { mf.focus(); };
@@ -465,24 +616,31 @@ function create(host, opt) {
       wrap.insertBefore(ta, wrap.firstChild);
       var upd = function () { renderTo(pv, ta.value, false); fire(); };
       ta.addEventListener('input', upd);
-      var tt = {
+      target = {
         anchor: ta,
+        btn: btn,
+        box: wrap,
         insert: function (tex) { insertIntoTextarea(ta, tex); },
         focus: function () { ta.focus(); }
       };
       ta.addEventListener('keydown', function (e) {
-        if (e.key === '\\') { e.preventDefault(); openMenu(tt); }
+        if (e.key === '\\') { e.preventDefault(); openMenu(target); }
       }, true);
-      btn.addEventListener('click', function () { if (menu && menu.open) closeMenu(); else { ta.focus(); openMenu(tt); } });
       api.get = function () { return ta.value.trim(); };
       api.set = function (v) { ta.value = v || ''; upd(); };
       api.focus = function () { ta.focus(); };
       upd();
     }
+    btn.addEventListener('click', function () {
+      if (menu && menu.open && menu.target === target) { closeMenu(true); return; }
+      openMenu(target);
+    });
+    quickBar(row, target);
   });
   wrap.appendChild(bar);
+  wrap.appendChild(hint);
   return api;
 }
 
-L.mathbox = { create: create, render: renderTo, clean: cleanLatex, needKatex: needKatex, close: closeMenu };
+L.mathbox = { create: create, render: renderTo, clean: cleanLatex, needKatex: needKatex, close: function () { closeMenu(false); } };
 })();
