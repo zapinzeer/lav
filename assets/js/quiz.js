@@ -152,8 +152,14 @@ function localBanner() {
     '<b>Lokalni režim.</b> Ova stranica još nije povezana sa serverom, pa se kvizovi i odgovori čuvaju samo na ovom uređaju. Da bi sobe i nalozi radili i između uređaja, autor treba da poveže Firebase (databaseURL i apiKey u config.js).',
     '<b>Local mode.</b> This site is not connected to a server yet, so quizzes and answers are stored only on this device. For rooms and accounts to work across devices, the author needs to connect Firebase (databaseURL and apiKey in config.js).') + '</div></div>';
 }
-function errBanner(sr, en) {
-  return '<div class="banner bad" role="alert">' + icon('info') + '<div>' + both(sr, en) + '</div></div>';
+function errNote(e) {
+  if (!e || (!e.status && !e.detail)) return '';
+  var t = [e.status, e.detail].filter(Boolean).join(' · ');
+  return ' <small>(' + String(t).replace(/[<>&]/g, '') + ')</small>';
+}
+function errBanner(sr, en, e) {
+  var n = errNote(e);
+  return '<div class="banner bad" role="alert">' + icon('info') + '<div>' + both(sr, en) + n + '</div></div>';
 }
 
 function normText(s) {
@@ -280,9 +286,9 @@ function openJoin(prefill) {
       if (!quiz.settings.open) { errEl.innerHTML = errBanner('Ova soba je zatvorena.', 'This room is closed.'); return; }
       try { localStorage.setItem('lav-name', name); } catch (e) {}
       renderPlayer(m, code, quiz, name);
-    }).catch(function () {
+    }).catch(function (e) {
       go.disabled = false;
-      errEl.innerHTML = errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.');
+      errEl.innerHTML = errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.', e);
     });
   }
   go.addEventListener('click', submit);
@@ -425,8 +431,8 @@ function renderPlayer(m, code, quiz, name) {
     }).catch(function (e) {
       send.disabled = false;
       warn.innerHTML = e && e.denied
-        ? errBanner('Odgovori nisu poslati. Možda je soba u međuvremenu zatvorena ili ti je istekla prijava. Ništa se nije izgubilo, odgovori su još tu, pa probaj ponovo.', 'Your answers did not go through. The room may have closed, or your sign-in may have expired. Nothing is lost, your answers are still here, so try again.')
-        : errBanner('Odgovori nisu poslati jer nema veze sa serverom. Ništa se nije izgubilo, odgovori su još tu, pa probaj ponovo.', 'Your answers did not go through because the server could not be reached. Nothing is lost, so try again.');
+        ? errBanner('Odgovori nisu poslati. Možda je soba u međuvremenu zatvorena ili ti je istekla prijava. Ništa se nije izgubilo, odgovori su još tu, pa probaj ponovo.', 'Your answers did not go through. The room may have closed, or your sign-in may have expired. Nothing is lost, your answers are still here, so try again.', e)
+        : errBanner('Odgovori nisu poslati jer nema veze sa serverom. Ništa se nije izgubilo, odgovori su još tu, pa probaj ponovo.', 'Your answers did not go through because the server could not be reached. Nothing is lost, so try again.', e);
       warn.scrollIntoView({ block: 'center' });
     });
   });
@@ -581,8 +587,8 @@ function openDashboard() {
       });
     }).catch(function (e) {
       host.innerHTML = e && e.denied
-        ? errBanner('Prijava je istekla. Prijavi se ponovo da vidiš svoje kvizove.', 'Your sign-in has expired. Sign in again to see your quizzes.')
-        : errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.');
+        ? errBanner('Server nije prihvatio tvoju prijavu. Prijavi se ponovo, a ako se ponovi, proveri pravila baze.', 'The server did not accept your sign-in. Sign in again, and if it keeps happening, check the database rules.', e)
+        : errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.', e);
     });
   }
   function rowHtml(r) {
@@ -852,9 +858,11 @@ function openBuilder(m, ctx, back) {
     var codeP = editing ? Promise.resolve(editing) : S.newCode();
     codeP.then(function (code) { return S.save(code, quiz).then(function () { return code; }); }).then(function (code) {
       showSaved(m, code, quiz, back);
-    }).catch(function () {
+    }).catch(function (e) {
       btn.disabled = false;
-      errEl.innerHTML = errBanner('Kviz nije sačuvan jer nema veze sa serverom. Proveri internet pa probaj ponovo.', 'The quiz was not saved because the server could not be reached. Check your connection and try again.');
+      errEl.innerHTML = e && e.denied
+        ? errBanner('Kviz nije sačuvan jer server nije prihvatio tvoju prijavu. Prijavi se ponovo pa probaj opet.', 'The quiz was not saved because the server did not accept your sign-in. Sign in again and retry.', e)
+        : errBanner('Kviz nije sačuvan jer nema veze sa serverom. Proveri internet pa probaj ponovo.', 'The quiz was not saved because the server could not be reached. Check your connection and try again.', e);
     });
   });
 }
@@ -948,8 +956,8 @@ function openResults(m, code, quiz, back) {
     }).catch(function (e) {
       var host = $(m.root, '#r-list');
       if (host && !subsData.length) host.innerHTML = e && e.denied
-        ? errBanner('Ne možeš da vidiš ove odgovore. Prijavi se nalogom kojim je kviz napravljen.', 'You cannot see these answers. Sign in with the account that the quiz was made with.')
-        : errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.');
+        ? errBanner('Ne možeš da vidiš ove odgovore. Prijavi se nalogom kojim je kviz napravljen.', 'You cannot see these answers. Sign in with the account that the quiz was made with.', e)
+        : errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.', e);
     });
   }
   $(m.root, '#r-refresh').addEventListener('click', function () { load.sig = null; load(); });

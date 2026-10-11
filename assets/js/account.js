@@ -27,15 +27,18 @@ var ERRORS = {
   USER_DISABLED: ['Ovaj nalog je onemogućen.', 'This account has been disabled.'],
   TOO_MANY_ATTEMPTS_TRY_LATER: ['Previše pokušaja. Pokušaj ponovo za nekoliko minuta.', 'Too many attempts. Try again in a few minutes.'],
   OPERATION_NOT_ALLOWED: ['Prijava emailom nije uključena u Firebase-u. Vlasnik sajta treba da uključi Email/Password.', 'Email sign-in is not enabled in Firebase. The site owner must enable Email/Password.'],
+  API_KEY_BLOCKED: ['API ključ je ograničen i ne dozvoljava ovaj sajt. U Google Cloud-u dodaj zapinzeer.github.io u dozvoljene sajtove ili skini ograničenje.', 'The API key is restricted and does not allow this site. In Google Cloud add zapinzeer.github.io to the allowed sites or remove the restriction.'],
+  SERVICE_DISABLED: ['Identity Toolkit API nije uključen u Google Cloud-u za ovaj projekat.', 'The Identity Toolkit API is not enabled in Google Cloud for this project.'],
+  CONFIGURATION_NOT_FOUND: ['Firebase Authentication nije podešen. U konzoli otvori Authentication i klikni Get started.', 'Firebase Authentication is not set up. Open Authentication in the console and click Get started.'],
   API_KEY_INVALID: ['API ključ u config.js nije ispravan.', 'The API key in config.js is not valid.'],
   CREDENTIAL_TOO_OLD_LOGIN_AGAIN: ['Zbog bezbednosti se prijavi ponovo, pa pokušaj još jednom.', 'For security, sign in again and then try once more.'],
   NETWORK: ['Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.']
 };
 function authError(e) {
   var m = ERRORS[e && e.code];
-  if (m) return errBanner(m[0], m[1]);
+  if (m) return errBanner(m[0], m[1], e && e.code !== 'NETWORK' && /^(API|SERV|CONF|OPER)/.test(e.code) ? { status: e.status, detail: e.code } : null);
   var c = esc((e && e.code) || 'UNKNOWN');
-  return errBanner('Nešto nije uspelo (' + c + ').', 'Something went wrong (' + c + ').');
+  return errBanner('Nešto nije uspelo (' + c + ').', 'Something went wrong (' + c + ').', e && e.status ? { status: e.status } : null);
 }
 
 function when(ts) { return L.fmtTime(ts); }

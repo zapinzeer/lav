@@ -107,7 +107,6 @@ function asMe(fn) {
   if (!id) { var e = new Error('not signed in'); e.denied = true; e.status = 401; return Promise.reject(e); }
   return fn(id);
 }
-function multi(updates) { return req('PATCH', '', updates); }
 
 var mem = { quizzes: {}, subs: {} };
 function lread() {
@@ -171,10 +170,9 @@ function save(code, quiz) {
   var body = JSON.parse(JSON.stringify(quiz));
   if (remote) return asMe(function (id) {
     body.owner = id;
-    var up = {};
-    up['quizzes/' + code] = body;
-    up['users/' + id + '/quizzes/' + code] = true;
-    return multi(up).then(function () { return code; });
+    return req('PUT', 'quizzes/' + code, body).then(function () {
+      return req('PUT', 'users/' + id + '/quizzes/' + code, true);
+    }).then(function () { return code; });
   });
   lread();
   mem.quizzes[code] = body;
@@ -198,11 +196,11 @@ function patch(code, obj) {
 
 function remove(code) {
   if (remote) return asMe(function (id) {
-    var up = {};
-    up['quizzes/' + code] = null;
-    up['subs/' + code] = null;
-    up['users/' + id + '/quizzes/' + code] = null;
-    return multi(up);
+    return req('DELETE', 'subs/' + code).then(function () {
+      return req('DELETE', 'quizzes/' + code);
+    }).then(function () {
+      return req('DELETE', 'users/' + id + '/quizzes/' + code);
+    });
   });
   lread();
   delete mem.quizzes[code];
@@ -232,17 +230,19 @@ function submit(code, sub, meta) {
   if (remote) {
     var who = me();
     var sid = uid();
-    var up = {};
     if (who) body.uid = who;
-    up['subs/' + code + '/' + sid] = body;
-    if (who) {
+    return req('PUT', 'subs/' + code + '/' + sid, body).then(function () {
+      if (!who) return { id: sid, saved: false };
       var h = JSON.parse(JSON.stringify(sub));
       h.code = code;
       h.title = (meta && meta.title) || '';
       h.titleEn = (meta && meta.titleEn) || h.title;
-      up['users/' + who + '/history/' + sid] = h;
-    }
-    return multi(up).then(function () { return { id: sid, saved: !!who }; });
+      return req('PUT', 'users/' + who + '/history/' + sid, h).then(function () {
+        return { id: sid, saved: true };
+      }, function () {
+        return { id: sid, saved: false };
+      });
+    });
   }
   lread();
   var id = uid();
@@ -300,13 +300,11 @@ function removeHistory(hid) {
 function wipeAccount() {
   return asMe(function (id) {
     return req('GET', 'users/' + id + '/quizzes', undefined, '?shallow=true').then(function (idx) {
-      var up = {};
+      var chain = Promise.resolve();
       Object.keys(idx || {}).forEach(function (c) {
-        up['quizzes/' + c] = null;
-        up['subs/' + c] = null;
+        chain = chain.then(function () { return req('DELETE', 'subs/' + c); }).then(function () { return req('DELETE', 'quizzes/' + c); });
       });
-      up['users/' + id] = null;
-      return multi(up);
+      return chain.then(function () { return req('DELETE', 'users/' + id); });
     });
   });
 }

@@ -54,7 +54,8 @@ function call(url, body, form) {
     return r.json().catch(function () { return {}; }).then(function (d) {
       if (!r.ok) {
         var msg = (d && d.error && (typeof d.error === 'string' ? d.error : d.error.message)) || 'UNKNOWN';
-        throw fail(/^API key/i.test(msg) ? 'API_KEY_INVALID' : String(msg).split(/[\s:]/)[0] || 'UNKNOWN', r.status);
+        var code = /^API key/i.test(msg) ? 'API_KEY_INVALID' : /referer|blocked|not allowed to use/i.test(msg) ? 'API_KEY_BLOCKED' : /has not been used|disabled/i.test(msg) ? 'SERVICE_DISABLED' : String(msg).split(/[\s:]/)[0] || 'UNKNOWN';
+        throw fail(code, r.status);
       }
       return d;
     });
