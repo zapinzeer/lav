@@ -38,14 +38,20 @@ V3.start([{
     var T = window.THREE, Cc = V3.C;
     function mesh(g, c, o) { return new T.Mesh(g, V3.std(c, o)); }
     // the tray lies in the plane z = 0, the viewer looks from +z, the rear panel (I/O side) is at the left
-    var tray = mesh(new T.BoxGeometry(5.4, 4.2, 0.06), 0x56616e, { metalness: 0.5 });
+    var tray = mesh(P.boxGeo(5.4, 4.2, 0.06), 0x56616e, { metalness: 0.6, roughness: 0.35 });
     tray.position.set(0.5, -0.1, -0.06);
     st.scene.add(tray);
-    var rear = mesh(new T.BoxGeometry(0.06, 4.2, 1.2), 0x39424d, { metalness: 0.5 });
+    var rear = mesh(P.boxGeo(0.06, 4.2, 1.2), 0x39424d, { metalness: 0.6, roughness: 0.4 });
     rear.position.set(-2.2, -0.1, 0.5);
     st.scene.add(rear);
     // holes of the tray (a plate with darker circles)
     var holes = [[-1.35, 1.0], [0.0, 1.0], [1.35, 1.0], [-1.35, 0.0], [0.0, 0.0], [1.35, 0.0], [-1.35, -1.0], [0.0, -1.0], [1.35, -1.0]];
+    // cut-outs in the tray: CPU backplate window, cable pass-throughs and vent slots
+    [[0.05, 0.95, 0.9, 0.8], [1.95, 0.4, 0.25, 1.3], [1.95, -1.1, 0.25, 0.6], [-1.95, 1.2, 0.2, 0.6], [0.0, -1.55, 2.2, 0.16]].forEach(function (c) {
+      var hole = new T.Mesh(new T.PlaneGeometry(c[2], c[3]), new T.MeshStandardMaterial({ color: 0x05080b, roughness: 0.9 }));
+      hole.position.set(c[0] + 0.5, c[1] - 0.1, 0.001);
+      st.scene.add(hole);
+    });
     var board = P.buildBoard();
     board.rotation.x = Math.PI / 2;
     board.scale.setScalar(0.9);
@@ -55,12 +61,12 @@ V3.start([{
     // the real board holes (see the model): the four corners, the middle and two edge points
     var bh = [[-1.2, 0.95], [1.2, 0.95], [-1.2, -0.95], [1.2, -0.95], [0, 0], [0, 0.95]];
     bh.forEach(function (h) {
-      var s = mesh(new T.CylinderGeometry(0.06, 0.06, 0.22, 10), 0xc9a24a, { metalness: 0.8 });
+      var s = mesh(new T.CylinderGeometry(0.075, 0.075, 0.22, 6), 0xc9a24a, { metalness: 0.9, roughness: 0.3 });
       s.rotation.x = Math.PI / 2;
       s.position.set(bx + h[0] * 0.9, by + h[1] * 0.9, 0.11);
       st.scene.add(s);
       standoffs.push(s);
-      var sc = mesh(new T.CylinderGeometry(0.075, 0.075, 0.1, 10), 0xaab4bd, { metalness: 0.9 });
+      var sc = mesh(new T.CylinderGeometry(0.085, 0.085, 0.1, 24), 0xaab4bd, { metalness: 1, roughness: 0.3 });
       sc.rotation.x = Math.PI / 2;
       sc.position.set(bx + h[0] * 0.9, by + h[1] * 0.9, 0.34);
       sc.userData.home = 0.17;
@@ -68,12 +74,12 @@ V3.start([{
       screws.push(sc);
     });
     // I/O shield
-    var shield = mesh(new T.BoxGeometry(0.03, 0.8, 1.55), 0xb8c2cc, { metalness: 0.7 });
+    var shield = mesh(P.boxGeo(0.03, 0.8, 1.55), 0xb8c2cc, { metalness: 0.8, roughness: 0.3 });
     var shx = -2.17;
     shield.position.set(shx - 1.5, 1.0, 0.65);
     st.scene.add(shield);
     // PSU at the bottom, cables from it
-    var psu = mesh(new T.BoxGeometry(1.8, 0.9, 0.9), 0x2b3139, { metalness: 0.4 });
+    var psu = mesh(P.boxGeo(1.8, 0.9, 0.9), 0x2b3139, { metalness: 0.5, roughness: 0.55 });
     psu.position.set(1.2, -1.85, 0.5);
     st.scene.add(psu);
     function cable(pts, color) {

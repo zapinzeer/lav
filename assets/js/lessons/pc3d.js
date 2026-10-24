@@ -119,57 +119,201 @@ if (!api.ok) return;
 
 var Cc = V3.C;
 var DARK = 0x14181d;
+
+// ---------- realism layer: sRGB output, tone mapping, image-based light, soft shadows, PBR materials ----------
+function srgb(c) { return new T.Color(c).convertSRGBToLinear(); }
+function canvasTex(w, h, draw, color, repeat) {
+  var c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  draw(c.getContext('2d'), w, h);
+  var t = new T.CanvasTexture(c);
+  if (color) t.encoding = T.sRGBEncoding;
+  if (repeat) { t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(repeat[0], repeat[1]); }
+  t.anisotropy = 4;
+  return t;
+}
+var seedN = 11;
+function rn() { seedN = (seedN * 16807) % 2147483647; return seedN / 2147483647; }
+// streaks along x: the look of brushed aluminium
+var BRUSH = canvasTex(256, 256, function (x, w, h) {
+  x.fillStyle = '#9a9a9a'; x.fillRect(0, 0, w, h);
+  for (var i = 0; i < 900; i++) {
+    var v = 110 + rn() * 90, y = rn() * h, l = 30 + rn() * 160, px = rn() * w;
+    x.fillStyle = 'rgba(' + v + ',' + v + ',' + v + ',' + (0.1 + rn() * 0.3) + ')';
+    x.fillRect(px, y, l, 1);
+    x.fillRect(px - w, y, l, 1);
+  }
+}, false, [3, 3]);
+// fine speckle: injection-moulded plastic and powder coating
+var GRAIN = canvasTex(128, 128, function (x, w, h) {
+  x.fillStyle = '#808080'; x.fillRect(0, 0, w, h);
+  for (var i = 0; i < 2600; i++) { var v = 70 + rn() * 130; x.fillStyle = 'rgb(' + v + ',' + v + ',' + v + ')'; x.fillRect(rn() * w, rn() * h, 1.5, 1.5); }
+}, false, [4, 4]);
+function isGold(c) { return c === 0xd8b84c || c === 0xb7a35c || c === 0xc9a24a || c === 0xd8a648; }
+
+// physically based material: metals get a brushed roughness map, plastics a fine grain
+V3.std = function (color, o) {
+  o = o || {};
+  var metal = o.metalness != null ? o.metalness : 0.0;
+  var m = new T.MeshStandardMaterial({ color: srgb(color), roughness: o.roughness != null ? o.roughness : 0.5, metalness: metal, envMapIntensity: 1 });
+  Object.keys(o).forEach(function (k) {
+    if (k === 'metalness' || k === 'roughness') return;
+    if (k === 'emissive') m.emissive.copy(srgb(o[k])); else m[k] = o[k];
+  });
+  if (metal >= 0.5 && !isGold(color)) {
+    m.roughnessMap = BRUSH; m.bumpMap = BRUSH; m.bumpScale = 0.1; m.envMapIntensity = 0.7;
+    m.roughness = Math.min(1, (o.roughness != null ? o.roughness : 0.4) + 0.25);
+  } else if (metal >= 0.5) {
+    m.roughness = o.roughness != null ? o.roughness : 0.28;
+  } else if (o.roughMap !== false && !o.emissive && !o.transparent) {
+    m.bumpMap = GRAIN; m.bumpScale = 0.04;
+  }
+  return m;
+};
 function mat(c, o) { return V3.std(c, o); }
-function box(w, h, d, c, o) { return new T.Mesh(new T.BoxGeometry(w, h, d), mat(c, o)); }
-function cyl(r, h, c, o, seg) { return new T.Mesh(new T.CylinderGeometry(r, r, h, seg || 20), mat(c, o)); }
+
+// bevelled box: every edge is rounded a little, as on real injection-moulded and folded-metal parts
+var geoCache = {};
+function boxGeo(w, h, d) {
+  var key = w.toFixed(3) + ',' + h.toFixed(3) + ',' + d.toFixed(3);
+  if (geoCache[key]) return geoCache[key];
+  var m = Math.min(w, h, d), g;
+  if (m < 0.03) g = new T.BoxGeometry(w, h, d);
+  else {
+    var bv = Math.min(0.02, m * 0.14);
+    var sh = new T.Shape();
+    sh.moveTo(-(w - 2 * bv) / 2, -(h - 2 * bv) / 2); sh.lineTo((w - 2 * bv) / 2, -(h - 2 * bv) / 2);
+    sh.lineTo((w - 2 * bv) / 2, (h - 2 * bv) / 2); sh.lineTo(-(w - 2 * bv) / 2, (h - 2 * bv) / 2); sh.closePath();
+    g = new T.ExtrudeGeometry(sh, { depth: d - 2 * bv, bevelEnabled: true, bevelThickness: bv, bevelSize: bv, bevelSegments: m < 0.1 ? 1 : 2, curveSegments: 1 });
+    g.translate(0, 0, -(d - 2 * bv) / 2);
+  }
+  geoCache[key] = g;
+  return g;
+}
+api.boxGeo = boxGeo;
+function box(w, h, d, c, o) { return new T.Mesh(boxGeo(w, h, d), mat(c, o)); }
+function cyl(r, h, c, o, seg) { return new T.Mesh(new T.CylinderGeometry(r, r, h, seg || 28), mat(c, o)); }
 function put(g, m, x, y, z) { m.position.set(x, y, z); g.add(m); return m; }
 var TOP = 0.02;
 
+// a soft studio environment (sky dome with two big soft boxes) baked once into a reflection map
+function studioEnv(renderer) {
+  var sc = new T.Scene();
+  var dome = new T.Mesh(new T.SphereGeometry(20, 32, 16), new T.MeshBasicMaterial({ side: T.BackSide, vertexColors: true }));
+  var pos = dome.geometry.attributes.position, col = [];
+  for (var i = 0; i < pos.count; i++) { var y = pos.getY(i) / 20, t = 0.5 + 0.5 * y; col.push(0.10 + 0.55 * t, 0.12 + 0.6 * t, 0.16 + 0.7 * t); }
+  dome.geometry.setAttribute('color', new T.Float32BufferAttribute(col, 3));
+  sc.add(dome);
+  function panel(w, h, x, y, z, c, k) {
+    var m = new T.Mesh(new T.PlaneGeometry(w, h), new T.MeshBasicMaterial({ color: new T.Color(c).multiplyScalar(k), side: T.DoubleSide }));
+    m.position.set(x, y, z); m.lookAt(0, 0, 0); sc.add(m);
+  }
+  panel(14, 9, 8, 14, 8, 0xffffff, 6);
+  panel(10, 6, -14, 6, 5, 0xcfe0ff, 3);
+  panel(16, 3, 0, 4, -15, 0xffe9d0, 2.4);
+  panel(18, 18, 0, -16, 0, 0x2a323c, 0.8);
+  var pm = new T.PMREMGenerator(renderer);
+  var rt = pm.fromScene(sc, 0.03);
+  pm.dispose();
+  return rt.texture;
+}
+
+// wrap stage creation so every PC model gets the same lighting
+var origStage = V3.createStage;
+V3.createStage = function (fig, opt) {
+  var st = origStage(fig, opt);
+  if (!st) return st;
+  var r = st.renderer, sc = st.scene;
+  r.outputEncoding = T.sRGBEncoding;
+  r.toneMapping = T.ACESFilmicToneMapping;
+  r.toneMappingExposure = 1.0;
+  r.shadowMap.enabled = true;
+  r.shadowMap.type = T.PCFSoftShadowMap;
+  r.shadowMap.autoUpdate = false;
+  sc.environment = studioEnv(r);
+  sc.children.slice().forEach(function (o) {
+    if (o.isHemisphereLight) o.intensity = 0.25;
+    else if (o.isDirectionalLight && o.intensity > 0.5) {
+      o.intensity = 1.6;
+      o.castShadow = true;
+      o.shadow.mapSize.set(2048, 2048);
+      o.shadow.bias = -0.0004; o.shadow.normalBias = 0.02; o.shadow.radius = 4;
+      var sh = o.shadow.camera;
+      sh.left = -4; sh.right = 4; sh.top = 4; sh.bottom = -4; sh.near = 1; sh.far = 30;
+      o.position.set(3.5, 8, 4.5);
+    } else if (o.isDirectionalLight) o.intensity = 0.25;
+  });
+  // meshes added later cast and receive shadows; the shadow map is refreshed a few times a second
+  var add = sc.add;
+  sc.add = function (obj) {
+    add.apply(sc, arguments);
+    obj.traverse(function (m) { if (m.isMesh && m.material && !m.material.transparent) { m.castShadow = true; m.receiveShadow = true; } });
+    r.shadowMap.needsUpdate = true;
+  };
+  var render = r.render, n = 0;
+  r.render = function () { if (n++ % 12 === 0) r.shadowMap.needsUpdate = true; render.apply(r, arguments); };
+  return st;
+};
+
 function traceTexture() {
-  var c = document.createElement('canvas');
-  c.width = 1024; c.height = 820;
-  var x = c.getContext('2d');
-  x.fillStyle = '#1c3d32';
-  x.fillRect(0, 0, c.width, c.height);
+  var W = 2048, H = 1640, k = W / 1024;
+  function sizeCv() { var c = document.createElement('canvas'); c.width = W; c.height = H; return c; }
+  var cc = sizeCv(), cb = sizeCv(), cr = sizeCv();
+  var x = cc.getContext('2d'), xb = cb.getContext('2d'), xr = cr.getContext('2d');
+  x.fillStyle = '#12362b'; x.fillRect(0, 0, W, H);
+  xb.fillStyle = '#000'; xb.fillRect(0, 0, W, H);
+  xr.fillStyle = '#5a5a5a'; xr.fillRect(0, 0, W, H);
+  // woven fibreglass shimmer under the solder mask
+  for (var f = 0; f < 5000; f++) { var gx = Math.random() * W, gy = Math.random() * H; x.fillStyle = 'rgba(255,255,255,.025)'; x.fillRect(gx, gy, 8, 1.5); }
   var seed = 7;
   function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
-  x.strokeStyle = 'rgba(120,190,150,.22)';
-  x.lineWidth = 2;
-  for (var i = 0; i < 170; i++) {
-    var px = rnd() * 1024, py = rnd() * 820;
-    x.beginPath(); x.moveTo(px, py);
-    for (var s = 0; s < 3; s++) {
-      var dx = (rnd() < 0.5 ? 1 : -1) * (30 + rnd() * 110), dy = rnd() < 0.5 ? 0 : (rnd() < 0.5 ? 1 : -1) * (20 + rnd() * 70);
-      px += dx; py += dy; x.lineTo(px, py);
+  // traces: raised copper under the mask, a little lighter, in bundles
+  for (var i = 0; i < 260; i++) {
+    var px = rnd() * W, py = rnd() * H, bundle = 1 + Math.floor(rnd() * 4), dirx = rnd() < 0.5;
+    for (var bn = 0; bn < bundle; bn++) {
+      var ox = dirx ? 0 : bn * 9, oy = dirx ? bn * 9 : 0, qx = px + ox, qy = py + oy;
+      x.beginPath(); xb.beginPath(); x.moveTo(qx, qy); xb.moveTo(qx, qy);
+      for (var sg = 0; sg < 3; sg++) {
+        var dx = dirx ? (rnd() < 0.5 ? 1 : -1) * (60 + rnd() * 220) : 0, dy = dirx ? 0 : (rnd() < 0.5 ? 1 : -1) * (60 + rnd() * 160);
+        qx += dx; qy += dy; x.lineTo(qx, qy); xb.lineTo(qx, qy);
+        if (rnd() < 0.6) { var d2 = 40 * (rnd() < 0.5 ? 1 : -1); qx += dirx ? d2 : 0; qy += dirx ? 0 : d2; x.lineTo(qx, qy); xb.lineTo(qx, qy); }
+      }
+      x.strokeStyle = 'rgba(70,150,110,.34)'; x.lineWidth = 5; x.stroke();
+      xb.strokeStyle = '#fff'; xb.lineWidth = 5; xb.stroke();
+      // vias: gold pads with a drilled centre
+      x.fillStyle = 'rgba(214,176,86,.9)'; x.beginPath(); x.arc(qx, qy, 6.5, 0, 6.3); x.fill();
+      x.fillStyle = '#0a1a14'; x.beginPath(); x.arc(qx, qy, 2.2, 0, 6.3); x.fill();
+      xr.fillStyle = '#222'; xr.beginPath(); xr.arc(qx, qy, 6.5, 0, 6.3); xr.fill();
     }
-    x.stroke();
-    x.fillStyle = 'rgba(210,180,90,.35)';
-    x.beginPath(); x.arc(px, py, 3.2, 0, Math.PI * 2); x.fill();
   }
-  // tiny SMD parts (resistors and capacitors)
-  for (var k = 0; k < 260; k++) {
-    var sx = 20 + rnd() * 984, sy = 20 + rnd() * 780, horiz = rnd() < 0.5;
-    x.fillStyle = rnd() < 0.5 ? 'rgba(30,30,32,.8)' : 'rgba(170,150,100,.55)';
-    x.fillRect(sx, sy, horiz ? 9 : 5, horiz ? 5 : 9);
-    x.fillStyle = 'rgba(215,215,215,.55)';
-    x.fillRect(sx - 1, sy, 2, horiz ? 5 : 9); x.fillRect(sx + (horiz ? 8 : 4), sy, 2, horiz ? 5 : 9);
+  // SMD resistors, capacitors and ICs printed as flat shapes (their height comes from the bump map)
+  for (var q = 0; q < 700; q++) {
+    var sx = 30 + rnd() * (W - 60), sy = 30 + rnd() * (H - 60), hz = rnd() < 0.5, kind = rnd();
+    var ww = hz ? 16 : 9, hh = hz ? 9 : 16;
+    if (kind < 0.55) { x.fillStyle = 'rgba(28,28,30,.95)'; x.fillRect(sx, sy, ww, hh); x.fillStyle = 'rgba(205,205,205,.8)'; x.fillRect(sx - 2, sy, 3.5, hh); x.fillRect(sx + ww - 1.5, sy, 3.5, hh); }
+    else if (kind < 0.9) { x.fillStyle = 'rgba(176,146,98,.95)'; x.fillRect(sx, sy, ww, hh); x.fillStyle = 'rgba(210,210,210,.85)'; x.fillRect(sx - 2, sy, 3.5, hh); x.fillRect(sx + ww - 1.5, sy, 3.5, hh); }
+    else { x.fillStyle = '#101113'; x.fillRect(sx, sy, 34, 34); x.fillStyle = 'rgba(200,200,200,.7)'; for (var pn = 0; pn < 6; pn++) { x.fillRect(sx - 3, sy + 3 + pn * 5, 3, 2); x.fillRect(sx + 34, sy + 3 + pn * 5, 3, 2); } }
+    xb.fillStyle = '#ccc'; xb.fillRect(sx, sy, ww, hh);
+    xr.fillStyle = '#999'; xr.fillRect(sx, sy, ww, hh);
   }
-  // silkscreen labels at board coordinates
-  function lab(txt, bx, bz, size) {
-    x.fillStyle = 'rgba(245,245,245,.8)';
-    x.font = '600 ' + (size || 17) + 'px Arial';
-    x.fillText(txt, (bx + 1.525) / 3.05 * 1024, (bz + 1.22) / 2.44 * 820);
+  function lab(txt, bx, bz, size, col) {
+    var px = (bx + 1.525) / 3.05 * W, py = (bz + 1.22) / 2.44 * H;
+    x.fillStyle = col || 'rgba(238,238,232,.88)';
+    x.font = '600 ' + (size || 17) * k + 'px Arial';
+    x.fillText(txt, px, py);
   }
   lab('CPU_FAN', 0.02, -1.08); lab('EATX12V', -0.78, -1.05); lab('ATX_PWR', 1.2, 0.2); lab('DIMM A1  B1  A2  B2', 0.18, -1.12, 14);
   lab('PCIEX16_1', -0.95, 0.25); lab('PCIEX16_2', -0.95, 0.76); lab('PCIEX1_1', -1.0, 0.54, 14); lab('M.2_1', -1.0, 0.08);
   lab('SATA 1-6', 1.08, 0.3, 15); lab('F_PANEL', 0.85, 1.12, 14); lab('CLR_CMOS', 0.22, 0.92, 13); lab('BAT', 0.0, 0.62, 14);
   lab('USB3_1', 1.22, -0.78, 14); lab('AUDIO', -1.4, 0.7, 14); lab('LGA / AM5', -0.7, -0.05, 14); lab('M.2_2', 0.1, 0.94, 13);
-  lab('RGB', 0.72, -1.12, 14); lab('ARGB', 0.98, -1.12, 14); lab('LAV · ATX', -0.2, 1.0, 20);
-  x.strokeStyle = 'rgba(240,240,240,.28)';
-  x.lineWidth = 3;
-  x.strokeRect(14, 14, 996, 792);
-  var tex = new T.CanvasTexture(c);
-  return tex;
+  lab('RGB', 0.72, -1.12, 14); lab('ARGB', 0.98, -1.12, 14); lab('LAV · ATX', -0.2, 1.0, 22); lab('REV 1.0', 1.0, -1.02, 12);
+  lab('DEBUG', 1.2, 0.93, 11); lab('AUDIO CODEC', -1.4, 0.9, 10);
+  x.strokeStyle = 'rgba(240,240,236,.45)'; x.lineWidth = 4;
+  x.strokeRect(20, 20, W - 40, H - 40);
+  var col = new T.CanvasTexture(cc); col.encoding = T.sRGBEncoding; col.anisotropy = 8;
+  var bump = new T.CanvasTexture(cb); bump.anisotropy = 4;
+  var rough = new T.CanvasTexture(cr); rough.anisotropy = 4;
+  return { map: col, bump: bump, rough: rough };
 }
 
 // the whole ATX motherboard lies flat: x is the long side (I/O on the left), z is the short side (slots at the bottom)
@@ -180,10 +324,15 @@ api.buildBoard = function () {
   root.add(board);
   var pcb = box(3.05, 0.04, 2.44, 0x1c3d32);
   put(board, pcb, 0, 0, 0);
-  var top = new T.Mesh(new T.PlaneGeometry(3.05, 2.44), new T.MeshStandardMaterial({ map: traceTexture(), roughness: 0.6, metalness: 0.1 }));
+  var tt = traceTexture();
+  var top = new T.Mesh(new T.PlaneGeometry(3.05, 2.44), new T.MeshPhysicalMaterial({ map: tt.map, bumpMap: tt.bump, bumpScale: 1.6, roughnessMap: tt.rough, roughness: 1, metalness: 0.0, clearcoat: 0.55, clearcoatRoughness: 0.25 }));
+  top.receiveShadow = true;
   top.rotation.x = -Math.PI / 2;
   top.position.y = 0.0201;
   board.add(top);
+  var floor = new T.Mesh(new T.PlaneGeometry(9, 9), new T.ShadowMaterial({ opacity: 0.4 }));
+  floor.rotation.x = -Math.PI / 2; floor.position.y = -0.03; floor.receiveShadow = true;
+  root.add(floor);
 
   function part(id) {
     var g = new T.Group();
@@ -239,15 +388,15 @@ api.buildBoard = function () {
   // chipset
   g = part('chipset');
   put(g, box(0.4, 0.03, 0.4, 0x15171a), 0.62, TOP + 0.015, 0.52);
-  put(g, box(0.34, 0.075, 0.34, 0x7d8792, { metalness: 0.6, roughness: 0.4 }), 0.62, TOP + 0.065, 0.52);
-  for (s = -2; s <= 2; s++) put(g, box(0.34, 0.03, 0.025, 0x98a2ad, { metalness: 0.6 }), 0.62, TOP + 0.115, 0.52 + s * 0.065);
+  put(g, box(0.34, 0.075, 0.34, 0x3f464e, { metalness: 0.6, roughness: 0.4 }), 0.62, TOP + 0.065, 0.52);
+  for (s = -2; s <= 2; s++) put(g, box(0.34, 0.03, 0.025, 0x59626c, { metalness: 0.6 }), 0.62, TOP + 0.115, 0.52 + s * 0.065);
 
   // VRM
   g = part('vrm');
-  put(g, box(1.22, 0.16, 0.16, 0x87909a, { metalness: 0.6, roughness: 0.4 }), -0.5, TOP + 0.08, -0.86);
-  for (s = 0; s < 13; s++) put(g, box(0.02, 0.05, 0.17, 0xa5aeb8, { metalness: 0.6 }), -1.08 + s * 0.1, TOP + 0.185, -0.86);
-  put(g, box(0.16, 0.16, 0.66, 0x87909a, { metalness: 0.6, roughness: 0.4 }), -1.0, TOP + 0.08, -0.35);
-  for (s = 0; s < 8; s++) put(g, box(0.17, 0.05, 0.02, 0xa5aeb8, { metalness: 0.6 }), -1.0, TOP + 0.185, -0.66 + s * 0.09);
+  put(g, box(1.22, 0.16, 0.16, 0x3f464e, { metalness: 0.6, roughness: 0.4 }), -0.5, TOP + 0.08, -0.86);
+  for (s = 0; s < 13; s++) put(g, box(0.02, 0.05, 0.17, 0x59626c, { metalness: 0.6 }), -1.08 + s * 0.1, TOP + 0.185, -0.86);
+  put(g, box(0.16, 0.16, 0.66, 0x3f464e, { metalness: 0.6, roughness: 0.4 }), -1.0, TOP + 0.08, -0.35);
+  for (s = 0; s < 8; s++) put(g, box(0.17, 0.05, 0.02, 0x59626c, { metalness: 0.6 }), -1.0, TOP + 0.185, -0.66 + s * 0.09);
   for (s = 0; s < 7; s++) put(g, box(0.1, 0.1, 0.1, 0x2d3036), -0.78 + s * 0.12, TOP + 0.05, -0.7);
   for (s = 0; s < 8; s++) {
     put(g, cyl(0.045, 0.13, 0x2b2f36), -1.05 + s * 0.14, TOP + 0.065, -1.06);
@@ -264,7 +413,8 @@ api.buildBoard = function () {
 
   // rear I/O
   g = part('io');
-  put(g, box(0.34, 0.32, 1.0, 0x9aa3ad, { metalness: 0.6, roughness: 0.4 }), -1.35, TOP + 0.16, -0.58);
+  put(g, box(0.34, 0.32, 1.0, 0x1a1e24, { roughness: 0.4 }), -1.35, TOP + 0.16, -0.58);
+  for (var ig = 0; ig < 4; ig++) put(g, box(0.32, 0.12, 0.2, 0xb4bcc6, { metalness: 0.9, roughness: 0.3 }), -1.36, TOP + 0.28 + (ig % 2) * 0.0, -0.95 + ig * 0.25);
   put(g, box(0.32, 0.24, 0.36, 0x9aa3ad, { metalness: 0.6, roughness: 0.4 }), -1.35, TOP + 0.12, 0.12);
   [[-0.9, 0x2f6fe0], [-0.76, 0x2f6fe0], [-0.62, 0x2f6fe0], [-0.48, 0x15181d], [-0.34, 0x15181d]].forEach(function (u) { put(g, box(0.03, 0.09, 0.1, u[1]), -1.53, TOP + 0.13, u[0]); });
   put(g, box(0.03, 0.12, 0.16, 0x15181d), -1.53, TOP + 0.26, -0.8);
@@ -299,8 +449,8 @@ api.buildBoard = function () {
   // second M.2 with a heatsink
   g = part('m2b');
   put(g, box(0.5, 0.03, 0.14, 0x15171a), 0.35, TOP + 0.015, 1.0);
-  put(g, box(0.46, 0.05, 0.12, 0x8a949f, { metalness: 0.6, roughness: 0.4 }), 0.35, TOP + 0.055, 1.0);
-  for (s = 0; s < 6; s++) put(g, box(0.02, 0.03, 0.12, 0xa5aeb8, { metalness: 0.6 }), 0.17 + s * 0.07, TOP + 0.095, 1.0);
+  put(g, box(0.46, 0.05, 0.12, 0x3f464e, { metalness: 0.6, roughness: 0.4 }), 0.35, TOP + 0.055, 1.0);
+  for (s = 0; s < 6; s++) put(g, box(0.02, 0.03, 0.12, 0x59626c, { metalness: 0.6 }), 0.17 + s * 0.07, TOP + 0.095, 1.0);
 
   // audio zone
   g = part('audio');
@@ -332,36 +482,74 @@ api.buildBoard = function () {
   // installed components, shown with the "components" switch
   var extras = new T.Group();
   board.add(extras);
+  function fanRotor(r, blades, c) {
+    var gr = new T.Group();
+    for (var bi = 0; bi < blades; bi++) {
+      var sh = new T.Shape();
+      sh.moveTo(0.08 * r, 0); sh.bezierCurveTo(0.4 * r, -0.12 * r, 0.8 * r, -0.2 * r, 0.96 * r, 0.1 * r); sh.bezierCurveTo(0.7 * r, 0.3 * r, 0.35 * r, 0.22 * r, 0.08 * r, 0.06 * r);
+      var bl = new T.Mesh(new T.ExtrudeGeometry(sh, { depth: 0.006, bevelEnabled: false }), mat(c, { roughness: 0.5 }));
+      bl.rotation.z = bi / blades * Math.PI * 2;
+      bl.rotation.x = 0.0;
+      gr.add(bl);
+    }
+    var hub = new T.Mesh(new T.CylinderGeometry(0.2 * r, 0.2 * r, 0.03, 28), mat(0x15181d, { roughness: 0.4 }));
+    hub.rotation.x = Math.PI / 2; gr.add(hub);
+    return gr;
+  }
+  // tower cooler: copper base plate, heat pipes through an aluminium fin stack and a 120 mm fan
   var cooler = new T.Group();
-  put(cooler, box(0.42, 0.025, 0.42, 0xb4693c, { metalness: 0.8, roughness: 0.35 }), -0.45, TOP + 0.13, -0.35);
-  for (s = 0; s < 16; s++) put(cooler, box(0.5, 0.012, 0.42, 0xa8b0b8, { metalness: 0.7, roughness: 0.4 }), -0.45, TOP + 0.17 + s * 0.045, -0.35);
-  var fan = cyl(0.19, 0.04, 0x2a2f36, null, 28);
-  fan.rotation.z = Math.PI / 2;
-  put(cooler, fan, -0.45 + 0.28, TOP + 0.5, -0.35);
+  put(cooler, box(0.42, 0.03, 0.42, 0xb06a3a, { metalness: 1, roughness: 0.25 }), -0.45, TOP + 0.13, -0.35);
+  for (s = 0; s < 4; s++) put(cooler, cyl(0.022, 0.62, 0xb8703c, { metalness: 1, roughness: 0.22 }, 14), -0.58 + s * 0.09, TOP + 0.45, -0.35);
+  for (s = 0; s < 26; s++) put(cooler, box(0.5, 0.01, 0.4, 0xc7ced6, { metalness: 0.9, roughness: 0.38 }), -0.45, TOP + 0.2 + s * 0.026, -0.35);
+  put(cooler, box(0.5, 0.02, 0.4, 0x2a2f36, { roughness: 0.4 }), -0.45, TOP + 0.9, -0.35);
+  var cfan = new T.Group();
+  put(cfan, box(0.04, 0.62, 0.62, 0x1b1f25, { roughness: 0.5 }), 0, 0, 0);
+  var cr = fanRotor(0.27, 9, 0x2a2f36); cr.rotation.y = Math.PI / 2; cr.position.x = 0.03; cfan.add(cr);
+  cfan.position.set(-0.45 + 0.29, TOP + 0.55, -0.35);
+  cooler.add(cfan);
   extras.add(cooler);
+  // two RAM modules: green PCB, black chips, gold edge and an aluminium heat spreader with an RGB light bar
   var ramg = new T.Group();
+  var ramLabel = canvasTex(256, 64, function (x, w, h) { x.fillStyle = '#16191e'; x.fillRect(0, 0, w, h); x.fillStyle = '#d9dde2'; x.font = '700 30px Arial'; x.fillText('LAV DDR5', 12, 28); x.font = '500 20px Arial'; x.fillStyle = '#9fb0c0'; x.fillText('6000 MT/s · CL30 · 16 GB', 12, 52); }, true);
   [0.42, 0.66].forEach(function (x) {
-    put(ramg, box(0.04, 0.31, 1.33, 0x2a3a55, { metalness: 0.5, roughness: 0.4 }), x, TOP + 0.09 + 0.155, -0.42);
-    put(ramg, box(0.042, 0.02, 1.33, 0x6cc6ee, { emissive: 0x1d6c8d }), x, TOP + 0.09 + 0.31, -0.42);
+    put(ramg, box(0.016, 0.28, 1.33, 0x1c5a3a, { roughness: 0.4 }), x, TOP + 0.09 + 0.14, -0.42);
+    put(ramg, box(0.012, 0.02, 1.2, 0xd8b84c, { metalness: 1, roughness: 0.25 }), x, TOP + 0.1, -0.42);
+    put(ramg, box(0.03, 0.26, 1.3, 0x20252b, { metalness: 0.9, roughness: 0.35 }), x - 0.012, TOP + 0.09 + 0.16, -0.42);
+    put(ramg, box(0.03, 0.26, 1.3, 0x20252b, { metalness: 0.9, roughness: 0.35 }), x + 0.012, TOP + 0.09 + 0.16, -0.42);
+    put(ramg, box(0.052, 0.035, 1.3, 0x6cc6ee, { emissive: 0x2a94c0, emissiveIntensity: 0.9, roughMap: false }), x, TOP + 0.09 + 0.31, -0.42);
+    var lb = new T.Mesh(new T.PlaneGeometry(0.62, 0.17), new T.MeshStandardMaterial({ map: ramLabel, roughness: 0.4, metalness: 0.2 }));
+    lb.rotation.y = Math.PI / 2; lb.position.set(x + 0.0285, TOP + 0.09 + 0.17, -0.42); ramg.add(lb);
   });
   extras.add(ramg);
+  // graphics card: brushed dark shroud with a printed label, three bladed fans, backplate and I/O bracket
   var gpu = new T.Group();
-  put(gpu, box(2.55, 1.05, 0.38, 0x1b1f25, { metalness: 0.3, roughness: 0.5 }), -0.22, TOP + 0.58, 0.46);
+  var shroud = canvasTex(1024, 256, function (x, w, h) {
+    x.fillStyle = '#1b1e23'; x.fillRect(0, 0, w, h);
+    for (var i = 0; i < 90; i++) { var v = 24 + rn() * 14; x.fillStyle = 'rgb(' + v + ',' + v + ',' + (v + 3) + ')'; x.fillRect(0, rn() * h, w, 1.5); }
+    x.fillStyle = '#6cc6ee'; x.fillRect(0, h - 14, w, 5);
+  }, true);
+  var shMat = new T.MeshStandardMaterial({ map: shroud, roughness: 0.38, metalness: 0.25 });
+  var gp = new T.Mesh(boxGeo(2.55, 1.05, 0.34), shMat);
+  gp.position.set(-0.22, TOP + 0.58, 0.45); gpu.add(gp);
+  put(gpu, box(2.5, 1.0, 0.03, 0x2b3037, { metalness: 0.8, roughness: 0.4 }), -0.22, TOP + 0.58, 0.26);
   [-0.85, 0.2, 0.9].forEach(function (x) {
-    var f = cyl(0.3, 0.02, 0x0c0f13, null, 32);
-    f.rotation.x = Math.PI / 2;
-    put(gpu, f, x - 0.1, TOP + 0.58, 0.66);
-    var hub = cyl(0.07, 0.03, 0x6cc6ee, { emissive: 0x1d6c8d }, 20);
-    hub.rotation.x = Math.PI / 2;
-    put(gpu, hub, x - 0.1, TOP + 0.58, 0.675);
+    var rim = new T.Mesh(new T.TorusGeometry(0.32, 0.018, 10, 40), mat(0x0c0f13, { roughness: 0.4 })); rim.position.set(x - 0.1, TOP + 0.58, 0.625); gpu.add(rim);
+    var fr = fanRotor(0.3, 11, 0x2a2e35); fr.position.set(x - 0.1, TOP + 0.58, 0.615); gpu.add(fr);
+    var well = new T.Mesh(new T.CircleGeometry(0.31, 36), mat(0x08090c, { roughMap: false })); well.position.set(x - 0.1, TOP + 0.58, 0.6); gpu.add(well);
   });
-  put(gpu, box(0.03, 1.05, 0.38, 0x9aa3ad, { metalness: 0.6 }), -1.52, TOP + 0.58, 0.46);
+  put(gpu, box(0.03, 1.1, 0.4, 0xc9d0d8, { metalness: 0.95, roughness: 0.3 }), -1.5, TOP + 0.58, 0.45);
+  for (s = 0; s < 3; s++) put(gpu, box(0.04, 0.05, 0.16, 0x0c0f13), -1.52, TOP + 0.3 + s * 0.12, 0.5);
+  put(gpu, box(0.34, 0.03, 0.12, 0xd8b84c, { metalness: 1, roughness: 0.28 }), -0.55, TOP - 0.01, 0.36);
   extras.add(gpu);
+  // NVMe SSD with a label, controller and NAND chips
   var ssd = new T.Group();
-  put(ssd, box(0.8, 0.014, 0.22, 0x2d3640), -0.54, TOP + 0.085, 0.14);
-  put(ssd, box(0.2, 0.012, 0.16, 0x121417), -0.8, TOP + 0.098, 0.14);
-  put(ssd, box(0.14, 0.012, 0.14, 0x121417), -0.5, TOP + 0.098, 0.14);
-  put(ssd, box(0.14, 0.012, 0.14, 0x121417), -0.25, TOP + 0.098, 0.14);
+  var ssdTex = canvasTex(512, 128, function (x, w, h) { x.fillStyle = '#1f2830'; x.fillRect(0, 0, w, h); x.fillStyle = '#e8edf2'; x.font = '800 30px Arial'; x.fillText('LAV NVMe 1TB', 12, 38); x.font = '500 18px Arial'; x.fillStyle = '#9fb0c0'; x.fillText('PCIe 4.0 x4 · M.2 2280', 12, 66); x.fillStyle = '#6cc6ee'; x.fillRect(0, 100, w, 4); }, true);
+  put(ssd, box(0.8, 0.012, 0.22, 0x1c5a3a, { roughness: 0.4 }), -0.54, TOP + 0.085, 0.14);
+  put(ssd, box(0.2, 0.014, 0.16, 0x121417), -0.8, TOP + 0.098, 0.14);
+  put(ssd, box(0.14, 0.014, 0.14, 0x121417), -0.5, TOP + 0.098, 0.14);
+  put(ssd, box(0.14, 0.014, 0.14, 0x121417), -0.25, TOP + 0.098, 0.14);
+  var sl = new T.Mesh(new T.PlaneGeometry(0.4, 0.2), new T.MeshStandardMaterial({ map: ssdTex, roughness: 0.5, metalness: 0.3 }));
+  sl.rotation.x = -Math.PI / 2; sl.position.set(-0.47, TOP + 0.108, 0.14); ssd.add(sl);
   extras.add(ssd);
   extras.visible = false;
 
@@ -557,7 +745,7 @@ api.buildPSU = function () {
   cable('molex', 0.7, 0.62, [new T.Vector3(1.1, 0.5, 1.2), new T.Vector3(1.5, floorY, 1.7), new T.Vector3(1.6, floorY, 2.3)], 0.02, [0xf2c94c, 0x16191e, 0xe85d3a, 0x16191e], function (gg, e) {
     put(gg, box(0.22, 0.2, 0.12, 0xeceff1), e.x, 0.1, e.z + 0.06);
   });
-  put(root, box(4.6, 0.01, 3.6, 0x1b2836), 0.2, -0.005, 1.5);
+  put(root, box(4.6, 0.01, 3.6, 0x1b2836, { roughMap: false, roughness: 0.75 }), 0.2, -0.005, 1.5);
   Object.keys(parts).forEach(function (id) {
     var pt = parts[id];
     pt.meshes = [];
@@ -657,7 +845,7 @@ api.buildCase = function (st, kind, boardKey) {
   // installed parts shown inside the tower: cooler, RAM, graphics card, drive trays, PSU shroud, top fan and front ports
   if (!horizontal) {
     var bx = -W / 2 + 0.2 + 0.2, by = H / 2 - 0.3 - bw[1] * s / 2, bz = D / 2 - bw[0] * s / 2 - 0.15;
-    put(g, box(0.5, 0.5, 0.5, 0x8a949f, { metalness: 0.6, roughness: 0.4 }), bx + 0.25, by + bw[1] * s * 0.12, bz - bw[0] * s * 0.18);
+    put(g, box(0.5, 0.5, 0.5, 0x3f464e, { metalness: 0.6, roughness: 0.4 }), bx + 0.25, by + bw[1] * s * 0.12, bz - bw[0] * s * 0.18);
     put(g, box(0.1, 0.55, 0.55, 0x2d3640), bx + 0.55, by + bw[1] * s * 0.12, bz - bw[0] * s * 0.18);
     [0.2, 0.3].forEach(function (dz) { put(g, box(0.06, 0.45, 0.03, 0x2a3a55, { metalness: 0.5 }), bx + 0.1, by + bw[1] * s * 0.18, bz - bw[0] * s * 0.05 - dz); });
     put(g, box(0.28, 0.12, bw[0] * s * 0.75, 0x1b1f25, { metalness: 0.3 }), bx + 0.16, by - bw[1] * s * 0.18, bz - bw[0] * s * 0.05);
