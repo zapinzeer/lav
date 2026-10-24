@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Samoindukcija, induktivna reaktansa X_L = ωL, struja koja kasni za naponom 90° i reaktivna snaga kalema, sa modelom kola i fazora.">
+<title>Kalem u kolu naizmenične struje · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="kalem-u-kolu-naizmenicne-struje">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš zašto je napon na kalemu \( u = L\,di/dt \) i šta znači samoindukcija;</li><li>izračunaš induktivnu reaktansu i struju kroz kalem;</li><li>objasniš zašto struja kasni za naponom za 90° i nacrtaš fazorski dijagram;</li><li>objasniš zašto idealni kalem ne troši snagu i šta je reaktivna snaga.</li></ul>
+    <ul lang="en"><li>explain why the voltage across a coil is \( u = L\,di/dt \) and what self-induction means;</li><li>calculate the inductive reactance and the current through a coil;</li><li>explain why the current lags the voltage by 90° and draw the phasor diagram;</li><li>explain why an ideal coil consumes no power and what reactive power is.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="indukcija" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">zašto struja kasni</span><span lang="en">why the current lags</span></p>
+    <h2><span lang="sr">Samoindukcija i napon na kalemu</span><span lang="en">Self-induction and the voltage across a coil</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Kalem (zavojnica) ima <strong>induktivnost</strong> <span class="v">L</span>, koja se meri u henrijima (H). Kada se struja kroz kalem menja, menja se i njegov magnetni fluks, pa se u samom kalemu <strong>indukuje napon</strong> koji se suprotstavlja promeni (Lencovo pravilo). Napon koji izvor mora da dovede na idealan kalem jednak je po veličini tom induktovanom naponu:</p>
+<p lang="en">A coil has an <strong>inductance</strong> <span class="v">L</span>, measured in henrys (H). When the current through the coil changes, its magnetic flux changes too, so a <strong>voltage is induced</strong> in the coil itself that opposes the change (Lenz's rule). The voltage the source must apply to an ideal coil equals that induced voltage in magnitude:</p><div class="formula"><div class="tex">\[ u = L\,\frac{di}{dt} \]</div><dl class="legend"><div><dt>u</dt><dd><span lang="sr">napon na kalemu</span><span lang="en">voltage across the coil</span></dd><span class="unit">V</span></div><div><dt>L</dt><dd><span lang="sr">induktivnost</span><span lang="en">inductance</span></dd><span class="unit">H</span></div><div><dt>di/dt</dt><dd><span lang="sr">brzina promene struje</span><span lang="en">rate of change of the current</span></dd><span class="unit">A/s</span></div></dl></div><p lang="sr">Napon na kalemu je srazmeran <strong>brzini promene</strong> struje, a ne samoj struji. Zato jednosmerna struja (koja se ne menja, <span class="v">di/dt</span> = 0) kroz idealan kalem ne daje nikakav napon: kalem se ponaša kao običan provodnik. Naizmenična struja se stalno menja, pa se kalem stalno „buni”.</p>
+<p lang="en">The voltage across a coil is proportional to the <strong>rate of change</strong> of the current, not to the current itself. That is why a direct current (which does not change, <span class="v">di/dt</span> = 0) through an ideal coil gives no voltage at all: the coil acts as an ordinary wire. An alternating current keeps changing, so the coil keeps "objecting".</p><details class="think"><summary><span lang="sr">Pomisli prvo: kada je struja kroz kalem najveća, koliki je u tom trenutku njen priraštaj di/dt?</span><span lang="en">Think first: when the current through a coil is at its maximum, what is its rate of change di/dt at that moment?</span></summary><div class="ans"><p lang="sr">Nula, jer je to vrh sinusoide i tu je kriva vodoravna. Zato je tada napon na kalemu nula. Najveći je napon kada struja najbrže raste, to jest kada prolazi kroz nulu.</p>
+<p lang="en">Zero, because that is the top of the sine and the curve is flat there. So the voltage across the coil is zero then. The voltage is largest when the current rises fastest, that is when it crosses zero.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="reaktansa" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">X_L = ωL</span><span lang="en">X_L = ωL</span></p>
+    <h2><span lang="sr">Induktivna reaktansa i fazni stav</span><span lang="en">Inductive reactance and the phase shift</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Neka kroz kalem teče struja \( i = I_m\sin\omega t \). Napon je \( u = L\,di/dt \), a izvod sinusa je kosinus: \( u = \omega L I_m\cos\omega t \). Pošto je \( \cos x = \sin(x + 90^\circ) \), dobijamo:</p>
+<p lang="en">Let a current \( i = I_m\sin\omega t \) flow through the coil. The voltage is \( u = L\,di/dt \), and the derivative of a sine is a cosine: \( u = \omega L I_m\cos\omega t \). Since \( \cos x = \sin(x + 90^\circ) \), we get:</p><div class="formula"><div class="tex">\[ u = \omega L I_m\sin(\omega t + 90^\circ) \qquad U_m = \omega L\,I_m \qquad X_L = \omega L = 2\pi f L \]</div><dl class="legend"><div><dt>X<sub>L</sub></dt><dd><span lang="sr">induktivna reaktansa</span><span lang="en">inductive reactance</span></dd><span class="unit">Ω</span></div><div><dt>ω</dt><dd><span lang="sr">kružna učestanost</span><span lang="en">angular frequency</span></dd><span class="unit">rad/s</span></div><div><dt>L</dt><dd><span lang="sr">induktivnost</span><span lang="en">inductance</span></dd><span class="unit">H</span></div></dl></div><p lang="sr">Dva važna zaključka: (1) <strong>napon prednjači struji za 90°</strong>, odnosno struja kasni za naponom za 90°; (2) odnos amplituda napona i struje je <strong>induktivna reaktansa</strong> \( X_L = \omega L \), koja se meri u omima, ali nije otpornost: ona <em>ne troši</em> energiju.</p>
+<p lang="en">Two important conclusions: (1) the <strong>voltage leads the current by 90°</strong>, that is the current lags the voltage by 90°; (2) the ratio of the voltage and current amplitudes is the <strong>inductive reactance</strong> \( X_L = \omega L \), measured in ohms, but it is not a resistance: it does <em>not</em> consume energy.</p><div class="formula"><div class="tex">\[ I_m = \frac{U_m}{X_L} \qquad I = \frac{U}{X_L} \qquad \underline{Z}_L = j\omega L = jX_L = X_L\angle 90^\circ \]</div></div><div class="cases"><div><p class="h">f → 0 (jednosmerna)</p><p class="note" lang="sr">X<sub>L</sub> → 0: kalem je kratak spoj za jednosmernu struju.</p><p class="note" lang="en">X<sub>L</sub> → 0: the coil is a short circuit for direct current.</p></div><div><p class="h">f → veliko</p><p class="note" lang="sr">X<sub>L</sub> → velika: kalem „guši” visoke učestanosti. Zato se zovu prigušnice.</p><p class="note" lang="en">X<sub>L</sub> → large: the coil "chokes" high frequencies. That is why they are called chokes.</p></div></div>
+</div><figure class="lab" id="lab-l">
+<div class="viewport" style="aspect-ratio:360/190"><canvas tabindex="0" aria-label="Strujno kolo i fazorski dijagram / the circuit and the phasor diagram"></canvas></div>
+<div class="plot" style="margin-top:10px"><canvas aria-label="Napon i struja u funkciji ωt / voltage and current against ωt"></canvas></div>
+<div class="plot short" style="margin-top:10px"><canvas aria-label="Trenutna snaga p(t) / instantaneous power p(t)"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="lab-l-um"><span lang="sr">Amplituda napona U<sub>m</sub></span><span lang="en">Voltage amplitude U<sub>m</sub></span></label><output id="lab-l-um-out" for="lab-l-um"></output><input type="range" id="lab-l-um" min="5" max="325" step="5" value="100"></div>
+<div class="ctl"><label for="lab-l-f"><span lang="sr">Učestanost f</span><span lang="en">Frequency f</span></label><output id="lab-l-f-out" for="lab-l-f"></output><input type="range" id="lab-l-f" min="10" max="500" step="10" value="50"></div>
+<div class="ctl"><label for="lab-l-val"><span lang="sr">Induktivnost L</span><span lang="en">Inductance L</span></label><output id="lab-l-val-out" for="lab-l-val"></output><input type="range" id="lab-l-val" min="10" max="1000" step="10" value="200"></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-l-calc"></div><div class="result" id="lab-l-result"></div><div class="calc" id="lab-l-note"></div></div>
+<figcaption><span lang="sr">Kalem u kolu naizmenične struje. Struja (narandžasta) <strong>kasni</strong> za naponom (plava) za četvrtinu periode, to jest 90°: kada je napon najveći, struja tek prolazi kroz nulu. Na fazorskom dijagramu fazor struje je 90° iza fazora napona. Povećaj učestanost ili induktivnost: reaktansa X<sub>L</sub> raste, pa struja opada. Snaga p(t) ispod menja znak: zelena površina je energija koju kalem prima, crvena je energija koju vraća izvoru.</span><span lang="en">A coil in an AC circuit. The current (orange) <strong>lags</strong> the voltage (blue) by a quarter of a period, that is 90°: when the voltage is at its maximum, the current is only just crossing zero. On the phasor diagram the current phasor is 90° behind the voltage phasor. Increase the frequency or the inductance: the reactance X<sub>L</sub> grows, so the current drops. The power p(t) below changes sign: the green area is energy the coil takes in, the red one is energy it gives back to the source.</span></figcaption>
+</figure><div class="rest">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Unit prefiksi koje ćeš često trebati</span><span lang="en">Unit prefixes you will often need</span></caption><thead><tr><th>Prefiks</th><th><span lang="sr">Značenje</span><span lang="en">Meaning</span></th><th><span lang="sr">Primer</span><span lang="en">Example</span></th></tr></thead><tbody><tr><td>m (mili)</td><td>10<sup>−3</sup></td><td>100 mH = 0,1 H</td></tr><tr><td>μ (mikro)</td><td>10<sup>−6</sup></td><td>470 μH = 0,00047 H</td></tr><tr><td>k (kilo)</td><td>10<sup>3</sup></td><td>2,2 kΩ = 2200 Ω</td></tr></tbody></table></div><div class="rule-box violet"><p class="eyebrow"><span lang="sr">Pamćenje: ELI</span><span lang="en">Remembering: ELI</span></p><p lang="sr">U kalemu (<strong>L</strong>) napon (<strong>E</strong>) prednjači struji (<strong>I</strong>): <strong>ELI</strong>. Kod kondenzatora će biti obrnuto, pa će ti zapamćeno „ICE” pomoći: struja (I) prednjači naponu (E) u kondenzatoru (C).</p>
+<p lang="en">In a coil (<strong>L</strong>) the voltage (<strong>E</strong>) leads the current (<strong>I</strong>): <strong>ELI</strong>. For a capacitor it will be the opposite, so "ICE" will help: the current (I) leads the voltage (E) in a capacitor (C).</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="snaga" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">p = u · i</span><span lang="en">p = u · i</span></p>
+    <h2><span lang="sr">Snaga i energija kalema</span><span lang="en">Power and energy of a coil</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Trenutna snaga je \( p = ui = U_mI_m\sin\omega t\cos\omega t = UI\sin 2\omega t \). To je sinus dvostruke učestanosti koji je pola periode pozitivan, a pola negativan. Kada je pozitivan, kalem <strong>prima</strong> energiju i skladišti je u magnetnom polju; kada je negativan, <strong>vraća</strong> je izvoru:</p>
+<p lang="en">The instantaneous power is \( p = ui = U_mI_m\sin\omega t\cos\omega t = UI\sin 2\omega t \). That is a sine of double frequency, positive for half of the time and negative for the other half. When it is positive the coil <strong>takes in</strong> energy and stores it in its magnetic field; when it is negative it <strong>returns</strong> it to the source:</p><div class="formula"><div class="tex">\[ W = \tfrac{1}{2}Li^2 \qquad P = 0 \qquad Q_L = U I = X_L I^2 = \frac{U^2}{X_L} \]</div><dl class="legend"><div><dt>W</dt><dd><span lang="sr">energija u magnetnom polju</span><span lang="en">energy in the magnetic field</span></dd><span class="unit">J</span></div><div><dt>P</dt><dd><span lang="sr">aktivna snaga (srednja)</span><span lang="en">active (average) power</span></dd><span class="unit">W</span></div><div><dt>Q<sub>L</sub></dt><dd><span lang="sr">reaktivna snaga</span><span lang="en">reactive power</span></dd><span class="unit">var</span></div></dl></div><p lang="sr">Srednja snaga idealnog kalema je <strong>nula</strong>. Energija samo „ide i vraća se”, ali struja kroz izvor i provodnike teče i opterećuje ih. Ta veličina se zove <strong>reaktivna snaga</strong> <span class="v">Q</span> i meri u varovima (var), da se ne meša sa vatima.</p>
+<p lang="en">The average power of an ideal coil is <strong>zero</strong>. The energy just "goes and comes back", but the current through the source and the wires still flows and loads them. This quantity is called the <strong>reactive power</strong> <span class="v">Q</span> and is measured in vars (var), so it is not confused with watts.</p><div class="rule-box green"><p class="eyebrow"><span lang="sr">Pravi kalem</span><span lang="en">A real coil</span></p><p lang="sr">Pravi kalem ima i otpornost žice <span class="v">r</span>. Model je red veza <span class="v">r</span> i idealnog kalema, impedansa je \( \underline{Z} = r + j\omega L \), a fazni stav je manji od 90°. Čist 90° imaju samo idealni kalemovi.</p>
+<p lang="en">A real coil also has the resistance of its wire <span class="v">r</span>. The model is <span class="v">r</span> in series with an ideal coil, the impedance is \( \underline{Z} = r + j\omega L \), and the phase shift is less than 90°. Only ideal coils have a clean 90°.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · reaktansa na dve učestanosti</span><span lang="en">Example 1 · reactance at two frequencies</span></h4><p class="given" lang="sr">Dato: kalem \( L = 0{,}5 \) H, priključen na 230 V. Traži se \( X_L \) i struja pri 50 Hz, a zatim pri 500 Hz.</p><p class="given" lang="en">Given: a coil \( L = 0.5 \) H connected to 230 V. Find \( X_L \) and the current at 50 Hz, and then at 500 Hz.</p><ol lang="sr"><li>Pri 50 Hz: \( X_L = 2\pi\cdot 50\cdot 0{,}5 = 157\ \Omega \), \( I = 230/157 = 1{,}46\ \mathrm{A} \).</li><li>Pri 500 Hz: \( X_L = 2\pi\cdot 500\cdot 0{,}5 = 1571\ \Omega \), \( I = 230/1571 = 0{,}146\ \mathrm{A} \).</li><li>Učestanost 10 puta veća daje reaktansu 10 puta veću i struju 10 puta manju.</li></ol>
+<ol lang="en"><li>At 50 Hz: \( X_L = 2\pi\cdot 50\cdot 0.5 = 157\ \Omega \), \( I = 230/157 = 1.46\ \mathrm{A} \).</li><li>At 500 Hz: \( X_L = 2\pi\cdot 500\cdot 0.5 = 1571\ \Omega \), \( I = 230/1571 = 0.146\ \mathrm{A} \).</li><li>A frequency 10 times higher gives a reactance 10 times larger and a current 10 times smaller.</li></ol><p class="answer"><span lang="sr">I(50 Hz) = 1,46 A, I(500 Hz) = 0,146 A</span><span lang="en">I(50 Hz) = 1.46 A, I(500 Hz) = 0.146 A</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · jednačina napona</span><span lang="en">Example 2 · the equation of the voltage</span></h4><p class="given" lang="sr">Dato: \( i = 3\sin 314t \) A kroz kalem od 100 mH. Napiši jednačinu napona.</p><p class="given" lang="en">Given: \( i = 3\sin 314t \) A through a coil of 100 mH. Write the equation of the voltage.</p><ol lang="sr"><li>\( X_L = \omega L = 314\cdot 0{,}1 = 31{,}4\ \Omega \).</li><li>\( U_m = X_L I_m = 31{,}4\cdot 3 = 94{,}2\ \mathrm{V} \).</li><li>Napon prednjači za 90°: \( u = 94{,}2\sin(314t + 90^\circ) \) V.</li></ol>
+<ol lang="en"><li>\( X_L = \omega L = 314\cdot 0.1 = 31.4\ \Omega \).</li><li>\( U_m = X_L I_m = 31.4\cdot 3 = 94.2\ \mathrm{V} \).</li><li>The voltage leads by 90°: \( u = 94.2\sin(314t + 90^\circ) \) V.</li></ol><p class="answer"><span lang="sr">u = 94,2 sin(314t + 90°) V</span><span lang="en">u = 94.2 sin(314t + 90°) V</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · potrebna induktivnost</span><span lang="en">Example 3 · the required inductance</span></h4><p class="given" lang="sr">Dato: prigušnica treba da ograniči struju na 0,5 A pri 230 V i 50 Hz. Kolika je potrebna induktivnost i reaktivna snaga?</p><p class="given" lang="en">Given: a choke has to limit the current to 0.5 A at 230 V and 50 Hz. What inductance and reactive power are needed?</p><ol lang="sr"><li>\( X_L = U/I = 230/0{,}5 = 460\ \Omega \).</li><li>\( L = X_L/\omega = 460/314 = 1{,}46\ \mathrm{H} \).</li><li>\( Q_L = UI = 230\cdot 0{,}5 = 115\ \mathrm{var} \), a aktivna snaga idealnog kalema je 0.</li></ol>
+<ol lang="en"><li>\( X_L = U/I = 230/0.5 = 460\ \Omega \).</li><li>\( L = X_L/\omega = 460/314 = 1.46\ \mathrm{H} \).</li><li>\( Q_L = UI = 230\cdot 0.5 = 115\ \mathrm{var} \), and the active power of an ideal coil is 0.</li></ol><p class="answer"><span lang="sr">L = 1,46 H, Q = 115 var</span><span lang="en">L = 1.46 H, Q = 115 var</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Pogrešan smer fazne razlike.</b> Kod kalema <strong>struja kasni</strong>, napon prednjači (ELI). Ne obrni to.</div></li><li><div><b>Reaktansa kao otpornost.</b> Reaktansa ima jedinicu om, ali ne pretvara energiju u toplotu. Srednja snaga idealnog kalema je nula.</div></li><li><div><b>Zaboravljeno 2π.</b> \( X_L = 2\pi f L \), ne \( fL \). I pretvori mH u H pre računanja.</div></li><li><div><b>Kalem na jednosmernoj struji.</b> Idealan kalem na jednosmernoj struji ima X<sub>L</sub> = 0. Struju tada ograničava samo otpornost žice.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>The wrong direction of the phase shift.</b> In a coil the <strong>current lags</strong>, the voltage leads (ELI). Do not reverse it.</div></li><li><div><b>Reactance as resistance.</b> Reactance has the unit ohm, but it does not turn energy into heat. The average power of an ideal coil is zero.</div></li><li><div><b>Forgetting 2π.</b> \( X_L = 2\pi f L \), not \( fL \). And convert mH to H before calculating.</div></li><li><div><b>A coil on direct current.</b> An ideal coil on direct current has X<sub>L</sub> = 0. The current is then limited only by the resistance of the wire.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Napon na kalemu je \( u = L\,di/dt \): srazmeran je brzini promene struje.</li><li>Napon <strong>prednjači</strong> struji za 90° (ELI). Impedansa je \( \underline{Z}_L = j\omega L \).</li><li>Induktivna reaktansa \( X_L = \omega L = 2\pi fL \) raste sa učestanošću i jednaka je nuli za jednosmernu struju.</li><li>Idealni kalem ne troši snagu (\( P = 0 \)), samo razmenjuje energiju \( W = Li^2/2 \) sa izvorom; reaktivna snaga je \( Q = UI \).</li></ul><ul lang="en"><li>The voltage across a coil is \( u = L\,di/dt \): proportional to the rate of change of the current.</li><li>The voltage <strong>leads</strong> the current by 90° (ELI). The impedance is \( \underline{Z}_L = j\omega L \).</li><li>The inductive reactance \( X_L = \omega L = 2\pi fL \) grows with frequency and is zero for direct current.</li><li>An ideal coil consumes no power (\( P = 0 \)), it only exchanges the energy \( W = Li^2/2 \) with the source; the reactive power is \( Q = UI \).</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="AC05" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/ac-labs.js"></script>
+<script src="../assets/js/lessons/kalem-u-kolu-naizmenicne-struje.js"></script>
+</body>
+</html>

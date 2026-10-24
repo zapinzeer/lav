@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Imaginarna jedinica j, algebarski i polarni oblik, Ojlerova formula i računanje sa naizmeničnim veličinama pomoću kompleksnih brojeva.">
+<title>Predstavljanje naizmenične veličine kompleksnim brojevima · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="kompleksni-brojevi">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>zapišeš kompleksan broj u algebarskom, trigonometrijskom, eksponencijalnom i polarnom obliku i pređeš iz jednog u drugi;</li><li>sabereš, oduzmeš, pomnožiš i podeliš kompleksne brojeve u pravom obliku.</li><li>sinusnu veličinu zapišeš kao kompleksnu amplitudu i obrnuto;</li><li>objasniš šta je kompleksna impedansa i šta znače njen modul i argument.</li></ul>
+    <ul lang="en"><li>write a complex number in rectangular, trigonometric, exponential and polar form and convert between them;</li><li>add, subtract, multiply and divide complex numbers in the right form;</li><li>write a sine quantity as a complex amplitude and the other way round;</li><li>explain what the complex impedance is and what its modulus and argument mean.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="zasto" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">ideja</span><span lang="en">the idea</span></p>
+    <h2><span lang="sr">Zašto kompleksni brojevi?</span><span lang="en">Why complex numbers?</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Fazor je strelica u ravni, a strelicu u ravni možemo da zapišemo <strong>jednim kompleksnim brojem</strong>. Tako se račun sa naizmeničnim veličinama (sabiranje, množenje, deljenje) svodi na običnu algebru, bez trigonometrije.</p>
+<p lang="en">A phasor is an arrow in a plane, and an arrow in a plane can be written as <strong>one complex number</strong>. Calculations with alternating quantities (adding, multiplying, dividing) then reduce to ordinary algebra, without trigonometry.</p><p lang="sr">U elektrotehnici imaginarna jedinica se označava slovom <span class="v">j</span>, a ne <span class="v">i</span>, jer je <span class="v">i</span> već zauzeto: to je trenutna vrednost struje.</p>
+<p lang="en">In electrical engineering the imaginary unit is written <span class="v">j</span>, not <span class="v">i</span>, because <span class="v">i</span> is already taken: it is the instantaneous value of the current.</p><div class="formula" style="max-width:420px"><div class="tex">\[ j = \sqrt{-1} \qquad j^2 = -1 \]</div></div><details class="think"><summary><span lang="sr">Pomisli prvo: koliko je j³ i koliko je j⁴?</span><span lang="en">Think first: what is j³ and what is j⁴?</span></summary><div class="ans"><p lang="sr">\( j^3 = j^2\cdot j = -j \), a \( j^4 = (j^2)^2 = 1 \). Stepeni od <span class="v">j</span> se ponavljaju u krugu od četiri: \( j,\ -1,\ -j,\ 1 \).</p>
+<p lang="en">\( j^3 = j^2\cdot j = -j \), and \( j^4 = (j^2)^2 = 1 \). The powers of <span class="v">j</span> repeat in a cycle of four: \( j,\ -1,\ -j,\ 1 \).</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="algebarski" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">oblik a + jb</span><span lang="en">the form a + jb</span></p>
+    <h2><span lang="sr">Algebarski oblik i kompleksna ravan</span><span lang="en">Rectangular form and the complex plane</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Kompleksni broj ima <strong>realni deo</strong> <span class="v">a</span> i <strong>imaginarni deo</strong> <span class="v">b</span>:</p>
+<p lang="en">A complex number has a <strong>real part</strong> <span class="v">a</span> and an <strong>imaginary part</strong> <span class="v">b</span>:</p><div class="formula"><div class="tex">\[ \underline{Z} = a + jb \qquad a = \mathrm{Re}\,\underline{Z},\quad b = \mathrm{Im}\,\underline{Z} \]</div></div><p lang="sr">Crta se u <strong>kompleksnoj ravni</strong>: realni deo na vodoravnoj, imaginarni na vertikalnoj osi. Broj \( \underline{Z} = 3 + j2 \) je tačka (3, 2), odnosno strelica od koordinatnog početka do te tačke. Kompleksne veličine se često podvlače da se razlikuju od običnih (efektivnih ili amplitudnih) brojeva.</p>
+<p lang="en">It is drawn in the <strong>complex plane</strong>: the real part on the horizontal axis, the imaginary part on the vertical one. The number \( \underline{Z} = 3 + j2 \) is the point (3, 2), that is, the arrow from the origin to that point. Complex quantities are often underlined to tell them apart from ordinary (RMS or amplitude) numbers.</p><p lang="sr">Sabiranje i oduzimanje je prosto: posebno realni, posebno imaginarni delovi.</p>
+<p lang="en">Adding and subtracting is simple: real parts and imaginary parts separately.</p><div class="formula"><div class="tex">\[ (a_1 + jb_1) \pm (a_2 + jb_2) = (a_1 \pm a_2) + j(b_1 \pm b_2) \]</div></div><p lang="sr">Množenje se radi kao množenje zagrada, uz \( j^2 = -1 \):</p>
+<p lang="en">Multiplication is done like multiplying brackets, with \( j^2 = -1 \):</p><div class="formula"><div class="tex">\[ (a_1 + jb_1)(a_2 + jb_2) = (a_1a_2 - b_1b_2) + j(a_1b_2 + a_2b_1) \]</div></div>
+</div><figure class="lab" id="lab-complex">
+<div class="viewport" style="aspect-ratio:360/300"><canvas tabindex="0" aria-label="Kompleksna ravan sa dva broja koja se mogu povlačiti / the complex plane with two draggable numbers"></canvas><span class="hint"><span lang="sr">Povuci tačke Z₁ i Z₂</span><span lang="en">Drag the points Z₁ and Z₂</span></span></div>
+<div class="controls">
+<div class="ctl"><label for="c-a1"><span lang="sr">Re Z<sub>1</sub></span><span lang="en">Re Z<sub>1</sub></span></label><output id="c-a1-out" for="c-a1"></output><input type="range" id="c-a1" min="-6" max="6" step="0.5" value="3"></div>
+<div class="ctl"><label for="c-b1"><span lang="sr">Im Z<sub>1</sub></span><span lang="en">Im Z<sub>1</sub></span></label><output id="c-b1-out" for="c-b1"></output><input type="range" id="c-b1" min="-6" max="6" step="0.5" value="2"></div>
+<div class="ctl"><label for="c-a2"><span lang="sr">Re Z<sub>2</sub></span><span lang="en">Re Z<sub>2</sub></span></label><output id="c-a2-out" for="c-a2"></output><input type="range" id="c-a2" min="-6" max="6" step="0.5" value="1"></div>
+<div class="ctl"><label for="c-b2"><span lang="sr">Im Z<sub>2</sub></span><span lang="en">Im Z<sub>2</sub></span></label><output id="c-b2-out" for="c-b2"></output><input type="range" id="c-b2" min="-6" max="6" step="0.5" value="3"></div>
+<div class="btns"><span class="lbl"><span lang="sr">Operacija</span><span lang="en">Operation</span></span><div class="seg" id="c-op" role="group"><button type="button" data-v="add" aria-pressed="true">+</button><button type="button" data-v="sub" aria-pressed="false">−</button><button type="button" data-v="mul" aria-pressed="false">×</button><button type="button" data-v="div" aria-pressed="false">÷</button></div></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="c-calc"></div><div class="result" id="c-result"></div><div class="calc" id="c-note"></div></div>
+<figcaption><span lang="sr">Dva kompleksna broja su dve strelice u ravni: plava Z₁ i narandžasta Z₂. Povuci njihove vrhove ili koristi klizače. Zelena strelica je rezultat izabrane operacije. Primeti: kod sabiranja se crta paralelogram, a kod množenja se <strong>moduli množe, a uglovi sabiraju</strong>.</span><span lang="en">Two complex numbers are two arrows in the plane: blue Z₁ and orange Z₂. Drag their tips or use the sliders. The green arrow is the result of the chosen operation. Notice: with addition a parallelogram appears, and with multiplication <strong>the moduli multiply and the angles add</strong>.</span></figcaption>
+</figure><div class="rest">
+<p lang="sr">Množenje sa <span class="v">j</span> ima jednostavno geometrijsko značenje: <strong>okreće strelicu za 90°</strong> suprotno kazaljci. Deljenje sa <span class="v">j</span> okreće je za 90° u smeru kazaljke. Zato je <span class="v">j</span> baš „operator kvadrature” koji nam treba za kalem i kondenzator.</p>
+<p lang="en">Multiplying by <span class="v">j</span> has a simple geometric meaning: it <strong>turns the arrow by 90°</strong> counter-clockwise. Dividing by <span class="v">j</span> turns it by 90° clockwise. That is why <span class="v">j</span> is exactly the "quadrature operator" we need for the coil and the capacitor.</p><div class="formula"><div class="tex">\[ j\cdot(a + jb) = -b + ja \qquad \frac{1}{j} = -j \]</div></div><p lang="sr"><strong>Konjugovano kompleksan broj</strong> ima suprotan znak imaginarnog dela: \( \underline{Z}^* = a - jb \). Proizvod \( \underline{Z}\,\underline{Z}^* = a^2 + b^2 \) je realan broj, pa konjugovanjem deljenje postaje lako:</p>
+<p lang="en">The <strong>complex conjugate</strong> has the opposite sign of the imaginary part: \( \underline{Z}^* = a - jb \). The product \( \underline{Z}\,\underline{Z}^* = a^2 + b^2 \) is a real number, so conjugating makes division easy:</p><div class="formula"><div class="tex">\[ \frac{a_1 + jb_1}{a_2 + jb_2} = \frac{(a_1 + jb_1)(a_2 - jb_2)}{a_2^2 + b_2^2} \]</div></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="polarni" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">oblik |Z|∠φ</span><span lang="en">the form |Z|∠φ</span></p>
+    <h2><span lang="sr">Polarni i eksponencijalni oblik</span><span lang="en">Polar and exponential form</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Istu strelicu možemo opisati dužinom i uglom. Dužina je <strong>modul</strong> <span class="v">|Z|</span>, a ugao je <strong>argument</strong> <span class="v">φ</span>:</p>
+<p lang="en">The same arrow can be described by its length and its angle. The length is the <strong>modulus</strong> <span class="v">|Z|</span>, and the angle is the <strong>argument</strong> <span class="v">φ</span>:</p><div class="formula"><div class="tex">\[ |\underline{Z}| = \sqrt{a^2 + b^2} \qquad \varphi = \arg\underline{Z} = \arctan\frac{b}{a} \]</div></div><div class="formula"><div class="tex">\[ a = |\underline{Z}|\cos\varphi \qquad b = |\underline{Z}|\sin\varphi \]</div></div><div class="rule-box"><p class="eyebrow"><span lang="sr">Pazi na kvadrant</span><span lang="en">Mind the quadrant</span></p><p lang="sr">Kalkulator za \( \arctan(b/a) \) daje ugao samo između −90° i +90°. Ako je realni deo <span class="v">a</span> negativan, dodaj ili oduzmi 180°. Zato uvek skiciraj broj u ravni.</p>
+<p lang="en">A calculator gives \( \arctan(b/a) \) only between −90° and +90°. If the real part <span class="v">a</span> is negative, add or subtract 180°. That is why you should always sketch the number in the plane.</p></div>
+</div><div class="rest">
+<p lang="sr">Zamenom <span class="v">a</span> i <span class="v">b</span> dobija se trigonometrijski oblik, a uz <strong>Ojlerovu formulu</strong> eksponencijalni i polarni oblik:</p>
+<p lang="en">Substituting <span class="v">a</span> and <span class="v">b</span> gives the trigonometric form, and with <strong>Euler's formula</strong> the exponential and polar forms:</p><div class="formula"><div class="tex">\[ e^{j\varphi} = \cos\varphi + j\sin\varphi \]</div></div><div class="formula"><div class="tex">\[ \underline{Z} = a + jb = |\underline{Z}|(\cos\varphi + j\sin\varphi) = |\underline{Z}|\,e^{j\varphi} = |\underline{Z}|\angle\varphi \]</div></div><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Isti broj u četiri zapisa</span><span lang="en">The same number in four notations</span></caption><thead><tr><th><span lang="sr">Oblik</span><span lang="en">Form</span></th><th><span lang="sr">Zapis</span><span lang="en">Notation</span></th></tr></thead><tbody><tr><td><span lang="sr">Algebarski</span><span lang="en">Rectangular</span></td><td>\( 3 + j4 \)</td></tr><tr><td><span lang="sr">Trigonometrijski</span><span lang="en">Trigonometric</span></td><td>\( 5(\cos 53{,}1^\circ + j\sin 53{,}1^\circ) \)</td></tr><tr><td><span lang="sr">Eksponencijalni</span><span lang="en">Exponential</span></td><td>\( 5\,e^{j53{,}1^\circ} \)</td></tr><tr><td><span lang="sr">Polarni</span><span lang="en">Polar</span></td><td>\( 5\angle 53{,}1^\circ \)</td></tr></tbody></table></div><p lang="sr"><strong>Množenje i deljenje</strong> su najlakši u polarnom obliku, jer se eksponenti sabiraju i oduzimaju:</p>
+<p lang="en"><strong>Multiplication and division</strong> are easiest in polar form, because exponents add and subtract:</p><div class="formula"><div class="tex">\[ |Z_1|\angle\varphi_1 \cdot |Z_2|\angle\varphi_2 = |Z_1||Z_2|\angle(\varphi_1 + \varphi_2) \qquad \frac{|Z_1|\angle\varphi_1}{|Z_2|\angle\varphi_2} = \frac{|Z_1|}{|Z_2|}\angle(\varphi_1 - \varphi_2) \]</div></div><div class="cases"><div><p class="h">sabiranje · oduzimanje</p><p class="note" lang="sr">Algebarski oblik: posebno realni, posebno imaginarni delovi.</p><p class="note" lang="en">Rectangular form: real parts and imaginary parts separately.</p></div><div><p class="h">množenje · deljenje</p><p class="note" lang="sr">Polarni oblik: moduli se množe ili dele, uglovi se sabiraju ili oduzimaju.</p><p class="note" lang="en">Polar form: moduli multiply or divide, angles add or subtract.</p></div></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primena" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">od sinusa do broja</span><span lang="en">from a sine to a number</span></p>
+    <h2><span lang="sr">Naizmenična veličina kao kompleksan broj</span><span lang="en">An alternating quantity as a complex number</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Sinusni napon \( u(t) = U_m\sin(\omega t + \varphi) \) zamenjujemo kompleksnim brojem koji ima <strong>modul jednak amplitudi</strong> i <strong>argument jednak početnoj fazi</strong>. To je kompleksna amplituda:</p>
+<p lang="en">We replace the sine voltage \( u(t) = U_m\sin(\omega t + \varphi) \) with a complex number whose <strong>modulus equals the amplitude</strong> and whose <strong>argument equals the initial phase</strong>. That is the complex amplitude:</p><div class="formula"><div class="tex">\[ \underline{U}_m = U_m\,e^{j\varphi} = U_m\angle\varphi \qquad u(t) = \mathrm{Im}\left\{\underline{U}_m\,e^{j\omega t}\right\} \]</div><dl class="legend"><div><dt>U̲<sub>m</sub></dt><dd><span lang="sr">kompleksna amplituda</span><span lang="en">complex amplitude</span></dd><span class="unit">V</span></div><div><dt>e<sup>jωt</sup></dt><dd><span lang="sr">obrtni faktor (isti za sve veličine u kolu)</span><span lang="en">rotating factor (the same for all quantities in the circuit)</span></dd></div></dl></div><p lang="sr">Faktor \( e^{j\omega t} \) je isti za sve veličine u kolu, pa ga ne pišemo. Ostaje samo broj \( \underline{U}_m \), a to je upravo naš zamrznuti fazor. U praksi se češće piše <strong>kompleksna efektivna vrednost</strong> \( \underline{U} = U\angle\varphi \), gde je \( U = U_m/\sqrt{2} \).</p>
+<p lang="en">The factor \( e^{j\omega t} \) is the same for all quantities in the circuit, so we do not write it. Only the number \( \underline{U}_m \) remains, and that is exactly our frozen phasor. In practice the <strong>complex RMS value</strong> \( \underline{U} = U\angle\varphi \) is written more often, where \( U = U_m/\sqrt{2} \).</p><p lang="sr">Lepa posledica: <strong>izvod po vremenu</strong> postaje množenje sa <span class="v">jω</span>, a integral deljenje sa <span class="v">jω</span>. Zato će kalem (<span class="v">u = L di/dt</span>) i kondenzator (<span class="v">i = C du/dt</span>) u narednim lekcijama imati vrlo jednostavne izraze:</p>
+<p lang="en">A nice consequence: <strong>differentiating with respect to time</strong> becomes multiplication by <span class="v">jω</span>, and integrating becomes division by <span class="v">jω</span>. That is why the coil (<span class="v">u = L di/dt</span>) and the capacitor (<span class="v">i = C du/dt</span>) in the following lessons will have very simple expressions:</p><div class="formula"><div class="tex">\[ \frac{d}{dt} \;\to\; j\omega \qquad \underline{Z}_R = R \qquad \underline{Z}_L = j\omega L \qquad \underline{Z}_C = \frac{1}{j\omega C} = -\,j\frac{1}{\omega C} \]</div></div><p lang="sr">Količnik kompleksnog napona i kompleksne struje zove se <strong>kompleksna impedansa</strong> \( \underline{Z} = \underline{U}/\underline{I} \). Njen modul je odnos amplituda, a njen argument je fazna razlika napona i struje. Zato „Omov zakon” za naizmeničnu struju ima isti oblik kao za jednosmernu, samo sa kompleksnim brojevima.</p>
+<p lang="en">The quotient of the complex voltage and the complex current is called the <strong>complex impedance</strong> \( \underline{Z} = \underline{U}/\underline{I} \). Its modulus is the ratio of the amplitudes and its argument is the phase difference of voltage and current. So "Ohm's law" for AC has the same form as for DC, just with complex numbers.</p><div class="formula"><div class="tex">\[ \underline{Z} = \frac{\underline{U}}{\underline{I}} = \frac{U}{I}\angle(\varphi_u - \varphi_i) = |\underline{Z}|\angle\varphi \]</div></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · iz algebarskog u polarni oblik</span><span lang="en">Example 1 · rectangular to polar</span></h4><p class="given" lang="sr">Dato: \( \underline{Z} = -3 + j4 \). Traži se modul i argument.</p><p class="given" lang="en">Given: \( \underline{Z} = -3 + j4 \). Find the modulus and the argument.</p><ol lang="sr"><li>Modul: \( |\underline{Z}| = \sqrt{(-3)^2 + 4^2} = 5 \).</li><li>Kalkulator daje \( \arctan\dfrac{4}{-3} = -53{,}13^\circ \). Ali je realni deo negativan, a imaginarni pozitivan: broj je u <strong>drugom kvadrantu</strong>.</li><li>Zato dodajemo 180°: \( \varphi = -53{,}13^\circ + 180^\circ = 126{,}87^\circ \).</li></ol>
+<ol lang="en"><li>Modulus: \( |\underline{Z}| = \sqrt{(-3)^2 + 4^2} = 5 \).</li><li>The calculator gives \( \arctan\dfrac{4}{-3} = -53.13^\circ \). But the real part is negative and the imaginary part positive: the number is in the <strong>second quadrant</strong>.</li><li>So we add 180°: \( \varphi = -53.13^\circ + 180^\circ = 126.87^\circ \).</li></ol><p class="answer"><span lang="sr">Z = 5∠126,87°</span><span lang="en">Z = 5∠126.87°</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · množenje i deljenje</span><span lang="en">Example 2 · multiplying and dividing</span></h4><p class="given" lang="sr">Dato: \( \underline{Z}_1 = 4\angle 30^\circ \) i \( \underline{Z}_2 = 2\angle 60^\circ \). Traži se \( \underline{Z}_1\underline{Z}_2 \) i \( \underline{Z}_1/\underline{Z}_2 \).</p><p class="given" lang="en">Given: \( \underline{Z}_1 = 4\angle 30^\circ \) and \( \underline{Z}_2 = 2\angle 60^\circ \). Find \( \underline{Z}_1\underline{Z}_2 \) and \( \underline{Z}_1/\underline{Z}_2 \).</p><ol lang="sr"><li>Proizvod: moduli se množe, uglovi sabiraju: \( 4\cdot 2\angle(30^\circ + 60^\circ) = 8\angle 90^\circ = j8 \).</li><li>Količnik: moduli se dele, uglovi oduzimaju: \( \dfrac{4}{2}\angle(30^\circ - 60^\circ) = 2\angle -30^\circ \).</li><li>U algebarskom obliku: \( 2(\cos 30^\circ - j\sin 30^\circ) = 1{,}73 - j1 \).</li></ol>
+<ol lang="en"><li>Product: the moduli multiply, the angles add: \( 4\cdot 2\angle(30^\circ + 60^\circ) = 8\angle 90^\circ = j8 \).</li><li>Quotient: the moduli divide, the angles subtract: \( \dfrac{4}{2}\angle(30^\circ - 60^\circ) = 2\angle -30^\circ \).</li><li>In rectangular form: \( 2(\cos 30^\circ - j\sin 30^\circ) = 1.73 - j1 \).</li></ol><p class="answer"><span lang="sr">Z₁Z₂ = 8∠90° = j8, Z₁/Z₂ = 2∠−30°</span><span lang="en">Z₁Z₂ = 8∠90° = j8, Z₁/Z₂ = 2∠−30°</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · zbir dva napona</span><span lang="en">Example 3 · the sum of two voltages</span></h4><p class="given" lang="sr">Dato: \( u_1 = 100\sin(\omega t + 60^\circ) \) V i \( u_2 = 60\sin(\omega t - 30^\circ) \) V. Traži se \( u = u_1 + u_2 \).</p><p class="given" lang="en">Given: \( u_1 = 100\sin(\omega t + 60^\circ) \) V and \( u_2 = 60\sin(\omega t - 30^\circ) \) V. Find \( u = u_1 + u_2 \).</p><ol lang="sr"><li>Kompleksne amplitude: \( \underline{U}_{m1} = 100\angle 60^\circ = 50 + j86{,}6 \) V i \( \underline{U}_{m2} = 60\angle -30^\circ = 51{,}96 - j30 \) V.</li><li>Zbir (algebarski): \( \underline{U}_m = 101{,}96 + j56{,}6 \) V.</li><li>Modul: \( \sqrt{101{,}96^2 + 56{,}6^2} = 116{,}6 \) V. Ugao: \( \arctan\dfrac{56{,}6}{101{,}96} = 29^\circ \).</li></ol>
+<ol lang="en"><li>Complex amplitudes: \( \underline{U}_{m1} = 100\angle 60^\circ = 50 + j86.6 \) V and \( \underline{U}_{m2} = 60\angle -30^\circ = 51.96 - j30 \) V.</li><li>Sum (rectangular): \( \underline{U}_m = 101.96 + j56.6 \) V.</li><li>Modulus: \( \sqrt{101.96^2 + 56.6^2} = 116.6 \) V. Angle: \( \arctan\dfrac{56.6}{101.96} = 29^\circ \).</li></ol><p class="answer"><span lang="sr">u = 116,6 sin(ωt + 29°) V</span><span lang="en">u = 116.6 sin(ωt + 29°) V</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 4 · impedansa iz napona i struje</span><span lang="en">Example 4 · impedance from voltage and current</span></h4><p class="given" lang="sr">Dato: \( \underline{U} = 230\angle 0^\circ \) V i \( \underline{I} = 5\angle -36{,}87^\circ \) A. Traži se impedansa \( \underline{Z} \).</p><p class="given" lang="en">Given: \( \underline{U} = 230\angle 0^\circ \) V and \( \underline{I} = 5\angle -36.87^\circ \) A. Find the impedance \( \underline{Z} \).</p><ol lang="sr"><li>Količnik u polarnom obliku: \( \underline{Z} = \dfrac{230}{5}\angle(0^\circ - (-36{,}87^\circ)) = 46\angle 36{,}87^\circ\ \Omega \).</li><li>U algebarskom obliku: \( 46\cos 36{,}87^\circ = 36{,}8 \) i \( 46\sin 36{,}87^\circ = 27{,}6 \).</li><li>Pozitivan imaginarni deo znači da kolo ima <strong>induktivni</strong> karakter: struja kasni za naponom.</li></ol>
+<ol lang="en"><li>The quotient in polar form: \( \underline{Z} = \dfrac{230}{5}\angle(0^\circ - (-36.87^\circ)) = 46\angle 36.87^\circ\ \Omega \).</li><li>In rectangular form: \( 46\cos 36.87^\circ = 36.8 \) and \( 46\sin 36.87^\circ = 27.6 \).</li><li>A positive imaginary part means the circuit has an <strong>inductive</strong> character: the current lags the voltage.</li></ol><p class="answer"><span lang="sr">Z = 36,8 + j27,6 Ω</span><span lang="en">Z = 36.8 + j27.6 Ω</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Pogrešan kvadrant.</b> Za negativno <span class="v">a</span> kalkulator daje ugao koji treba korigovati za 180°. Uvek skiciraj broj u ravni.</div></li><li><div><b>Sabiranje u polarnom obliku.</b> Moduli se ne sabiraju: \( 5\angle 0^\circ + 5\angle 90^\circ \) nije \( 10\angle 90^\circ \), nego \( 7{,}07\angle 45^\circ \). Za sabiranje pređi u algebarski oblik.</div></li><li><div><b>Zaboravljen j² = −1.</b> Pri množenju zagrada član \( jb_1\cdot jb_2 = -b_1b_2 \) ima znak minus.</div></li><li><div><b>Mešanje amplitude i efektivne vrednosti.</b> Ako pišeš \( \underline{U} = U\angle\varphi \), modul je efektivna vrednost; ako pišeš \( \underline{U}_m \), modul je amplituda. Ne mešaj ih u istom zadatku.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>The wrong quadrant.</b> For a negative <span class="v">a</span> the calculator gives an angle that must be corrected by 180°. Always sketch the number in the plane.</div></li><li><div><b>Adding in polar form.</b> Moduli do not add: \( 5\angle 0^\circ + 5\angle 90^\circ \) is not \( 10\angle 90^\circ \), but \( 7.07\angle 45^\circ \). To add, switch to rectangular form.</div></li><li><div><b>Forgetting j² = −1.</b> When multiplying brackets the term \( jb_1\cdot jb_2 = -b_1b_2 \) has a minus sign.</div></li><li><div><b>Mixing amplitude and RMS.</b> If you write \( \underline{U} = U\angle\varphi \), the modulus is the RMS value; if you write \( \underline{U}_m \), the modulus is the amplitude. Do not mix them in the same problem.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Fazor se piše kao kompleksan broj \( \underline{Z} = a + jb = |\underline{Z}|\angle\varphi \), gde je \( j^2 = -1 \).</li><li>Za sabiranje i oduzimanje koristi algebarski oblik, a za množenje i deljenje polarni.</li><li>Množenje sa <span class="v">j</span> okreće fazor za +90°, deljenje sa <span class="v">j</span> za −90°.</li><li>Sinus \( U_m\sin(\omega t + \varphi) \) odgovara broju \( \underline{U}_m = U_m\angle\varphi \), a izvod po vremenu množenju sa <span class="v">jω</span>.</li><li>Impedansa \( \underline{Z} = \underline{U}/\underline{I} \): modul je odnos amplituda, a argument fazna razlika napona i struje.</li></ul><ul lang="en"><li>A phasor is written as a complex number \( \underline{Z} = a + jb = |\underline{Z}|\angle\varphi \), where \( j^2 = -1 \).</li><li>Use rectangular form for adding and subtracting, and polar form for multiplying and dividing.</li><li>Multiplying by <span class="v">j</span> turns a phasor by +90°, dividing by <span class="v">j</span> by −90°.</li><li>A sine \( U_m\sin(\omega t + \varphi) \) corresponds to the number \( \underline{U}_m = U_m\angle\varphi \), and differentiating in time to multiplying by <span class="v">jω</span>.</li><li>Impedance \( \underline{Z} = \underline{U}/\underline{I} \): the modulus is the ratio of amplitudes and the argument is the phase difference of voltage and current.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="AC02" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/ac-labs.js"></script>
+<script src="../assets/js/lessons/kompleksni-brojevi.js"></script>
+</body>
+</html>

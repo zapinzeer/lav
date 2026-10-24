@@ -34,23 +34,36 @@ function normQuiz(q) {
       showAnswers: !(q.settings && q.settings.showAnswers === false),
       open: !(q.settings && q.settings.open === false)
     },
-    questions: toArr(q.questions).filter(Boolean).map(function (x) {
-      return {
-        type: x.type || 'choice',
-        text: x.text || '',
-        options: toArr(x.options),
-        correct: x.type === 'multi' ? toArr(x.correct).map(Number) : x.correct,
-        numeric: !!x.numeric,
-        tol: x.tol == null ? 1 : Number(x.tol),
-        unit: x.unit || '',
-        formula: x.formula || 'off',
-        working: x.working || 'off',
-        points: x.points == null ? 1 : Number(x.points),
-        explain: x.explain || '',
-        ref: x.ref || ''
-      };
-    })
+    questions: toArr(q.questions).filter(Boolean).map(normQuestion),
+    advanced: toArr(q.advanced).filter(Boolean).map(normQuestion)
   };
+  return out;
+}
+
+function normQuestion(x) {
+  return {
+    type: x.type || 'choice',
+    text: x.text || '',
+    options: toArr(x.options),
+    correct: x.type === 'multi' ? toArr(x.correct).map(Number) : x.correct,
+    numeric: !!x.numeric,
+    tol: x.tol == null ? 1 : Number(x.tol),
+    unit: x.unit || '',
+    formula: x.formula || 'off',
+    working: x.working || 'off',
+    points: x.points == null ? 1 : Number(x.points),
+    explain: x.explain || '',
+    ref: x.ref || ''
+  };
+}
+
+// the in-depth set used by hosted tests: the short questions of the lesson plus the advanced ones
+function full(quiz) {
+  if (!quiz) return null;
+  var out = JSON.parse(JSON.stringify(quiz));
+  out.easyCount = quiz.questions.length;
+  out.questions = quiz.questions.concat(quiz.advanced || []);
+  out.advanced = [];
   return out;
 }
 
@@ -108,11 +121,11 @@ function asMe(fn) {
   return fn(id);
 }
 
-var mem = { quizzes: {}, subs: {} };
+var mem = { quizzes: {}, subs: {}, sessions: {} };
 function lread() {
   try {
     var raw = localStorage.getItem('lav-db');
-    if (raw) { var p = JSON.parse(raw); mem = { quizzes: p.quizzes || {}, subs: p.subs || {} }; }
+    if (raw) { var p = JSON.parse(raw); mem = { quizzes: p.quizzes || {}, subs: p.subs || {}, sessions: p.sessions || {} }; }
   } catch (e) {}
   return mem;
 }
@@ -318,6 +331,144 @@ function claimAdmin() {
   return asMe(function (id) { return req('PUT', 'admins/' + id, true).then(function () { return true; }); });
 }
 
+// ---------- hosted tests ----------
+// sessions/<6 digits>/{info, players/<pid>, results/<pid>}; in local mode the same shape lives in lav-db
+function sessionHostId() {
+  if (!remote) return Promise.resolve('local');
+  return asMe(function (id) { return Promise.resolve(id); });
+}
+
+function newSid() {
+  function attempt(n) {
+    var c = '';
+    for (var i = 0; i < 6; i++) c += Math.floor(Math.random() * 10);
+    return sessionInfo(c).then(function (e) { return e && n < 8 ? attempt(n + 1) : c; });
+  }
+  return attempt(0);
+}
+
+function sessionCreate(quizCode, opt) {
+  opt = opt || {};
+  return Promise.all([sessionHostId(), get(quizCode), newSid()]).then(function (r) {
+    var host = r[0], quiz = full(r[1]), sid = r[2];
+    if (!quiz) throw new Error('no quiz');
+    var u = A.user();
+    var info = {
+      quiz: quizCode,
+      host: host,
+      hostName: (u && (u.name || u.email) ? String(u.name || u.email).split('@')[0] : '').slice(0, 40),
+      state: 'lobby',
+      secure: opt.secure !== false,
+      showAnswers: opt.showAnswers !== false,
+      created: Date.now(),
+      n: quiz.questions.length
+    };
+    if (!info.hostName) delete info.hostName;
+    if (remote) return req('PUT', 'sessions/' + sid + '/info', info).then(function () { return { sid: sid, info: info }; });
+    lread();
+    mem.sessions[sid] = { info: info, players: {}, results: {} };
+    lwrite();
+    return { sid: sid, info: info };
+  });
+}
+
+function sessionInfo(sid) {
+  if (remote) return req('GET', 'sessions/' + sid + '/info');
+  lread();
+  return Promise.resolve(mem.sessions[sid] ? mem.sessions[sid].info : null);
+}
+
+function sessionPatch(sid, obj) {
+  if (remote) return req('PATCH', 'sessions/' + sid + '/info', obj);
+  lread();
+  if (mem.sessions[sid]) { Object.keys(obj).forEach(function (k) { mem.sessions[sid].info[k] = obj[k]; }); lwrite(); }
+  return Promise.resolve();
+}
+
+function sessionJoin(sid, name) {
+  var pid = uid();
+  var body = { name: name, at: Date.now(), state: 'lobby' };
+  if (remote) return req('PUT', 'sessions/' + sid + '/players/' + pid, body).then(function () { return pid; });
+  lread();
+  if (!mem.sessions[sid]) return Promise.reject(new Error('no session'));
+  mem.sessions[sid].players[pid] = body;
+  lwrite();
+  return Promise.resolve(pid);
+}
+
+function playerPatch(sid, pid, obj) {
+  if (remote) return req('PATCH', 'sessions/' + sid + '/players/' + pid, obj);
+  lread();
+  var p = mem.sessions[sid] && mem.sessions[sid].players[pid];
+  if (p) { Object.keys(obj).forEach(function (k) { p[k] = obj[k]; }); lwrite(); }
+  return Promise.resolve();
+}
+
+function sessionPlayers(sid) {
+  var load;
+  if (remote) load = req('GET', 'sessions/' + sid + '/players').then(function (o) { return o || {}; });
+  else { lread(); load = Promise.resolve(mem.sessions[sid] ? mem.sessions[sid].players : {}); }
+  return load.then(function (o) {
+    return Object.keys(o).map(function (id) { var p = o[id]; return { id: id, name: p.name || '', at: p.at || 0, state: p.state || 'lobby', blur: p.blur || 0 }; })
+      .sort(function (a, b) { return a.at - b.at; });
+  });
+}
+
+function sessionSubmit(sid, pid, sub, meta) {
+  var body = JSON.parse(JSON.stringify(sub));
+  if (remote) {
+    var who = me();
+    if (who) body.uid = who;
+    return req('PUT', 'sessions/' + sid + '/results/' + pid, body).then(function () {
+      req('PATCH', 'sessions/' + sid + '/players/' + pid, { state: 'done' }).catch(function () {});
+      if (!who) return { saved: false };
+      var h = JSON.parse(JSON.stringify(sub));
+      h.code = (meta && meta.code) || '';
+      h.title = (meta && meta.title) || '';
+      h.titleEn = (meta && meta.titleEn) || h.title;
+      return req('PUT', 'users/' + who + '/history/' + pid, h).then(function () { return { saved: true }; }, function () { return { saved: false }; });
+    });
+  }
+  lread();
+  if (!mem.sessions[sid]) return Promise.reject(new Error('no session'));
+  mem.sessions[sid].results[pid] = body;
+  if (mem.sessions[sid].players[pid]) mem.sessions[sid].players[pid].state = 'done';
+  lwrite();
+  return Promise.resolve({ saved: false });
+}
+
+function sessionResults(sid) {
+  var load;
+  if (remote) load = req('GET', 'sessions/' + sid + '/results').then(function (o) { return o || {}; });
+  else { lread(); load = Promise.resolve(mem.sessions[sid] ? mem.sessions[sid].results : {}); }
+  return load.then(function (o) {
+    return Object.keys(o).map(function (id) {
+      var s = normSub(id, o[id]);
+      s.correct = o[id].correct || 0;
+      s.wrong = o[id].wrong || 0;
+      s.blank = o[id].blank || 0;
+      s.blur = o[id].blur || 0;
+      s.auto = !!o[id].auto;
+      return s;
+    }).sort(function (a, b) { return a.at - b.at; });
+  });
+}
+
+function sessionKick(sid, pid) {
+  if (remote) return req('DELETE', 'sessions/' + sid + '/results/' + pid).then(function () { return req('DELETE', 'sessions/' + sid + '/players/' + pid); });
+  lread();
+  if (mem.sessions[sid]) { delete mem.sessions[sid].results[pid]; delete mem.sessions[sid].players[pid]; lwrite(); }
+  return Promise.resolve();
+}
+
+function sessionDelete(sid) {
+  if (remote) return req('DELETE', 'sessions/' + sid);
+  lread();
+  delete mem.sessions[sid];
+  lwrite();
+  return Promise.resolve();
+}
+
 window.LAV.store = {
   remote: remote,
   get: get,
@@ -336,6 +487,17 @@ window.LAV.store = {
   wipeAccount: wipeAccount,
   isAdmin: isAdmin,
   claimAdmin: claimAdmin,
-  norm: normQuiz
+  norm: normQuiz,
+  full: full,
+  sessionCreate: sessionCreate,
+  sessionInfo: sessionInfo,
+  sessionPatch: sessionPatch,
+  sessionJoin: sessionJoin,
+  playerPatch: playerPatch,
+  sessionPlayers: sessionPlayers,
+  sessionSubmit: sessionSubmit,
+  sessionResults: sessionResults,
+  sessionKick: sessionKick,
+  sessionDelete: sessionDelete
 };
 })();

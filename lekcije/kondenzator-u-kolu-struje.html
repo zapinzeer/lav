@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Punjenje i pražnjenje kondenzatora, vremenska konstanta RC, kapacitivna reaktansa X_C = 1/ωC i struja koja prednjači naponu 90°, sa modelima.">
+<title>Kondenzator u kolu jednosmerne i naizmenične struje · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="kondenzator-u-kolu-struje">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš šta je kapacitivnost i kako se kondenzator puni i prazni preko otpornika;</li><li>izračunaš vremensku konstantu \( \tau = RC \) i napon na kondenzatoru u datom trenutku;</li><li>izračunaš kapacitivnu reaktansu i struju u kolu naizmenične struje;</li><li>objasniš zašto struja prednjači naponu za 90° i uporediš kondenzator sa kalemom.</li></ul>
+    <ul lang="en"><li>explain what capacitance is and how a capacitor charges and discharges through a resistor;</li><li>calculate the time constant \( \tau = RC \) and the capacitor voltage at a given moment;</li><li>calculate the capacitive reactance and the current in an AC circuit;</li><li>explain why the current leads the voltage by 90° and compare the capacitor with the coil.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="kondenzator" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">građa</span><span lang="en">construction</span></p>
+    <h2><span lang="sr">Šta je kondenzator?</span><span lang="en">What is a capacitor?</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Kondenzator čine dve provodne obloge razdvojene izolatorom (dielektrikom). Kada se priključi na izvor, na jednoj oblozi se nakupi pozitivno, a na drugoj negativno naelektrisanje. <strong>Kapacitivnost</strong> <span class="v">C</span> govori koliko naelektrisanja kondenzator primi po voltu napona:</p>
+<p lang="en">A capacitor consists of two conducting plates separated by an insulator (a dielectric). When it is connected to a source, positive charge accumulates on one plate and negative charge on the other. The <strong>capacitance</strong> <span class="v">C</span> tells how much charge the capacitor takes in per volt of voltage:</p><div class="formula"><div class="tex">\[ C = \frac{Q}{U} \qquad W = \tfrac{1}{2}CU^2 \]</div><dl class="legend"><div><dt>C</dt><dd><span lang="sr">kapacitivnost</span><span lang="en">capacitance</span></dd><span class="unit">F (farad)</span></div><div><dt>Q</dt><dd><span lang="sr">naelektrisanje na oblozi</span><span lang="en">charge on a plate</span></dd><span class="unit">C (kulon)</span></div><div><dt>W</dt><dd><span lang="sr">energija u električnom polju</span><span lang="en">energy in the electric field</span></dd><span class="unit">J</span></div></dl></div><p lang="sr">Farad je ogromna jedinica, pa se koriste <strong>mikrofaradi</strong> (1 μF = 10<sup>−6</sup> F), nanofaradi (10<sup>−9</sup> F) i pikofaradi (10<sup>−12</sup> F). Struja ne teče <em>kroz</em> dielektrik. Ona teče u kolu dok se obloge pune ili prazne, i tim kretanjem naelektrisanja dobijamo osećaj da struja „prolazi” kroz kondenzator.</p>
+<p lang="en">The farad is a huge unit, so we use <strong>microfarads</strong> (1 μF = 10<sup>−6</sup> F), nanofarads (10<sup>−9</sup> F) and picofarads (10<sup>−12</sup> F). Current does not flow <em>through</em> the dielectric. It flows in the circuit while the plates are charging or discharging, and that movement of charge gives the impression that current "passes" through the capacitor.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="dc" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">jednosmerna struja</span><span lang="en">direct current</span></p>
+    <h2><span lang="sr">Kondenzator u kolu jednosmerne struje</span><span lang="en">A capacitor in a DC circuit</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Priključimo kondenzator na bateriju <span class="v">E</span> preko otpornika <span class="v">R</span>. Na početku je kondenzator prazan, pa na njemu nema napona i cela baterija je na otporniku: struja je najveća, \( I_0 = E/R \). Kako se obloge pune, napon na kondenzatoru raste, napon na otporniku opada, pa opada i struja. Kada je \( u_C = E \), struje više nema i kondenzator je pun.</p>
+<p lang="en">We connect a capacitor to a battery <span class="v">E</span> through a resistor <span class="v">R</span>. At the start the capacitor is empty, so there is no voltage across it and the whole battery is across the resistor: the current is largest, \( I_0 = E/R \). As the plates charge, the capacitor voltage rises, the resistor voltage falls, and so the current falls. When \( u_C = E \) there is no current any more and the capacitor is full.</p><div class="formula"><div class="tex">\[ u_C(t) = E\left(1 - e^{-t/\tau}\right) \qquad i(t) = \frac{E}{R}\,e^{-t/\tau} \qquad \tau = RC \]</div><dl class="legend"><div><dt>τ</dt><dd><span lang="sr">vremenska konstanta kola</span><span lang="en">time constant of the circuit</span></dd><span class="unit">s</span></div><div><dt>R</dt><dd><span lang="sr">otpornost u kolu</span><span lang="en">resistance in the circuit</span></dd><span class="unit">Ω</span></div><div><dt>C</dt><dd><span lang="sr">kapacitivnost</span><span lang="en">capacitance</span></dd><span class="unit">F</span></div></dl></div><p lang="sr">Posle <strong>jedne</strong> vremenske konstante napon dostiže \( 1 - e^{-1} = 63\ \% \) od <span class="v">E</span>, posle <strong>pet</strong> konstanti 99,3 %, pa se kondenzator smatra punim. Pražnjenje preko otpornika ide istim zakonom, ali opadajuće:</p>
+<p lang="en">After <strong>one</strong> time constant the voltage reaches \( 1 - e^{-1} = 63\ \% \) of <span class="v">E</span>, after <strong>five</strong> constants 99.3 %, and the capacitor is considered full. Discharging through a resistor follows the same law, but falling:</p><div class="formula"><div class="tex">\[ u_C(t) = U_0\,e^{-t/\tau} \qquad i(t) = -\frac{U_0}{R}\,e^{-t/\tau} \]</div></div><div class="rule-box violet"><p class="eyebrow"><span lang="sr">Ustaljeno stanje</span><span lang="en">Steady state</span></p><p lang="sr">Kada se sve smiri (posle ~5τ) struja kroz kondenzator je nula, pa se on za jednosmernu struju ponaša kao <strong>prekid kola</strong>. Kažemo da kondenzator „ne propušta” jednosmernu struju. Odatle dolazi njegova uloga da odvaja jednosmernu od naizmenične komponente.</p>
+<p lang="en">When everything settles (after ~5τ) the current through the capacitor is zero, so for direct current it behaves like an <strong>open circuit</strong>. We say the capacitor "blocks" direct current. That is where its role of separating the direct and the alternating component comes from.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="dc-model" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">model</span><span lang="en">model</span></p>
+    <h2><span lang="sr">Probaj punjenje i pražnjenje</span><span lang="en">Try charging and discharging</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Menjaj R i C i posmatraj kako se menja brzina procesa. Veći R znači manja struja punjenja, pa je sporije punjenje. Veći C znači da treba doneti više naelektrisanja, pa je takođe sporije. Zato je \( \tau = RC \).</p>
+<p lang="en">Change R and C and watch how the speed of the process changes. A larger R means a smaller charging current, so charging is slower. A larger C means more charge has to be delivered, so it is also slower. That is why \( \tau = RC \).</p>
+</div><figure class="lab" id="lab-dc">
+<div class="viewport" style="aspect-ratio:360/190"><canvas tabindex="0" aria-label="RC kolo sa baterijom: punjenje i pražnjenje kondenzatora / an RC circuit with a battery: charging and discharging a capacitor"></canvas></div>
+<div class="plot" style="margin-top:10px"><canvas aria-label="Napon na kondenzatoru u funkciji t/τ / capacitor voltage against t/τ"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="d-r"><span lang="sr">Otpornost R</span><span lang="en">Resistance R</span></label><output id="d-r-out" for="d-r"></output><input type="range" id="d-r" min="100" max="5000" step="100" value="1000"></div>
+<div class="ctl"><label for="d-c"><span lang="sr">Kapacitivnost C</span><span lang="en">Capacitance C</span></label><output id="d-c-out" for="d-c"></output><input type="range" id="d-c" min="10" max="500" step="10" value="100"></div>
+<div class="btns"><span class="lbl"><span lang="sr">Stanje</span><span lang="en">State</span></span><div class="seg" id="d-mode" role="group"><button type="button" data-v="chg" aria-pressed="true"><span lang="sr">Puni se</span><span lang="en">Charging</span></button><button type="button" data-v="dis" aria-pressed="false"><span lang="sr">Prazni se</span><span lang="en">Discharging</span></button></div><button type="button" class="btn small" id="d-reset"><span lang="sr">Isprazni</span><span lang="en">Reset</span></button></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="d-calc"></div><div class="result" id="d-result"></div><div class="calc" id="d-note"></div></div>
+<figcaption><span lang="sr">Kondenzator se puni preko otpornika iz baterije od 10 V. Struja (narandžasta) je na početku najveća i opada, a napon na kondenzatoru (zelena kriva) raste i teži bateriji. Žuta isprekidana linija je 63 % od 10 V, to jest napon posle jedne vremenske konstante τ = RC. Model sam menja stanje posle pet τ, a stanje možeš i ručno da prebaciš. Vreme je ubrzano, da se vidi ceo proces.</span><span lang="en">A capacitor charges through a resistor from a 10 V battery. The current (orange) is largest at the start and falls, and the capacitor voltage (green curve) rises and approaches the battery voltage. The yellow dashed line is 63 % of 10 V, that is the voltage after one time constant τ = RC. The model switches state by itself after five τ, and you can also switch it by hand. Time is sped up so you can see the whole process.</span></figcaption>
+</figure><div class="rest">
+<details class="think"><summary><span lang="sr">Pomisli prvo: R = 10 kΩ i C = 100 μF. Koliko traje potpuno punjenje (5τ)?</span><span lang="en">Think first: R = 10 kΩ and C = 100 μF. How long does a full charge (5τ) take?</span></summary><div class="ans"><p lang="sr">\( \tau = 10^4\cdot 10^{-4} = 1\ \mathrm{s} \), pa je potpuno punjenje oko 5 s.</p>
+<p lang="en">\( \tau = 10^4\cdot 10^{-4} = 1\ \mathrm{s} \), so a full charge takes about 5 s.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="ac" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">naizmenična struja</span><span lang="en">alternating current</span></p>
+    <h2><span lang="sr">Kondenzator u kolu naizmenične struje</span><span lang="en">A capacitor in an AC circuit</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Sada na kondenzator dovedemo napon \( u = U_m\sin\omega t \). Struja kondenzatora je brzina promene naelektrisanja, \( i = dQ/dt = C\,du/dt \). Izvod sinusa je kosinus, pa je:</p>
+<p lang="en">Now we apply a voltage \( u = U_m\sin\omega t \) to the capacitor. The capacitor current is the rate of change of charge, \( i = dQ/dt = C\,du/dt \). The derivative of a sine is a cosine, so:</p><div class="formula"><div class="tex">\[ i = C\frac{du}{dt} = \omega C U_m\cos\omega t = \omega C U_m\sin(\omega t + 90^\circ) \]</div></div><div class="formula"><div class="tex">\[ I_m = \omega C\,U_m \qquad X_C = \frac{1}{\omega C} = \frac{1}{2\pi fC} \qquad \underline{Z}_C = \frac{1}{j\omega C} = -jX_C = X_C\angle -90^\circ \]</div><dl class="legend"><div><dt>X<sub>C</sub></dt><dd><span lang="sr">kapacitivna reaktansa</span><span lang="en">capacitive reactance</span></dd><span class="unit">Ω</span></div><div><dt>ω</dt><dd><span lang="sr">kružna učestanost</span><span lang="en">angular frequency</span></dd><span class="unit">rad/s</span></div><div><dt>C</dt><dd><span lang="sr">kapacitivnost</span><span lang="en">capacitance</span></dd><span class="unit">F</span></div></dl></div><p lang="sr"><strong>Struja prednjači naponu za 90°</strong> (ICE). Reaktansa je <strong>obrnuto srazmerna</strong> učestanosti i kapacitivnosti: za jednosmernu struju (f = 0) je beskonačna (prekid kola), a sa porastom učestanosti opada, pa kondenzator sve bolje „propušta” naizmeničnu struju.</p>
+<p lang="en">The <strong>current leads the voltage by 90°</strong> (ICE). The reactance is <strong>inversely proportional</strong> to frequency and capacitance: for direct current (f = 0) it is infinite (an open circuit), and as the frequency rises it falls, so the capacitor "passes" alternating current better and better.</p>
+</div><figure class="lab" id="lab-c">
+<div class="viewport" style="aspect-ratio:360/190"><canvas tabindex="0" aria-label="Strujno kolo i fazorski dijagram / the circuit and the phasor diagram"></canvas></div>
+<div class="plot" style="margin-top:10px"><canvas aria-label="Napon i struja u funkciji ωt / voltage and current against ωt"></canvas></div>
+<div class="plot short" style="margin-top:10px"><canvas aria-label="Trenutna snaga p(t) / instantaneous power p(t)"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="lab-c-um"><span lang="sr">Amplituda napona U<sub>m</sub></span><span lang="en">Voltage amplitude U<sub>m</sub></span></label><output id="lab-c-um-out" for="lab-c-um"></output><input type="range" id="lab-c-um" min="5" max="325" step="5" value="100"></div>
+<div class="ctl"><label for="lab-c-f"><span lang="sr">Učestanost f</span><span lang="en">Frequency f</span></label><output id="lab-c-f-out" for="lab-c-f"></output><input type="range" id="lab-c-f" min="10" max="500" step="10" value="50"></div>
+<div class="ctl"><label for="lab-c-val"><span lang="sr">Kapacitivnost C</span><span lang="en">Capacitance C</span></label><output id="lab-c-val-out" for="lab-c-val"></output><input type="range" id="lab-c-val" min="1" max="100" step="1" value="20"></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-c-calc"></div><div class="result" id="lab-c-result"></div><div class="calc" id="lab-c-note"></div></div>
+<figcaption><span lang="sr">Kondenzator u kolu naizmenične struje. Sada struja (narandžasta) <strong>prednjači</strong> naponu (plava) za 90°: struja je najveća kada napon prolazi kroz nulu, jer se tada napon najbrže menja. Povećaj učestanost ili kapacitivnost: reaktansa X<sub>C</sub> opada, pa struja raste. To je suprotno od kalema. Snaga ponovo menja znak, srednja snaga je nula.</span><span lang="en">A capacitor in an AC circuit. Now the current (orange) <strong>leads</strong> the voltage (blue) by 90°: the current is largest when the voltage crosses zero, because that is when the voltage changes fastest. Increase the frequency or the capacitance: the reactance X<sub>C</sub> falls, so the current grows. This is the opposite of the coil. The power changes sign again, and the average power is zero.</span></figcaption>
+</figure><div class="rest">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Kalem i kondenzator jedan pored drugog</span><span lang="en">The coil and the capacitor side by side</span></caption><thead><tr><th></th><th><span lang="sr">Kalem L</span><span lang="en">Coil L</span></th><th><span lang="sr">Kondenzator C</span><span lang="en">Capacitor C</span></th></tr></thead><tbody><tr><td><span lang="sr">reaktansa</span><span lang="en">reactance</span></td><td>X<sub>L</sub> = ωL</td><td>X<sub>C</sub> = 1/(ωC)</td></tr><tr><td><span lang="sr">impedansa</span><span lang="en">impedance</span></td><td>jωL</td><td>1/(jωC) = −jX<sub>C</sub></td></tr><tr><td><span lang="sr">fazni stav</span><span lang="en">phase</span></td><td><span lang="sr">struja kasni 90°</span><span lang="en">current lags 90°</span></td><td><span lang="sr">struja prednjači 90°</span><span lang="en">current leads 90°</span></td></tr><tr><td><span lang="sr">pri f → 0</span><span lang="en">as f → 0</span></td><td><span lang="sr">kratak spoj</span><span lang="en">short circuit</span></td><td><span lang="sr">prekid kola</span><span lang="en">open circuit</span></td></tr><tr><td><span lang="sr">pri f → ∞</span><span lang="en">as f → ∞</span></td><td><span lang="sr">prekid kola</span><span lang="en">open circuit</span></td><td><span lang="sr">kratak spoj</span><span lang="en">short circuit</span></td></tr><tr><td><span lang="sr">energija</span><span lang="en">energy</span></td><td>W = Li²/2</td><td>W = Cu²/2</td></tr><tr><td><span lang="sr">mnemonik</span><span lang="en">mnemonic</span></td><td>ELI</td><td>ICE</td></tr></tbody></table></div><p lang="sr">Idealan kondenzator, kao i kalem, ne troši srednju snagu: \( p = UI\sin 2\omega t \) i \( P = 0 \). Reaktivna snaga \( Q_C = -UI \) ima suprotan znak u odnosu na kalem. To je razlog što se kondenzatori koriste za <strong>kompenzaciju</strong> induktivnog opterećenja (motori) u industriji.</p>
+<p lang="en">An ideal capacitor, like a coil, uses no average power: \( p = UI\sin 2\omega t \) and \( P = 0 \). The reactive power \( Q_C = -UI \) has the opposite sign compared with the coil. That is why capacitors are used to <strong>compensate</strong> inductive loads (motors) in industry.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · vreme punjenja</span><span lang="en">Example 1 · charging time</span></h4><p class="given" lang="sr">Dato: \( E = 12 \) V, \( R = 10\ \mathrm{k}\Omega \), \( C = 100\ \mu\mathrm{F} \). Traži se τ, napon posle 2 s i početna struja.</p><p class="given" lang="en">Given: \( E = 12 \) V, \( R = 10\ \mathrm{k}\Omega \), \( C = 100\ \mu\mathrm{F} \). Find τ, the voltage after 2 s and the initial current.</p><ol lang="sr"><li>\( \tau = RC = 10^4\cdot 100\cdot 10^{-6} = 1\ \mathrm{s} \).</li><li>\( u_C(2\ \mathrm{s}) = 12(1 - e^{-2}) = 12\cdot 0{,}865 = 10{,}4\ \mathrm{V} \).</li><li>\( I_0 = E/R = 12/10^4 = 1{,}2\ \mathrm{mA} \).</li></ol>
+<ol lang="en"><li>\( \tau = RC = 10^4\cdot 100\cdot 10^{-6} = 1\ \mathrm{s} \).</li><li>\( u_C(2\ \mathrm{s}) = 12(1 - e^{-2}) = 12\cdot 0.865 = 10.4\ \mathrm{V} \).</li><li>\( I_0 = E/R = 12/10^4 = 1.2\ \mathrm{mA} \).</li></ol><p class="answer"><span lang="sr">τ = 1 s, u_C(2 s) = 10,4 V, I₀ = 1,2 mA</span><span lang="en">τ = 1 s, u_C(2 s) = 10.4 V, I₀ = 1.2 mA</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · reaktansa i struja</span><span lang="en">Example 2 · reactance and current</span></h4><p class="given" lang="sr">Dato: kondenzator \( C = 10\ \mu\mathrm{F} \) na 230 V, 50 Hz. Traži se \( X_C \), struja i reaktivna snaga.</p><p class="given" lang="en">Given: a capacitor \( C = 10\ \mu\mathrm{F} \) at 230 V, 50 Hz. Find \( X_C \), the current and the reactive power.</p><ol lang="sr"><li>\( X_C = \dfrac{1}{2\pi\cdot 50\cdot 10\cdot 10^{-6}} = 318\ \Omega \).</li><li>\( I = U/X_C = 230/318 = 0{,}72\ \mathrm{A} \).</li><li>\( Q_C = UI = 230\cdot 0{,}72 = 166\ \mathrm{var} \), a aktivna snaga je 0.</li></ol>
+<ol lang="en"><li>\( X_C = \dfrac{1}{2\pi\cdot 50\cdot 10\cdot 10^{-6}} = 318\ \Omega \).</li><li>\( I = U/X_C = 230/318 = 0.72\ \mathrm{A} \).</li><li>\( Q_C = UI = 230\cdot 0.72 = 166\ \mathrm{var} \), and the active power is 0.</li></ol><p class="answer"><span lang="sr">X_C = 318 Ω, I = 0,72 A, Q = 166 var</span><span lang="en">X_C = 318 Ω, I = 0.72 A, Q = 166 var</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · jednačina struje</span><span lang="en">Example 3 · the equation of the current</span></h4><p class="given" lang="sr">Dato: \( u = 2\sin 1000t \) V na kondenzatoru od 1 μF. Napiši jednačinu struje.</p><p class="given" lang="en">Given: \( u = 2\sin 1000t \) V across a 1 μF capacitor. Write the equation of the current.</p><ol lang="sr"><li>\( X_C = \dfrac{1}{\omega C} = \dfrac{1}{1000\cdot 10^{-6}} = 1000\ \Omega \).</li><li>\( I_m = U_m/X_C = 2/1000 = 2\ \mathrm{mA} \).</li><li>Struja prednjači za 90°: \( i = 2\sin(1000t + 90^\circ) \) mA.</li></ol>
+<ol lang="en"><li>\( X_C = \dfrac{1}{\omega C} = \dfrac{1}{1000\cdot 10^{-6}} = 1000\ \Omega \).</li><li>\( I_m = U_m/X_C = 2/1000 = 2\ \mathrm{mA} \).</li><li>The current leads by 90°: \( i = 2\sin(1000t + 90^\circ) \) mA.</li></ol><p class="answer"><span lang="sr">i = 2 sin(1000t + 90°) mA</span><span lang="en">i = 2 sin(1000t + 90°) mA</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 4 · potrebna kapacitivnost</span><span lang="en">Example 4 · the required capacitance</span></h4><p class="given" lang="sr">Dato: kondenzator treba da vuče 1 A pri 230 V, 50 Hz. Kolika je kapacitivnost?</p><p class="given" lang="en">Given: a capacitor has to draw 1 A at 230 V, 50 Hz. What is the capacitance?</p><ol lang="sr"><li>\( X_C = U/I = 230\ \Omega \).</li><li>\( C = \dfrac{1}{\omega X_C} = \dfrac{1}{314\cdot 230} = 13{,}8\cdot 10^{-6}\ \mathrm{F} \).</li></ol>
+<ol lang="en"><li>\( X_C = U/I = 230\ \Omega \).</li><li>\( C = \dfrac{1}{\omega X_C} = \dfrac{1}{314\cdot 230} = 13.8\cdot 10^{-6}\ \mathrm{F} \).</li></ol><p class="answer"><span lang="sr">C = 13,8 μF</span><span lang="en">C = 13.8 μF</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Obrnuta reaktansa.</b> \( X_C = 1/(\omega C) \): sa porastom učestanosti <em>opada</em>. Kod kalema je obrnuto.</div></li><li><div><b>Mikro u osnovne jedinice.</b> 1 μF = 10<sup>−6</sup> F. Greška od jedne stepenice daje reaktansu pogrešnu za 10<sup>6</sup>.</div></li><li><div><b>Pogrešan smer kašnjenja.</b> Kod kondenzatora <strong>struja prednjači</strong> (ICE). Kod kalema kasni (ELI).</div></li><li><div><b>Kondenzator „propušta” DC.</b> Samo dok se puni ili prazni. U ustaljenom stanju kroz njega jednosmerna struja ne teče.</div></li><li><div><b>Pun posle jedne τ.</b> Posle jedne τ je tek 63 %. Praktično pun kondenzator zahteva ~5τ.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>An inverted reactance.</b> \( X_C = 1/(\omega C) \): it <em>falls</em> as frequency rises. For a coil it is the opposite.</div></li><li><div><b>Micro to base units.</b> 1 μF = 10<sup>−6</sup> F. A slip of one power gives a reactance wrong by a factor of 10<sup>6</sup>.</div></li><li><div><b>The wrong direction of the lag.</b> In a capacitor the <strong>current leads</strong> (ICE). In a coil it lags (ELI).</div></li><li><div><b>A capacitor "passes" DC.</b> Only while it is charging or discharging. In the steady state no direct current flows through it.</div></li><li><div><b>Full after one τ.</b> After one τ it is only 63 %. A practically full capacitor takes ~5τ.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Kapacitivnost \( C = Q/U \), energija \( W = CU^2/2 \). Jedinica je farad, praktično μF, nF i pF.</li><li>U kolu jednosmerne struje kondenzator se puni i prazni po eksponencijalnom zakonu sa vremenskom konstantom \( \tau = RC \); posle ~5τ je pun i struja je nula (prekid kola).</li><li>U kolu naizmenične struje \( i = C\,du/dt \): struja <strong>prednjači</strong> naponu za 90° (ICE).</li><li>Kapacitivna reaktansa \( X_C = 1/(\omega C) \) opada sa učestanošću; impedansa je \( \underline{Z}_C = 1/(j\omega C) = -jX_C \).</li><li>Idealni kondenzator ne troši snagu (\( P = 0 \)), samo razmenjuje energiju sa izvorom.</li></ul><ul lang="en"><li>Capacitance \( C = Q/U \), energy \( W = CU^2/2 \). The unit is the farad, in practice μF, nF and pF.</li><li>In a DC circuit a capacitor charges and discharges exponentially with the time constant \( \tau = RC \); after ~5τ it is full and the current is zero (an open circuit).</li><li>In an AC circuit \( i = C\,du/dt \): the current <strong>leads</strong> the voltage by 90° (ICE).</li><li>The capacitive reactance \( X_C = 1/(\omega C) \) falls with frequency; the impedance is \( \underline{Z}_C = 1/(j\omega C) = -jX_C \).</li><li>An ideal capacitor consumes no power (\( P = 0 \)), it only exchanges energy with the source.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="AC06" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/ac-labs.js"></script>
+<script src="../assets/js/lessons/kondenzator-u-kolu-struje.js"></script>
+</body>
+</html>

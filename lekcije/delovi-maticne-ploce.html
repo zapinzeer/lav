@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Obiđi matičnu ploču u 3D modelu: procesorsko podnožje, RAM, PCIe, M.2, SATA, čipset, VRM, konektori napajanja i zadnja ploča, sa opisom svakog dela.">
+<title>Delovi matične ploče i njihove uloge · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="delovi-maticne-ploce">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>nabrojiš i pokažeš na 3D modelu glavne delove matične ploče;</li><li>objasniš ulogu svakog dela: podnožje, RAM, PCIe, M.2, SATA, čipset, VRM i konektori;</li><li>razlikuješ šta je vezano direktno na procesor, a šta preko čipseta;</li><li>izračunaš propusnost memorije i PCIe veze i struju VRM-a.</li></ul>
+    <ul lang="en"><li>list and point out the main parts of a motherboard on the 3D model;</li><li>explain the role of each part: socket, RAM, PCIe, M.2, SATA, chipset, VRM and connectors;</li><li>tell what connects directly to the processor and what goes through the chipset;</li><li>calculate memory and PCIe bandwidth and the VRM current.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="sta" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">uvod</span><span lang="en">introduction</span></p>
+    <h2><span lang="sr">Šta je matična ploča?</span><span lang="en">What is a motherboard?</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Matična ploča</strong> (engl. motherboard) je najveća štampana ploča u računaru. Na njoj nema „pametnog” rada kao u procesoru, ali bez nje ništa ne bi radilo zajedno: ona <strong>fizički nosi</strong> sve komponente, <strong>električno ih povezuje</strong> bakarnim putanjama (trasama) i <strong>napaja</strong> ih. Možeš da je zamisliš kao grad: procesor je centar uprave, memorija su magacini, a trase na ploči su ulice i auto-putevi.</p>
+<p lang="en">The <strong>motherboard</strong> is the largest printed circuit board in a computer. It does no "clever" work like the processor does, but nothing would work together without it: it <strong>physically carries</strong> all the components, <strong>electrically connects them</strong> with copper paths (traces) and <strong>powers</strong> them. Think of it as a city: the processor is the administrative centre, the memory modules are warehouses, and the traces on the board are streets and highways.</p><p lang="sr">Moderna ploča je višeslojna (4 do 12 slojeva bakra spojenih u „sendvič”), a trase za brze signale (memorija, PCIe) crtaju se u parovima tačno određene dužine da bi signali stigli istovremeno. Na jednoj strani su svi utikači i slotovi, a na zadnjoj ivici ploče grupisani su spoljni portovi (I/O).</p>
+<p lang="en">A modern board is multi-layered (4 to 12 layers of copper joined in a "sandwich"), and traces for fast signals (memory, PCIe) are drawn in pairs of precisely controlled length so the signals arrive at the same time. All the plugs and slots are on one side, and the external ports (I/O) are grouped on the rear edge of the board.</p><details class="think"><summary><span lang="sr">Pomisli prvo: koje tri stvari matična ploča radi za sve komponente?</span><span lang="en">Think first: what three things does the motherboard do for all the components?</span></summary><div class="ans"><p lang="sr">Nosi ih (mehanički), povezuje ih (signalne trase i magistrale) i napaja ih (razvodi i pretvara napone).</p>
+<p lang="en">It carries them (mechanically), connects them (signal traces and buses) and powers them (distributes and converts the voltages).</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="model" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">obiđi ploču u 3D</span><span lang="en">tour the board in 3D</span></p>
+    <h2><span lang="sr">Delovi matične ploče u 3D</span><span lang="en">Parts of the motherboard in 3D</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Model desno prikazuje tipičnu <strong>ATX</strong> ploču (30,5 × 24,4 cm) sa 17 označenih delova. Počni od <strong>procesorskog podnožja</strong> u sredini, pa ga prati: desno su RAM slotovi, dole PCIe slotovi, levo zadnja ploča sa portovima, a gore i levo VRM sa hladnjacima. Kada kliknes deo, kamera mu se približi i dobijaš opis i savet.</p>
+<p lang="en">The model on the right shows a typical <strong>ATX</strong> board (30.5 × 24.4 cm) with 17 labelled parts. Start from the <strong>CPU socket</strong> in the middle and follow from there: the RAM slots are on the right, the PCIe slots at the bottom, the rear panel with the ports on the left, and the VRM with its heatsinks at the top and left. When you click a part, the camera moves closer and you get a description and a tip.</p><div class="rule-box"><p class="eyebrow"><span lang="sr">Gde je šta?</span><span lang="en">Where is what?</span></p><p lang="sr">Zadnja ploča je uvek na istoj ivici (levo na slici) jer mora da izađe kroz otvor na zadnjoj strani kućišta. Slotovi za kartice su pri dnu, a napajanje (24-pin i 8-pin) pri ivicama bliže napajanju.</p>
+<p lang="en">The rear panel is always on the same edge (left in the picture) because it has to come out through the opening at the back of the case. The slots for cards are at the bottom, and the power connectors (24-pin and 8-pin) are near the edges closest to the power supply.</p></div>
+</div><figure class="lab" id="lab-board">
+<div class="viewport" style="aspect-ratio:4/3"><canvas tabindex="0" aria-label="3D model matične ploče / 3D model of a motherboard"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje · klikni deo</span><span lang="en">Drag to rotate · click a part</span></span></div>
+<div class="controls"><div class="btns"><label class="switch" for="pc-x"><input type="checkbox" id="pc-x"><span lang="sr">Prikaži ugrađene komponente</span><span lang="en">Show installed components</span></label></div></div>
+<div class="pc-info" id="pc-info" aria-live="polite"></div>
+<div class="pc-list" id="pc-list"></div>
+<figcaption><span lang="sr">Model ATX matične ploče gledan odozgo, sa ulaznim/izlaznim portovima levo. Okreni ga prevlačenjem, klikni na deo (ili izaberi iz liste) da se kamera približi i da vidiš čemu služi. Uključi „ugrađene komponente” da vidiš procesorski hladnjak, RAM module, grafičku karticu i M.2 SSD na svojim mestima.</span><span lang="en">An ATX motherboard seen from above, with the input/output ports on the left. Rotate it by dragging, click a part (or pick it from the list) to bring the camera closer and see what it does. Switch on "installed components" to see the CPU cooler, RAM modules, graphics card and M.2 SSD in their places.</span></figcaption>
+</figure><div class="rest">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Brzi pregled delova</span><span lang="en">A quick reference of the parts</span></caption><thead><tr><th><span lang="sr">Deo</span><span lang="en">Part</span></th><th><span lang="sr">Šta povezuje</span><span lang="en">What it connects</span></th><th><span lang="sr">Tipična veličina</span><span lang="en">Typical size</span></th></tr></thead><tbody><tr><td><span lang="sr">CPU podnožje</span><span lang="en">CPU socket</span></td><td><span lang="sr">procesor ↔ ploča</span><span lang="en">processor ↔ board</span></td><td>1200–1851 (LGA)</td></tr><tr><td><span lang="sr">RAM slotovi</span><span lang="en">RAM slots</span></td><td><span lang="sr">DDR4/DDR5 moduli</span><span lang="en">DDR4/DDR5 modules</span></td><td>2 ili 4 / 2 or 4</td></tr><tr><td><span lang="sr">PCIe x16</span><span lang="en">PCIe x16</span></td><td><span lang="sr">grafička kartica</span><span lang="en">graphics card</span></td><td>16 traka / lanes</td></tr><tr><td><span lang="sr">M.2</span><span lang="en">M.2</span></td><td><span lang="sr">NVMe SSD</span><span lang="en">NVMe SSD</span></td><td>2242 · 2260 · 2280</td></tr><tr><td><span lang="sr">SATA</span><span lang="en">SATA</span></td><td><span lang="sr">HDD, SATA SSD</span><span lang="en">HDD, SATA SSD</span></td><td>4–8 portova / ports</td></tr><tr><td><span lang="sr">24-pin ATX</span><span lang="en">24-pin ATX</span></td><td><span lang="sr">napajanje → ploča</span><span lang="en">power supply → board</span></td><td>3,3 V · 5 V · 12 V</td></tr><tr><td><span lang="sr">8-pin EPS</span><span lang="en">8-pin EPS</span></td><td><span lang="sr">napajanje → CPU</span><span lang="en">power supply → CPU</span></td><td>+12 V</td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="veze" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">kako sarađuju</span><span lang="en">how they work together</span></p>
+    <h2><span lang="sr">Kako se delovi povezuju</span><span lang="en">How the parts are connected</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Najbrži uređaji su vezani <strong>direktno na procesor</strong>: RAM (preko memorijskog kontrolera koji je u samom procesoru) i grafička kartica (PCIe x16). Sporiji uređaji (USB, SATA, mreža, dodatne PCIe trake) vezani su na <strong>čipset</strong>, a čipset je sa procesorom povezan jednom brzom vezom (DMI kod Intela, ekvivalent kod AMD-a). Stariji računari su imali dva čipa, „severni” i „južni most”; danas je severni most utopljen u procesor.</p>
+<p lang="en">The fastest devices are connected <strong>directly to the processor</strong>: RAM (through the memory controller that sits inside the processor) and the graphics card (PCIe x16). Slower devices (USB, SATA, network, extra PCIe lanes) are connected to the <strong>chipset</strong>, and the chipset is linked to the processor with one fast link (DMI on Intel, the equivalent on AMD). Older computers had two chips, the "north" and the "south bridge"; today the north bridge is built into the processor.</p><figure class="fig" style="max-width:640px"><svg class="dg" viewBox="0 0 560 300" role="img" aria-label="Blok-šema: procesor je u centru, RAM i grafika su direktno na njemu, a sporiji uređaji preko čipseta / Block diagram: the CPU is in the centre, RAM and graphics hang directly off it, slower devices through the chipset" style="width:100%;height:auto"><defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><g><rect x="210" y="14" width="140" height="44" rx="7" fill="var(--sheet-soft, var(--sheet))" stroke="var(--ink)" stroke-width="1.6"/><text x="280" y="32" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">RAM</text><text x="280" y="48" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">DDR4 / DDR5 · 2 kanala</text></g><g><rect x="210" y="110" width="140" height="64" rx="7" fill="var(--copper-soft, var(--sheet))" stroke="var(--copper)" stroke-width="1.6"/><text x="280" y="138" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">CPU</text><text x="280" y="154" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">procesor · memorijski kontroler</text></g><g><rect x="10" y="118" width="140" height="48" rx="7" fill="var(--field-soft, var(--sheet))" stroke="var(--field)" stroke-width="1.6"/><text x="80" y="138" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">GPU</text><text x="80" y="154" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">PCIe x16</text></g><g><rect x="410" y="118" width="140" height="48" rx="7" fill="var(--field-soft, var(--sheet))" stroke="var(--field)" stroke-width="1.6"/><text x="480" y="138" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">NVMe SSD</text><text x="480" y="154" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">M.2 · PCIe x4</text></g><g><rect x="210" y="228" width="140" height="52" rx="7" fill="var(--violet-soft, var(--sheet))" stroke="var(--violet)" stroke-width="1.6"/><text x="280" y="250" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">Čipset</text><text x="280" y="266" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">PCH</text></g><g><line x1="280" y1="58" x2="280" y2="108" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#ar)" marker-start="url(#ar)"/></g><g><line x1="150" y1="142" x2="208" y2="142" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#ar)" marker-start="url(#ar)"/><text x="185" y="137" style="font:500 10.5px var(--mono);fill:var(--muted)">PCIe</text></g><g><line x1="410" y1="142" x2="352" y2="142" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#ar)" marker-start="url(#ar)"/><text x="387" y="137" style="font:500 10.5px var(--mono);fill:var(--muted)">PCIe</text></g><g><line x1="280" y1="174" x2="280" y2="226" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#ar)" marker-start="url(#ar)"/><text x="286" y="195" style="font:500 10.5px var(--mono);fill:var(--muted)">DMI / uplink</text></g><g><rect x="10" y="232" width="100" height="42" rx="7" fill="var(--sheet-soft, var(--sheet))" stroke="var(--ink)" stroke-width="1.6"/><text x="60" y="249" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">SATA</text><text x="60" y="265" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">HDD · SSD</text></g><g><rect x="116" y="232" width="84" height="42" rx="7" fill="var(--sheet-soft, var(--sheet))" stroke="var(--ink)" stroke-width="1.6"/><text x="158" y="257" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">USB</text></g><g><rect x="366" y="232" width="84" height="42" rx="7" fill="var(--sheet-soft, var(--sheet))" stroke="var(--ink)" stroke-width="1.6"/><text x="408" y="257" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">LAN</text></g><g><rect x="456" y="232" width="94" height="42" rx="7" fill="var(--sheet-soft, var(--sheet))" stroke="var(--ink)" stroke-width="1.6"/><text x="503" y="249" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">PCIe x1</text><text x="503" y="265" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">kartice</text></g><g><line x1="208" y1="254" x2="202" y2="254" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#ar)"/></g><g><line x1="352" y1="254" x2="364" y2="254" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#ar)"/></g></svg><figcaption><span lang="sr">Pojednostavljena blok-šema moderne ploče. Strelice su magistrale.</span><span lang="en">A simplified block diagram of a modern board. The arrows are buses.</span></figcaption></figure><div class="formula"><div class="tex">\[ B = \frac{f \cdot w}{8} \]</div><dl class="legend"><div><dt>B</dt><dd><span lang="sr">propusnost</span><span lang="en">bandwidth</span></dd><span class="unit">GB/s</span></div><div><dt>f</dt><dd><span lang="sr">broj prenosa u sekundi (MT/s)</span><span lang="en">transfers per second (MT/s)</span></dd><span class="unit">MT/s</span></div><div><dt>w</dt><dd><span lang="sr">širina magistrale</span><span lang="en">bus width</span></dd><span class="unit">bit</span></div></dl></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · propusnost memorije</span><span lang="en">Example 1 · memory bandwidth</span></h4><p class="given" lang="sr">Dato: DDR4-3200 modul ima magistralu širine 64 bita. Kolika je propusnost jednog kanala i dvokanalnog režima?</p><p class="given" lang="en">Given: a DDR4-3200 module has a 64-bit bus. What is the bandwidth of one channel and of dual-channel mode?</p><ol lang="sr"><li>\( B = \dfrac{3200\cdot 10^6\cdot 64}{8} = 25{,}6\ \mathrm{GB/s} \) po kanalu.</li><li>Dva kanala rade paralelno: \( 2\cdot 25{,}6 = 51{,}2\ \mathrm{GB/s} \).</li><li>Zato se dva modula stavljaju u slotove iste boje (2 i 4).</li></ol>
+<ol lang="en"><li>\( B = \dfrac{3200\cdot 10^6\cdot 64}{8} = 25.6\ \mathrm{GB/s} \) per channel.</li><li>Two channels work in parallel: \( 2\cdot 25.6 = 51.2\ \mathrm{GB/s} \).</li><li>That is why two modules are put into the slots of the same colour (2 and 4).</li></ol><p class="answer"><span lang="sr">B = 25,6 GB/s (1 kanal), 51,2 GB/s (2 kanala)</span><span lang="en">B = 25.6 GB/s (1 channel), 51.2 GB/s (2 channels)</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · PCIe veza</span><span lang="en">Example 2 · a PCIe link</span></h4><p class="given" lang="sr">Dato: PCIe 4.0 radi 16 GT/s po traci sa kodiranjem 128b/130b. Kolika je propusnost slota x16 i M.2 NVMe SSD-a sa x4?</p><p class="given" lang="en">Given: PCIe 4.0 runs at 16 GT/s per lane with 128b/130b encoding. What is the bandwidth of an x16 slot and of an M.2 NVMe SSD with x4?</p><ol lang="sr"><li>Po traci: \( 16\cdot\dfrac{128}{130}/8 = 1{,}97\ \mathrm{GB/s} \).</li><li>x16: \( 16\cdot 1{,}97 = 31{,}5\ \mathrm{GB/s} \).</li><li>x4 (M.2): \( 4\cdot 1{,}97 = 7{,}9\ \mathrm{GB/s} \).</li></ol>
+<ol lang="en"><li>Per lane: \( 16\cdot\dfrac{128}{130}/8 = 1.97\ \mathrm{GB/s} \).</li><li>x16: \( 16\cdot 1.97 = 31.5\ \mathrm{GB/s} \).</li><li>x4 (M.2): \( 4\cdot 1.97 = 7.9\ \mathrm{GB/s} \).</li></ol><p class="answer"><span lang="sr">x16 ≈ 31,5 GB/s, x4 ≈ 7,9 GB/s</span><span lang="en">x16 ≈ 31.5 GB/s, x4 ≈ 7.9 GB/s</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · struja VRM-a</span><span lang="en">Example 3 · VRM current</span></h4><p class="given" lang="sr">Dato: procesor troši 125 W pri naponu jezgra 1,25 V, a VRM se napaja sa 12 V i ima efikasnost 90 %. Kolika je izlazna struja VRM-a i ulazna struja sa 12 V?</p><p class="given" lang="en">Given: a processor draws 125 W at a core voltage of 1.25 V, and the VRM is fed from 12 V with 90 % efficiency. What are the output current of the VRM and the input current from 12 V?</p><ol lang="sr"><li>Izlazna struja: \( I = P/U = 125/1{,}25 = 100\ \mathrm{A} \).</li><li>Ulazna snaga: \( 125/0{,}9 = 139\ \mathrm{W} \), pa je ulazna struja \( 139/12 = 11{,}6\ \mathrm{A} \).</li><li>Gubici su 14 W i zato VRM treba hladnjake.</li></ol>
+<ol lang="en"><li>Output current: \( I = P/U = 125/1.25 = 100\ \mathrm{A} \).</li><li>Input power: \( 125/0.9 = 139\ \mathrm{W} \), so the input current is \( 139/12 = 11.6\ \mathrm{A} \).</li><li>The losses are 14 W, which is why the VRM needs heatsinks.</li></ol><p class="answer"><span lang="sr">I(izlaz) = 100 A, I(ulaz) = 11,6 A</span><span lang="en">I(out) = 100 A, I(in) = 11.6 A</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 4 · dijagnostika</span><span lang="en">Example 4 · troubleshooting</span></h4><p class="given" lang="sr">Računar se pali, ali pri svakom uključivanju pokazuje pogrešan datum i resetuje BIOS podešavanja. Koji deo je verovatno uzrok i kako se rešava?</p><p class="given" lang="en">A computer starts, but shows the wrong date and resets the BIOS settings every time it is switched on. Which part is the probable cause and how is it fixed?</p><ol lang="sr"><li>Podešavanja i sat čuva mali čip uz pomoć CMOS baterije dok je računar isključen.</li><li>Ako je baterija ispražnjena, čip gubi podatke pri svakom isključivanju.</li><li>Rešenje: zameniti CR2032 bateriju (3 V) novom i ponovo podesiti datum i BIOS.</li></ol>
+<ol lang="en"><li>The settings and the clock are kept by a small chip with the help of the CMOS battery while the computer is off.</li><li>If the battery is flat, the chip loses its data every time the power is removed.</li><li>Fix: replace the CR2032 battery (3 V) with a new one and set the date and BIOS again.</li></ol><p class="answer"><span lang="sr">Uzrok: CMOS baterija. Zameni CR2032.</span><span lang="en">Cause: the CMOS battery. Replace the CR2032.</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Mešanje 8-pin EPS i PCIe konektora.</b> Izgledaju skoro isto, ali imaju različit raspored kontakata. EPS ide samo u ploču, PCIe samo u grafičku karticu.</div></li><li><div><b>RAM u pogrešne slotove.</b> Dva modula u susedne slotove rade samo u jednom kanalu. Prati uputstvo ploče (obično 2 i 4).</div></li><li><div><b>Zaboravljen I/O štitnik ili odstojnik.</b> Odstojnik ispod ploče bez rupe ili nedostajući štitnik mogu da prouzrokuju kratak spoj ili oštećenje portova.</div></li><li><div><b>Pogrešan podnožje procesora.</b> Procesor mora da odgovara podnožju (npr. LGA1700 ili AM5). Isti brend ne znači isto podnožje.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>Mixing up the 8-pin EPS and PCIe connectors.</b> They look almost the same but have a different pin arrangement. EPS goes only to the board, PCIe only to the graphics card.</div></li><li><div><b>RAM in the wrong slots.</b> Two modules in adjacent slots work in single channel only. Follow the board manual (usually 2 and 4).</div></li><li><div><b>A forgotten I/O shield or standoff.</b> A standoff under the board with no hole, or a missing shield, can cause a short circuit or damaged ports.</div></li><li><div><b>The wrong CPU socket.</b> The processor must match the socket (e.g. LGA1700 or AM5). The same brand does not mean the same socket.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Matična ploča nosi, povezuje i napaja sve komponente računara.</li><li>Najbrži uređaji (RAM, grafička kartica) vezani su direktno na procesor, a ostali preko čipseta.</li><li>VRM pretvara 12 V u nizak napon i veliku struju za procesor; zato ima hladnjake.</li><li>Napajanje ide kroz 24-pinski ATX konektor (ploča) i 8-pinski EPS konektor (procesor).</li><li>CMOS baterija čuva sat i BIOS podešavanja; BIOS/UEFI pokreće računar i učitava operativni sistem.</li></ul><ul lang="en"><li>The motherboard carries, connects and powers all the components of the computer.</li><li>The fastest devices (RAM, the graphics card) connect directly to the processor, the rest through the chipset.</li><li>The VRM converts 12 V into a low voltage and large current for the processor; that is why it has heatsinks.</li><li>Power comes through the 24-pin ATX connector (board) and the 8-pin EPS connector (processor).</li><li>The CMOS battery keeps the clock and the BIOS settings; the BIOS/UEFI starts the computer and loads the operating system.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC03" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/pc3d.js"></script>
+<script src="../assets/js/lessons/delovi-maticne-ploce.js"></script>
+</body>
+</html>

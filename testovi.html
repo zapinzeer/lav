@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Testovi u sobi: domaćin pokreće gotov test sa produbljenim pitanjima, učesnici se pridružuju kodom, a domaćin vidi koliko je ko pogodio i pogrešio.">
+<title>Testovi · lav</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="assets/css/lav.css">
+</head>
+<body data-nav="tests" data-title-sr="Testovi · lav" data-title-en="Tests · lav">
+<div id="site-header"></div>
+
+<main>
+  <section class="section tests-top">
+    <div class="wrap">
+      <p class="eyebrow"><span lang="sr">Testovi u sobi</span><span lang="en">Test rooms</span></p>
+      <h1 class="tests-h"><span lang="sr">Pokreni test, pridruži se kodom</span><span lang="en">Host a test, join with a code</span></h1>
+      <p class="lead" lang="sr">Izaberi gotov test, pogledaj sva pitanja i tačne odgovore, pa napravi sobu. Učesnici upišu kod i čekaju da ih pokreneš. Kad završe, vidiš koliko je ko pogodio, a koliko pogrešio, i koja su pitanja bila najteža.</p>
+      <p class="lead" lang="en">Pick a ready-made test, look through all the questions and correct answers, then create a room. Participants type the code and wait for you to start. When they finish you see how many each of them got right and wrong, and which questions were the hardest.</p>
+
+      <div class="tests-grid">
+        <div class="tests-box">
+          <h2><span lang="sr">Pridruži se testu</span><span lang="en">Join a test</span></h2>
+          <p class="help" lang="sr">Kod ima 6 cifara i daje ga domaćin.</p>
+          <p class="help" lang="en">The code has 6 digits and the host gives it to you.</p>
+          <div class="row"><input id="t-code" class="input code" type="text" inputmode="numeric" maxlength="6" autocomplete="off" data-ph-sr="000000" data-ph-en="000000"><button type="button" class="btn primary" id="t-join"><span lang="sr">Pridruži se</span><span lang="en">Join</span></button></div>
+        </div>
+        <div class="tests-box" id="t-mine" hidden>
+          <h2><span lang="sr">Tvoje sobe</span><span lang="en">Your rooms</span></h2>
+          <div id="t-mine-list"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow"><span lang="sr">Gotovi testovi</span><span lang="en">Ready-made tests</span></p>
+        <h2><span lang="sr">Izaberi test koji pokrećeš</span><span lang="en">Pick the test you host</span></h2>
+        <p class="help" lang="sr">Svaki test ima pitanja iz same lekcije i produbljena pitanja sa računanjem. Testove ne možeš da menjaš, a učesnici dobijaju ista pitanja.</p>
+        <p class="help" lang="en">Each test has questions from the lesson itself and in-depth questions with calculations. The tests cannot be edited and every participant gets the same questions.</p>
+      </div>
+      <div id="t-list"></div>
+    </div>
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="config.js"></script>
+<script src="assets/js/lessons.js"></script>
+<script src="assets/vendor/katex/katex.min.js"></script>
+<script src="assets/vendor/katex/auto-render.min.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/testovi.js"></script>
+</body>
+</html>

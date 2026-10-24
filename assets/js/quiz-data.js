@@ -19,9 +19,21 @@ function num(text, correct, unit, ref, explain, tol) {
   return { type: 'text', numeric: true, tol: tol == null ? 1 : tol, unit: unit, text: text, correct: correct, formula: 'optional', working: 'optional', points: 2, ref: ref, explain: explain };
 }
 
-function quiz(title, questions) {
-  return { builtin: true, title: title, settings: { showAnswers: true, shuffleO: true }, questions: questions };
+function quiz(title, questions, advanced) {
+  return { builtin: true, title: title, settings: { showAnswers: true, shuffleO: true }, questions: questions, advanced: advanced || [] };
 }
+
+// compact helpers for the question banks: text is passed as separate Serbian and English strings,
+// an option is either one string (same in both languages) or a [sr, en] pair
+function o(x) { return Array.isArray(x) ? t(x[0], x[1]) : t(x, x); }
+window.LAV_QH = {
+  t: t,
+  quiz: quiz,
+  C: function (sr, en, opts, correct, ref, esr, een) { return choice(t(sr, en), opts.map(o), correct, ref, t(esr, een)); },
+  M: function (sr, en, opts, correct, ref, esr, een) { return multi(t(sr, en), opts.map(o), correct, ref, t(esr, een)); },
+  B: function (sr, en, correct, ref, esr, een) { return bool(t(sr, en), correct, ref, t(esr, een)); },
+  N: function (sr, en, correct, unit, ref, esr, een, tol) { return num(t(sr, en), correct, unit, ref, t(esr, een), tol); }
+};
 
 window.LAV_QUIZZES = {
   FIZ01: quiz(t('Magnetna indukcija · mali test', 'Magnetic induction · short test'), [

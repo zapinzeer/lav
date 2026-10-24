@@ -40,6 +40,71 @@
           }
         }
       },
+      "sessions": {
+        "$sid": {
+          ".validate": "$sid.matches(/^[0-9]{6}$/)",
+          ".write": "auth != null && data.child('info/host').val() === auth.uid",
+          "info": {
+            ".read": true,
+            ".write": "auth != null && !data.exists() && newData.child('host').val() === auth.uid",
+            ".validate": "newData.hasChildren(['quiz', 'host', 'state', 'created', 'n'])",
+            "quiz": { ".validate": "newData.isString() && newData.val().matches(/^[A-Z0-9]{3,8}$/)" },
+            "host": { ".validate": "newData.isString()" },
+            "hostName": { ".validate": "newData.isString() && newData.val().length <= 40" },
+            "state": { ".validate": "newData.val() === 'lobby' || newData.val() === 'live' || newData.val() === 'ended'" },
+            "secure": { ".validate": "newData.isBoolean()" },
+            "showAnswers": { ".validate": "newData.isBoolean()" },
+            "created": { ".validate": "newData.isNumber()" },
+            "started": { ".validate": "newData.isNumber()" },
+            "ended": { ".validate": "newData.isNumber()" },
+            "n": { ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 200" },
+            "$other": { ".validate": false }
+          },
+          "players": {
+            ".read": true,
+            "$pid": {
+              ".write": "newData.exists() && root.child('lav/sessions/' + $sid + '/info/state').val() !== 'ended' && root.child('lav/sessions/' + $sid + '/info').exists()",
+              ".validate": "$pid.matches(/^[a-z0-9]{6,20}$/) && newData.hasChildren(['name', 'at', 'state'])",
+              "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 40" },
+              "at": { ".validate": "newData.isNumber() && newData.val() <= now + 86400000" },
+              "state": { ".validate": "newData.val() === 'lobby' || newData.val() === 'testing' || newData.val() === 'done'" },
+              "blur": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+              "$other": { ".validate": false }
+            }
+          },
+          "results": {
+            ".read": "auth != null && root.child('lav/sessions/' + $sid + '/info/host').val() === auth.uid",
+            "$pid": {
+              ".write": "newData.exists() && !data.exists() && (root.child('lav/sessions/' + $sid + '/info/state').val() === 'live' || (root.child('lav/sessions/' + $sid + '/info/state').val() === 'ended' && now < root.child('lav/sessions/' + $sid + '/info/ended').val() + 180000))",
+              ".validate": "newData.hasChildren(['name', 'at', 'score', 'max', 'correct', 'wrong', 'blank', 'answers'])",
+              "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 40" },
+              "at": { ".validate": "newData.isNumber() && newData.val() <= now + 86400000" },
+              "score": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+              "max": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+              "correct": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+              "wrong": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+              "blank": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+              "blur": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+              "auto": { ".validate": "newData.isBoolean()" },
+              "uid": { ".validate": "auth != null && newData.val() === auth.uid" },
+              "answers": {
+                "$i": {
+                  ".validate": "$i.matches(/^[0-9]{1,3}$/)",
+                  "a": {
+                    ".validate": "!newData.isString() || newData.val().length <= 2000",
+                    "$k": { ".validate": "newData.isNumber()" }
+                  },
+                  "t": { ".validate": "newData.isString() && newData.val().length <= 12" },
+                  "f": { ".validate": "newData.isString() && newData.val().length <= 4000" },
+                  "w": { ".validate": "newData.isString() && newData.val().length <= 4000" },
+                  "$other": { ".validate": false }
+                }
+              },
+              "$other": { ".validate": false }
+            }
+          }
+        }
+      },
       "users": {
         "$uid": {
           ".read": "auth != null && auth.uid === $uid",

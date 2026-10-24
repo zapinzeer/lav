@@ -156,7 +156,12 @@ function loadScript(src) {
 }
 var quizReady = null;
 function loadData() {
-  if (!window.LAV_QUIZZES && !loadData.p) loadData.p = loadScript('assets/js/quiz-data.js');
+  if (!window.LAV_QUIZZES && !loadData.p) {
+    loadData.p = loadScript('assets/js/quiz-data.js')
+      .then(function () { return loadScript('assets/js/quiz-ac.js'); })
+      .then(function () { return loadScript('assets/js/quiz-pc.js'); })
+      .then(function () { return loadScript('assets/js/quiz-adv.js'); });
+  }
   return loadData.p || Promise.resolve();
 }
 function loadQuiz() {
@@ -166,6 +171,7 @@ function loadQuiz() {
       .then(function () { return loadScript('assets/js/quiz-store.js'); })
       .then(function () { return loadScript('assets/js/mathbox.js'); })
       .then(function () { return loadScript('assets/js/quiz.js'); })
+      .then(function () { return loadScript('assets/js/host.js'); })
       .then(function () { return loadScript('assets/js/account.js'); });
     quizReady.catch(function () { quizReady = null; });
   }
@@ -220,18 +226,18 @@ function buildHeader() {
     '<a class="mark" href="' + BASE + 'index.html" aria-label="lav"><i></i>lav</a>' +
     '<nav class="nav" aria-label="Navigacija">' +
     '<a href="' + BASE + 'biblioteka.html"' + (cur === 'library' ? ' aria-current="page"' : '') + '>' + both('Biblioteka', 'Library') + '</a>' +
+    '<a href="' + BASE + 'testovi.html"' + (cur === 'tests' ? ' aria-current="page"' : '') + '>' + both('Testovi', 'Tests') + '</a>' +
     '</nav>' +
     '<div class="top-tools">' +
     '<div class="lang" role="group" aria-label="Jezik / Language"><button type="button" data-set-lang="sr" aria-pressed="true">SR</button><button type="button" data-set-lang="en" aria-pressed="false">EN</button></div>' +
     (accountsOn() ? '<button type="button" class="tool" id="btn-account" data-title-on>' + icon('user') + '<span class="lbl"></span></button>' : '') +
     '<button type="button" class="tool" id="btn-join" data-aria-sr="Pridruži se sobi" data-aria-en="Join a room" data-title-on>' + icon('join') + '<span class="lbl">' + both('Pridruži se', 'Join room') + '</span></button>' +
-    '<button type="button" class="tool primary" id="btn-create" data-aria-sr="Napravi kviz" data-aria-en="Create a quiz" data-title-on>' + icon('plus') + '<span class="lbl">' + both('Napravi kviz', 'Create quiz') + '</span></button>' +
+    '<a class="tool primary" id="btn-create" href="' + BASE + 'testovi.html" data-aria-sr="Pokreni test" data-aria-en="Host a test" data-title-on>' + icon('plus') + '<span class="lbl">' + both('Pokreni test', 'Host a test') + '</span></a>' +
     '</div></div></header>';
   document.querySelectorAll('[data-set-lang]').forEach(function (b) {
     b.addEventListener('click', function () { setLang(b.getAttribute('data-set-lang')); });
   });
   document.getElementById('btn-join').addEventListener('click', function () { openJoin(); });
-  document.getElementById('btn-create').addEventListener('click', function () { openCreate(); });
   var acc = document.getElementById('btn-account');
   if (acc) {
     acc.addEventListener('click', function () { openAccount(); });
@@ -244,7 +250,7 @@ function buildFooter() {
   var host = document.getElementById('site-footer');
   if (!host) return;
   host.outerHTML = '<footer class="site"><a href="' + BASE + 'index.html">lav</a> · ' + both('otvorena biblioteka školskih lekcija', 'an open library of school lessons') +
-    ' · <a href="' + BASE + 'biblioteka.html">' + both('Biblioteka', 'Library') + '</a></footer>';
+    ' · <a href="' + BASE + 'biblioteka.html">' + both('Biblioteka', 'Library') + '</a> · <a href="' + BASE + 'testovi.html">' + both('Testovi', 'Tests') + '</a></footer>';
 }
 
 function buildLessonTop() {
@@ -333,8 +339,8 @@ function buildTestCta() {
       '<p class="eyebrow">' + both('Proveri znanje', 'Check what you know') + '</p>' +
       '<h2>' + both('Mali test', 'A small test') + '</h2>' +
       '<p>' + both(
-        (n ? n + ' vrlo lakih pitanja. ' : 'Vrlo laka pitanja. ') + 'Upišeš korisničko ime i odgovaraš u kviz sobi. Iznad svakog odgovora je polje za formulu: otkucaj <b>\\</b> i izaberi funkciju. Formule iz lekcije se tu ne prikazuju, pa probaj da ih se setiš.',
-        (n ? n + ' very easy questions. ' : 'Very easy questions. ') + 'You enter a username and answer in a quiz room. There is a formula box above every answer: type <b>\\</b> and pick a function. The formulas from the lesson are not shown there, so try to remember them.'
+        (n ? n + ' kratkih pitanja' : 'Kratka pitanja') + ' za proveru da li si razumeo lekciju. Upišeš korisničko ime i odgovaraš. Iznad svakog odgovora može da stoji polje za formulu: otkucaj <b>\\</b> i izaberi funkciju. Za dubinsko proveravanje u grupi domaćin pokreće <a href="' + BASE + 'testovi.html">test u sobi</a> sa produbljenim pitanjima.',
+        (n ? n + ' short questions' : 'Short questions') + ' to check that you understood the lesson. You enter a username and answer. A formula box may appear above an answer: type <b>\\</b> and pick a function. For an in-depth check in a group, a host starts a <a href="' + BASE + 'testovi.html">test room</a> with in-depth questions.'
       ) + '</p>' +
       '</div><div class="test-side">' +
       '<div class="room"><span class="code" aria-label="Kod sobe">' + esc(code) + '</span></div>' +
@@ -351,6 +357,87 @@ function buildTestCta() {
   };
   render();
   loadData().then(render).catch(function () {});
+}
+
+// ---------- secure mode: the lessons are locked while this browser is in a hosted test ----------
+function hsState() {
+  try { var h = JSON.parse(localStorage.getItem('lav-hs') || 'null'); return h && h.sid && h.pid ? h : null; } catch (e) { return null; }
+}
+function sessionInfoOf(h) {
+  var c = window.LAV_CONFIG || {};
+  if (accountsOn()) {
+    var base = String(c.databaseURL).trim().replace(/\/+$/, '');
+    return fetch(base + '/' + (c.dataPath || 'lav') + '/sessions/' + h.sid + '/info.json').then(function (r) { return r.ok ? r.json() : undefined; }, function () { return undefined; });
+  }
+  try { var db = JSON.parse(localStorage.getItem('lav-db') || '{}'); var x = db.sessions && db.sessions[h.sid]; return Promise.resolve(x ? x.info : null); } catch (e) { return Promise.resolve(undefined); }
+}
+function lockMin(ms) {
+  var t = Math.max(0, Math.ceil(ms / 1000));
+  return Math.floor(t / 60) + ':' + ('0' + (t % 60)).slice(-2);
+}
+var lockEnded = false;
+function openResume() {
+  loadQuiz().then(function () { return window.LAV.quiz.resume(); }).then(function () { paintLock(); }).catch(function () { toast('Kviz se nije učitao. Proveri vezu.', 'The quiz did not load. Check your connection.'); });
+}
+function paintLock() {
+  var old = document.getElementById('lock-layer');
+  if (old) old.remove();
+  var h = hsState();
+  if (h && h.until <= Date.now()) { try { localStorage.removeItem('lav-hs'); } catch (e) {} h = null; }
+  document.documentElement.classList.remove('lav-locked');
+  if (!h) return;
+  var lesson = !!document.getElementById('lesson-top');
+  var full = h.secure && lesson;
+  var el = document.createElement('div');
+  el.id = 'lock-layer';
+  el.className = full ? 'lock-card' : 'lock-bar';
+  var txt = lockEnded
+    ? both('Domaćin je završio test. Vrati se da pošalješ odgovore.', 'The host has ended the test. Go back to send your answers.')
+    : h.secure ? both('Test je u toku. Lekcije su zaključane još ', 'A test is in progress. The lessons are locked for another ') : both('Test je u toku.', 'A test is in progress.');
+  if (full) {
+    el.innerHTML = '<div class="lock-in">' + icon('lock', 'ic') + '<h2>' + both('Lekcija je zaključana', 'This lesson is locked') + '</h2>' +
+      '<p>' + txt + (h.secure && !lockEnded ? '<b class="lock-t"></b>' : '') + '</p>' +
+      '<p class="help">' + both('Zaključavanje traje 30 minuta ili dok ne pošalješ odgovore. Biblioteka i ostale stranice rade normalno.', 'The lock lasts 30 minutes or until you submit your answers. The library and the other pages work normally.') + '</p>' +
+      '<div class="row"><button type="button" class="btn primary" data-act="resume">' + both('Nazad na test', 'Back to the test') + '</button></div></div>';
+    document.documentElement.classList.add('lav-locked');
+    var top = document.querySelector('.top');
+    if (top && top.parentNode) top.parentNode.insertBefore(el, top.nextSibling); else document.body.insertBefore(el, document.body.firstChild);
+  } else {
+    el.innerHTML = '<span>' + txt + (h.secure && !lockEnded ? '<b class="lock-t"></b>' : '') + '</span><button type="button" class="btn small primary" data-act="resume">' + both('Nazad na test', 'Back to the test') + '</button>';
+    document.body.appendChild(el);
+  }
+  el.querySelector('[data-act="resume"]').addEventListener('click', openResume);
+  tickLock();
+}
+function tickLock() {
+  var h = hsState();
+  if (!h) { if (document.getElementById('lock-layer')) paintLock(); return; }
+  if (h.until <= Date.now()) { paintLock(); return; }
+  document.querySelectorAll('.lock-t').forEach(function (b) { b.textContent = lockMin(h.until - Date.now()); });
+}
+function checkLockRemote() {
+  var h = hsState();
+  if (!h) return;
+  sessionInfoOf(h).then(function (info) {
+    if (info === undefined) return;
+    var cur = hsState();
+    if (!cur || cur.sid !== h.sid) return;
+    if (!info || (info.state === 'ended' && Date.now() - (info.ended || 0) > 170000)) {
+      try { localStorage.removeItem('lav-hs'); } catch (e) {}
+      paintLock();
+    } else if (info.state === 'ended' && !lockEnded) {
+      lockEnded = true;
+      paintLock();
+    }
+  });
+}
+function startLock() {
+  paintLock();
+  window.addEventListener('lav-lock', paintLock);
+  window.addEventListener('storage', function (e) { if (e.key === 'lav-hs') paintLock(); });
+  setInterval(tickLock, 1000);
+  setInterval(checkLockRemote, 20000);
+  if (hsState()) checkLockRemote();
 }
 
 var observed = [];
@@ -415,6 +502,7 @@ window.LAV = {
   openAccount: openAccount,
   accountsOn: accountsOn,
   loadData: loadData,
+  loadQuiz: loadQuiz,
   watch: watch,
   loop: loop,
   range: range,
@@ -428,6 +516,7 @@ buildLessonTop();
 buildToc();
 buildPager();
 buildTestCta();
+startLock();
 renderMath(document.body);
 setLang(lang);
 

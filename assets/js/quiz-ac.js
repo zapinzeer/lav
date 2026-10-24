@@ -1,0 +1,126 @@
+(function () {
+'use strict';
+var H = window.LAV_QH, t = H.t, C = H.C, M = H.M, B = H.B, N = H.N;
+var Q = window.LAV_QUIZZES;
+
+Q.AC01 = H.quiz(t('Fazori · mali test', 'Phasors · short test'), [
+  C('Kojom ugaonom brzinom se okreće fazor naizmenične veličine?', 'At what angular speed does the phasor of an alternating quantity rotate?',
+    ['ω = 2πf', 'ω = f/2π', 'ω = 1/f', 'ω = U/I'], 0, 'fazor', 'Fazor se okreće ugaonom brzinom ω = 2πf, suprotno kretanju kazaljke na satu.', 'The phasor rotates at the angular speed ω = 2πf, counter-clockwise.'),
+  C('Šta predstavlja dužina fazora?', 'What does the length of a phasor represent?',
+    [['amplitudu (ili efektivnu vrednost)', 'the amplitude (or the RMS value)'], ['frekvenciju', 'the frequency'], ['periodu', 'the period'], ['fazni stav', 'the phase']], 0, 'fazor', 'Dužina fazora je proporcionalna amplitudi, a ugao je fazni stav.', 'The length of the phasor is proportional to the amplitude and its angle is the phase.'),
+  C('Šta daje projekcija fazora na vertikalnu osu?', 'What does the projection of the phasor on the vertical axis give?',
+    [['trenutnu vrednost veličine', 'the instantaneous value of the quantity'], ['efektivnu vrednost', 'the RMS value'], ['frekvenciju', 'the frequency'], ['srednju vrednost', 'the average value']], 0, 'sinus', 'Projekcija rotirajućeg fazora na vertikalnu osu opisuje sinusoidu u vremenu.', 'The projection of the rotating phasor on the vertical axis traces the sine wave in time.'),
+  B('Dva fazora iste učestanosti zadržavaju stalnu međusobnu razliku faza dok se okreću.', 'Two phasors of the same frequency keep a constant phase difference while they rotate.', true, 'razlika', 'Okreću se istom brzinom, pa ugao među njima ostaje isti.', 'They rotate at the same speed, so the angle between them stays the same.'),
+  N('Za u = 311·sin(314t + 30°) V koliki je početni fazni ugao u stepenima?', 'For u = 311·sin(314t + 30°) V, what is the initial phase angle in degrees?', '30', '°|stepeni|stepen|deg|degrees', 'razlika', 'Početni fazni ugao je član uz ωt, dakle 30°.', 'The initial phase is the term next to ωt, that is 30°.')
+], [
+  N('Napon u₁ = 3·sin(ωt) V i u₂ = 4·sin(ωt + 90°) V se sabiraju. Kolika je amplituda zbira u voltima?', 'The voltages u₁ = 3·sin(ωt) V and u₂ = 4·sin(ωt + 90°) V are added. What is the amplitude of the sum in volts?', '5', 'V|volt', 'zbir', 'Fazori su pod pravim uglom, pa je rezultanta √(3² + 4²) = 5 V.', 'The phasors are at a right angle, so the resultant is √(3² + 4²) = 5 V.'),
+  N('Učestanost je 50 Hz. Za koliko milisekundi je jedna veličina pomerena u odnosu na drugu ako je fazna razlika 90°?', 'The frequency is 50 Hz. By how many milliseconds is one quantity shifted relative to the other if the phase difference is 90°?', '5', 'ms|milisekund|millisecond', 'razlika', 'Perioda je 20 ms, a 90° je četvrtina periode: 20/4 = 5 ms.', 'The period is 20 ms and 90° is a quarter of it: 20/4 = 5 ms.'),
+  N('Kolika je kružna učestanost ω u rad/s pri f = 50 Hz? (zaokruži na ceo broj)', 'What is the angular frequency ω in rad/s at f = 50 Hz? (round to a whole number)', '314', 'rad/s|rad', 'sinus', 'ω = 2π · 50 ≈ 314 rad/s.', 'ω = 2π · 50 ≈ 314 rad/s.', 1),
+  N('Amplituda prvog napona je 6 V, drugog 8 V, a fazna razlika je 90°. Kolika je amplituda zbira u voltima?', 'The first voltage has an amplitude of 6 V, the second 8 V, and the phase difference is 90°. What is the amplitude of the sum in volts?', '10', 'V|volt', 'zbir', '√(6² + 8²) = 10 V.', '√(6² + 8²) = 10 V.'),
+  N('Dva napona iste amplitude od 10 V su u protivfazi (180°). Koliki je zbir amplituda u voltima?', 'Two voltages of the same 10 V amplitude are in antiphase (180°). What is the amplitude of their sum in volts?', '0', 'V|volt', 'zbir', 'Fazori su suprotni i poništavaju se.', 'The phasors are opposite and cancel each other.', 0),
+  N('Koliko je u(t) u trenutku t = 0 za u = 100·sin(ωt + 30°) V?', 'What is u(t) at t = 0 for u = 100·sin(ωt + 30°) V?', '50', 'V|volt', 'sinus', 'u(0) = 100 · sin 30° = 50 V.', 'u(0) = 100 · sin 30° = 50 V.'),
+  C('Zašto ne možemo prosto da saberemo fazore dve veličine različitih učestanosti?', 'Why can we not simply add the phasors of two quantities of different frequencies?',
+    [['jer se okreću različitim brzinama, pa se ugao među njima stalno menja', 'because they rotate at different speeds, so the angle between them keeps changing'], ['jer fazori nemaju dužinu', 'because phasors have no length'], ['jer je zbir uvek nula', 'because the sum is always zero'], ['jer se razlika faza ne može meriti', 'because the phase difference cannot be measured']], 0, 'zbir', 'Zbir nije sinusoida jedne učestanosti, pa se ne prikazuje jednim fazorom.', 'The sum is not a sinusoid of one frequency, so it cannot be shown as a single phasor.'),
+  M('Šta se direktno vidi na fazorskom dijagramu?', 'What can be read directly from a phasor diagram?',
+    [['amplituda (dužina fazora)', 'the amplitude (length of the phasor)'], ['početna faza (ugao fazora)', 'the initial phase (angle of the phasor)'], ['boja signala', 'the colour of the signal'], ['temperatura provodnika', 'the temperature of the wire']], [0, 1], 'fazor', 'Dužina daje amplitudu, a ugao fazu.', 'The length gives the amplitude and the angle the phase.')
+]);
+
+Q.AC02 = H.quiz(t('Kompleksni brojevi · mali test', 'Complex numbers · short test'), [
+  C('Kojim slovom se u elektrotehnici obeležava imaginarna jedinica?', 'Which letter denotes the imaginary unit in electrical engineering?',
+    ['j', 'i', 'k', 'm'], 0, 'algebarski', 'Slovo i je rezervisano za struju, pa se piše j.', 'The letter i is reserved for current, so we write j.'),
+  B('j² = −1', 'j² = −1', true, 'algebarski', 'To je definicija imaginarne jedinice.', 'That is the definition of the imaginary unit.'),
+  N('Koliki je moduo broja Z = 3 + j4?', 'What is the modulus of Z = 3 + j4?', '5', '', 'polarni', '|Z| = √(3² + 4²) = 5.', '|Z| = √(3² + 4²) = 5.', 0),
+  C('Šta radi množenje fazora sa j?', 'What does multiplying a phasor by j do?',
+    [['obrće ga za +90°', 'rotates it by +90°'], ['obrće ga za −90°', 'rotates it by −90°'], ['udvostručuje mu dužinu', 'doubles its length'], ['ne menja ga', 'leaves it unchanged']], 0, 'primena', 'Množenje sa j je zaokret od 90° u pozitivnom smeru.', 'Multiplying by j is a rotation by 90° in the positive direction.'),
+  C('Kako se piše 10∠90° u algebarskom obliku?', 'How is 10∠90° written in algebraic form?',
+    ['j10', '10', '−j10', '10 + j10'], 0, 'polarni', '10(cos 90° + j sin 90°) = j10.', '10(cos 90° + j sin 90°) = j10.')
+], [
+  N('Koliki je imaginarni deo zbira (3 + j4) + (1 − j2)?', 'What is the imaginary part of the sum (3 + j4) + (1 − j2)?', '2', '', 'algebarski', 'Imaginarni delovi se sabiraju: 4 − 2 = 2.', 'The imaginary parts add up: 4 − 2 = 2.', 0),
+  N('Koliki je realni deo proizvoda (2 + j3)(1 − j)?', 'What is the real part of the product (2 + j3)(1 − j)?', '5', '', 'algebarski', '(2 + j3)(1 − j) = 2 − j2 + j3 − j²3 = 5 + j.', '(2 + j3)(1 − j) = 2 − j2 + j3 − j²3 = 5 + j.', 0),
+  N('Množe se 5∠30° i 4∠20°. Koliki je ugao proizvoda u stepenima?', '5∠30° and 4∠20° are multiplied. What is the angle of the product in degrees?', '50', '°|stepeni|deg|degrees', 'polarni', 'Moduli se množe (20), a uglovi sabiraju (50°).', 'The moduli multiply (20) and the angles add (50°).'),
+  C('Koliko je 20∠60° / 4∠20°?', 'What is 20∠60° / 4∠20°?',
+    ['5∠40°', '5∠80°', '80∠40°', '16∠3°'], 0, 'polarni', 'Moduli se dele (5), a uglovi oduzimaju (40°).', 'The moduli divide (5) and the angles subtract (40°).'),
+  N('Koliki je ugao broja −3 + j3 u stepenima (u intervalu 0° do 360°)?', 'What is the angle of −3 + j3 in degrees (in the range 0° to 360°)?', '135', '°|stepeni|deg|degrees', 'polarni', 'Broj je u drugom kvadrantu: 180° − 45° = 135°.', 'The number is in the second quadrant: 180° − 45° = 135°.'),
+  N('Koliki je realni deo broja 5∠53,13°? (zaokruži na ceo broj)', 'What is the real part of 5∠53.13°? (round to a whole number)', '3', '', 'polarni', '5 · cos 53,13° ≈ 3.', '5 · cos 53.13° ≈ 3.', 2),
+  C('Koliko je 1/j?', 'What is 1/j?', ['−j', 'j', '1', '−1'], 0, 'algebarski', 'Pomnožimo brojilac i imenilac sa j: j / j² = −j.', 'Multiply the numerator and denominator by j: j / j² = −j.'),
+  C('Koja je operacija jednostavnija u polarnom obliku?', 'Which operation is simpler in polar form?',
+    [['množenje i deljenje', 'multiplication and division'], ['sabiranje i oduzimanje', 'addition and subtraction'], ['obe jednako', 'both equally'], ['nijedna', 'neither']], 0, 'polarni', 'U polarnom obliku se moduli množe, a uglovi sabiraju. Za sabiranje je lakši algebarski oblik.', 'In polar form the moduli multiply and the angles add. For addition the algebraic form is easier.')
+]);
+
+Q.AC03 = H.quiz(t('Elementi naizmenične struje · mali test', 'Elements of alternating current · short test'), [
+  C('Kakva je veza učestanosti f i periode T?', 'What is the relation between the frequency f and the period T?',
+    ['f = 1/T', 'f = T', 'f = 2T', 'f = T²'], 0, 'perioda', 'Učestanost je broj perioda u sekundi: f = 1/T.', 'Frequency is the number of periods per second: f = 1/T.'),
+  N('Kolika je perioda u milisekundama pri f = 50 Hz?', 'What is the period in milliseconds at f = 50 Hz?', '20', 'ms|milisekund|millisecond', 'perioda', 'T = 1/50 s = 20 ms.', 'T = 1/50 s = 20 ms.'),
+  C('Kako se efektivna vrednost sinusoide odnosi prema amplitudi?', 'How is the RMS value of a sinusoid related to its amplitude?',
+    ['U = Um/√2', 'U = Um·√2', 'U = Um/2', 'U = Um'], 0, 'efektivna', 'Efektivna vrednost je amplituda podeljena sa √2 ≈ 1,414.', 'The RMS value is the amplitude divided by √2 ≈ 1.414.'),
+  B('Napon mreže od 230 V je efektivna vrednost.', 'The mains voltage of 230 V is an RMS value.', true, 'efektivna', 'Zato je amplituda oko 325 V.', 'That is why the amplitude is about 325 V.'),
+  C('Koja je jedinica učestanosti?', 'What is the unit of frequency?', ['herc (Hz)', 'veber (Wb)', 'farad (F)', 'henri (H)'], 0, 'perioda', 'Jedan herc je jedna perioda u sekundi.', 'One hertz is one period per second.')
+], [
+  N('Efektivni napon mreže je 230 V. Kolika je amplituda u voltima? (zaokruži na ceo broj)', 'The RMS mains voltage is 230 V. What is the amplitude in volts? (round to a whole number)', '325', 'V|volt', 'efektivna', '230 · √2 ≈ 325 V.', '230 · √2 ≈ 325 V.'),
+  N('Efektivna vrednost je 12 V. Kolika je amplituda u voltima?', 'The RMS value is 12 V. What is the amplitude in volts?', '17|16,97|16.97', 'V|volt', 'efektivna', '12 · 1,414 ≈ 16,97 V.', '12 · 1.414 ≈ 16.97 V.'),
+  N('Amplituda sinusoide je 10 V. Kolika je njena srednja vrednost u jednoj poluperiodi u voltima?', 'The amplitude of a sinusoid is 10 V. What is its average value over one half-cycle in volts?', '6,37|6.37', 'V|volt', 'amplituda', 'Usrednjena vrednost poluperiode je 2Um/π ≈ 0,637·Um = 6,37 V.', 'The half-cycle average is 2Um/π ≈ 0.637·Um = 6.37 V.'),
+  N('Kolika je kružna učestanost u rad/s pri f = 60 Hz? (zaokruži na ceo broj)', 'What is the angular frequency in rad/s at f = 60 Hz? (round to a whole number)', '377', 'rad/s|rad', 'perioda', 'ω = 2π · 60 ≈ 377 rad/s.', 'ω = 2π · 60 ≈ 377 rad/s.'),
+  C('Kolika je srednja vrednost sinusoide u toku cele periode?', 'What is the average value of a sinusoid over a whole period?',
+    [['nula', 'zero'], ['Um/2', 'Um/2'], ['2Um/π', '2Um/π'], ['Um', 'Um']], 0, 'amplituda', 'Pozitivna i negativna poluperioda se poništavaju.', 'The positive and negative half-cycles cancel.'),
+  N('Na osciloskopu je vrh-vrh 4 podeoka, a osetljivost 2 V/podeoku. Kolika je efektivna vrednost sinusoide u voltima? (zaokruži na dve decimale)', 'On an oscilloscope the peak-to-peak value is 4 divisions at 2 V/div. What is the RMS value of the sinusoid in volts? (round to two decimals)', '2,83|2.83', 'V|volt', 'efektivna', 'Upp = 8 V, amplituda 4 V, efektivna 4/√2 ≈ 2,83 V.', 'Upp = 8 V, amplitude 4 V, RMS 4/√2 ≈ 2.83 V.'),
+  N('Koliki je faktor oblika (efektivna / srednja vrednost poluperiode) sinusoide?', 'What is the form factor (RMS / half-cycle average) of a sinusoid?', '1,11|1.11', '', 'efektivna', '(Um/√2) / (2Um/π) = π/(2√2) ≈ 1,11.', '(Um/√2) / (2Um/π) = π/(2√2) ≈ 1.11.', 1),
+  N('Amplituda napona je 5 V. Koliki je napon vrh-vrh u voltima?', 'The amplitude of a voltage is 5 V. What is the peak-to-peak voltage in volts?', '10', 'V|volt', 'amplituda', 'Vrh-vrh je dvostruka amplituda.', 'Peak-to-peak is twice the amplitude.')
+]);
+
+Q.AC04 = H.quiz(t('Otpornik u kolu naizmenične struje · mali test', 'A resistor in an AC circuit · short test'), [
+  N('Kolika je fazna razlika između napona i struje na otporniku u stepenima?', 'What is the phase difference between the voltage and the current in a resistor, in degrees?', '0', '°|stepeni|deg|degrees', 'omov', 'Na otporniku su napon i struja u fazi.', 'In a resistor the voltage and the current are in phase.', 0),
+  C('Kako glasi Omov zakon za efektivne vrednosti?', 'How does Ohm\'s law read for RMS values?', ['I = U/R', 'I = U·R', 'I = R/U', 'I = U²/R'], 0, 'omov', 'Za otpornik važi isti zakon kao u jednosmernoj struji.', 'For a resistor the same law holds as in direct current.'),
+  N('Otpornik ima 100 Ω, a efektivni napon je 230 V. Kolika je efektivna struja u A?', 'A resistor has 100 Ω and the RMS voltage is 230 V. What is the RMS current in A?', '2,3|2.3', 'A|amper|ampere', 'omov', 'I = 230/100 = 2,3 A.', 'I = 230/100 = 2.3 A.'),
+  B('Otpornost idealnog otpornika ne zavisi od učestanosti.', 'The resistance of an ideal resistor does not depend on the frequency.', true, 'omov', 'To je razlika u odnosu na kalem i kondenzator.', 'That is the difference from a coil and a capacitor.'),
+  C('Koja je jedinica snage?', 'What is the unit of power?', ['vat (W)', 'džul (J)', 'volt (V)', 'amper (A)'], 0, 'snaga', 'Snaga se meri u vatima.', 'Power is measured in watts.')
+], [
+  N('Otpornik od 529 Ω je priključen na 230 V efektivno. Kolika je srednja snaga u vatima?', 'A 529 Ω resistor is connected to 230 V RMS. What is the average power in watts?', '100', 'W|vat|watt', 'snaga', 'P = U²/R = 230²/529 = 100 W.', 'P = U²/R = 230²/529 = 100 W.'),
+  N('Srednja snaga na otporniku je 50 W. Kolika je vršna trenutna snaga u vatima?', 'The average power in a resistor is 50 W. What is the peak instantaneous power in watts?', '100', 'W|vat|watt', 'snaga', 'Trenutna snaga p = Um·Im·sin² ωt dostiže Um·Im = 2P.', 'The instantaneous power p = Um·Im·sin² ωt reaches Um·Im = 2P.'),
+  N('Amplituda struje je 2 A kroz otpornik od 10 Ω. Kolika je srednja snaga u vatima?', 'The current amplitude is 2 A through a 10 Ω resistor. What is the average power in watts?', '20', 'W|vat|watt', 'snaga', 'P = Im²·R/2 = 4 · 10 / 2 = 20 W.', 'P = Im²·R/2 = 4 · 10 / 2 = 20 W.'),
+  C('Kakva je trenutna snaga p(t) = u·i na otporniku?', 'What is the instantaneous power p(t) = u·i in a resistor like?',
+    [['uvek nenegativna, učestanosti 2f', 'always non-negative, with the frequency 2f'], ['menja znak, učestanosti f', 'changes sign, with the frequency f'], ['stalna', 'constant'], ['uvek nula', 'always zero']], 0, 'snaga', 'u i i imaju isti znak, pa je proizvod uvek ≥ 0, a menja se dvaput brže.', 'u and i have the same sign, so the product is always ≥ 0 and varies twice as fast.'),
+  N('Grejalica od 1000 W radi na 230 V. Kolika je struja u A? (zaokruži na dve decimale)', 'A 1000 W heater works at 230 V. What is the current in A? (round to two decimals)', '4,35|4.35', 'A|amper|ampere', 'snaga', 'I = P/U = 1000/230 ≈ 4,35 A.', 'I = P/U = 1000/230 ≈ 4.35 A.'),
+  N('Izvor ima amplitudu 100 V, a otpornik 50 Ω. Kolika je efektivna struja u A? (zaokruži na dve decimale)', 'A source has an amplitude of 100 V and the resistor is 50 Ω. What is the RMS current in A? (round to two decimals)', '1,41|1.41', 'A|amper|ampere', 'omov', 'I = (100/√2)/50 ≈ 1,41 A.', 'I = (100/√2)/50 ≈ 1.41 A.'),
+  N('Napon mreže 230 V efektivno je na otporniku od 100 Ω. Kolika je snaga u vatima?', 'The 230 V RMS mains is across a 100 Ω resistor. What is the power in watts?', '529', 'W|vat|watt', 'snaga', 'P = 230²/100 = 529 W.', 'P = 230²/100 = 529 W.'),
+  B('Jednosmerni napon od 230 V i naizmenični od 230 V efektivno greju isti otpornik jednako.', 'A direct voltage of 230 V and an alternating one of 230 V RMS heat the same resistor equally.', true, 'snaga', 'Upravo to znači efektivna vrednost.', 'That is exactly what the RMS value means.'),
+  B('Ako se učestanost udvostruči, srednja snaga u idealnom otporniku se udvostruči.', 'If the frequency is doubled, the average power in an ideal resistor doubles.', false, 'omov', 'Otpornost ne zavisi od učestanosti, pa se snaga ne menja.', 'The resistance does not depend on the frequency, so the power does not change.')
+]);
+
+Q.AC05 = H.quiz(t('Kalem u kolu naizmenične struje · mali test', 'A coil in an AC circuit · short test'), [
+  C('Kakav je fazni odnos napona i struje na idealnom kalemu?', 'What is the phase relation between voltage and current in an ideal coil?',
+    [['napon prednjači struji za 90°', 'the voltage leads the current by 90°'], ['struja prednjači naponu za 90°', 'the current leads the voltage by 90°'], ['u fazi su', 'they are in phase'], ['u protivfazi su', 'they are in antiphase']], 0, 'indukcija', 'Kod kalema struja kasni za naponom za 90°.', 'In a coil the current lags the voltage by 90°.'),
+  C('Koja je jedinica induktivne reaktanse?', 'What is the unit of inductive reactance?', ['om (Ω)', 'henri (H)', 'farad (F)', 'vat (W)'], 0, 'reaktansa', 'Reaktansa se meri u omima, kao otpornost.', 'Reactance is measured in ohms, like resistance.'),
+  N('Kalem ima L = 0,1 H, a f = 50 Hz. Kolika je X_L u Ω? (zaokruži na jednu decimalu)', 'A coil has L = 0.1 H and f = 50 Hz. What is X_L in Ω? (round to one decimal)', '31,4|31.4', 'Ω|ohm|om', 'reaktansa', 'X_L = 2π·50·0,1 ≈ 31,4 Ω.', 'X_L = 2π·50·0.1 ≈ 31.4 Ω.'),
+  B('Idealan kalem ne troši srednju snagu.', 'An ideal coil does not consume average power.', true, 'snaga', 'Energiju naizmenično prima i vraća u izvor.', 'It alternately takes in energy and gives it back to the source.'),
+  B('U stacionarnom jednosmernom kolu idealan kalem se ponaša kao provodnik.', 'In a steady direct-current circuit an ideal coil behaves like a wire.', true, 'reaktansa', 'Pri f = 0 je X_L = 0.', 'At f = 0, X_L = 0.')
+], [
+  N('Na 50 Hz je X_L = 20 Ω. Kolika je X_L na 150 Hz u Ω?', 'At 50 Hz X_L = 20 Ω. What is X_L at 150 Hz in Ω?', '60', 'Ω|ohm|om', 'reaktansa', 'X_L je srazmerna učestanosti: 20 · 3 = 60 Ω.', 'X_L is proportional to the frequency: 20 · 3 = 60 Ω.'),
+  N('Na kalem sa X_L = 40 Ω je priključeno 12 V efektivno. Kolika je struja u A?', '12 V RMS is applied to a coil with X_L = 40 Ω. What is the current in A?', '0,3|0.3', 'A|amper|ampere', 'reaktansa', 'I = U/X_L = 12/40 = 0,3 A.', 'I = U/X_L = 12/40 = 0.3 A.'),
+  N('Kalem je 10 mH, a učestanost 1 kHz. Kolika je X_L u Ω? (zaokruži na jednu decimalu)', 'A coil is 10 mH and the frequency is 1 kHz. What is X_L in Ω? (round to one decimal)', '62,8|62.8', 'Ω|ohm|om', 'reaktansa', 'X_L = 2π · 1000 · 0,01 ≈ 62,8 Ω.', 'X_L = 2π · 1000 · 0.01 ≈ 62.8 Ω.'),
+  N('Na kalem sa X_L = 50 Ω je priključeno 100 V efektivno. Kolika je reaktivna snaga u var?', '100 V RMS is applied to a coil with X_L = 50 Ω. What is the reactive power in var?', '200', 'var', 'snaga', 'Q = U²/X_L = 10000/50 = 200 var.', 'Q = U²/X_L = 10000/50 = 200 var.'),
+  N('Koliko je potrebno L u henrijima da bi X_L = 314 Ω na 50 Hz? (zaokruži na ceo broj)', 'What L in henries is needed for X_L = 314 Ω at 50 Hz? (round to a whole number)', '1', 'H|henri|henry', 'reaktansa', 'L = X_L/ω = 314/314 = 1 H.', 'L = X_L/ω = 314/314 = 1 H.'),
+  N('Struja kroz kalem je i = 2·sin(ωt). Kolika je početna faza napona u stepenima?', 'The current through a coil is i = 2·sin(ωt). What is the initial phase of the voltage in degrees?', '90', '°|stepeni|deg|degrees', 'indukcija', 'Napon prednjači struji za 90°.', 'The voltage leads the current by 90°.'),
+  M('Šta povećava struju kroz idealan kalem priključen na izvor stalnog napona?', 'What increases the current through an ideal coil connected to a source of fixed voltage?',
+    [['smanjenje učestanosti', 'lowering the frequency'], ['smanjenje induktivnosti', 'reducing the inductance'], ['povećanje učestanosti', 'raising the frequency'], ['povećanje induktivnosti', 'raising the inductance']], [0, 1], 'reaktansa', 'I = U/(ωL), pa manji ω ili L daju veću struju.', 'I = U/(ωL), so a smaller ω or L gives a larger current.'),
+  N('Kroz kalem L = 0,2 H teče struja od 3 A. Kolika je energija magnetnog polja u J?', 'A current of 3 A flows through a coil L = 0.2 H. What is the energy of the magnetic field in J?', '0,9|0.9', 'J|dzul|džul|joule', 'indukcija', 'W = ½LI² = 0,5 · 0,2 · 9 = 0,9 J.', 'W = ½LI² = 0.5 · 0.2 · 9 = 0.9 J.')
+]);
+
+Q.AC06 = H.quiz(t('Kondenzator u kolu struje · mali test', 'A capacitor in a circuit · short test'), [
+  N('Kolika je struja kroz kondenzator u stacionarnom jednosmernom kolu (u A)?', 'What is the current through a capacitor in a steady direct-current circuit (in A)?', '0', 'A|amper|ampere', 'dc', 'Kad se napuni, kondenzator prekida jednosmernu struju.', 'Once charged, a capacitor blocks direct current.', 0),
+  N('R = 1 kΩ i C = 100 μF. Kolika je vremenska konstanta τ u sekundama?', 'R = 1 kΩ and C = 100 μF. What is the time constant τ in seconds?', '0,1|0.1', 's|sekund|second', 'dc-model', 'τ = RC = 1000 · 0,0001 = 0,1 s.', 'τ = RC = 1000 · 0.0001 = 0.1 s.'),
+  C('Kakav je fazni odnos napona i struje na idealnom kondenzatoru?', 'What is the phase relation between voltage and current in an ideal capacitor?',
+    [['struja prednjači naponu za 90°', 'the current leads the voltage by 90°'], ['napon prednjači struji za 90°', 'the voltage leads the current by 90°'], ['u fazi su', 'they are in phase'], ['u protivfazi su', 'they are in antiphase']], 0, 'ac', 'Kod kondenzatora struja prednjači naponu za 90°.', 'In a capacitor the current leads the voltage by 90°.'),
+  B('Reaktansa kondenzatora raste kad učestanost raste.', 'The reactance of a capacitor rises as the frequency rises.', false, 'ac', 'X_C = 1/(ωC) opada sa učestanošću.', 'X_C = 1/(ωC) falls as the frequency rises.'),
+  C('Koja je jedinica kapacitivnosti?', 'What is the unit of capacitance?', ['farad (F)', 'henri (H)', 'om (Ω)', 'tesla (T)'], 0, 'kondenzator', 'Kapacitivnost se meri u faradima.', 'Capacitance is measured in farads.')
+], [
+  N('Posle vremena t = τ kondenzator je napunjen na koliko procenata konačnog napona? (zaokruži na ceo broj)', 'After a time t = τ, to what percentage of the final voltage is the capacitor charged? (round to a whole number)', '63', '%|procenat|percent', 'dc-model', '1 − e⁻¹ ≈ 0,632.', '1 − e⁻¹ ≈ 0.632.', 3),
+  N('Kolika je X_C u Ω kondenzatora od 10 μF na 50 Hz? (zaokruži na ceo broj)', 'What is X_C in Ω for a 10 μF capacitor at 50 Hz? (round to a whole number)', '318', 'Ω|ohm|om', 'ac', 'X_C = 1/(2π · 50 · 10⁻⁵) ≈ 318 Ω.', 'X_C = 1/(2π · 50 · 10⁻⁵) ≈ 318 Ω.'),
+  N('Prazan kondenzator se puni preko 10 kΩ iz izvora od 9 V jednosmerno. Kolika je početna struja u mA?', 'An empty capacitor is charged through 10 kΩ from a 9 V DC source. What is the initial current in mA?', '0,9|0.9', 'mA|miliamper|milliampere', 'dc-model', 'U trenutku uključenja je napon na kondenzatoru nula: I = 9/10000 = 0,9 mA.', 'At the moment of switching on the capacitor voltage is zero: I = 9/10000 = 0.9 mA.'),
+  N('R = 2 kΩ i C = 50 μF. Za koliko sekundi se kondenzator praktično napuni (5τ)?', 'R = 2 kΩ and C = 50 μF. After how many seconds is the capacitor practically charged (5τ)?', '0,5|0.5', 's|sekund|second', 'dc-model', 'τ = 0,1 s, a 5τ = 0,5 s.', 'τ = 0.1 s and 5τ = 0.5 s.'),
+  N('Kolika je X_C u Ω kondenzatora od 1 μF na 1 kHz? (zaokruži na ceo broj)', 'What is X_C in Ω for a 1 μF capacitor at 1 kHz? (round to a whole number)', '159', 'Ω|ohm|om', 'ac', 'X_C = 1/(2π · 1000 · 10⁻⁶) ≈ 159 Ω.', 'X_C = 1/(2π · 1000 · 10⁻⁶) ≈ 159 Ω.'),
+  C('Zašto se kondenzator koristi za spregu stepena pojačavača?', 'Why is a capacitor used to couple amplifier stages?',
+    [['propušta naizmenični signal, a blokira jednosmernu komponentu', 'it passes the alternating signal and blocks the direct component'], ['pojačava signal', 'it amplifies the signal'], ['pretvara naizmenični signal u jednosmerni', 'it turns the alternating signal into a direct one'], ['smanjuje frekvenciju', 'it lowers the frequency']], 0, 'ac', 'Za jednosmernu struju je beskonačna otpornost, a za signal malo reaktansa.', 'For direct current it is an open circuit, and for the signal it has a small reactance.'),
+  N('Kondenzator od 100 μF je napunjen na 10 V. Kolika je energija u mJ?', 'A 100 μF capacitor is charged to 10 V. What is the stored energy in mJ?', '5', 'mJ|milidzul|milijoule|millijoule', 'kondenzator', 'W = ½CU² = 0,5 · 10⁻⁴ · 100 = 5 mJ.', 'W = ½CU² = 0.5 · 10⁻⁴ · 100 = 5 mJ.'),
+  N('Na kondenzator od 1 μF je priključeno 10 V efektivno na 1 kHz. Kolika je struja u mA? (zaokruži na jednu decimalu)', '10 V RMS at 1 kHz is applied to a 1 μF capacitor. What is the current in mA? (round to one decimal)', '62,8|62.8', 'mA|miliamper|milliampere', 'ac', 'I = U·ωC = 10 · 6283 · 10⁻⁶ ≈ 62,8 mA.', 'I = U·ωC = 10 · 6283 · 10⁻⁶ ≈ 62.8 mA.')
+]);
+})();

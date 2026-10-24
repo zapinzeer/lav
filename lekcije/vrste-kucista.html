@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Full, mid i mini tower, Mini-ITX i desktop kućišta u 3D modelu iste razmere, form-faktori ploča, hlađenje, protok vazduha i izbor kućišta.">
+<title>Vrste kućišta · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="vrste-kucista">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>nabrojiš zadatke kućišta i najčešće vrste (full, mid, mini tower, SFF, desktop);</li><li>povežeš kućište sa form-faktorom matične ploče i napajanja;</li><li>objasniš kako teče vazduh kroz kućište i izračunaš potreban protok;</li><li>izabereš kućište prema komponentama koje se ugrađuju.</li></ul>
+    <ul lang="en"><li>list the jobs of a case and the most common types (full, mid, mini tower, SFF, desktop);</li><li>match a case with the motherboard and power supply form factor;</li><li>explain how air flows through a case and calculate the required flow;</li><li>choose a case according to the components to be installed.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="uloga" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">čemu služi</span><span lang="en">what it is for</span></p>
+    <h2><span lang="sr">Šta kućište radi?</span><span lang="en">What does a case do?</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Kućište (engl. <em>case</em>, <em>chassis</em>) nije samo kutija. Ono ima pet zadataka: (1) <strong>nosi</strong> matičnu ploču, napajanje i diskove na standardizovanim mestima; (2) <strong>štiti</strong> komponente od prašine, udaraca i dodirivanja; (3) <strong>usmerava vazduh</strong> za hlađenje; (4) <strong>štiti od smetnji</strong>: metalni zidovi zadržavaju elektromagnetno zračenje unutra i spolja; (5) daje <strong>prednje priključke</strong> (USB, audio, dugme za uključivanje).</p>
+<p lang="en">A case (<em>chassis</em>) is not just a box. It has five jobs: (1) it <strong>carries</strong> the motherboard, power supply and drives at standardised positions; (2) it <strong>protects</strong> the components from dust, knocks and touching; (3) it <strong>guides the air</strong> for cooling; (4) it <strong>shields from interference</strong>: metal walls keep electromagnetic radiation in and out; (5) it provides the <strong>front connectors</strong> (USB, audio, the power button).</p><p lang="sr">Najčešće se pravi od čeličnog lima (SECC, obično debljine 0,6–0,8 mm), a prednja strana od plastike ili mrežice. Aluminijum je lakši i bolje odvodi toplotu, ali je skuplji. Bočna strana često je od stakla ili akrila da bi se videla unutrašnjost.</p>
+<p lang="en">It is most often made of sheet steel (SECC, usually 0.6–0.8 mm thick), with a plastic or mesh front. Aluminium is lighter and conducts heat better, but costs more. The side panel is often glass or acrylic so the inside can be seen.</p><details class="think"><summary><span lang="sr">Pomisli prvo: zašto bi proizvođač pravio kućište od lima, a ne od plastike?</span><span lang="en">Think first: why would a manufacturer make a case from sheet metal instead of plastic?</span></summary><div class="ans"><p lang="sr">Metal je čvrst, odvodi toplotu i, pre svega, zaklanja elektromagnetne smetnje (kavez Faradeja). Plastika bi propuštala zračenje računara ka okolnim uređajima i obrnuto.</p>
+<p lang="en">Metal is strong, conducts heat and, above all, shields electromagnetic interference (a Faraday cage). Plastic would let the radiation of the computer reach nearby devices and vice versa.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="vrste" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">po veličini</span><span lang="en">by size</span></p>
+    <h2><span lang="sr">Vrste kućišta po veličini</span><span lang="en">Types of cases by size</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Kućišta se dele po veličini, a veličina određuje koje matične ploče stanu i koliko se komponenti može ugraditi. Izaberi vrstu u modelu: sve su nacrtane u istoj razmeri, pa odmah vidiš razliku.</p>
+<p lang="en">Cases are divided by size, and the size decides which motherboards fit and how many components can be installed. Pick a type in the model: all are drawn to the same scale, so you can see the difference at once.</p><p lang="sr">Pored ovih pet, postoje i <strong>rek (rack) kućišta</strong> za servere (visina u jedinicama „U”, 1U = 44,45 mm), <strong>HTPC</strong> kućišta za dnevnu sobu i mini računari veličine knjige (NUC), kod kojih je ploča deo kućišta.</p>
+<p lang="en">Besides these five there are <strong>rack cases</strong> for servers (the height in "U" units, 1U = 44.45 mm), <strong>HTPC</strong> cases for the living room and book-sized mini PCs (NUC), where the board is part of the case.</p>
+</div><figure class="lab" id="lab-case">
+<div class="viewport" style="aspect-ratio:4/3"><canvas tabindex="0" aria-label="3D model kućišta sa prozirnim zidovima, matičnom pločom i napajanjem / 3D model of a case with transparent walls, a motherboard and a power supply"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje</span><span lang="en">Drag to rotate</span></span></div>
+<div class="controls"><div class="btns"><span class="lbl"><span lang="sr">Vrsta</span><span lang="en">Type</span></span><div class="seg" id="case-kind" role="group"><button type="button" data-v="full" aria-pressed="false">Full tower</button><button type="button" data-v="mid" aria-pressed="true">Mid tower</button><button type="button" data-v="mini" aria-pressed="false">Mini tower</button><button type="button" data-v="sff" aria-pressed="false">Mini-ITX</button><button type="button" data-v="desk" aria-pressed="false">Desktop</button></div></div>
+<div class="btns"><label class="switch" for="case-air"><input type="checkbox" checked id="case-air"><span lang="sr">Prikaži protok vazduha</span><span lang="en">Show the airflow</span></label></div></div>
+<div class="pc-info" id="case-info" aria-live="polite"></div>
+<figcaption><span lang="sr">Providne ivice su zidovi kućišta, zelena ploča je najveća matična ploča koju ono prima, tamni blok na dnu je napajanje, a plavi ventilatori usisavaju vazduh sprijeda i izbacuju ga pozadi. Prebacuj vrste da vidiš razliku u veličini (sve su prikazane u istoj razmeri).</span><span lang="en">The transparent edges are the walls of the case, the green board is the largest motherboard it takes, the dark block at the bottom is the power supply, and the blue fans pull air in at the front and push it out at the back. Switch between the types to see the difference in size (all are drawn to the same scale).</span></figcaption>
+</figure><div class="rest">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Kućišta u brojkama (okvirno)</span><span lang="en">Cases in numbers (approximate)</span></caption><thead><tr><th><span lang="sr">Vrsta</span><span lang="en">Type</span></th><th>Š × V × D (cm)</th><th><span lang="sr">Ploče</span><span lang="en">Boards</span></th><th><span lang="sr">Slotova</span><span lang="en">Slots</span></th></tr></thead><tbody><tr><td>Full tower</td><td>23 × 55 × 55</td><td>E-ATX, ATX, mATX, ITX</td><td>8</td></tr><tr><td>Mid tower</td><td>21 × 46 × 45</td><td>ATX, mATX, ITX</td><td>7</td></tr><tr><td>Mini tower</td><td>18 × 38 × 40</td><td>mATX, ITX</td><td>4</td></tr><tr><td>Mini-ITX (SFF)</td><td>20 × 30 × 34</td><td>ITX</td><td>2</td></tr><tr><td>Desktop</td><td>42 × 10 × 40</td><td>mATX, ITX</td><td>2</td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="formfaktor" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">ploče i kućišta</span><span lang="en">boards and cases</span></p>
+    <h2><span lang="sr">Form-faktor matične ploče</span><span lang="en">The motherboard form factor</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Form-faktor</strong> određuje dimenzije ploče i raspored rupa za zavrtnje. Manja ploča uvek može da stane u kućište za veću, a obrnuto ne može. Napajanje ima svoj form-faktor (ATX ili manje SFX), a on se bira prema kućištu.</p>
+<p lang="en">The <strong>form factor</strong> determines the dimensions of the board and the layout of the screw holes. A smaller board can always fit in a case for a larger one, but not the other way round. The power supply has its own form factor (ATX or the smaller SFX), chosen according to the case.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Standardni form-faktori ploča</span><span lang="en">Standard board form factors</span></caption><thead><tr><th><span lang="sr">Naziv</span><span lang="en">Name</span></th><th>Dimenzije (mm)</th><th><span lang="sr">Slotova za kartice</span><span lang="en">Card slots</span></th><th><span lang="sr">Rupa za zavrtnje</span><span lang="en">Screw holes</span></th></tr></thead><tbody><tr><td>E-ATX</td><td>305 × 330</td><td>7</td><td>9–10</td></tr><tr><td>ATX</td><td>305 × 244</td><td>7</td><td>9</td></tr><tr><td>micro-ATX (mATX)</td><td>244 × 244</td><td>4</td><td>9</td></tr><tr><td>Mini-ITX</td><td>170 × 170</td><td>1</td><td>4</td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="hladjenje" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">protok vazduha</span><span lang="en">airflow</span></p>
+    <h2><span lang="sr">Hlađenje i protok vazduha</span><span lang="en">Cooling and airflow</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Sva električna snaga koju računar potroši na kraju postaje <strong>toplota</strong>, pa kućište mora da je izbaci. Osnovno pravilo: <strong>hladan vazduh ulazi sprijeda (i odozdo), topao izlazi pozadi i odozgo</strong>, jer topao vazduh prirodno ide nagore. Ventilatori su obično 120 ili 140 mm (veći ventilator pri istoj količini vazduha radi sporije i tiše).</p>
+<p lang="en">All the electrical power a computer uses ends up as <strong>heat</strong>, so the case has to get rid of it. The basic rule: <strong>cool air enters at the front (and the bottom), warm air leaves at the back and the top</strong>, because warm air naturally rises. The fans are usually 120 or 140 mm (a larger fan moves the same amount of air more slowly and quietly).</p><div class="cases"><div><p class="h">pozitivan pritisak</p><p class="note" lang="sr">Više vazduha ulazi nego što izlazi. Prašina ulazi samo kroz filtere, pa je unutrašnjost čistija.</p><p class="note" lang="en">More air enters than leaves. Dust gets in only through filters, so the inside stays cleaner.</p></div><div><p class="h">negativan pritisak</p><p class="note" lang="sr">Više vazduha izlazi nego što ulazi. Hladi dobro, ali usisava prašinu kroz svaku rupu.</p><p class="note" lang="en">More air leaves than enters. It cools well, but sucks dust in through every gap.</p></div></div><p lang="sr">Količina vazduha koja je potrebna da odnese snagu <span class="v">P</span> pri dozvoljenom zagrevanju vazduha za \( \Delta T \) je:</p>
+<p lang="en">The amount of air needed to carry away the power <span class="v">P</span> for an allowed air temperature rise \( \Delta T \) is:</p><div class="formula"><div class="tex">\[ \dot V = \frac{P}{\rho\,c_p\,\Delta T} \]</div><dl class="legend"><div><dt>V̇</dt><dd><span lang="sr">protok vazduha</span><span lang="en">air flow rate</span></dd><span class="unit">m³/s</span></div><div><dt>ρ</dt><dd><span lang="sr">gustina vazduha ≈ 1,2</span><span lang="en">air density ≈ 1.2</span></dd><span class="unit">kg/m³</span></div><div><dt>c<sub>p</sub></dt><dd><span lang="sr">specifična toplota ≈ 1005</span><span lang="en">specific heat ≈ 1005</span></dd><span class="unit">J/(kg·K)</span></div><div><dt>ΔT</dt><dd><span lang="sr">dozvoljeno zagrevanje vazduha</span><span lang="en">allowed air temperature rise</span></dd><span class="unit">K</span></div></dl></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="izbor" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">kako birati</span><span lang="en">how to choose</span></p>
+    <h2><span lang="sr">Kako se bira kućište</span><span lang="en">How to choose a case</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<ul lang="sr"><li><strong>Veličina ploče:</strong> kućište mora da podržava tvoj form-faktor (ATX, mATX, ITX).</li><li><strong>Grafička kartica:</strong> pogledaj najveću dozvoljenu dužinu (npr. 330 mm) i debljinu u slotovima.</li><li><strong>Procesorski hladnjak:</strong> visina je ograničena (npr. 165 mm); za tečno hlađenje proveri radijator (240/360 mm).</li><li><strong>Napajanje:</strong> ATX ili SFX, i da li ima mesta za kablove iza ploče.</li><li><strong>Diskovi:</strong> broj ležišta 3,5″ i 2,5″ ili samo M.2.</li><li><strong>Protok vazduha:</strong> mrežasta prednja strana, mesta za ventilatore, filteri za prašinu.</li><li><strong>Prednji priključci:</strong> USB 3 i USB-C, audio; kućište mora da ima kabl koji tvoja ploča podržava.</li></ul>
+<ul lang="en"><li><strong>Board size:</strong> the case must support your form factor (ATX, mATX, ITX).</li><li><strong>Graphics card:</strong> look at the maximum length allowed (e.g. 330 mm) and the thickness in slots.</li><li><strong>CPU cooler:</strong> the height is limited (e.g. 165 mm); for liquid cooling check the radiator (240/360 mm).</li><li><strong>Power supply:</strong> ATX or SFX, and whether there is room for cables behind the board.</li><li><strong>Drives:</strong> the number of 3.5″ and 2.5″ bays, or just M.2.</li><li><strong>Airflow:</strong> a mesh front, places for fans, dust filters.</li><li><strong>Front connectors:</strong> USB 3 and USB-C, audio; the case must have a cable your board supports.</li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · zapremina kućišta</span><span lang="en">Example 1 · case volume</span></h4><p class="given" lang="sr">Dato: mid tower 21 × 46 × 45 cm i Mini-ITX kućište 20 × 30 × 34 cm. Kolike su zapremine u litrima?</p><p class="given" lang="en">Given: a mid tower 21 × 46 × 45 cm and a Mini-ITX case 20 × 30 × 34 cm. What are their volumes in litres?</p><ol lang="sr"><li>Mid tower: \( 21\cdot 46\cdot 45 = 43\,470\ \mathrm{cm^3} = 43{,}5\ \mathrm{l} \).</li><li>Mini-ITX: \( 20\cdot 30\cdot 34 = 20\,400\ \mathrm{cm^3} = 20{,}4\ \mathrm{l} \).</li><li>Odnos je \( 43{,}5/20{,}4 = 2{,}1 \): mid tower je više nego dvaput veći.</li></ol>
+<ol lang="en"><li>Mid tower: \( 21\cdot 46\cdot 45 = 43{,}470\ \mathrm{cm^3} = 43.5\ \mathrm{l} \).</li><li>Mini-ITX: \( 20\cdot 30\cdot 34 = 20{,}400\ \mathrm{cm^3} = 20.4\ \mathrm{l} \).</li><li>The ratio is \( 43.5/20.4 = 2.1 \): the mid tower is more than twice as large.</li></ol><p class="answer"><span lang="sr">V = 43,5 l i 20,4 l</span><span lang="en">V = 43.5 l and 20.4 l</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · potreban protok vazduha</span><span lang="en">Example 2 · the required airflow</span></h4><p class="given" lang="sr">Dato: računar troši 300 W toplote, a vazduh sme da se zagreje za 10 K. Koliki je potreban protok?</p><p class="given" lang="en">Given: a computer gives off 300 W of heat, and the air may warm up by 10 K. What flow is needed?</p><ol lang="sr"><li>\( \dot V = \dfrac{300}{1{,}2\cdot 1005\cdot 10} = 0{,}0249\ \mathrm{m^3/s} \).</li><li>U kubnim stopama po minutu (CFM): \( 0{,}0249\cdot 2119 = 52{,}7\ \mathrm{CFM} \).</li><li>Dva ventilatora od po ~30 CFM to lako obezbeđuju.</li></ol>
+<ol lang="en"><li>\( \dot V = \dfrac{300}{1.2\cdot 1005\cdot 10} = 0.0249\ \mathrm{m^3/s} \).</li><li>In cubic feet per minute (CFM): \( 0.0249\cdot 2119 = 52.7\ \mathrm{CFM} \).</li><li>Two fans of ~30 CFM each provide that easily.</li></ol><p class="answer"><span lang="sr">V̇ = 0,025 m³/s ≈ 53 CFM</span><span lang="en">V̇ = 0.025 m³/s ≈ 53 CFM</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · da li kartica staje?</span><span lang="en">Example 3 · will the card fit?</span></h4><p class="given" lang="sr">Dato: grafička kartica je duga 336 mm, a kućište dozvoljava 320 mm. Šta su opcije?</p><p class="given" lang="en">Given: a graphics card is 336 mm long and the case allows 320 mm. What are the options?</p><ol lang="sr"><li>Razlika je \( 336 - 320 = 16\ \mathrm{mm} \) pa kartica ne staje.</li><li>Neke kućišta dozvoljavaju veću dužinu ako se skine prednji ventilator ili radijator (npr. 360 mm).</li><li>Ostaje: drugo kućište ili kraća kartica. Uvek proveri specifikaciju pre kupovine.</li></ol>
+<ol lang="en"><li>The difference is \( 336 - 320 = 16\ \mathrm{mm} \) so the card does not fit.</li><li>Some cases allow a longer card if the front fan or radiator is removed (e.g. 360 mm).</li><li>That leaves: another case or a shorter card. Always check the specification before buying.</li></ol><p class="answer"><span lang="sr">Ne staje: potrebno drugo kućište ili kraća kartica</span><span lang="en">It does not fit: another case or a shorter card is needed</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Kupovina po izgledu.</b> Staklo i RGB ne znače dobar protok vazduha. Zatvorena prednja strana smanjuje hlađenje.</div></li><li><div><b>Veća ploča od kućišta.</b> ATX ploča ne staje u mATX kućište. Obrnuto može, ali se neka mesta za zavrtnje ne koriste.</div></li><li><div><b>Pogrešan smer ventilatora.</b> Ventilatori imaju strelice na rubu: jedna za smer vazduha, druga za smer obrtanja. Prednji usisavaju, zadnji izbacuju.</div></li><li><div><b>Zaboravljena prašina.</b> Filteri se čiste na par meseci, inače protok opadne i komponente se pregrevaju.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>Buying by looks.</b> Glass and RGB do not mean good airflow. A closed front reduces cooling.</div></li><li><div><b>A larger board than the case.</b> An ATX board does not fit in an mATX case. The other way round works, but some screw positions are unused.</div></li><li><div><b>The wrong fan direction.</b> Fans have arrows on the frame: one for the airflow direction, one for the rotation. Front fans pull in, rear fans push out.</div></li><li><div><b>Forgetting dust.</b> Filters should be cleaned every few months, otherwise the flow drops and the components overheat.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Kućište nosi, štiti, hladi i štiti od smetnji, i daje prednje priključke.</li><li>Veličine: full, mid i mini tower, Mini-ITX (SFF) i desktop; veličina određuje koje ploče staju.</li><li>Form-faktori ploča: E-ATX, ATX (305 × 244), mATX (244 × 244) i Mini-ITX (170 × 170).</li><li>Hladan vazduh ulazi sprijeda i odozdo, topao izlazi pozadi i odozgo; protok je ( dot V = P/(
+ho c_p Delta T) ).</li><li>Pri izboru proveri: form-faktor, dužinu kartice, visinu hladnjaka, napajanje, diskove, protok vazduha i priključke.</li></ul><ul lang="en"><li>A case carries, protects, cools and shields from interference, and provides the front connectors.</li><li>Sizes: full, mid and mini tower, Mini-ITX (SFF) and desktop; the size decides which boards fit.</li><li>Board form factors: E-ATX, ATX (305 × 244), mATX (244 × 244) and Mini-ITX (170 × 170).</li><li>Cool air enters at the front and bottom, warm air leaves at the back and top; the flow is ( dot V = P/(
+ho c_p Delta T) ).</li><li>When choosing check: the form factor, card length, cooler height, power supply, drives, airflow and connectors.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC01" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/pc3d.js"></script>
+<script src="../assets/js/lessons/vrste-kucista.js"></script>
+</body>
+</html>

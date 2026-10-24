@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Hijerarhija memorije: registri, keš, RAM, ROM, HDD, SSD i flash. Brzine, jedinice, vreme prenosa i kalkulator kopiranja.">
+<title>Unutrašnja i spoljna memorija · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="memorija">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>razlikuješ unutrašnju i spoljnu memoriju i objasniš hijerarhiju;</li><li>opišeš razliku između SRAM-a i DRAM-a i HDD-a i SSD-a;</li><li>preračunaš jedinice (bit/bajt, GB/GiB) i vreme prenosa podataka;</li><li>izračunaš propusnost RAM-a i prosečno vreme pristupa sa kešom.</li></ul>
+    <ul lang="en"><li>distinguish internal and external memory and explain the hierarchy;</li><li>describe the difference between SRAM and DRAM and between an HDD and an SSD;</li><li>convert units (bit/byte, GB/GiB) and compute data transfer times;</li><li>compute RAM bandwidth and the average access time with a cache.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="podela" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">čemu služi</span><span lang="en">what it is for</span></p>
+    <h2><span lang="sr">Šta je memorija i kako se deli?</span><span lang="en">What is memory and how is it divided?</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Računar mora negde da čuva programe i podatke. Ne postoji jedna memorija koja je istovremeno <strong>brza, velika, jeftina i trajna</strong>, pa se računar služi mešavinom. Dve osnovne grupe su <strong>unutrašnja</strong> (radna, glavna) i <strong>spoljna</strong> (masovna, trajna) memorija.</p>
+<p lang="en">A computer has to keep programs and data somewhere. No single memory is at the same time <strong>fast, large, cheap and permanent</strong>, so a computer uses a mix. The two basic groups are <strong>internal</strong> (working, main) and <strong>external</strong> (mass, permanent) memory.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Unutrašnja i spoljna memorija</span><span lang="en">Internal and external memory</span></caption><thead><tr><th><span lang="sr">Osobina</span><span lang="en">Property</span></th><th><span lang="sr">Unutrašnja</span><span lang="en">Internal</span></th><th><span lang="sr">Spoljna</span><span lang="en">External</span></th></tr></thead><tbody><tr><td><span lang="sr">Primer</span><span lang="en">Example</span></td><td><span lang="sr">registri, keš, RAM, ROM</span><span lang="en">registers, cache, RAM, ROM</span></td><td><span lang="sr">SSD, HDD, USB, SD kartica, optički disk</span><span lang="en">SSD, HDD, USB stick, SD card, optical disc</span></td></tr><tr><td><span lang="sr">Pristup procesora</span><span lang="en">Processor access</span></td><td><span lang="sr">direktno, preko magistrale</span><span lang="en">direct, over the bus</span></td><td><span lang="sr">posredno, preko kontrolera i U/I veze</span><span lang="en">indirect, through a controller and I/O link</span></td></tr><tr><td><span lang="sr">Brzina</span><span lang="en">Speed</span></td><td><span lang="sr">nanosekunde</span><span lang="en">nanoseconds</span></td><td><span lang="sr">mikro- do milisekundi</span><span lang="en">micro- to milliseconds</span></td></tr><tr><td><span lang="sr">Veličina</span><span lang="en">Size</span></td><td><span lang="sr">GB</span><span lang="en">GB</span></td><td><span lang="sr">stotine GB do TB</span><span lang="en">hundreds of GB to TB</span></td></tr><tr><td><span lang="sr">Pri gašenju</span><span lang="en">On power-off</span></td><td><span lang="sr">RAM gubi sadržaj (isparljiva)</span><span lang="en">RAM loses its contents (volatile)</span></td><td><span lang="sr">čuva sadržaj (neisparljiva)</span><span lang="en">keeps its contents (non-volatile)</span></td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="piramida" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">hijerarhija</span><span lang="en">hierarchy</span></p>
+    <h2><span lang="sr">Piramida memorije</span><span lang="en">The memory pyramid</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Memorije se slažu u <strong>hijerarhiju</strong>: što je bliže procesoru, to je brže, skuplje i manje. Procesor traži podatak prvo u najbržem nivou. Ako ga nađe (<em>pogodak, hit</em>), gotovo je. Ako ne (<em>promašaj, miss</em>), traži u sledećem, sporijem nivou.</p>
+<p lang="en">Memories are stacked into a <strong>hierarchy</strong>: the closer to the processor, the faster, more expensive and smaller. The processor looks for data in the fastest level first. If it finds it (a <em>hit</em>), it is done. If not (a <em>miss</em>), it goes on to the next, slower level.</p><figure class="fig" style="max-width:680px"><svg class="dg" viewBox="0 0 600 276" role="img" aria-label="Piramida memorije / The memory pyramid" style="width:100%;height:auto"><defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><g><rect x="190" y="8" width="220" height="40" rx="6" fill="var(--copper-soft, var(--sheet))" stroke="var(--copper)" stroke-width="1.5"/><text x="300" y="27" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">Registri</text><text x="300" y="41" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">< 1 ns · ~1 KB</text></g><g><rect x="150" y="54" width="300" height="40" rx="6" fill="var(--violet-soft, var(--sheet))" stroke="var(--violet)" stroke-width="1.5"/><text x="300" y="73" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">L1 · L2 · L3 keš</text><text x="300" y="87" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">1–40 ns · KB–MB</text></g><g><rect x="110" y="100" width="380" height="40" rx="6" fill="var(--field-soft, var(--sheet))" stroke="var(--field)" stroke-width="1.5"/><text x="300" y="119" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">RAM (DRAM)</text><text x="300" y="133" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">~80 ns · GB</text></g><g><rect x="70" y="146" width="460" height="40" rx="6" fill="var(--copper-soft, var(--sheet))" stroke="var(--copper)" stroke-width="1.5"/><text x="300" y="165" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">SSD (NAND)</text><text x="300" y="179" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">~50 µs · stotine GB</text></g><g><rect x="30" y="192" width="540" height="40" rx="6" fill="var(--ink-soft, var(--sheet))" stroke="var(--ink)" stroke-width="1.5"/><text x="300" y="211" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">HDD · USB · mreža</text><text x="300" y="225" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">~10 ms · TB</text></g><text x="10" y="268" text-anchor="start" style="font:500 11px var(--mono);fill:var(--muted)">brže · skuplje · manje ↑</text><text x="590" y="268" text-anchor="end" style="font:500 11px var(--mono);fill:var(--muted)">sporije · jeftinije · veće ↓</text></svg><figcaption><span lang="sr">Zadnji red je okvirno 10 000 000 puta sporiji od prvog, ali je hiljadu puta veći. Hijerarhija radi jer programi koriste iste podatke iznova („lokalnost”).</span><span lang="en">The last row is roughly 10,000,000 times slower than the first, but a thousand times larger. The hierarchy works because programs reuse the same data over and over ("locality").</span></figcaption></figure><details class="think"><summary><span lang="sr">Pomisli prvo: zašto računar ne napravi svu memoriju od najbrže vrste?</span><span lang="en">Think first: why does a computer not make all its memory from the fastest kind?</span></summary><div class="ans"><p lang="sr">Cena. Keš (SRAM) košta stotine puta više po bajtu od RAM-a i zauzima mnogo prostora na čipu. Računar sa 16 GB keša bi bio nepraktičan.</p>
+<p lang="en">Cost. Cache (SRAM) costs hundreds of times more per byte than RAM and takes a lot of room on the chip. A computer with 16 GB of cache would be impractical.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="unutrasnja" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">radna memorija</span><span lang="en">working memory</span></p>
+    <h2><span lang="sr">Unutrašnja memorija: registri, keš, RAM, ROM</span><span lang="en">Internal memory: registers, cache, RAM, ROM</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<ul lang="sr"><li><strong>Registri</strong>: desetak do stotinu 64-bitnih ćelija u samom jezgru procesora. Najbrži, nulto kašnjenje.</li><li><strong>Keš L1, L2, L3</strong>: SRAM unutar procesora. L1 je mali (32–64 KB po jezgru) i najbrži, L3 je zajednički i velik (do desetina MB).</li><li><strong>RAM</strong>: DRAM u modulima (DIMM) u slotovima ploče. Svaki bit je kondenzator koji se mora <em>osvežavati</em> više puta u sekundi, inače gubi naboj. Radi kao radni sto programa.</li><li><strong>ROM, flash BIOS/UEFI</strong>: neisparljiva memorija sa programom za pokretanje.</li></ul>
+<ul lang="en"><li><strong>Registers</strong>: from about ten to a hundred 64-bit cells inside the processor core. The fastest, zero latency.</li><li><strong>L1, L2, L3 cache</strong>: SRAM inside the processor. L1 is small (32–64 KB per core) and fastest, L3 is shared and large (up to tens of MB).</li><li><strong>RAM</strong>: DRAM in modules (DIMMs) in the board slots. Each bit is a capacitor that must be <em>refreshed</em> many times a second, otherwise it loses its charge. It acts as the working desk of programs.</li><li><strong>ROM, flash BIOS/UEFI</strong>: non-volatile memory holding the start-up program.</li></ul><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">SRAM i DRAM</span><span lang="en">SRAM and DRAM</span></caption><thead><tr><th><span lang="sr"></span><span lang="en"></span></th><th>SRAM</th><th>DRAM</th></tr></thead><tbody><tr><td><span lang="sr">Ćelija</span><span lang="en">Cell</span></td><td><span lang="sr">6 tranzistora</span><span lang="en">6 transistors</span></td><td><span lang="sr">1 tranzistor + 1 kondenzator</span><span lang="en">1 transistor + 1 capacitor</span></td></tr><tr><td><span lang="sr">Osvežavanje</span><span lang="en">Refresh</span></td><td><span lang="sr">ne</span><span lang="en">no</span></td><td><span lang="sr">da, ~64 ms</span><span lang="en">yes, ~64 ms</span></td></tr><tr><td><span lang="sr">Brzina</span><span lang="en">Speed</span></td><td><span lang="sr">vrlo brza</span><span lang="en">very fast</span></td><td><span lang="sr">sporija</span><span lang="en">slower</span></td></tr><tr><td><span lang="sr">Cena po bitu</span><span lang="en">Cost per bit</span></td><td><span lang="sr">visoka</span><span lang="en">high</span></td><td><span lang="sr">niska</span><span lang="en">low</span></td></tr><tr><td><span lang="sr">Upotreba</span><span lang="en">Use</span></td><td><span lang="sr">keš</span><span lang="en">cache</span></td><td><span lang="sr">RAM</span><span lang="en">RAM</span></td></tr></tbody></table></div><p lang="sr">Brzina RAM-a se zapisuje kao <strong>DDR5-6000</strong>: „6000” je broj prenosa u sekundi (MT/s), a stvarna učestanost sata je upola manja jer se podaci prenose na uzlaznu i silaznu ivicu. Memorijski modul je 64-bitni, pa je propusnost jednog kanala \( B = 6000\cdot 10^6 \cdot 8\ \mathrm{B} = 48\ \mathrm{GB/s} \).</p>
+<p lang="en">The speed of RAM is written as <strong>DDR5-6000</strong>: "6000" is the number of transfers per second (MT/s), and the real clock frequency is half of it because data moves on both the rising and falling edge. A memory module is 64-bit, so the bandwidth of one channel is \( B = 6000\cdot 10^6 \cdot 8\ \mathrm{B} = 48\ \mathrm{GB/s} \).</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="spoljna" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">trajna memorija</span><span lang="en">permanent storage</span></p>
+    <h2><span lang="sr">Spoljna memorija: HDD, SSD, flash i optika</span><span lang="en">External memory: HDD, SSD, flash and optical</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>HDD</strong> (hard disk) čuva podatke magnetno na rotirajućim pločama (5400 ili 7200 o/min), a glava ih čita pomerajući se po ploči. Mehanički je, pa je spor (10 ms za pristup) i osetljiv na udarce, ali je jeftin po gigabajtu.</p>
+<p lang="en">An <strong>HDD</strong> (hard disk) stores data magnetically on spinning platters (5400 or 7200 rpm) and a head reads them by moving over the platter. It is mechanical, so it is slow (10 ms access) and sensitive to shocks, but cheap per gigabyte.</p><p lang="sr"><strong>SSD</strong> nema pokretnih delova: podaci su u <strong>NAND flash</strong> ćelijama koje drže naboj i bez napona. Pristup je ~0,05 ms, a brzina zavisi od veze: SATA je ograničena na ~550 MB/s, a NVMe preko PCIe-a ide od 3500 MB/s (PCIe 3.0 x4) do preko 7000 MB/s (PCIe 4.0 x4). Ćelija NAND-a podnosi ograničen broj upisa, pa SSD ima <em>wear leveling</em> (ravnomerno trošenje).</p>
+<p lang="en">An <strong>SSD</strong> has no moving parts: the data sit in <strong>NAND flash</strong> cells that hold charge without power. Access takes ~0.05 ms and the speed depends on the link: SATA is limited to ~550 MB/s while NVMe over PCIe goes from 3500 MB/s (PCIe 3.0 x4) to over 7000 MB/s (PCIe 4.0 x4). A NAND cell tolerates a limited number of writes, so an SSD uses <em>wear levelling</em>.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Poređenje spoljnih memorija</span><span lang="en">Comparing external memories</span></caption><thead><tr><th><span lang="sr">Vrsta</span><span lang="en">Type</span></th><th><span lang="sr">Pristup</span><span lang="en">Access</span></th><th><span lang="sr">Brzina</span><span lang="en">Speed</span></th><th><span lang="sr">Cena/GB</span><span lang="en">Cost/GB</span></th></tr></thead><tbody><tr><td>HDD 7200</td><td>~10 ms</td><td>120–200 MB/s</td><td><span lang="sr">najniža</span><span lang="en">lowest</span></td></tr><tr><td>SATA SSD</td><td>~0,1 ms</td><td>~550 MB/s</td><td><span lang="sr">srednja</span><span lang="en">medium</span></td></tr><tr><td>NVMe SSD</td><td>~0,02 ms</td><td>3 500–7 000 MB/s</td><td><span lang="sr">viša</span><span lang="en">higher</span></td></tr><tr><td>USB fleš</td><td>~0,5 ms</td><td>30–400 MB/s</td><td><span lang="sr">srednja</span><span lang="en">medium</span></td></tr><tr><td><span lang="sr">Optički disk</span><span lang="en">Optical disc</span></td><td>~100 ms</td><td>1–15 MB/s</td><td><span lang="sr">niska (arhiva)</span><span lang="en">low (archive)</span></td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="merenje" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">jedinice i vreme</span><span lang="en">units and time</span></p>
+    <h2><span lang="sr">Jedinice i vreme prenosa</span><span lang="en">Units and transfer time</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Osnovna jedinica je <strong>bit</strong> (0 ili 1); <strong>bajt</strong> ima 8 bitova. Pazi na razliku: proizvođači diskova računaju decimalno (1 GB = 10<sup>9</sup> B), a operativni sistem često binarno (1 GiB = 2<sup>30</sup> B ≈ 1,074 · 10<sup>9</sup> B). Zato disk „od 500 GB” u sistemu pokazuje oko 465 GiB.</p>
+<p lang="en">The basic unit is the <strong>bit</strong> (0 or 1); a <strong>byte</strong> has 8 bits. Mind the difference: drive makers count in decimal (1 GB = 10<sup>9</sup> B), while the operating system often counts in binary (1 GiB = 2<sup>30</sup> B ≈ 1.074 · 10<sup>9</sup> B). That is why a "500 GB" drive shows about 465 GiB in the system.</p><div class="formula"><div class="tex">\[ t = \frac{S}{v} \]</div><dl class="legend"><div><dt>t</dt><dd><span lang="sr">vreme prenosa</span><span lang="en">transfer time</span></dd><span class="unit">s</span></div><div><dt>S</dt><dd><span lang="sr">veličina podataka</span><span lang="en">data size</span></dd><span class="unit">MB</span></div><div><dt>v</dt><dd><span lang="sr">brzina prenosa</span><span lang="en">transfer speed</span></dd><span class="unit">MB/s</span></div></dl></div>
+</div><figure class="lab" id="lab-mem">
+<div class="controls">
+<div class="ctl"><label for="mem-size"><span lang="sr">Veličina podataka</span><span lang="en">Data size</span></label><output id="mem-size-out" for="mem-size"></output><input type="range" id="mem-size" min="1" max="500" step="1" value="50"></div>
+<div class="btns"><span class="lbl"><span lang="sr">Uređaj</span><span lang="en">Device</span></span><div class="seg" id="mem-dev" role="group"><button type="button" data-v="hdd" aria-pressed="false">HDD</button><button type="button" data-v="sata" aria-pressed="true">SATA SSD</button><button type="button" data-v="nvme3" aria-pressed="false">NVMe 3.0</button><button type="button" data-v="nvme4" aria-pressed="false">NVMe 4.0</button><button type="button" data-v="ddr" aria-pressed="false">DDR5 RAM</button></div></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="mem-calc"></div><div class="result" id="mem-result"></div><div class="calc" id="mem-note"></div></div>
+<figcaption><span lang="sr">Izaberi veličinu podataka i uređaj: vidi koliko traje kopiranje pri tipičnoj brzini. Brzine su okvirne, trajno (sekvencijalno) čitanje.</span><span lang="en">Pick a data size and a device: see how long copying takes at a typical speed. The speeds are approximate, sustained (sequential) reads.</span></figcaption>
+</figure><div class="rest">
+<div class="rule-box green"><p class="eyebrow"><span lang="sr">Prenos u bitovima</span><span lang="en">Transfer in bits</span></p><p lang="sr">Mreže i USB oznake su često u <em>bitovima</em> u sekundi (Gb/s). Podeli sa 8 da dobiješ bajtove: 1 Gb/s = 125 MB/s.</p>
+<p lang="en">Networks and USB marks are often in <em>bits</em> per second (Gb/s). Divide by 8 to get bytes: 1 Gb/s = 125 MB/s.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="virtuelna" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">swap i keš diska</span><span lang="en">swap and disk cache</span></p>
+    <h2><span lang="sr">Kad RAM nije dovoljan</span><span lang="en">When RAM is not enough</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Ako programi traže više od RAM-a, operativni sistem prebacuje manje korišćene delove na disk: to je <strong>virtuelna memorija</strong> (swap, page file). Radi, ali je i do hiljadu puta sporija, pa računar „zastaje”. Dodavanje RAM-a je tada najbolje ulaganje.</p>
+<p lang="en">If programs ask for more than the RAM, the operating system moves the less-used parts to the disk: this is <strong>virtual memory</strong> (swap, page file). It works, but is up to a thousand times slower, so the computer "stalls". Adding RAM is then the best investment.</p><p lang="sr">Obrnuto, sistem koristi slobodan RAM kao <strong>keš diska</strong>: nedavno čitani fajlovi ostaju u RAM-u pa se drugi put otvaraju odmah.</p>
+<p lang="en">Conversely, the system uses free RAM as a <strong>disk cache</strong>: recently read files stay in RAM so they open at once the second time.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · kopiranje filma</span><span lang="en">Example 1 · copying a film</span></h4><p class="given" lang="sr">Dato: film je veličine 8 GB. Koliko traje kopiranje sa SATA SSD-a (550 MB/s) i sa HDD-a (150 MB/s)?</p><p class="given" lang="en">Given: a film is 8 GB. How long does copying take from a SATA SSD (550 MB/s) and from an HDD (150 MB/s)?</p><ol lang="sr"><li>\( S = 8\ \mathrm{GB} = 8000\ \mathrm{MB} \).</li><li>SSD: \( t = 8000/550 \approx 14{,}5\ \mathrm{s} \).</li><li>HDD: \( t = 8000/150 \approx 53{,}3\ \mathrm{s} \).</li></ol>
+<ol lang="en"><li>\( S = 8\ \mathrm{GB} = 8000\ \mathrm{MB} \).</li><li>SSD: \( t = 8000/550 \approx 14.5\ \mathrm{s} \).</li><li>HDD: \( t = 8000/150 \approx 53.3\ \mathrm{s} \).</li></ol><p class="answer"><span lang="sr">SSD ≈ 14,5 s, HDD ≈ 53 s</span><span lang="en">SSD ≈ 14.5 s, HDD ≈ 53 s</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · stvarni kapacitet</span><span lang="en">Example 2 · real capacity</span></h4><p class="given" lang="sr">Dato: disk je označen sa 1 TB. Koliko GiB pokazuje operativni sistem?</p><p class="given" lang="en">Given: a drive is marked 1 TB. How many GiB does the operating system show?</p><ol lang="sr"><li>\( 1\ \mathrm{TB} = 10^{12}\ \mathrm{B} \).</li><li>\( 1\ \mathrm{GiB} = 2^{30} = 1\,073\,741\,824\ \mathrm{B} \).</li><li>\( 10^{12}/2^{30} \approx 931{,}3\ \mathrm{GiB} \).</li></ol>
+<ol lang="en"><li>\( 1\ \mathrm{TB} = 10^{12}\ \mathrm{B} \).</li><li>\( 1\ \mathrm{GiB} = 2^{30} = 1\,073\,741\,824\ \mathrm{B} \).</li><li>\( 10^{12}/2^{30} \approx 931.3\ \mathrm{GiB} \).</li></ol><p class="answer"><span lang="sr">≈ 931 GiB</span><span lang="en">≈ 931 GiB</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · propusnost dvokanalne memorije</span><span lang="en">Example 3 · dual-channel bandwidth</span></h4><p class="given" lang="sr">Dato: dva modula DDR5-5600 rade u dvokanalnom režimu, svaki je 64-bitni. Kolika je ukupna propusnost?</p><p class="given" lang="en">Given: two DDR5-5600 modules work in dual-channel mode, each 64-bit. What is the total bandwidth?</p><ol lang="sr"><li>Jedan kanal: \( 5600\cdot 10^6 \cdot 8\ \mathrm{B} = 44{,}8\ \mathrm{GB/s} \).</li><li>Dva kanala: \( 2\cdot 44{,}8 = 89{,}6\ \mathrm{GB/s} \).</li></ol>
+<ol lang="en"><li>One channel: \( 5600\cdot 10^6 \cdot 8\ \mathrm{B} = 44.8\ \mathrm{GB/s} \).</li><li>Two channels: \( 2\cdot 44.8 = 89.6\ \mathrm{GB/s} \).</li></ol><p class="answer"><span lang="sr">≈ 89,6 GB/s</span><span lang="en">≈ 89.6 GB/s</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 4 · srednje vreme pristupa</span><span lang="en">Example 4 · average access time</span></h4><p class="given" lang="sr">Dato: keš ima pogodak u 95 % slučajeva sa vremenom 2 ns, a promašaj košta 80 ns (RAM). Koliko je prosečno vreme pristupa?</p><p class="given" lang="en">Given: a cache hits in 95 % of cases with a time of 2 ns, and a miss costs 80 ns (RAM). What is the average access time?</p><ol lang="sr"><li>\( t = h\cdot t_{keš} + (1-h)\cdot t_{RAM} \).</li><li>\( t = 0{,}95\cdot 2 + 0{,}05\cdot 80 = 1{,}9 + 4 = 5{,}9\ \mathrm{ns} \).</li><li>Skoro 14 puta brže nego bez keša (80 ns).</li></ol>
+<ol lang="en"><li>\( t = h\cdot t_{cache} + (1-h)\cdot t_{RAM} \).</li><li>\( t = 0.95\cdot 2 + 0.05\cdot 80 = 1.9 + 4 = 5.9\ \mathrm{ns} \).</li><li>Almost 14 times faster than with no cache (80 ns).</li></ol><p class="answer"><span lang="sr">t = 5,9 ns</span><span lang="en">t = 5.9 ns</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>RAM i disk su isto.</b> RAM je radna memorija i gubi sadržaj bez struje. Disk je trajna memorija. „16 GB” RAM-a i „512 GB” diska su različite stvari.</div></li><li><div><b>Bit i bajt.</b> Mb/s nije MB/s. Razlika je 8 puta.</div></li><li><div><b>SSD ne troši.</b> NAND ima ograničen broj upisa. Za običnu upotrebu traje godinama, ali se ne sme ignorisati kod stalnih velikih upisa.</div></li><li><div><b>Mešanje modula.</b> RAM moduli različitih brzina rade na brzini najsporijeg, a moduli u dvokanalnom režimu treba da budu isti i u pravim slotovima.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>RAM and disk are the same.</b> RAM is working memory and loses its contents without power. A disk is permanent storage. "16 GB" of RAM and a "512 GB" disk are different things.</div></li><li><div><b>Bit and byte.</b> Mb/s is not MB/s. The difference is a factor of 8.</div></li><li><div><b>SSDs never wear.</b> NAND has a limited number of writes. For normal use it lasts for years, but it must not be ignored under constant heavy writing.</div></li><li><div><b>Mixing modules.</b> RAM modules of different speeds run at the speed of the slowest one, and modules in dual-channel mode should be identical and in the right slots.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 9</span><span lang="en">Part 9</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Unutrašnja memorija (registri, keš, RAM) je brza i isparljiva; spoljna (SSD, HDD, USB) je sporija i trajna.</li><li>Hijerarhija: što je bliže procesoru, to je brže, skuplje i manje; keš skraćuje prosečno vreme pristupa.</li><li>DRAM mora da se osvežava; SRAM ne, ali je skuplji i koristi se za keš.</li><li>NVMe SSD je desetine puta brži od HDD-a, jer nema mehaniku i koristi PCIe.</li><li>Vreme prenosa ( t = S/v ); pazi na bite i bajtove, GB i GiB.</li><li>Kad RAM nije dovoljan, sistem koristi disk (swap) i sve usporava.</li></ul><ul lang="en"><li>Internal memory (registers, cache, RAM) is fast and volatile; external memory (SSD, HDD, USB) is slower and permanent.</li><li>The hierarchy: the closer to the processor, the faster, more expensive and smaller; the cache shortens the average access time.</li><li>DRAM must be refreshed; SRAM does not, but costs more and is used for cache.</li><li>An NVMe SSD is tens of times faster than an HDD, since it has no mechanics and uses PCIe.</li><li>The transfer time is ( t = S/v ); watch bits and bytes, GB and GiB.</li><li>When RAM is not enough the system uses the disk (swap) and everything slows down.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC06" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/memorija.js"></script>
+</body>
+</html>

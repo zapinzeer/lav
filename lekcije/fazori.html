@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Fazor kao obrtni vektor: amplituda, početna faza, fazna razlika i sabiranje naizmeničnih napona, sa modelom koji možeš da pomeraš.">
+<title>Predstavljanje naizmeničnih veličina pomoću fazora · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="fazori">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš šta je fazor i zašto je projekcija obrtne strelice sinusna veličina;</li><li>iz jednačine u = U<sub>m</sub> sin(ωt + φ) nacrtaš fazor i obrnuto;</li><li>odrediš faznu razliku i kažeš ko kome prednjači;</li><li>sabereš dve naizmenične veličine kao vektore (fazore).</li></ul>
+    <ul lang="en"><li>explain what a phasor is and why the projection of a rotating arrow is a sine quantity;</li><li>draw a phasor from the equation u = U<sub>m</sub> sin(ωt + φ) and the other way round;</li><li>find the phase difference and say who leads whom;</li><li>add two alternating quantities as vectors (phasors).</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="sinus" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">ponavljanje</span><span lang="en">a quick recap</span></p>
+    <h2><span lang="sr">Sinusna veličina i njeni parametri</span><span lang="en">A sine quantity and its parameters</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Napon gradske mreže menja se po <strong>sinusnom zakonu</strong>. Trenutna vrednost napona (napon u trenutku <span class="v">t</span>) zapisuje se ovako:</p>
+<p lang="en">The mains voltage changes according to a <strong>sine law</strong>. The instantaneous value of the voltage (the voltage at the moment <span class="v">t</span>) is written like this:</p><div class="formula"><div class="tex">\[ u(t) = U_m \sin(\omega t + \varphi) \]</div><dl class="legend"><div><dt>u</dt><dd><span lang="sr">trenutna vrednost napona</span><span lang="en">instantaneous voltage</span></dd><span class="unit">V</span></div><div><dt>U<sub>m</sub></dt><dd><span lang="sr">amplituda (najveća vrednost)</span><span lang="en">amplitude (the largest value)</span></dd><span class="unit">V</span></div><div><dt>ω</dt><dd><span lang="sr">kružna učestanost, ω = 2πf</span><span lang="en">angular frequency, ω = 2πf</span></dd><span class="unit">rad/s</span></div><div><dt>φ</dt><dd><span lang="sr">početna faza (ugao u trenutku t = 0)</span><span lang="en">initial phase (the angle at t = 0)</span></dd><span class="unit">rad ili °</span></div></dl></div><p lang="sr">Argument sinusa, <span class="v">ωt + φ</span>, zove se <strong>faza</strong>, a meri se u radijanima ili stepenima. Faza stalno raste jer vreme teče, pa sinus ide „gore-dole”. Za 50 Hz je <span class="v">ω</span> = 2π · 50 ≈ 314 rad/s.</p>
+<p lang="en">The argument of the sine, <span class="v">ωt + φ</span>, is called the <strong>phase</strong>, and it is measured in radians or degrees. The phase keeps growing because time flows, so the sine goes "up and down". For 50 Hz we have <span class="v">ω</span> = 2π · 50 ≈ 314 rad/s.</p><p lang="sr">Kada u kolu ima više napona i struja, svi imaju istu učestanost <span class="v">ω</span>, a razlikuju se samo po amplitudi i početnoj fazi. Sabirati sinuse pomoću trigonometrije je naporno. Zato postoji lakši način: <strong>fazor</strong>.</p>
+<p lang="en">When a circuit contains several voltages and currents, they all have the same frequency <span class="v">ω</span> and differ only in amplitude and initial phase. Adding sines with trigonometry is laborious. That is why there is an easier way: the <strong>phasor</strong>.</p><details class="think"><summary><span lang="sr">Pomisli prvo: ako sve veličine u kolu imaju isto ω, koja dva podatka o svakoj od njih još treba da pamtimo?</span><span lang="en">Think first: if all quantities in a circuit have the same ω, which two pieces of information about each of them do we still need to remember?</span></summary><div class="ans"><p lang="sr">Amplitudu <span class="v">U<sub>m</sub></span> (ili efektivnu vrednost) i početnu fazu <span class="v">φ</span>. Fazor je baš način da se ta dva broja nacrtaju kao jedna strelica.</p>
+<p lang="en">The amplitude <span class="v">U<sub>m</sub></span> (or the RMS value) and the initial phase <span class="v">φ</span>. A phasor is exactly a way to draw those two numbers as one arrow.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="fazor" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">obrtni vektor</span><span lang="en">a rotating vector</span></p>
+    <h2><span lang="sr">Šta je fazor?</span><span lang="en">What is a phasor?</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Zamisli strelicu dužine <span class="v">U<sub>m</sub></span> koja se obrće oko početka koordinatnog sistema <strong>ugaonom brzinom ω</strong>, suprotno kazaljci na satu. Ugao strelice prema vodoravnoj osi u trenutku <span class="v">t</span> je baš faza <span class="v">ωt + φ</span>.</p>
+<p lang="en">Imagine an arrow of length <span class="v">U<sub>m</sub></span> turning around the origin with <strong>angular speed ω</strong>, counter-clockwise. The angle of the arrow to the horizontal axis at the moment <span class="v">t</span> is exactly the phase <span class="v">ωt + φ</span>.</p><p lang="sr">Njen vertikalni „senka” (projekcija na vertikalnu osu) iznosi <span class="v">U<sub>m</sub></span> sin(<span class="v">ωt + φ</span>), a to je tačno trenutni napon <span class="v">u(t)</span>. Obrtna strelica je dakle isto što i sinusna funkcija, samo nacrtana drugačije. Takva strelica zove se <strong>fazor</strong> (obrtni vektor).</p>
+<p lang="en">Its vertical "shadow" (the projection on the vertical axis) equals <span class="v">U<sub>m</sub></span> sin(<span class="v">ωt + φ</span>), and that is exactly the instantaneous voltage <span class="v">u(t)</span>. A rotating arrow is therefore the same thing as a sine function, only drawn differently. Such an arrow is called a <strong>phasor</strong> (a rotating vector).</p>
+</div><figure class="lab" id="lab-phasor">
+<div class="viewport" style="aspect-ratio:360/236"><canvas tabindex="0" aria-label="Fazor koji se obrće i njegova projekcija / a rotating phasor and its projection"></canvas><span class="hint"><span lang="sr">Pomeraj klizače</span><span lang="en">Move the sliders</span></span></div>
+<div class="plot" style="margin-top:10px"><canvas aria-label="Sinusoida u(t) i trenutak na njoj / the sine wave u(t) and the current moment on it"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="p-um"><span lang="sr">Amplituda U<sub>m</sub></span><span lang="en">Amplitude U<sub>m</sub></span></label><output id="p-um-out" for="p-um"></output><input type="range" id="p-um" min="2" max="20" step="1" value="10"></div>
+<div class="ctl"><label for="p-ph"><span lang="sr">Početna faza φ</span><span lang="en">Initial phase φ</span></label><output id="p-ph-out" for="p-ph"></output><input type="range" id="p-ph" min="-180" max="180" step="5" value="30"></div>
+<div class="ctl only-two"><label for="p-um2"><span lang="sr">Amplituda U<sub>m2</sub></span><span lang="en">Amplitude U<sub>m2</sub></span></label><output id="p-um2-out" for="p-um2"></output><input type="range" id="p-um2" min="2" max="20" step="1" value="6"></div>
+<div class="ctl only-two"><label for="p-ph2"><span lang="sr">Početna faza φ<sub>2</sub></span><span lang="en">Initial phase φ<sub>2</sub></span></label><output id="p-ph2-out" for="p-ph2"></output><input type="range" id="p-ph2" min="-180" max="180" step="5" value="120"></div>
+<div class="ctl"><label for="p-sp"><span lang="sr">Brzina obrtanja (usporeno)</span><span lang="en">Rotation speed (slow motion)</span></label><output id="p-sp-out" for="p-sp"></output><input type="range" id="p-sp" min="0.05" max="1" step="0.05" value="0.25"></div>
+<div class="btns"><label class="switch" for="p-two"><input type="checkbox" id="p-two"><span lang="sr">Dodaj drugi napon</span><span lang="en">Add a second voltage</span></label><label class="switch" for="p-run"><input type="checkbox" checked id="p-run"><span lang="sr">Okreće se</span><span lang="en">Running</span></label></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="p-calc"></div><div class="result" id="p-result"></div><div class="calc" id="p-note"></div></div>
+<figcaption><span lang="sr">Levo je fazor: strelica dužine U<sub>m</sub> koja se obrće suprotno kazaljci na satu. Njena visina iznad vodoravne ose (beli kružić) je trenutni napon u(t), a dole se isti napon crta kao sinusoida. U stvarnosti se strelica obrće 50 puta u sekundi, ovde je usporena da bi se videlo. Uključi „Dodaj drugi napon” i vidi da zbir dve sinusoide odgovara vektorskom zbiru dve strelice.</span><span lang="en">On the left is the phasor: an arrow of length U<sub>m</sub> turning counter-clockwise. Its height above the horizontal axis (the white dot) is the instantaneous voltage u(t), and below the same voltage is drawn as a sine wave. In reality the arrow turns 50 times a second; here it is slowed down so you can see it. Switch on "Add a second voltage" and see that the sum of two sine waves matches the vector sum of two arrows.</span></figcaption>
+</figure><div class="rest">
+<p lang="sr">Pošto se u kolu <strong>sve strelice obrću istom brzinom</strong>, njihov međusobni položaj se ne menja. Zato fazore crtamo „zamrznute” u trenutku <span class="v">t</span> = 0. Tada svaka strelica ima samo dva podatka:</p>
+<p lang="en">Since in a circuit <strong>all the arrows turn at the same speed</strong>, their positions relative to each other do not change. That is why we draw phasors "frozen" at the moment <span class="v">t</span> = 0. Each arrow then carries just two pieces of information:</p><div class="cases"><div><p class="h">dužina = U<sub>m</sub></p><p class="note" lang="sr">Dužina strelice je amplituda. U praksi se često crta efektivna vrednost U = U<sub>m</sub>/√2, jer se ona meri voltmetrom.</p><p class="note" lang="en">The length of the arrow is the amplitude. In practice the RMS value U = U<sub>m</sub>/√2 is often drawn instead, because that is what a voltmeter measures.</p></div><div><p class="h">ugao = φ</p><p class="note" lang="sr">Ugao prema vodoravnoj osi je početna faza. Pozitivan ugao meri se suprotno kazaljci na satu, negativan u smeru kazaljke.</p><p class="note" lang="en">The angle to the horizontal axis is the initial phase. A positive angle is measured counter-clockwise, a negative one clockwise.</p></div></div><div class="rule-box"><p class="eyebrow"><span lang="sr">Dogovor o crtanju</span><span lang="en">Drawing convention</span></p><p lang="sr">Vodoravna osa je referentna (0°). Jednom veličinom u kolu se obično izabere da ima fazu 0°, a sve ostale se crtaju u odnosu na nju.</p>
+<p lang="en">The horizontal axis is the reference (0°). One quantity in the circuit is usually chosen to have phase 0°, and all the others are drawn relative to it.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="razlika" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">ko prednjači</span><span lang="en">who leads</span></p>
+    <h2><span lang="sr">Fazna razlika dva fazora</span><span lang="en">The phase difference of two phasors</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Napon <span class="v">u</span> i struja <span class="v">i</span> u istom kolu mogu imati različite početne faze. Razlika faza je <strong>fazni stav</strong> ili fazna razlika:</p>
+<p lang="en">The voltage <span class="v">u</span> and the current <span class="v">i</span> in the same circuit can have different initial phases. The difference of the phases is the <strong>phase shift</strong> or phase difference:</p><div class="formula"><div class="tex">\[ \varphi = \varphi_u - \varphi_i \]</div><dl class="legend"><div><dt>φ</dt><dd><span lang="sr">fazna razlika napona i struje</span><span lang="en">phase difference between voltage and current</span></dd><span class="unit">°</span></div></dl></div><div class="cases"><div><p class="h">φ > 0</p><p class="note" lang="sr">Fazor napona je ispred fazora struje (suprotno kazaljci). Kažemo da <strong>napon prednjači struji</strong>, a struja kasni za naponom.</p><p class="note" lang="en">The voltage phasor is ahead of the current phasor (counter-clockwise). We say the <strong>voltage leads the current</strong>, and the current lags the voltage.</p></div><div><p class="h">φ < 0</p><p class="note" lang="sr">Fazor struje je ispred fazora napona. <strong>Struja prednjači naponu</strong>.</p><p class="note" lang="en">The current phasor is ahead of the voltage phasor. The <strong>current leads the voltage</strong>.</p></div><div><p class="h">φ = 0</p><p class="note" lang="sr">Napon i struja su <strong>u fazi</strong>: istovremeno dostižu maksimum i istovremeno prolaze kroz nulu.</p><p class="note" lang="en">Voltage and current are <strong>in phase</strong>: they reach their maximum together and cross zero together.</p></div><div><p class="h">φ = ±90°</p><p class="note" lang="sr">Kažemo da su <strong>u kvadraturi</strong>. Takav je slučaj kod idealnog kalema i idealnog kondenzatora.</p><p class="note" lang="en">We say they are <strong>in quadrature</strong>. This is the case for an ideal coil and an ideal capacitor.</p></div></div><p lang="sr">Fazna razlika se može pretvoriti u vreme. Pošto jedna perioda <span class="v">T</span> odgovara uglu 360°, vremenski pomak je:</p>
+<p lang="en">A phase difference can be turned into time. Since one period <span class="v">T</span> corresponds to the angle 360°, the time shift is:</p><div class="formula" style="max-width:420px"><div class="tex">\[ \Delta t = \frac{\varphi}{360^\circ}\,T = \frac{\varphi}{\omega} \]</div></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="zbir" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">zašto nam trebaju</span><span lang="en">why we need them</span></p>
+    <h2><span lang="sr">Sabiranje pomoću fazora</span><span lang="en">Adding with phasors</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Zamisli da dva izvora vezana na red daju napone <span class="v">u<sub>1</sub></span> = <span class="v">U<sub>m1</sub></span> sin(<span class="v">ωt</span> + <span class="v">φ<sub>1</sub></span>) i <span class="v">u<sub>2</sub></span> = <span class="v">U<sub>m2</sub></span> sin(<span class="v">ωt</span> + <span class="v">φ<sub>2</sub></span>). Ukupan napon je <span class="v">u</span> = <span class="v">u<sub>1</sub></span> + <span class="v">u<sub>2</sub></span>.</p>
+<p lang="en">Imagine two sources in series giving the voltages <span class="v">u<sub>1</sub></span> = <span class="v">U<sub>m1</sub></span> sin(<span class="v">ωt</span> + <span class="v">φ<sub>1</sub></span>) and <span class="v">u<sub>2</sub></span> = <span class="v">U<sub>m2</sub></span> sin(<span class="v">ωt</span> + <span class="v">φ<sub>2</sub></span>). The total voltage is <span class="v">u</span> = <span class="v">u<sub>1</sub></span> + <span class="v">u<sub>2</sub></span>.</p><p lang="sr">Zbir je opet sinus iste učestanosti, a njegov fazor je <strong>vektorski zbir</strong> fazora <span class="v">u<sub>1</sub></span> i <span class="v">u<sub>2</sub></span>. Crta se pravilom paralelograma ili „glava na rep”. Probaj u modelu iznad (odeljak „Šta je fazor?”): uključi drugi napon i menjaj uglove.</p>
+<p lang="en">The sum is again a sine of the same frequency, and its phasor is the <strong>vector sum</strong> of the phasors <span class="v">u<sub>1</sub></span> and <span class="v">u<sub>2</sub></span>. It is drawn with the parallelogram rule or "head to tail". Try it in the model above (the section "What is a phasor?"): switch on the second voltage and change the angles.</p><details class="think"><summary><span lang="sr">Pomisli prvo: koliki je zbir dva napona iste amplitude U<sub>m</sub> koji su u kontrafazi (φ razlika 180°)?</span><span lang="en">Think first: what is the sum of two voltages of equal amplitude U<sub>m</sub> that are in antiphase (a 180° difference)?</span></summary><div class="ans"><p lang="sr">Nula. Strelice su iste dužine, a okrenute na suprotne strane, pa se potiru u svakom trenutku.</p>
+<p lang="en">Zero. The arrows have equal length and point in opposite directions, so they cancel at every moment.</p></div></details><p lang="sr">Zbir se računa preko komponenata duž dve ose (tako se ne mora pamtiti nikakva formula za zbir sinusa):</p>
+<p lang="en">The sum is calculated through components along the two axes (so no formula for the sum of sines needs to be memorised):</p><div class="formula"><div class="tex">\[ U_{m}\cos\varphi = U_{m1}\cos\varphi_1 + U_{m2}\cos\varphi_2 \qquad U_{m}\sin\varphi = U_{m1}\sin\varphi_1 + U_{m2}\sin\varphi_2 \]</div></div><div class="formula"><div class="tex">\[ U_m = \sqrt{U_{m1}^2 + U_{m2}^2 + 2U_{m1}U_{m2}\cos(\varphi_1-\varphi_2)} \]</div><dl class="legend"><div><dt>U<sub>m</sub></dt><dd><span lang="sr">amplituda zbira</span><span lang="en">amplitude of the sum</span></dd><span class="unit">V</span></div><div><dt>φ₁ − φ₂</dt><dd><span lang="sr">fazna razlika sabiraka</span><span lang="en">phase difference of the terms</span></dd><span class="unit">°</span></div></dl></div><p lang="sr">Provera zdravim razumom: ako su sabirci u fazi (razlika 0°), amplitude se prosto saberu. Ako su u kontrafazi (180°), oduzimaju se. Ako su u kvadraturi (90°), važi Pitagorina teorema, <span class="v">U<sub>m</sub></span> = √(<span class="v">U<sub>m1</sub></span>² + <span class="v">U<sub>m2</sub></span>²).</p>
+<p lang="en">Sanity check: if the terms are in phase (a 0° difference), the amplitudes simply add. If they are in antiphase (180°), they subtract. If they are in quadrature (90°), the Pythagorean theorem applies, <span class="v">U<sub>m</sub></span> = √(<span class="v">U<sub>m1</sub></span>² + <span class="v">U<sub>m2</sub></span>²).</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · kvadratura</span><span lang="en">Example 1 · quadrature</span></h4><p class="given" lang="sr">Dato: <span class="v">u<sub>1</sub></span> = 30 sin <span class="v">ωt</span> V i <span class="v">u<sub>2</sub></span> = 40 sin(<span class="v">ωt</span> + 90°) V. Traži se zbir <span class="v">u</span> = <span class="v">u<sub>1</sub></span> + <span class="v">u<sub>2</sub></span>.</p><p class="given" lang="en">Given: <span class="v">u<sub>1</sub></span> = 30 sin <span class="v">ωt</span> V and <span class="v">u<sub>2</sub></span> = 40 sin(<span class="v">ωt</span> + 90°) V. Find the sum <span class="v">u</span> = <span class="v">u<sub>1</sub></span> + <span class="v">u<sub>2</sub></span>.</p><ol lang="sr"><li>Fazori su pod pravim uglom (razlika 90°), pa je amplituda: \( U_m = \sqrt{30^2 + 40^2} = 50\ \mathrm{V} \).</li><li>Ugao: \( \tan\varphi = \dfrac{40}{30} \Rightarrow \varphi = 53{,}1^\circ \) (fazor <span class="v">u<sub>2</sub></span> je „gore”, pa je φ pozitivno).</li><li>Zbir je opet sinus iste učestanosti.</li></ol>
+<ol lang="en"><li>The phasors are at a right angle (a 90° difference), so the amplitude is \( U_m = \sqrt{30^2 + 40^2} = 50\ \mathrm{V} \).</li><li>Angle: \( \tan\varphi = \dfrac{40}{30} \Rightarrow \varphi = 53.1^\circ \) (the phasor <span class="v">u<sub>2</sub></span> points "up", so φ is positive).</li><li>The sum is again a sine of the same frequency.</li></ol><p class="answer"><span lang="sr">u = 50 sin(ωt + 53,1°) V</span><span lang="en">u = 50 sin(ωt + 53.1°) V</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · komponente</span><span lang="en">Example 2 · components</span></h4><p class="given" lang="sr">Dato: <span class="v">u<sub>1</sub></span> = 10 sin(<span class="v">ωt</span> + 30°) V i <span class="v">u<sub>2</sub></span> = 10 sin(<span class="v">ωt</span> − 90°) V. Traži se zbir.</p><p class="given" lang="en">Given: <span class="v">u<sub>1</sub></span> = 10 sin(<span class="v">ωt</span> + 30°) V and <span class="v">u<sub>2</sub></span> = 10 sin(<span class="v">ωt</span> − 90°) V. Find the sum.</p><ol lang="sr"><li>Vodoravne komponente: \( 10\cos 30^\circ + 10\cos(-90^\circ) = 8{,}66 + 0 = 8{,}66\ \mathrm{V} \).</li><li>Vertikalne komponente: \( 10\sin 30^\circ + 10\sin(-90^\circ) = 5 - 10 = -5\ \mathrm{V} \).</li><li>Amplituda: \( \sqrt{8{,}66^2 + 5^2} = 10\ \mathrm{V} \). Ugao: \( \varphi = \arctan\dfrac{-5}{8{,}66} = -30^\circ \).</li></ol>
+<ol lang="en"><li>Horizontal components: \( 10\cos 30^\circ + 10\cos(-90^\circ) = 8.66 + 0 = 8.66\ \mathrm{V} \).</li><li>Vertical components: \( 10\sin 30^\circ + 10\sin(-90^\circ) = 5 - 10 = -5\ \mathrm{V} \).</li><li>Amplitude: \( \sqrt{8.66^2 + 5^2} = 10\ \mathrm{V} \). Angle: \( \varphi = \arctan\dfrac{-5}{8.66} = -30^\circ \).</li></ol><p class="answer"><span lang="sr">u = 10 sin(ωt − 30°) V</span><span lang="en">u = 10 sin(ωt − 30°) V</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · ko prednjači i za koliko vremena</span><span lang="en">Example 3 · who leads and by how much time</span></h4><p class="given" lang="sr">Dato: <span class="v">u</span> = 325 sin(314<span class="v">t</span> + 60°) V i <span class="v">i</span> = 5 sin(314<span class="v">t</span> − 30°) A. Traži se fazna razlika i vremenski pomak.</p><p class="given" lang="en">Given: <span class="v">u</span> = 325 sin(314<span class="v">t</span> + 60°) V and <span class="v">i</span> = 5 sin(314<span class="v">t</span> − 30°) A. Find the phase difference and the time shift.</p><ol lang="sr"><li>Fazna razlika: \( \varphi = \varphi_u - \varphi_i = 60^\circ - (-30^\circ) = 90^\circ \). Pozitivna je, pa napon prednjači struji.</li><li>Učestanost: \( f = \omega/2\pi = 314/6{,}28 = 50\ \mathrm{Hz} \), pa je \( T = 20\ \mathrm{ms} \).</li><li>Vremenski pomak: \( \Delta t = \dfrac{90^\circ}{360^\circ}\cdot 20\ \mathrm{ms} = 5\ \mathrm{ms} \).</li></ol>
+<ol lang="en"><li>Phase difference: \( \varphi = \varphi_u - \varphi_i = 60^\circ - (-30^\circ) = 90^\circ \). It is positive, so the voltage leads the current.</li><li>Frequency: \( f = \omega/2\pi = 314/6.28 = 50\ \mathrm{Hz} \), so \( T = 20\ \mathrm{ms} \).</li><li>Time shift: \( \Delta t = \dfrac{90^\circ}{360^\circ}\cdot 20\ \mathrm{ms} = 5\ \mathrm{ms} \).</li></ol><p class="answer"><span lang="sr">φ = 90°, napon prednjači struji za 5 ms</span><span lang="en">φ = 90°, the voltage leads the current by 5 ms</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Mešanje amplitude i efektivne vrednosti.</b> Fazor može imati dužinu <span class="v">U<sub>m</sub></span> ili <span class="v">U</span> = <span class="v">U<sub>m</sub></span>/√2. Izaberi jedno i drži se toga u celom zadatku.</div></li><li><div><b>Sabiranje amplituda “napamet”.</b> Amplitude se sabiraju samo kada su sabirci u fazi. Inače se sabiraju vektori (fazori), a ne brojevi.</div></li><li><div><b>Pogrešan smer ugla.</b> Pozitivna faza je ugao <em>suprotno</em> kazaljci na satu. Napon sa φ = −30° kasni, ne prednjači.</div></li><li><div><b>Različite učestanosti.</b> Fazori se mogu sabirati samo ako imaju isto ω. Strelice različitih brzina menjaju međusobni ugao u vremenu i zbir nije sinusoida.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>Mixing amplitude and RMS.</b> A phasor can have length <span class="v">U<sub>m</sub></span> or <span class="v">U</span> = <span class="v">U<sub>m</sub></span>/√2. Choose one and stick to it throughout the problem.</div></li><li><div><b>Adding amplitudes "by heart".</b> Amplitudes add only when the terms are in phase. Otherwise vectors (phasors) are added, not numbers.</div></li><li><div><b>The wrong direction of the angle.</b> A positive phase is an angle <em>counter</em>-clockwise. A voltage with φ = −30° lags, it does not lead.</div></li><li><div><b>Different frequencies.</b> Phasors can be added only if they have the same ω. Arrows with different speeds change their mutual angle with time and the sum is not a sine.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Fazor je obrtna strelica dužine <span class="v">U<sub>m</sub></span> (ili <span class="v">U</span>) i ugla <span class="v">ωt + φ</span>. Njena projekcija na vertikalnu osu je sinusna veličina.</li><li>Pošto se svi fazori u kolu obrću istom brzinom, crtamo ih zamrznute u <span class="v">t</span> = 0: potrebna su samo dva podatka, dužina i ugao.</li><li>Fazna razlika \( \varphi = \varphi_u - \varphi_i \): pozitivna znači da napon prednjači struji. Vremenski pomak je \( \Delta t = \varphi T/360^\circ \).</li><li>Zbir sinusa iste učestanosti je fazor koji je <strong>vektorski zbir</strong> fazora sabiraka. Računa se preko komponenata ili formulom sa kosinusom razlike uglova.</li></ul><ul lang="en"><li>A phasor is a rotating arrow of length <span class="v">U<sub>m</sub></span> (or <span class="v">U</span>) and angle <span class="v">ωt + φ</span>. Its projection on the vertical axis is the sine quantity.</li><li>Since all phasors in a circuit turn at the same speed, we draw them frozen at <span class="v">t</span> = 0: only two pieces of information are needed, the length and the angle.</li><li>Phase difference \( \varphi = \varphi_u - \varphi_i \): positive means the voltage leads the current. The time shift is \( \Delta t = \varphi T/360^\circ \).</li><li>The sum of sines of the same frequency is a phasor that is the <strong>vector sum</strong> of the phasors of the terms. It is computed through components or with the cosine of the angle difference.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="AC01" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/ac-labs.js"></script>
+<script src="../assets/js/lessons/fazori.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Perioda, učestanost, kružna učestanost, amplituda, početna faza, srednja i efektivna vrednost naizmenične struje, sa modelom koji menja parametre.">
+<title>Elementi naizmenične struje · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="elementi-naizmenicne-struje">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>razlikuješ jednosmernu i naizmeničnu struju i nabrojiš elemente sinusne veličine;</li><li>izračunaš periodu, učestanost i kružnu učestanost i pređeš iz jedne u drugu;</li><li>odrediš amplitudu, vrh-vrh, srednju i efektivnu vrednost iz jednačine ili dijagrama;</li><li>objasniš šta je fazna razlika i šta znači efektivna vrednost.</li></ul>
+    <ul lang="en"><li>tell direct and alternating current apart and list the elements of a sine quantity;</li><li>calculate the period, frequency and angular frequency and convert between them;</li><li>find the amplitude, peak-to-peak, average and RMS value from an equation or a diagram;</li><li>explain what the phase difference is and what the RMS value means.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="sta" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">uvod</span><span lang="en">introduction</span></p>
+    <h2><span lang="sr">Šta je naizmenična struja?</span><span lang="en">What is alternating current?</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Jednosmerna struja</strong> (DC) uvek teče istim smerom, na primer iz baterije. <strong>Naizmenična struja</strong> (AC) menja smer, i to <strong>periodično</strong>: ista slika se ponavlja iznova. Najvažniji oblik je <strong>sinusni</strong>, jer se tako menja napon kojeg stvara generator, o čemu smo učili kod elektromagnetne indukcije: petlja koja se obrće u magnetnom polju daje napon \( u = U_m\sin\omega t \).</p>
+<p lang="en"><strong>Direct current</strong> (DC) always flows in the same direction, for example from a battery. <strong>Alternating current</strong> (AC) changes direction, and does so <strong>periodically</strong>: the same picture repeats again and again. The most important shape is the <strong>sine</strong>, because that is how the voltage from a generator changes, as we learned in electromagnetic induction: a loop turning in a magnetic field gives a voltage \( u = U_m\sin\omega t \).</p><p lang="sr">Mreža u Srbiji i većem delu sveta ima <strong>230 V i 50 Hz</strong>. Pogledajmo šta sve opisuje takvu veličinu. Ti parametri se zovu <strong>elementi naizmenične struje</strong>.</p>
+<p lang="en">The mains in Serbia and most of the world is <strong>230 V and 50 Hz</strong>. Let us look at everything that describes such a quantity. These parameters are called the <strong>elements of alternating current</strong>.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Elementi sinusne veličine</span><span lang="en">The elements of a sine quantity</span></caption><thead><tr><th><span lang="sr">Pojam</span><span lang="en">Term</span></th><th>Oznaka</th><th><span lang="sr">Šta je to</span><span lang="en">What it is</span></th><th><span lang="sr">Jedinica</span><span lang="en">Unit</span></th></tr></thead><tbody><tr><td><span lang="sr">trenutna vrednost</span><span lang="en">instantaneous value</span></td><td>u, i</td><td><span lang="sr">vrednost u datom trenutku</span><span lang="en">value at a given moment</span></td><td>V, A</td></tr><tr><td><span lang="sr">amplituda</span><span lang="en">amplitude</span></td><td>U<sub>m</sub>, I<sub>m</sub></td><td><span lang="sr">najveća vrednost</span><span lang="en">the largest value</span></td><td>V, A</td></tr><tr><td><span lang="sr">perioda</span><span lang="en">period</span></td><td>T</td><td><span lang="sr">vreme jednog ponavljanja</span><span lang="en">time of one repetition</span></td><td>s</td></tr><tr><td><span lang="sr">učestanost</span><span lang="en">frequency</span></td><td>f</td><td><span lang="sr">broj perioda u sekundi</span><span lang="en">periods per second</span></td><td>Hz</td></tr><tr><td><span lang="sr">kružna učestanost</span><span lang="en">angular frequency</span></td><td>ω</td><td><span lang="sr">ugao koji fazor pređe u sekundi</span><span lang="en">angle swept by the phasor per second</span></td><td>rad/s</td></tr><tr><td><span lang="sr">početna faza</span><span lang="en">initial phase</span></td><td>φ</td><td><span lang="sr">ugao u trenutku t = 0</span><span lang="en">the angle at t = 0</span></td><td>° ili rad</td></tr><tr><td><span lang="sr">efektivna vrednost</span><span lang="en">RMS value</span></td><td>U, I</td><td><span lang="sr">ekvivalentna jednosmerna vrednost</span><span lang="en">the equivalent direct value</span></td><td>V, A</td></tr><tr><td><span lang="sr">srednja vrednost</span><span lang="en">average value</span></td><td>U<sub>sr</sub></td><td><span lang="sr">prosek u pola periode</span><span lang="en">the average over half a period</span></td><td>V, A</td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="perioda" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">T · f · ω</span><span lang="en">T · f · ω</span></p>
+    <h2><span lang="sr">Perioda, učestanost i kružna učestanost</span><span lang="en">Period, frequency and angular frequency</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr"><strong>Perioda</strong> <span class="v">T</span> je vreme za koje se veličina vrati na isto stanje i krene isto kao pre. <strong>Učestanost</strong> <span class="v">f</span> kaže koliko se perioda desi u jednoj sekundi, pa je to recipročna vrednost periode. <strong>Kružna učestanost</strong> <span class="v">ω</span> je ugaona brzina fazora: jedna perioda je pun krug, 2π radijana.</p>
+<p lang="en">The <strong>period</strong> <span class="v">T</span> is the time after which the quantity returns to the same state and sets off the same way as before. The <strong>frequency</strong> <span class="v">f</span> tells how many periods happen in one second, so it is the reciprocal of the period. The <strong>angular frequency</strong> <span class="v">ω</span> is the angular speed of the phasor: one period is a full circle, 2π radians.</p><div class="formula"><div class="tex">\[ f = \frac{1}{T} \qquad \omega = 2\pi f = \frac{2\pi}{T} \]</div><dl class="legend"><div><dt>T</dt><dd><span lang="sr">perioda</span><span lang="en">period</span></dd><span class="unit">s</span></div><div><dt>f</dt><dd><span lang="sr">učestanost</span><span lang="en">frequency</span></dd><span class="unit">Hz = 1/s</span></div><div><dt>ω</dt><dd><span lang="sr">kružna učestanost</span><span lang="en">angular frequency</span></dd><span class="unit">rad/s</span></div></dl></div><p lang="sr">Za mrežu je <span class="v">f</span> = 50 Hz, pa je <span class="v">T</span> = 1/50 s = 20 ms i <span class="v">ω</span> = 2π · 50 = 314 rad/s. Struja u mreži dakle 100 puta u sekundi menja smer i 100 puta prođe kroz nulu.</p>
+<p lang="en">For the mains <span class="v">f</span> = 50 Hz, so <span class="v">T</span> = 1/50 s = 20 ms and <span class="v">ω</span> = 2π · 50 = 314 rad/s. The mains current therefore reverses 100 times a second and passes through zero 100 times.</p><details class="think"><summary><span lang="sr">Pomisli prvo: lampa na mreži svetli i treperi 100 puta u sekundi. Zašto toga ne vidimo?</span><span lang="en">Think first: a lamp on the mains flickers 100 times a second. Why do we not see it?</span></summary><div class="ans"><p lang="sr">Oko ne razlikuje promene brže od oko 50–60 puta u sekundi, a žarna nit se usput ne stigne ni ohladiti do kraja. Zato vidimo stalno svetlo.</p>
+<p lang="en">The eye cannot tell changes faster than about 50–60 per second, and a filament does not manage to cool down completely in between. So we see a steady light.</p></div></details>
+</div><figure class="lab" id="lab-wave">
+<div class="plot" style="margin-top:10px"><canvas aria-label="Napon (i struja) u funkciji vremena, dve periode / voltage (and current) against time, two periods"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="w-um"><span lang="sr">Amplituda U<sub>m</sub></span><span lang="en">Amplitude U<sub>m</sub></span></label><output id="w-um-out" for="w-um"></output><input type="range" id="w-um" min="5" max="325" step="5" value="325"></div>
+<div class="ctl"><label for="w-f"><span lang="sr">Učestanost f</span><span lang="en">Frequency f</span></label><output id="w-f-out" for="w-f"></output><input type="range" id="w-f" min="5" max="100" step="5" value="50"></div>
+<div class="ctl"><label for="w-ph"><span lang="sr">Početna faza φ<sub>u</sub></span><span lang="en">Initial phase φ<sub>u</sub></span></label><output id="w-ph-out" for="w-ph"></output><input type="range" id="w-ph" min="-180" max="180" step="5" value="0"></div>
+<div class="ctl only-cur"><label for="w-im"><span lang="sr">Amplituda struje I<sub>m</sub></span><span lang="en">Current amplitude I<sub>m</sub></span></label><output id="w-im-out" for="w-im"></output><input type="range" id="w-im" min="1" max="20" step="1" value="6"></div>
+<div class="ctl only-cur"><label for="w-phi"><span lang="sr">Početna faza φ<sub>i</sub></span><span lang="en">Initial phase φ<sub>i</sub></span></label><output id="w-phi-out" for="w-phi"></output><input type="range" id="w-phi" min="-180" max="180" step="5" value="-60"></div>
+<div class="btns"><label class="switch" for="w-cur"><input type="checkbox" id="w-cur"><span lang="sr">Prikaži i struju</span><span lang="en">Also show the current</span></label></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="w-calc"></div><div class="result" id="w-result"></div><div class="calc" id="w-note"></div></div>
+<figcaption><span lang="sr">Prikazane su dve periode napona. Zelene isprekidane linije su efektivna vrednost U<sub>ef</sub> = U<sub>m</sub>/√2, žute isprekidane vertikale ograničavaju jednu periodu T. Menjaj učestanost i vidi kako se menja T; menjaj fazu i vidi kako se kriva pomera ulevo ili udesno. Uključi struju da vidiš faznu razliku (struja je crtana u drugoj razmeri).</span><span lang="en">Two periods of the voltage are shown. The green dashed lines are the RMS value U<sub>rms</sub> = U<sub>m</sub>/√2, the yellow dashed verticals bound one period T. Change the frequency and see T change; change the phase and see the curve shift left or right. Switch on the current to see the phase difference (the current is drawn on a different scale).</span></figcaption>
+</figure><div class="rest">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Učestanosti koje srećemo</span><span lang="en">Frequencies we meet</span></caption><thead><tr><th><span lang="sr">Primer</span><span lang="en">Example</span></th><th>f</th><th>T</th></tr></thead><tbody><tr><td><span lang="sr">mreža u Evropi</span><span lang="en">European mains</span></td><td>50 Hz</td><td>20 ms</td></tr><tr><td><span lang="sr">mreža u SAD</span><span lang="en">US mains</span></td><td>60 Hz</td><td>16,7 ms</td></tr><tr><td><span lang="sr">zvuk (ton A)</span><span lang="en">sound (note A)</span></td><td>440 Hz</td><td>2,27 ms</td></tr><tr><td><span lang="sr">FM radio</span><span lang="en">FM radio</span></td><td>100 MHz</td><td>10 ns</td></tr><tr><td><span lang="sr">procesor</span><span lang="en">CPU clock</span></td><td>3 GHz</td><td>0,33 ns</td></tr></tbody></table></div><div class="rule-box"><p class="eyebrow"><span lang="sr">Dve jedinice za ugao</span><span lang="en">Two units for an angle</span></p><p lang="sr">Jedan krug je 360° ili 2π rad. Zato faza može da se piše u stepenima, kao \( \sin(\omega t + 30^\circ) \), ili u radijanima, kao \( \sin(\omega t + \pi/6) \). Pazi da kalkulator bude u pravom režimu.</p>
+<p lang="en">One full circle is 360° or 2π rad. So a phase can be written in degrees, as \( \sin(\omega t + 30^\circ) \), or in radians, as \( \sin(\omega t + \pi/6) \). Make sure your calculator is in the right mode.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="amplituda" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">U_m · U_pp · φ</span><span lang="en">U_m · U_pp · φ</span></p>
+    <h2><span lang="sr">Trenutna vrednost, amplituda i faza</span><span lang="en">Instantaneous value, amplitude and phase</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Vrednost u bilo kom trenutku daje jednačina sinusne veličine:</p>
+<p lang="en">The value at any moment is given by the equation of the sine quantity:</p><div class="formula"><div class="tex">\[ u(t) = U_m\sin(\omega t + \varphi_u) \qquad i(t) = I_m\sin(\omega t + \varphi_i) \]</div></div><p lang="sr"><strong>Amplituda</strong> <span class="v">U<sub>m</sub></span> je najveća vrednost (vrh). Razlika između najvišeg i najnižeg vrha je <strong>vrh-vrh vrednost</strong> \( U_{pp} = 2U_m \), a to je ono što na ekranu osciloskopa merimo između dva vrha. <strong>Početna faza</strong> <span class="v">φ</span> kaže gde je kriva u trenutku <span class="v">t</span> = 0. Pozitivno φ pomera krivu ulevo (kriva „kreće ranije”), negativno udesno.</p>
+<p lang="en">The <strong>amplitude</strong> <span class="v">U<sub>m</sub></span> is the largest value (the peak). The difference between the highest and the lowest peak is the <strong>peak-to-peak value</strong> \( U_{pp} = 2U_m \), which is what we measure between two peaks on an oscilloscope screen. The <strong>initial phase</strong> <span class="v">φ</span> tells where the curve is at the moment <span class="v">t</span> = 0. A positive φ shifts the curve to the left (the curve "starts earlier"), a negative one to the right.</p><p lang="sr">Kada su napon i struja u istom kolu, njihove početne faze se najčešće razlikuju. Ta razlika, \( \varphi = \varphi_u - \varphi_i \), zove se <strong>fazna razlika</strong> i najvažniji je podatak o kolu naizmenične struje. Uključi struju u modelu iznad da je vidiš.</p>
+<p lang="en">When the voltage and the current are in the same circuit, their initial phases usually differ. That difference, \( \varphi = \varphi_u - \varphi_i \), is called the <strong>phase difference</strong> and is the most important piece of information about an AC circuit. Switch on the current in the model above to see it.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="efektivna" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">U_ef · U_sr</span><span lang="en">U_rms · U_avg</span></p>
+    <h2><span lang="sr">Srednja i efektivna vrednost</span><span lang="en">Average and RMS value</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Prosek sinusa preko cele periode je <strong>nula</strong>, jer je pozitivna poluperioda jednaka negativnoj. Zato se za <strong>srednju vrednost</strong> uzima prosek preko jedne poluperiode (ono što bi pokazao instrument sa jednosmernim usmeravanjem):</p>
+<p lang="en">The average of a sine over a whole period is <strong>zero</strong>, because the positive half-period equals the negative one. That is why the <strong>average value</strong> is taken over one half-period (what an instrument with rectification would show):</p><div class="formula" style="max-width:420px"><div class="tex">\[ U_{sr} = \frac{2}{\pi}\,U_m \approx 0{,}637\,U_m \]</div></div><p lang="sr">Mnogo je važnija <strong>efektivna vrednost</strong>. To je jednosmerni napon koji bi na istom otporniku proizveo istu toplotu (istu snagu) kao naizmenični. Računa se iz srednje vrednosti kvadrata, a za sinus je rezultat:</p>
+<p lang="en">Much more important is the <strong>RMS (effective) value</strong>. It is the direct voltage that would produce the same heat (the same power) in the same resistor as the alternating one. It is calculated from the mean of the squares, and for a sine the result is:</p><div class="formula"><div class="tex">\[ U = \frac{U_m}{\sqrt{2}} \approx 0{,}707\,U_m \qquad I = \frac{I_m}{\sqrt{2}} \]</div><dl class="legend"><div><dt>U, I</dt><dd><span lang="sr">efektivne vrednosti</span><span lang="en">RMS values</span></dd><span class="unit">V, A</span></div><div><dt>U<sub>m</sub>, I<sub>m</sub></dt><dd><span lang="sr">amplitude</span><span lang="en">amplitudes</span></dd><span class="unit">V, A</span></div></dl></div><p lang="sr">Voltmetri i ampermetri za naizmeničnu struju pokazuju efektivnu vrednost. Kada kažemo „mreža je 230 V”, mislimo na efektivnu vrednost, a amplituda je \( 230\sqrt{2} = 325 \) V. Odnos efektivne i srednje vrednosti zove se <strong>faktor oblika</strong>: \( k_f = U/U_{sr} = 1{,}11 \).</p>
+<p lang="en">Voltmeters and ammeters for AC show the RMS value. When we say "the mains is 230 V", we mean the RMS value, and the amplitude is \( 230\sqrt{2} = 325 \) V. The ratio of the RMS to the average value is called the <strong>form factor</strong>: \( k_f = U/U_{sr} = 1.11 \).</p><div class="rule-box green"><p class="eyebrow"><span lang="sr">Zašto baš √2?</span><span lang="en">Why exactly √2?</span></p><p lang="sr">Snaga na otporniku je \( p = u^2/R \) i menja se između nule i \( U_m^2/R \). Njena srednja vrednost je tačno pola maksimuma, \( U_m^2/(2R) \). Izjednačimo to sa \( U^2/R \) i dobijamo \( U = U_m/\sqrt{2} \).</p>
+<p lang="en">The power in a resistor is \( p = u^2/R \) and varies between zero and \( U_m^2/R \). Its mean is exactly half of the maximum, \( U_m^2/(2R) \). Equating that with \( U^2/R \) gives \( U = U_m/\sqrt{2} \).</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · mrežni napon</span><span lang="en">Example 1 · mains voltage</span></h4><p class="given" lang="sr">Dato: efektivni napon mreže je \( U = 230 \) V, \( f = 50 \) Hz. Traži se amplituda, vrh-vrh vrednost, perioda, ω i napon u trenutku \( t = 2{,}5 \) ms.</p><p class="given" lang="en">Given: the RMS mains voltage is \( U = 230 \) V, \( f = 50 \) Hz. Find the amplitude, the peak-to-peak value, the period, ω and the voltage at \( t = 2.5 \) ms.</p><ol lang="sr"><li>\( U_m = U\sqrt{2} = 230\cdot 1{,}414 = 325\ \mathrm{V} \) i \( U_{pp} = 2U_m = 650\ \mathrm{V} \).</li><li>\( T = 1/f = 20\ \mathrm{ms} \) i \( \omega = 2\pi f = 314\ \mathrm{rad/s} \).</li><li>\( u(2{,}5\ \mathrm{ms}) = 325\sin(314\cdot 0{,}0025) = 325\sin(0{,}785) = 325\cdot 0{,}707 = 230\ \mathrm{V} \). To je baš osmina periode, tj. 45°.</li></ol>
+<ol lang="en"><li>\( U_m = U\sqrt{2} = 230\cdot 1.414 = 325\ \mathrm{V} \) and \( U_{pp} = 2U_m = 650\ \mathrm{V} \).</li><li>\( T = 1/f = 20\ \mathrm{ms} \) and \( \omega = 2\pi f = 314\ \mathrm{rad/s} \).</li><li>\( u(2.5\ \mathrm{ms}) = 325\sin(314\cdot 0.0025) = 325\sin(0.785) = 325\cdot 0.707 = 230\ \mathrm{V} \). That is exactly an eighth of a period, i.e. 45°.</li></ol><p class="answer"><span lang="sr">Um = 325 V, Upp = 650 V, T = 20 ms, ω = 314 rad/s</span><span lang="en">Um = 325 V, Upp = 650 V, T = 20 ms, ω = 314 rad/s</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · prvi prolazak kroz nulu</span><span lang="en">Example 2 · the first zero crossing</span></h4><p class="given" lang="sr">Dato: \( u = 100\sin(\omega t - 30^\circ) \) V pri 50 Hz. Kada prvi put posle \( t = 0 \) napon postaje nula?</p><p class="given" lang="en">Given: \( u = 100\sin(\omega t - 30^\circ) \) V at 50 Hz. When does the voltage first become zero after \( t = 0 \)?</p><ol lang="sr"><li>Sinus je nula kada je argument 0: \( \omega t - 30^\circ = 0 \Rightarrow \omega t = 30^\circ \).</li><li>Ugao od 30° je \( 30/360 \) periode: \( t = \dfrac{30}{360}\cdot 20\ \mathrm{ms} = 1{,}67\ \mathrm{ms} \).</li><li>Provera: u trenutku \( t = 0 \) je \( u = 100\sin(-30^\circ) = -50 \) V, napon raste ka nuli.</li></ol>
+<ol lang="en"><li>A sine is zero when its argument is 0: \( \omega t - 30^\circ = 0 \Rightarrow \omega t = 30^\circ \).</li><li>An angle of 30° is \( 30/360 \) of a period: \( t = \dfrac{30}{360}\cdot 20\ \mathrm{ms} = 1.67\ \mathrm{ms} \).</li><li>Check: at \( t = 0 \) we have \( u = 100\sin(-30^\circ) = -50 \) V, and the voltage rises towards zero.</li></ol><p class="answer"><span lang="sr">t = 1,67 ms</span><span lang="en">t = 1.67 ms</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · ista toplota</span><span lang="en">Example 3 · the same heat</span></h4><p class="given" lang="sr">Dato: na otpornik od 100 Ω priključen je naizmenični napon amplitude 141 V. Kolika je srednja snaga i koji jednosmerni napon daje istu snagu?</p><p class="given" lang="en">Given: an alternating voltage of amplitude 141 V is connected to a 100 Ω resistor. What is the average power, and which direct voltage gives the same power?</p><ol lang="sr"><li>Efektivni napon: \( U = 141/\sqrt{2} = 100\ \mathrm{V} \).</li><li>Srednja snaga: \( P = U^2/R = 100^2/100 = 100\ \mathrm{W} \).</li><li>Isto daje jednosmerni napon od 100 V: \( P = 100^2/100 = 100\ \mathrm{W} \). To je smisao efektivne vrednosti.</li></ol>
+<ol lang="en"><li>RMS voltage: \( U = 141/\sqrt{2} = 100\ \mathrm{V} \).</li><li>Average power: \( P = U^2/R = 100^2/100 = 100\ \mathrm{W} \).</li><li>A direct voltage of 100 V gives the same: \( P = 100^2/100 = 100\ \mathrm{W} \). That is the meaning of the RMS value.</li></ol><p class="answer"><span lang="sr">P = 100 W, UDC = 100 V</span><span lang="en">P = 100 W, UDC = 100 V</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Amplituda umesto efektivne vrednosti.</b> Voltmetar i podaci na tablicama uređaja daju efektivnu vrednost. Za snagu i toplotu koristi efektivne vrednosti, a za dimenzionisanje izolacije i oscilograme amplitudu.</div></li><li><div><b>Srednja vrednost cele periode.</b> Ona je nula. Srednja vrednost se uzima za poluperiodu, ili posle usmeravanja.</div></li><li><div><b>Mešanje f i ω.</b> \( \omega = 2\pi f \). Za 50 Hz je ω = 314 rad/s, ne 50. U jednačini \( \sin(\omega t) \) uvek stoji ω.</div></li><li><div><b>Stepeni i radijani.</b> \( \sin(314\cdot 0{,}0025) \) računaj u radijanima. Ako ti je kalkulator u stepenima, dobićeš pogrešan rezultat.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>Amplitude instead of RMS.</b> A voltmeter and the data on device labels give the RMS value. Use RMS values for power and heat, and the amplitude for insulation ratings and oscilloscope traces.</div></li><li><div><b>The average over a whole period.</b> It is zero. The average value is taken over a half-period, or after rectification.</div></li><li><div><b>Mixing up f and ω.</b> \( \omega = 2\pi f \). For 50 Hz we have ω = 314 rad/s, not 50. The equation \( \sin(\omega t) \) always contains ω.</div></li><li><div><b>Degrees and radians.</b> Calculate \( \sin(314\cdot 0.0025) \) in radians. If your calculator is in degrees, you will get a wrong result.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Naizmenična veličina se periodično ponavlja. Perioda i učestanost su \( f = 1/T \), a kružna učestanost \( \omega = 2\pi f \).</li><li>Sinusna veličina je opisana amplitudom, kružnom učestanošću i početnom fazom: \( u = U_m\sin(\omega t + \varphi) \).</li><li>Srednja vrednost (za poluperiodu) je \( 2U_m/\pi = 0{,}637U_m \), efektivna je \( U_m/\sqrt{2} = 0{,}707U_m \).</li><li>Efektivna vrednost je jednosmerna vrednost koja daje istu snagu, a to pokazuju voltmetar i ampermetar.</li><li>Fazna razlika \( \varphi = \varphi_u - \varphi_i \) govori ko prednjači: ona je ključ za otpornik, kalem i kondenzator.</li></ul><ul lang="en"><li>An alternating quantity repeats periodically. The period and frequency are related by \( f = 1/T \), and the angular frequency is \( \omega = 2\pi f \).</li><li>A sine quantity is described by its amplitude, angular frequency and initial phase: \( u = U_m\sin(\omega t + \varphi) \).</li><li>The average value (over a half-period) is \( 2U_m/\pi = 0.637U_m \), the RMS value is \( U_m/\sqrt{2} = 0.707U_m \).</li><li>The RMS value is the direct value that gives the same power, and it is what a voltmeter and an ammeter show.</li><li>The phase difference \( \varphi = \varphi_u - \varphi_i \) tells who leads: it is the key to the resistor, the coil and the capacitor.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="AC03" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/ac-labs.js"></script>
+<script src="../assets/js/lessons/elementi-naizmenicne-struje.js"></script>
+</body>
+</html>

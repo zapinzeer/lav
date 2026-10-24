@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Napon i struja na otporniku su u fazi, Omov zakon važi za trenutne vrednosti, a snaga pulsira i nikad nije negativna. Sa modelom kola i fazora.">
+<title>Otpornik u kolu naizmenične struje · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="otpornik-u-kolu-naizmenicne-struje">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>izračunaš struju kroz otpornik iz naizmeničnog napona i napišeš njenu jednačinu;</li><li>objasniš zašto su napon i struja na otporniku u fazi;</li><li>izračunaš trenutnu i srednju snagu i kažeš zašto se koriste efektivne vrednosti;</li><li>nacrtaš fazorski dijagram i grafike u(t), i(t) i p(t).</li></ul>
+    <ul lang="en"><li>calculate the current through a resistor from an alternating voltage and write its equation;</li><li>explain why voltage and current in a resistor are in phase;</li><li>calculate instantaneous and average power and say why RMS values are used;</li><li>draw the phasor diagram and the graphs of u(t), i(t) and p(t).</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="omov" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">u = R · i</span><span lang="en">u = R · i</span></p>
+    <h2><span lang="sr">Otpornik i Omov zakon</span><span lang="en">The resistor and Ohm's law</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Na idealan otpornik otpornosti <span class="v">R</span> dovedemo napon \( u = U_m\sin\omega t \). U svakom trenutku važi Omov zakon, baš kao u kolu jednosmerne struje:</p>
+<p lang="en">We apply a voltage \( u = U_m\sin\omega t \) to an ideal resistor of resistance <span class="v">R</span>. At every moment Ohm's law holds, exactly as in a DC circuit:</p><div class="formula"><div class="tex">\[ i = \frac{u}{R} = \frac{U_m}{R}\sin\omega t = I_m\sin\omega t \qquad I_m = \frac{U_m}{R},\quad I = \frac{U}{R} \]</div><dl class="legend"><div><dt>i</dt><dd><span lang="sr">trenutna struja</span><span lang="en">instantaneous current</span></dd><span class="unit">A</span></div><div><dt>R</dt><dd><span lang="sr">otpornost</span><span lang="en">resistance</span></dd><span class="unit">Ω</span></div><div><dt>I<sub>m</sub></dt><dd><span lang="sr">amplituda struje</span><span lang="en">current amplitude</span></dd><span class="unit">A</span></div></dl></div><p lang="sr">Struja ima isti oblik (sinus), istu učestanost i <strong>istu fazu</strong> kao napon. Kažemo da su napon i struja <strong>u fazi</strong>, fazna razlika je \( \varphi = 0 \). Isto važi i za amplitude i za efektivne vrednosti, jer su obe veličine samo pomnožene istim brojem \( 1/R \).</p>
+<p lang="en">The current has the same shape (a sine), the same frequency and <strong>the same phase</strong> as the voltage. We say that voltage and current are <strong>in phase</strong>, the phase difference is \( \varphi = 0 \). The same holds for amplitudes and for RMS values, because both quantities are simply multiplied by the same number \( 1/R \).</p><div class="formula" style="max-width:420px"><div class="tex">\[ \underline{Z}_R = \frac{\underline{U}}{\underline{I}} = R\angle 0^\circ = R \]</div></div><details class="think"><summary><span lang="sr">Pomisli prvo: kako izgledaju fazori napona i struje na otporniku?</span><span lang="en">Think first: what do the phasors of the voltage and the current in a resistor look like?</span></summary><div class="ans"><p lang="sr">Dve strelice u istom pravcu i smeru. Razlika uglova je 0°, a odnos dužina je <span class="v">R</span> (u odgovarajućim jedinicama).</p>
+<p lang="en">Two arrows in the same direction. The angle difference is 0°, and the ratio of their lengths is <span class="v">R</span> (in the appropriate units).</p></div></details>
+</div><figure class="lab" id="lab-r">
+<div class="viewport" style="aspect-ratio:360/190"><canvas tabindex="0" aria-label="Strujno kolo i fazorski dijagram / the circuit and the phasor diagram"></canvas></div>
+<div class="plot" style="margin-top:10px"><canvas aria-label="Napon i struja u funkciji ωt / voltage and current against ωt"></canvas></div>
+<div class="plot short" style="margin-top:10px"><canvas aria-label="Trenutna snaga p(t) / instantaneous power p(t)"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="lab-r-um"><span lang="sr">Amplituda napona U<sub>m</sub></span><span lang="en">Voltage amplitude U<sub>m</sub></span></label><output id="lab-r-um-out" for="lab-r-um"></output><input type="range" id="lab-r-um" min="5" max="325" step="5" value="100"></div>
+<div class="ctl"><label for="lab-r-f"><span lang="sr">Učestanost f</span><span lang="en">Frequency f</span></label><output id="lab-r-f-out" for="lab-r-f"></output><input type="range" id="lab-r-f" min="10" max="500" step="10" value="50"></div>
+<div class="ctl"><label for="lab-r-val"><span lang="sr">Otpornost R</span><span lang="en">Resistance R</span></label><output id="lab-r-val-out" for="lab-r-val"></output><input type="range" id="lab-r-val" min="10" max="1000" step="10" value="100"></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-r-calc"></div><div class="result" id="lab-r-result"></div><div class="calc" id="lab-r-note"></div></div>
+<figcaption><span lang="sr">Gore levo je kolo: izvor naizmeničnog napona i otpornik. Narandžaste tačkice su struja: gde je tačkica gušća i svetlija, struja je veća. Gore desno su fazori napona (plavi) i struje (narandžasti): leže jedan preko drugog. Na grafiku su u(t) i i(t) potpuno usklađeni, a ispod je snaga p(t) koja je uvek iznad nule. Struja je nacrtana u svojoj razmeri, da obe krive budu iste visine.</span><span lang="en">Top left is the circuit: an AC source and a resistor. The orange dots are the current: the denser and brighter they are, the larger the current. Top right are the phasors of the voltage (blue) and the current (orange): they lie on top of each other. On the graph u(t) and i(t) are perfectly aligned, and below is the power p(t), which stays above zero. The current is drawn on its own scale so that both curves have the same height.</span></figcaption>
+</figure><div class="rest">
+<div class="cases"><div><p class="h">otpornost ne zavisi od f</p><p class="note" lang="sr">Idealan otpornik se ponaša isto na 50 Hz, na 1 kHz i na jednosmernoj struji. Probaj da menjaš učestanost u modelu: struja se ne menja.</p><p class="note" lang="en">An ideal resistor behaves the same at 50 Hz, at 1 kHz and with direct current. Try changing the frequency in the model: the current does not change.</p></div><div><p class="h">fazni stav 0°</p><p class="note" lang="sr">Kada je napon maksimalan, i struja je maksimalna. Kada je napon nula, i struja je nula.</p><p class="note" lang="en">When the voltage is at its maximum, so is the current. When the voltage is zero, so is the current.</p></div></div><div class="rule-box violet"><p class="eyebrow"><span lang="sr">U fazi</span><span lang="en">In phase</span></p><p lang="sr">Otpornik je jedini element čija je impedansa <strong>realan broj</strong>. Kalem i kondenzator imaju imaginarni deo, pa će između napona i struje uneti fazni pomak od 90°.</p>
+<p lang="en">The resistor is the only element whose impedance is a <strong>real number</strong>. The coil and the capacitor have an imaginary part, so they will introduce a 90° phase shift between voltage and current.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="snaga" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">p = u · i</span><span lang="en">p = u · i</span></p>
+    <h2><span lang="sr">Snaga na otporniku</span><span lang="en">Power in a resistor</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Trenutna snaga je proizvod trenutnog napona i trenutne struje. Pošto su u fazi, imaju uvek isti znak, pa je snaga uvek nenegativna. Otpornik <strong>samo troši</strong> energiju i pretvara je u toplotu:</p>
+<p lang="en">The instantaneous power is the product of the instantaneous voltage and the instantaneous current. Since they are in phase, they always have the same sign, so the power is never negative. A resistor <strong>only consumes</strong> energy and turns it into heat:</p><div class="formula"><div class="tex">\[ p = u\,i = U_mI_m\sin^2\omega t = U I\,(1 - \cos 2\omega t) \]</div></div><p lang="sr">Snaga „pulsira” dvostrukom učestanošću \( 2\omega \) (na grafiku vidiš dva brega u jednoj periodi napona), između nule i \( U_mI_m = 2UI \). Njena <strong>srednja vrednost</strong> je tačno polovina maksimuma:</p>
+<p lang="en">The power "pulses" at twice the frequency \( 2\omega \) (on the graph you see two humps in one voltage period), between zero and \( U_mI_m = 2UI \). Its <strong>average value</strong> is exactly half of the maximum:</p><div class="formula"><div class="tex">\[ P = U\,I = I^2R = \frac{U^2}{R} = \frac{U_mI_m}{2} \]</div><dl class="legend"><div><dt>P</dt><dd><span lang="sr">srednja (aktivna) snaga</span><span lang="en">average (active) power</span></dd><span class="unit">W</span></div><div><dt>U, I</dt><dd><span lang="sr">efektivne vrednosti</span><span lang="en">RMS values</span></dd><span class="unit">V, A</span></div></dl></div><p lang="sr">Formule za snagu izgledaju isto kao u jednosmernoj struji, <strong>ali samo ako se koriste efektivne vrednosti</strong>. Ta snaga se zove <strong>aktivna snaga</strong> i meri u vatima.</p>
+<p lang="en">The formulas for power look the same as in DC, <strong>but only if RMS values are used</strong>. This power is called the <strong>active power</strong> and is measured in watts.</p><div class="rule-box green"><p class="eyebrow"><span lang="sr">Pravi otpornici</span><span lang="en">Real resistors</span></p><p lang="sr">Pravi otpornik ima malu induktivnost (posebno žičani) i kapacitivnost. Pri vrlo visokim učestanostima ponaša se kao kolo sa kalemom i kondenzatorom, a ne kao čist otpornik. U ovoj lekciji računamo sa idealnim.</p>
+<p lang="en">A real resistor has a small inductance (especially a wire-wound one) and some capacitance. At very high frequencies it behaves like a circuit with a coil and a capacitor, not as a pure resistor. In this lesson we work with the ideal one.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · sijalica</span><span lang="en">Example 1 · a lamp</span></h4><p class="given" lang="sr">Dato: sijalica sa žarnom niti, 230 V / 60 W. Traži se otpornost niti, efektivna i najveća struja i najveća trenutna snaga.</p><p class="given" lang="en">Given: an incandescent lamp, 230 V / 60 W. Find the resistance of the filament, the RMS and the peak current and the peak instantaneous power.</p><ol lang="sr"><li>\( R = U^2/P = 230^2/60 = 882\ \Omega \).</li><li>\( I = P/U = 60/230 = 0{,}26\ \mathrm{A} \) i \( I_m = I\sqrt{2} = 0{,}369\ \mathrm{A} \).</li><li>Najveća trenutna snaga: \( U_mI_m = 325\cdot 0{,}369 = 120\ \mathrm{W} \), dvaput veća od srednje.</li></ol>
+<ol lang="en"><li>\( R = U^2/P = 230^2/60 = 882\ \Omega \).</li><li>\( I = P/U = 60/230 = 0.26\ \mathrm{A} \) and \( I_m = I\sqrt{2} = 0.369\ \mathrm{A} \).</li><li>The peak instantaneous power: \( U_mI_m = 325\cdot 0.369 = 120\ \mathrm{W} \), twice the average.</li></ol><p class="answer"><span lang="sr">R = 882 Ω, I = 0,26 A, p_max = 120 W</span><span lang="en">R = 882 Ω, I = 0.26 A, p_max = 120 W</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · jednačina struje</span><span lang="en">Example 2 · the equation of the current</span></h4><p class="given" lang="sr">Dato: \( u = 50\sin 314t \) V na otporniku od 25 Ω. Napiši jednačinu struje i izračunaj snagu.</p><p class="given" lang="en">Given: \( u = 50\sin 314t \) V across a 25 Ω resistor. Write the equation of the current and calculate the power.</p><ol lang="sr"><li>\( I_m = U_m/R = 50/25 = 2\ \mathrm{A} \), a pošto su u fazi: \( i = 2\sin 314t \) A.</li><li>Efektivne vrednosti: \( U = 50/\sqrt{2} = 35{,}4\ \mathrm{V} \), \( I = 2/\sqrt{2} = 1{,}41\ \mathrm{A} \).</li><li>\( P = UI = 35{,}4\cdot 1{,}41 = 50\ \mathrm{W} \). Provera: \( I^2R = 2\cdot 25 = 50\ \mathrm{W} \).</li></ol>
+<ol lang="en"><li>\( I_m = U_m/R = 50/25 = 2\ \mathrm{A} \), and since they are in phase: \( i = 2\sin 314t \) A.</li><li>RMS values: \( U = 50/\sqrt{2} = 35.4\ \mathrm{V} \), \( I = 2/\sqrt{2} = 1.41\ \mathrm{A} \).</li><li>\( P = UI = 35.4\cdot 1.41 = 50\ \mathrm{W} \). Check: \( I^2R = 2\cdot 25 = 50\ \mathrm{W} \).</li></ol><p class="answer"><span lang="sr">i = 2 sin 314t A, P = 50 W</span><span lang="en">i = 2 sin 314t A, P = 50 W</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · očitavanje voltmetra</span><span lang="en">Example 3 · a voltmeter reading</span></h4><p class="given" lang="sr">Dato: voltmetar vezan na otpornik od 6 Ω pokazuje 12 V (naizmenično). Traži se najveći napon, struja i snaga.</p><p class="given" lang="en">Given: a voltmeter across a 6 Ω resistor reads 12 V (AC). Find the peak voltage, the current and the power.</p><ol lang="sr"><li>Voltmetar pokazuje efektivnu vrednost, pa je \( U_m = 12\sqrt{2} = 17 \) V.</li><li>\( I = U/R = 12/6 = 2\ \mathrm{A} \), \( I_m = 2{,}83\ \mathrm{A} \).</li><li>\( P = U^2/R = 144/6 = 24\ \mathrm{W} \).</li></ol>
+<ol lang="en"><li>A voltmeter shows the RMS value, so \( U_m = 12\sqrt{2} = 17 \) V.</li><li>\( I = U/R = 12/6 = 2\ \mathrm{A} \), \( I_m = 2.83\ \mathrm{A} \).</li><li>\( P = U^2/R = 144/6 = 24\ \mathrm{W} \).</li></ol><p class="answer"><span lang="sr">Um = 17 V, I = 2 A, P = 24 W</span><span lang="en">Um = 17 V, I = 2 A, P = 24 W</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Snaga sa amplitudama.</b> \( P = U_mI_m \) je dvaput previše. Tačno je \( P = U_mI_m/2 \), ili \( P = UI \) sa efektivnim vrednostima.</div></li><li><div><b>Fazni pomak na otporniku.</b> Nema ga. Ako ti u zadatku sa otpornikom izađe ugao različit od nule, negde si pogrešio.</div></li><li><div><b>Negativna snaga.</b> Snaga na otporniku nikad nije negativna, ni u jednom trenutku. Negativna snaga (vraćanje energije) postoji samo kod kalema i kondenzatora.</div></li><li><div><b>Zavisnost od učestanosti.</b> Otpornost idealnog otpornika ne zavisi od učestanosti. To je razlika u odnosu na reaktanse kalema i kondenzatora.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>Power from amplitudes.</b> \( P = U_mI_m \) is twice too much. The correct one is \( P = U_mI_m/2 \), or \( P = UI \) with RMS values.</div></li><li><div><b>A phase shift in a resistor.</b> There is none. If you get a non-zero angle in a resistor problem, you have made a mistake somewhere.</div></li><li><div><b>Negative power.</b> Power in a resistor is never negative, at no moment. Negative power (returning energy) exists only in coils and capacitors.</div></li><li><div><b>Dependence on frequency.</b> The resistance of an ideal resistor does not depend on frequency. That is the difference compared with the reactances of the coil and the capacitor.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Na otporniku važi Omov zakon za trenutne vrednosti: \( i = u/R \), pa i za amplitude i efektivne vrednosti.</li><li>Napon i struja su <strong>u fazi</strong> (φ = 0), a impedansa je realna: \( \underline{Z}_R = R \).</li><li>Trenutna snaga \( p = UI(1 - \cos 2\omega t) \) nikad nije negativna, pulsira sa 2ω.</li><li>Srednja (aktivna) snaga je \( P = UI = I^2R = U^2/R \), samo sa efektivnim vrednostima.</li></ul><ul lang="en"><li>Ohm's law holds for a resistor for instantaneous values: \( i = u/R \), and so for amplitudes and RMS values too.</li><li>Voltage and current are <strong>in phase</strong> (φ = 0), and the impedance is real: \( \underline{Z}_R = R \).</li><li>The instantaneous power \( p = UI(1 - \cos 2\omega t) \) is never negative and pulses at 2ω.</li><li>The average (active) power is \( P = UI = I^2R = U^2/R \), with RMS values only.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="AC04" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/ac-labs.js"></script>
+<script src="../assets/js/lessons/otpornik-u-kolu-naizmenicne-struje.js"></script>
+</body>
+</html>

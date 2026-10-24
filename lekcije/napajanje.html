@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="ATX napajanje u 3D modelu: kablovi i konektori, boje žica, snaga i efikasnost (80 PLUS), zaštite, faktor snage i izbor napajanja.">
+<title>Napajanje · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="napajanje">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš zašto računaru treba napajanje i kako radi impulsno napajanje;</li><li>prepoznaš kablove i konektore napajanja i boje žica;</li><li>izračunaš efikasnost, gubitke i struju grane +12 V;</li><li>izabereš napajanje po snazi, efikasnosti, konektorima i zaštitama.</li></ul>
+    <ul lang="en"><li>explain why a computer needs a power supply and how a switch-mode supply works;</li><li>recognise the power-supply cables and connectors and the wire colours;</li><li>calculate efficiency, losses and the +12 V rail current;</li><li>choose a power supply by power, efficiency, connectors and protections.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="zasto" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">zašto napajanje</span><span lang="en">why a power supply</span></p>
+    <h2><span lang="sr">Zašto računaru treba napajanje?</span><span lang="en">Why does a computer need a power supply?</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Iz zidne utičnice dolazi <strong>naizmenični napon 230 V</strong>, a čipovi u računaru rade sa <strong>jednosmernim naponima</strong> od 12 V, 5 V i 3,3 V, pa i ispod 1 V. Napajanje (engl. PSU, <em>power supply unit</em>) zato radi tri stvari: <strong>ispravlja</strong> struju (AC → DC), <strong>spušta</strong> napon i <strong>stabilizuje</strong> ga.</p>
+<p lang="en">The wall socket delivers an <strong>alternating voltage of 230 V</strong>, but the chips in a computer work with <strong>direct voltages</strong> of 12 V, 5 V and 3.3 V, and even below 1 V. A power supply (PSU) therefore does three things: it <strong>rectifies</strong> the current (AC → DC), it <strong>steps the voltage down</strong> and it <strong>regulates</strong> it.</p><p lang="sr">Moderna napajanja su <strong>impulsna</strong> (SMPS, switch-mode power supply). Umesto velikog, teškog transformatora na 50 Hz koriste prekidače (tranzistore) koji radi na desetinama kilohertza. Na tim visokim učestanostima transformator može da bude vrlo mali i lagan, a efikasnost visoka. Lanac je ovakav:</p>
+<p lang="en">Modern power supplies are <strong>switch-mode</strong> (SMPS). Instead of a large, heavy 50 Hz transformer they use switches (transistors) running at tens of kilohertz. At such high frequencies the transformer can be very small and light, and the efficiency high. The chain looks like this:</p><figure class="fig" style="max-width:680px"><svg class="dg" viewBox="0 0 600 120" role="img" aria-label="Lanac pretvaranja u impulsnom napajanju / The conversion chain in a switching power supply" style="width:100%;height:auto"><defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><g><rect x="4" y="38" width="78" height="44" rx="7" fill="var(--sheet-soft, var(--sheet))" stroke="var(--ink)" stroke-width="1.6"/><text x="43" y="56" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">230 V ~</text><text x="43" y="72" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">mreža</text></g><g><rect x="100" y="38" width="78" height="44" rx="7" fill="var(--field-soft, var(--sheet))" stroke="var(--field)" stroke-width="1.6"/><text x="139" y="56" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">Filter</text><text x="139" y="72" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">EMI</text></g><g><rect x="196" y="38" width="86" height="44" rx="7" fill="var(--copper-soft, var(--sheet))" stroke="var(--copper)" stroke-width="1.6"/><text x="239" y="56" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">Ispravljač</text><text x="239" y="72" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">Grecov most</text></g><g><rect x="300" y="38" width="80" height="44" rx="7" fill="var(--violet-soft, var(--sheet))" stroke="var(--violet)" stroke-width="1.6"/><text x="340" y="56" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">PFC</text><text x="340" y="72" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">aktivni</text></g><g><rect x="398" y="38" width="88" height="44" rx="7" fill="var(--copper-soft, var(--sheet))" stroke="var(--copper)" stroke-width="1.6"/><text x="442" y="56" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">Sekač</text><text x="442" y="72" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">MOSFET + transf.</text></g><g><rect x="504" y="38" width="92" height="44" rx="7" fill="var(--field-soft, var(--sheet))" stroke="var(--field)" stroke-width="1.6"/><text x="550" y="56" text-anchor="middle" style="font:700 13px var(--body);fill:var(--ink)">Ispravljač</text><text x="550" y="72" text-anchor="middle" style="font:500 10.5px var(--mono);fill:var(--muted)">12 · 5 · 3,3 V</text></g><g><line x1="82" y1="60" x2="98" y2="60" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#ar)"/></g><g><line x1="178" y1="60" x2="194" y2="60" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#ar)"/></g><g><line x1="282" y1="60" x2="298" y2="60" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#ar)"/></g><g><line x1="380" y1="60" x2="396" y2="60" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#ar)"/></g><g><line x1="486" y1="60" x2="502" y2="60" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#ar)"/></g><text x="300" y="108" text-anchor="middle" style="font:500 11px var(--mono);fill:var(--muted)">~ 230 V AC  →  ~ 325 V DC (PFC)  →  visokofrekventni AC  →  niski DC</text></svg><figcaption><span lang="sr">Redosled blokova unutar impulsnog napajanja. Prvi stepen (ispravljač) je isti Grecov most iz lekcije o usmerivačima.</span><span lang="en">The order of the blocks inside a switch-mode power supply. The first stage (the rectifier) is the same Graetz bridge from the lesson on rectifiers.</span></figcaption></figure><details class="think"><summary><span lang="sr">Pomisli prvo: zašto je ovaj način bolji od običnog transformatora od 50 Hz?</span><span lang="en">Think first: why is this approach better than an ordinary 50 Hz transformer?</span></summary><div class="ans"><p lang="sr">Veličina transformatora opada sa učestanošću (isti fluks se postiže sa manje jezgra). Zato prekidačko napajanje na 100 kHz ima transformator veličine šake, a ne cigle, i manje gubitaka.</p>
+<p lang="en">The size of a transformer falls as frequency rises (the same flux is reached with a smaller core). So a switching supply at 100 kHz has a transformer the size of a fist, not a brick, and lower losses.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="model" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">obiđi napajanje u 3D</span><span lang="en">tour the PSU in 3D</span></p>
+    <h2><span lang="sr">Delovi napajanja u 3D</span><span lang="en">Parts of the power supply in 3D</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Napajanje u modelu je standardnog <strong>ATX</strong> oblika (150 × 86 × 140 mm). Iz njega izlazi nekoliko kablova, a svaki je namenjen određenom uređaju. Boje žica su standardizovane i govore koji je napon u njoj:</p>
+<p lang="en">The power supply in the model has the standard <strong>ATX</strong> shape (150 × 86 × 140 mm). Several cables come out of it, each meant for a particular device. The wire colours are standardised and tell the voltage in them:</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Boje žica</span><span lang="en">Wire colours</span></caption><thead><tr><th><span lang="sr">Boja</span><span lang="en">Colour</span></th><th><span lang="sr">Napon</span><span lang="en">Voltage</span></th><th><span lang="sr">Koristi se za</span><span lang="en">Used for</span></th></tr></thead><tbody><tr><td><span lang="sr">žuta</span><span lang="en">yellow</span></td><td>+12 V</td><td><span lang="sr">procesor, grafička, ventilatori, diskovi</span><span lang="en">CPU, graphics card, fans, drives</span></td></tr><tr><td><span lang="sr">crvena</span><span lang="en">red</span></td><td>+5 V</td><td><span lang="sr">USB, diskovi, logika</span><span lang="en">USB, drives, logic</span></td></tr><tr><td><span lang="sr">narandžasta</span><span lang="en">orange</span></td><td>+3,3 V</td><td><span lang="sr">memorija, čipset, M.2</span><span lang="en">memory, chipset, M.2</span></td></tr><tr><td><span lang="sr">crna</span><span lang="en">black</span></td><td>0 V</td><td><span lang="sr">masa (zajednički vod)</span><span lang="en">ground (common return)</span></td></tr><tr><td><span lang="sr">ljubičasta</span><span lang="en">purple</span></td><td>+5 V SB</td><td><span lang="sr">stand-by: radi i kad je računar ugašen</span><span lang="en">standby: works even when the computer is off</span></td></tr><tr><td><span lang="sr">zelena</span><span lang="en">green</span></td><td>PS_ON</td><td><span lang="sr">signal ploče: uključi napajanje</span><span lang="en">board signal: switch the supply on</span></td></tr><tr><td><span lang="sr">siva</span><span lang="en">grey</span></td><td>PWR_OK</td><td><span lang="sr">signal napajanja: naponi su ispravni</span><span lang="en">supply signal: the voltages are good</span></td></tr></tbody></table></div>
+</div><figure class="lab" id="lab-psu">
+<div class="viewport" style="aspect-ratio:4/3"><canvas tabindex="0" aria-label="3D model ATX napajanja sa kablovima i konektorima / 3D model of an ATX power supply with cables and connectors"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje · klikni deo</span><span lang="en">Drag to rotate · click a part</span></span></div>
+<div class="pc-info" id="psu-info" aria-live="polite"></div>
+<div class="pc-list" id="psu-list"></div>
+<figcaption><span lang="sr">ATX napajanje sa ventilatorom na vrhu, ulaznom utičnicom i prekidačem pozadi i kablovima sa strane ispred. Svaki kabl se završava konektorom za određeni uređaj. Klikni deo (ili izaberi iz liste) i vidi čemu služi.</span><span lang="en">An ATX power supply with the fan on top, the inlet socket and switch at the back and the cables at the front. Every cable ends in a connector for a specific device. Click a part (or pick it from the list) to see what it is for.</span></figcaption>
+</figure><div class="rest">
+<div class="rule-box green"><p class="eyebrow"><span lang="sr">Modularno ili ne?</span><span lang="en">Modular or not?</span></p><p lang="sr">Kod <strong>modularnih</strong> napajanja se kablovi priključuju po potrebi, pa u kućištu nema nepotrebnih kablova i protok vazduha je bolji. <strong>Poluodularna</strong> imaju stalno prikačen samo 24-pin i EPS kabl. Nemodularna su jeftinija.</p>
+<p lang="en"><strong>Modular</strong> power supplies let you attach cables as needed, so there are no unnecessary cables in the case and airflow is better. <strong>Semi-modular</strong> ones have only the 24-pin and EPS cables permanently attached. Non-modular ones are cheaper.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="snaga" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">vati i efikasnost</span><span lang="en">watts and efficiency</span></p>
+    <h2><span lang="sr">Snaga i efikasnost</span><span lang="en">Power and efficiency</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Snaga napajanja (npr. 650 W) je <strong>izlazna snaga</strong>, to jest ono što može da da komponentama. Ono samo troši više iz zida jer deo snage pretvara u toplotu. Odnos izlazne i ulazne snage je <strong>efikasnost</strong>:</p>
+<p lang="en">The rating of a power supply (e.g. 650 W) is the <strong>output power</strong>, that is what it can give to the components. It draws more from the wall because part of the power is turned into heat. The ratio of output to input power is the <strong>efficiency</strong>:</p><div class="formula"><div class="tex">\[ \eta = \frac{P_{out}}{P_{in}} \qquad P_{loss} = P_{in} - P_{out} = P_{out}\left(\frac{1}{\eta} - 1\right) \]</div><dl class="legend"><div><dt>η</dt><dd><span lang="sr">efikasnost (0…1)</span><span lang="en">efficiency (0…1)</span></dd></div><div><dt>P<sub>out</sub></dt><dd><span lang="sr">izlazna snaga</span><span lang="en">output power</span></dd><span class="unit">W</span></div><div><dt>P<sub>in</sub></dt><dd><span lang="sr">ulazna snaga iz mreže</span><span lang="en">input power from the mains</span></dd><span class="unit">W</span></div></dl></div><p lang="sr">Oznaka <strong>80 PLUS</strong> jamči minimalnu efikasnost pri 20 %, 50 % i 100 % opterećenja. Najbolje efikasnosti napajanja imaju pri oko 50 % opterećenja.</p>
+<p lang="en">The <strong>80 PLUS</strong> mark guarantees a minimum efficiency at 20 %, 50 % and 100 % load. Power supplies are most efficient at around 50 % load.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">80 PLUS nivoi (115 V, okvirno)</span><span lang="en">80 PLUS levels (115 V, approximate)</span></caption><thead><tr><th><span lang="sr">Nivo</span><span lang="en">Level</span></th><th>20 %</th><th>50 %</th><th>100 %</th></tr></thead><tbody><tr><td>80 PLUS</td><td>80 %</td><td>80 %</td><td>80 %</td></tr><tr><td>Bronze</td><td>82 %</td><td>85 %</td><td>82 %</td></tr><tr><td>Silver</td><td>85 %</td><td>88 %</td><td>85 %</td></tr><tr><td>Gold</td><td>87 %</td><td>90 %</td><td>87 %</td></tr><tr><td>Platinum</td><td>90 %</td><td>92 %</td><td>89 %</td></tr><tr><td>Titanium</td><td>92 %</td><td>94 %</td><td>90 %</td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="zastite" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">zaštite i PFC</span><span lang="en">protections and PFC</span></p>
+    <h2><span lang="sr">Zaštite i faktor snage</span><span lang="en">Protections and the power factor</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Dobro napajanje štiti računar od svog kvara i od kvara u mreži:</p>
+<p lang="en">A good power supply protects the computer from its own faults and from faults in the mains:</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Zaštite</span><span lang="en">Protections</span></caption><thead><tr><th><span lang="sr">Oznaka</span><span lang="en">Mark</span></th><th><span lang="sr">Značenje</span><span lang="en">Meaning</span></th><th><span lang="sr">Šta radi</span><span lang="en">What it does</span></th></tr></thead><tbody><tr><td>OVP</td><td><span lang="sr">prenapon</span><span lang="en">over-voltage</span></td><td><span lang="sr">gasi napajanje ako je izlazni napon previsok</span><span lang="en">shuts down if the output voltage is too high</span></td></tr><tr><td>UVP</td><td><span lang="sr">podnapon</span><span lang="en">under-voltage</span></td><td><span lang="sr">gasi ako napon padne prenisko</span><span lang="en">shuts down if the voltage falls too low</span></td></tr><tr><td>OCP</td><td><span lang="sr">prekomerna struja</span><span lang="en">over-current</span></td><td><span lang="sr">ograničava struju po grani</span><span lang="en">limits the current of a rail</span></td></tr><tr><td>OPP</td><td><span lang="sr">prevelika snaga</span><span lang="en">over-power</span></td><td><span lang="sr">gasi pri preopterećenju</span><span lang="en">shuts down on overload</span></td></tr><tr><td>SCP</td><td><span lang="sr">kratak spoj</span><span lang="en">short circuit</span></td><td><span lang="sr">trenutno isključuje</span><span lang="en">switches off at once</span></td></tr><tr><td>OTP</td><td><span lang="sr">pregrevanje</span><span lang="en">over-temperature</span></td><td><span lang="sr">gasi ako se pregreje</span><span lang="en">shuts down if it overheats</span></td></tr></tbody></table></div><p lang="sr">Kao što smo videli u lekcijama o naizmeničnoj struji, ako struja ne prati napon (kao kod kalema ili kondenzatora) <strong>faktor snage</strong> je manji od 1. Napajanje sa običnim ispravljačem i velikim kondenzatorom povlači struju u kratkim impulsima, pa je faktor snage loš (~0,6). <strong>Aktivni PFC</strong> (<em>power factor correction</em>) oblikuje struju da prati napon, pa je faktor snage ~0,99.</p>
+<p lang="en">As we saw in the lessons on alternating current, when the current does not follow the voltage (as with a coil or a capacitor) the <strong>power factor</strong> is below 1. A power supply with an ordinary rectifier and a large capacitor draws current in short pulses, so the power factor is poor (~0.6). <strong>Active PFC</strong> (power factor correction) shapes the current to follow the voltage, giving a power factor of ~0.99.</p><div class="formula"><div class="tex">\[ \lambda = \frac{P}{S} = \frac{P}{U\,I} = \cos\varphi \quad(\text{za sinusne veličine / for sine quantities}) \]</div></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="izbor" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">kako birati</span><span lang="en">how to choose</span></p>
+    <h2><span lang="sr">Kako se bira napajanje</span><span lang="en">How to choose a power supply</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<ul lang="sr"><li><strong>Snaga:</strong> saberi potrošnju komponenti (TDP procesora i grafičke, plus oko 75 W za ostalo) i dodaj 30 % rezerve.</li><li><strong>Grana +12 V:</strong> mora da daje dovoljno ampera; skoro sve komponente su na njoj.</li><li><strong>Efikasnost:</strong> Bronze je minimum, Gold je dobar kompromis.</li><li><strong>Konektori:</strong> dovoljno PCIe kablova za grafičku (jedan 8-pinski ili 12VHPWR), EPS za procesor, SATA za diskove.</li><li><strong>Form-faktor:</strong> ATX ili SFX, prema kućištu.</li><li><strong>Kvalitet i garancija:</strong> zaštite (OVP, OCP, OPP, SCP), pouzdan proizvođač, 5 do 10 godina garancije.</li></ul>
+<ul lang="en"><li><strong>Power:</strong> add up the consumption of the components (CPU and graphics TDP, plus about 75 W for the rest) and add 30 % headroom.</li><li><strong>The +12 V rail:</strong> it must give enough amps; almost all components are on it.</li><li><strong>Efficiency:</strong> Bronze is the minimum, Gold is a good compromise.</li><li><strong>Connectors:</strong> enough PCIe cables for the graphics card (one 8-pin or 12VHPWR), EPS for the CPU, SATA for drives.</li><li><strong>Form factor:</strong> ATX or SFX, depending on the case.</li><li><strong>Quality and warranty:</strong> protections (OVP, OCP, OPP, SCP), a reliable manufacturer, 5 to 10 years of warranty.</li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · izbor snage</span><span lang="en">Example 1 · choosing the wattage</span></h4><p class="given" lang="sr">Dato: procesor 125 W, grafička 285 W, ostale komponente (ploča, RAM, diskovi, ventilatori) 75 W. Koje napajanje izabrati?</p><p class="given" lang="en">Given: CPU 125 W, graphics card 285 W, other components (board, RAM, drives, fans) 75 W. Which power supply should be chosen?</p><ol lang="sr"><li>Zbir: \( 125 + 285 + 75 = 485\ \mathrm{W} \).</li><li>Sa 30 % rezerve: \( 485\cdot 1{,}3 = 630\ \mathrm{W} \).</li><li>Prvo standardno napajanje iznad toga je 650 W.</li></ol>
+<ol lang="en"><li>Total: \( 125 + 285 + 75 = 485\ \mathrm{W} \).</li><li>With 30 % headroom: \( 485\cdot 1.3 = 630\ \mathrm{W} \).</li><li>The first standard power supply above that is 650 W.</li></ol><p class="answer"><span lang="sr">650 W</span><span lang="en">650 W</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · gubici i račun</span><span lang="en">Example 2 · losses and the bill</span></h4><p class="given" lang="sr">Dato: računar troši 325 W iz napajanja (izlazna snaga) i radi 8 h dnevno. Poredi Gold (η = 90 %) i običan 80 PLUS (η = 80 %) za godinu dana.</p><p class="given" lang="en">Given: a computer draws 325 W from the power supply (output power) and runs 8 h a day. Compare Gold (η = 90 %) and plain 80 PLUS (η = 80 %) over a year.</p><ol lang="sr"><li>Gold: \( P_{in} = 325/0{,}9 = 361\ \mathrm{W} \); 80 PLUS: \( 325/0{,}8 = 406\ \mathrm{W} \).</li><li>Godišnji sati: \( 8\cdot 365 = 2920\ \mathrm{h} \).</li><li>Energija: Gold \( 0{,}361\cdot 2920 = 1054\ \mathrm{kWh} \), 80 PLUS \( 0{,}406\cdot 2920 = 1186\ \mathrm{kWh} \). Razlika je 132 kWh.</li></ol>
+<ol lang="en"><li>Gold: \( P_{in} = 325/0.9 = 361\ \mathrm{W} \); 80 PLUS: \( 325/0.8 = 406\ \mathrm{W} \).</li><li>Hours per year: \( 8\cdot 365 = 2920\ \mathrm{h} \).</li><li>Energy: Gold \( 0.361\cdot 2920 = 1054\ \mathrm{kWh} \), 80 PLUS \( 0.406\cdot 2920 = 1186\ \mathrm{kWh} \). The difference is 132 kWh.</li></ol><p class="answer"><span lang="sr">Gold štedi 132 kWh godišnje</span><span lang="en">Gold saves 132 kWh a year</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · struja grane +12 V</span><span lang="en">Example 3 · the +12 V rail current</span></h4><p class="given" lang="sr">Dato: grafička troši 285 W i sva se napaja sa +12 V. Kolika je struja i da li je dovoljno jedan 8-pinski PCIe kabl (150 W) uz slot (75 W)?</p><p class="given" lang="en">Given: a graphics card draws 285 W, all from +12 V. What is the current and is one 8-pin PCIe cable (150 W) plus the slot (75 W) enough?</p><ol lang="sr"><li>\( I = P/U = 285/12 = 23{,}75\ \mathrm{A} \).</li><li>Dostupno: \( 150 + 75 = 225\ \mathrm{W} \), što je manje od 285 W.</li><li>Treba dva 8-pinska konektora: \( 2\cdot 150 + 75 = 375\ \mathrm{W} \).</li></ol>
+<ol lang="en"><li>\( I = P/U = 285/12 = 23.75\ \mathrm{A} \).</li><li>Available: \( 150 + 75 = 225\ \mathrm{W} \), which is less than 285 W.</li><li>It needs two 8-pin connectors: \( 2\cdot 150 + 75 = 375\ \mathrm{W} \).</li></ol><p class="answer"><span lang="sr">I = 23,75 A, potrebna su dva 8-pinska konektora</span><span lang="en">I = 23.75 A, two 8-pin connectors are needed</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 4 · faktor snage</span><span lang="en">Example 4 · the power factor</span></h4><p class="given" lang="sr">Dato: napajanje bez PFC uzima iz mreže 3 A pri 230 V, a stvarna snaga je 400 W. Koliki je faktor snage i koliko bi iznosila struja sa PFC (λ = 0,99)?</p><p class="given" lang="en">Given: a power supply without PFC draws 3 A at 230 V from the mains, and the real power is 400 W. What is the power factor, and what would the current be with PFC (λ = 0.99)?</p><ol lang="sr"><li>Prividna snaga: \( S = UI = 230\cdot 3 = 690\ \mathrm{VA} \).</li><li>\( \lambda = P/S = 400/690 = 0{,}58 \).</li><li>Sa PFC: \( I = \dfrac{P}{U\lambda} = \dfrac{400}{230\cdot 0{,}99} = 1{,}76\ \mathrm{A} \).</li></ol>
+<ol lang="en"><li>Apparent power: \( S = UI = 230\cdot 3 = 690\ \mathrm{VA} \).</li><li>\( \lambda = P/S = 400/690 = 0.58 \).</li><li>With PFC: \( I = \dfrac{P}{U\lambda} = \dfrac{400}{230\cdot 0.99} = 1.76\ \mathrm{A} \).</li></ol><p class="answer"><span lang="sr">λ = 0,58; sa PFC I = 1,76 A</span><span lang="en">λ = 0.58; with PFC I = 1.76 A</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Pogrešan kabl u pogrešan konektor.</b> PCIe i EPS izgledaju isto, ali se ne zamenjuju. Kablovi različitih proizvođača (modularni) nisu međusobno zamenljivi, jer pinovi na strani napajanja nisu standardizovani.</div></li><li><div><b>Birati samo prema vatima.</b> Dve „650 W” jedinice mogu biti vrlo različite: proveri ampere na +12 V i zaštite.</div></li><li><div><b>Otvaranje napajanja.</b> Veliki kondenzatori ostaju nabijeni na ~325 V dugo nakon isključenja. Napajanje ne popravljamo.</div></li><li><div><b>Mešanje W i VA.</b> UPS ima snagu u VA. Stvarna snaga je VA pomnoženo faktorom snage.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>The wrong cable in the wrong connector.</b> PCIe and EPS look the same but are not interchangeable. Cables from different manufacturers (modular) are not interchangeable, because the pinout on the power supply side is not standardised.</div></li><li><div><b>Choosing only by watts.</b> Two "650 W" units can be very different: check the amps on +12 V and the protections.</div></li><li><div><b>Opening a power supply.</b> The large capacitors stay charged to ~325 V long after switching off. We do not repair power supplies.</div></li><li><div><b>Mixing up W and VA.</b> A UPS is rated in VA. The real power is the VA multiplied by the power factor.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Napajanje pretvara mrežni AC 230 V u stabilne DC napone 12 V, 5 V i 3,3 V: ispravlja, spušta i stabilizuje.</li><li>Moderna napajanja su impulsna (SMPS) sa visokom efikasnošću; ( eta = P_{out}/P_{in} ).</li><li>Glavni kablovi: 24-pin (ploča), 4+4 EPS (procesor), PCIe 6+2 (grafička), SATA i Molex (diskovi).</li><li>Boje žica: žuta +12 V, crvena +5 V, narandžasta +3,3 V, crna masa.</li><li>Biraj prema snazi sa 30 % rezerve, struji grane +12 V, efikasnosti (80 PLUS), konektorima i zaštitama; aktivni PFC daje faktor snage ~0,99.</li></ul><ul lang="en"><li>A power supply turns the mains AC 230 V into stable DC voltages of 12 V, 5 V and 3.3 V: it rectifies, steps down and regulates.</li><li>Modern power supplies are switch-mode (SMPS) with high efficiency; ( eta = P_{out}/P_{in} ).</li><li>Main cables: 24-pin (board), 4+4 EPS (CPU), PCIe 6+2 (graphics), SATA and Molex (drives).</li><li>Wire colours: yellow +12 V, red +5 V, orange +3.3 V, black ground.</li><li>Choose by power with 30 % headroom, the +12 V rail current, efficiency (80 PLUS), connectors and protections; active PFC gives a power factor of ~0.99.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC02" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/pc3d.js"></script>
+<script src="../assets/js/lessons/napajanje.js"></script>
+</body>
+</html>

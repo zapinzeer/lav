@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Detaljan opis matične ploče uz 3D model sa animiranim putevima napajanja i podataka: podnožje, čipset, memorija, PCIe, VRM, BIOS/UEFI, portovi i izbor ploče.">
+<title>Matična ploča u fokusu · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="maticna-ploca">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš zašto je matična ploča osnova celog računara i šta određuje;</li><li>opišeš podnožje, čipset, memorijske slotove, PCIe/M.2, VRM, BIOS/UEFI i portove;</li><li>izračunaš propusnost memorije, PCIe i USB veza i struju po fazi VRM-a;</li><li>izabereš matičnu ploču proverom kompatibilnosti korak po korak.</li></ul>
+    <ul lang="en"><li>explain why the motherboard is the basis of the whole computer and what it determines;</li><li>describe the socket, chipset, memory slots, PCIe/M.2, VRM, BIOS/UEFI and ports;</li><li>calculate the bandwidth of memory, PCIe and USB links and the VRM current per phase;</li><li>choose a motherboard by checking compatibility step by step.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="uloga" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">središte računara</span><span lang="en">the centre of the computer</span></p>
+    <h2><span lang="sr">Zašto je matična ploča najvažnija?</span><span lang="en">Why is the motherboard so important?</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Procesor, memorija i grafička kartica određuju koliko je računar <em>brz</em>, ali matična ploča određuje šta uopšte <em>može</em> da se spoji: koji procesor, koja vrsta i količina memorije, koliko diskova, koliko monitora, da li ima Wi-Fi, koliko USB portova i koliko će kasnije moći da se nadogradi. Zato se računar obično gradi <strong>oko</strong> matične ploče.</p>
+<p lang="en">The processor, memory and graphics card determine how <em>fast</em> a computer is, but the motherboard determines what can be connected at all: which processor, what type and amount of memory, how many drives, how many monitors, whether there is Wi-Fi, how many USB ports and how much it can be upgraded later. That is why a computer is usually built <strong>around</strong> the motherboard.</p><p lang="sr">Prva PC ploča (IBM, 1981) imala je samo procesor, nekoliko čipova i slotove. Standard <strong>ATX</strong> iz 1995. godine (Intel) definisao je veličinu ploče, raspored rupa, konektore napajanja i položaj zadnjeg panela. Zahvaljujući njemu danas bilo koje ATX kućište i napajanje prima bilo koju ATX ploču. Razvoj ide ka tome da se sve više funkcija seli <strong>u procesor</strong> (memorijski kontroler, PCIe, grafika), pa ploča ostaje „razvodnik” i izvor napajanja.</p>
+<p lang="en">The first PC board (IBM, 1981) had only a processor, a few chips and slots. The <strong>ATX</strong> standard from 1995 (Intel) defined the size of the board, the layout of the holes, the power connectors and the position of the rear panel. Thanks to it any ATX case and power supply today takes any ATX board. Development goes towards moving more and more functions <strong>into the processor</strong> (the memory controller, PCIe, graphics), so the board stays the "distributor" and the source of power.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="model" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">model sa prikazima</span><span lang="en">a model with views</span></p>
+    <h2><span lang="sr">Matična ploča u fokusu</span><span lang="en">The motherboard in focus</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Model prikazuje tipičnu ATX ploču. Uključi <strong>prikaz</strong> i prati tačkice: <strong>Napajanje</strong> pokazuje kako 24-pinski i EPS konektor hrane VRM, a VRM procesor i memoriju; <strong>Memorija</strong> pokazuje dva kanala od procesora do četiri slota; <strong>PCIe</strong> pokazuje trake od procesora do grafičkog slota i M.2; <strong>Čipset i diskovi</strong> pokazuje vezu procesor–čipset i SATA portove; <strong>Portovi</strong> pokazuje USB, mrežu i zvuk na zadnjoj ploči i prednjim konektorima.</p>
+<p lang="en">The model shows a typical ATX board. Switch on a <strong>view</strong> and follow the dots: <strong>Power</strong> shows how the 24-pin and EPS connectors feed the VRM, and the VRM feeds the processor and memory; <strong>Memory</strong> shows the two channels from the processor to the four slots; <strong>PCIe</strong> shows the lanes from the processor to the graphics slot and the M.2; <strong>Chipset and drives</strong> shows the processor–chipset link and the SATA ports; <strong>Ports</strong> shows USB, network and sound at the rear panel and the front headers.</p>
+</div><figure class="lab" id="lab-focus">
+<div class="viewport" style="aspect-ratio:4/3"><canvas tabindex="0" aria-label="3D model matične ploče sa prikazom puteva podataka i napajanja / 3D model of a motherboard showing data and power paths"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje · klikni deo</span><span lang="en">Drag to rotate · click a part</span></span></div>
+<div class="controls"><div class="btns"><span class="lbl"><span lang="sr">Prikaz</span><span lang="en">View</span></span><div class="seg" id="fx-view" role="group"><button type="button" data-v="none" aria-pressed="true"><span lang="sr">Ploča</span><span lang="en">Board</span></button><button type="button" data-v="power" aria-pressed="false"><span lang="sr">Napajanje</span><span lang="en">Power</span></button><button type="button" data-v="memory" aria-pressed="false"><span lang="sr">Memorija</span><span lang="en">Memory</span></button><button type="button" data-v="pcie" aria-pressed="false"><span lang="sr">PCIe</span><span lang="en">PCIe</span></button><button type="button" data-v="storage" aria-pressed="false"><span lang="sr">Čipset i diskovi</span><span lang="en">Chipset and drives</span></button><button type="button" data-v="io" aria-pressed="false"><span lang="sr">Portovi</span><span lang="en">Ports</span></button></div></div>
+<div class="btns"><label class="switch" for="fx-x"><input type="checkbox" id="fx-x"><span lang="sr">Prikaži ugrađene komponente</span><span lang="en">Show installed components</span></label></div></div>
+<div class="pc-info" id="fx-info" aria-live="polite"></div>
+<div class="pc-list" id="fx-list"></div>
+<figcaption><span lang="sr">Isti model kao u prethodnoj lekciji, ali sa dodatkom: izaberi prikaz i na ploči se pale animirane tačkice koje pokazuju kuda teče napajanje, kuda idu podaci do memorije, do PCIe slotova, do čipseta i do portova. Klikom na deo dobijaš njegov opis.</span><span lang="en">The same model as in the previous lesson, with an addition: pick a view and animated dots light up on the board showing where the power flows and where data goes to the memory, the PCIe slots, the chipset and the ports. Click a part to get its description.</span></figcaption>
+</figure><div class="rest">
+<div class="rule-box"><p class="eyebrow"><span lang="sr">Pitanje za razmišljanje</span><span lang="en">A question to think about</span></p><p lang="sr">Zašto se memorija i grafička kartica vezuju na procesor, a ne na čipset? Zato što su najbrže i najpotrebnije: svaki dodatni čip na putu povećava kašnjenje (latenciju).</p>
+<p lang="en">Why are the memory and the graphics card connected to the processor and not to the chipset? Because they are the fastest and most needed: every extra chip on the path increases the delay (latency).</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="cpu" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">procesor i čipset</span><span lang="en">processor and chipset</span></p>
+    <h2><span lang="sr">Podnožje i čipset</span><span lang="en">The socket and the chipset</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Podnožje (socket)</strong> je fizički i električni interfejs za procesor. Kod <strong>LGA</strong> (<em>land grid array</em>) pinovi su na ploči, a procesor ima ravne kontakte, pa se kriva igla lako popravi, ali ploča se lako ošteti ako se pogrešno stavi procesor. Kod <strong>PGA</strong> pinovi su na procesoru. Procesori različitih generacija često koriste različita podnožja, a čak i isto podnožje ne znači da će stariji BIOS prepoznati novi procesor.</p>
+<p lang="en">The <strong>socket</strong> is the physical and electrical interface for the processor. With <strong>LGA</strong> (land grid array) the pins are on the board and the processor has flat contacts, so a bent pin is easy to fix but the board is easily damaged if the processor is placed wrongly. With <strong>PGA</strong> the pins are on the processor. Processors of different generations often use different sockets, and even the same socket does not mean an older BIOS will recognise a new processor.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Primeri podnožja (savremene generacije)</span><span lang="en">Socket examples (recent generations)</span></caption><thead><tr><th><span lang="sr">Proizvođač</span><span lang="en">Maker</span></th><th><span lang="sr">Podnožje</span><span lang="en">Socket</span></th><th><span lang="sr">Vrsta</span><span lang="en">Type</span></th><th><span lang="sr">Memorija</span><span lang="en">Memory</span></th></tr></thead><tbody><tr><td>Intel</td><td>LGA1700</td><td>LGA</td><td>DDR4 / DDR5</td></tr><tr><td>Intel</td><td>LGA1851</td><td>LGA</td><td>DDR5</td></tr><tr><td>AMD</td><td>AM4</td><td>PGA</td><td>DDR4</td></tr><tr><td>AMD</td><td>AM5</td><td>LGA</td><td>DDR5</td></tr></tbody></table></div><p lang="sr"><strong>Čipset</strong> određuje koliko ima USB portova, SATA portova, PCIe traka, da li se procesor može „overklokovati” i koje su funkcije dostupne. Šifra obično kaže nivo: kod Intela <strong>Z</strong> (entuzijasti, overklok), <strong>B</strong> (srednja klasa), <strong>H</strong> (osnovna); kod AMD-a <strong>X</strong> (vrhunska), <strong>B</strong> (srednja), <strong>A</strong> (osnovna).</p>
+<p lang="en">The <strong>chipset</strong> determines how many USB ports, SATA ports and PCIe lanes there are, whether the processor can be overclocked and which features are available. The code usually tells the level: for Intel <strong>Z</strong> (enthusiast, overclocking), <strong>B</strong> (mid-range), <strong>H</strong> (basic); for AMD <strong>X</strong> (high-end), <strong>B</strong> (mid-range), <strong>A</strong> (entry).</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="ram" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">radna memorija</span><span lang="en">working memory</span></p>
+    <h2><span lang="sr">Memorijski slotovi</span><span lang="en">The memory slots</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Moduli radne memorije (<strong>DIMM</strong>) idu u slotove sa urezom i dvema kopčama. Vrsta memorije mora da odgovara ploči: <strong>DDR4</strong> i <strong>DDR5</strong> su različiti i fizički se ne mogu zameniti (urez je na drugom mestu). Memorijski kontroler je u procesoru i podržava <strong>dva kanala</strong>: dva modula u pravim slotovima rade dvostruko brže od jednog.</p>
+<p lang="en">Working-memory modules (<strong>DIMM</strong>) go into slots with a notch and two clips. The memory type must match the board: <strong>DDR4</strong> and <strong>DDR5</strong> are different and physically cannot be swapped (the notch is in a different place). The memory controller is in the processor and supports <strong>two channels</strong>: two modules in the right slots run twice as fast as one.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">DDR4 i DDR5</span><span lang="en">DDR4 and DDR5</span></caption><thead><tr><th></th><th>DDR4</th><th>DDR5</th></tr></thead><tbody><tr><td><span lang="sr">tipične brzine</span><span lang="en">typical speeds</span></td><td>2133–3600 MT/s</td><td>4800–8000+ MT/s</td></tr><tr><td><span lang="sr">napon</span><span lang="en">voltage</span></td><td>1,2 V</td><td>1,1 V</td></tr><tr><td><span lang="sr">kapacitet po modulu</span><span lang="en">capacity per module</span></td><td>do 32 GB</td><td>do 64 GB i više</td></tr><tr><td><span lang="sr">pinova na modulu</span><span lang="en">pins on the module</span></td><td>288</td><td>288</td></tr><tr><td><span lang="sr">kontrola napona</span><span lang="en">voltage control</span></td><td><span lang="sr"> na ploči</span><span lang="en">on the board</span></td><td><span lang="sr"> na samom modulu (PMIC)</span><span lang="en">on the module itself (PMIC)</span></td></tr></tbody></table></div><p lang="sr">Brzina memorije se piše kao <strong>MT/s</strong> (milion prenosa u sekundi), a u imenu se često pojavljuje i kao <strong>PC4-25600</strong> (propusnost u MB/s). Profil <strong>XMP</strong> (Intel) ili <strong>EXPO</strong> (AMD) u BIOS-u uključuje proizvođačevo „overklokovano” podešavanje; bez njega memorija radi na osnovnoj brzini.</p>
+<p lang="en">The memory speed is written as <strong>MT/s</strong> (million transfers per second), and the name often also includes <strong>PC4-25600</strong> (bandwidth in MB/s). The <strong>XMP</strong> (Intel) or <strong>EXPO</strong> (AMD) profile in the BIOS switches on the manufacturer's "overclocked" setting; without it the memory runs at its base speed.</p><div class="formula"><div class="tex">\[ B = \frac{f_{MT/s}\cdot 64\ \mathrm{bit}}{8} \cdot N_{kanala} \]</div></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="pcie" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">magistrala</span><span lang="en">the bus</span></p>
+    <h2><span lang="sr">PCIe slotovi i M.2</span><span lang="en">PCIe slots and M.2</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>PCI Express</strong> je serijska magistrala sa „trakama” (lane). Svaka traka ima dva para žica, jedan za svaki smer. Uređaj koristi 1, 4, 8 ili 16 traka (x1, x4, x8, x16). Procesor daje obično 16 traka za grafičku i 4 za M.2 SSD, a čipset dodatne trake za ostalo. Broj traka je ograničen, pa ponekad uključivanje drugog M.2 slota smanjuje broj dostupnih SATA portova.</p>
+<p lang="en"><strong>PCI Express</strong> is a serial bus made of "lanes". Each lane has two pairs of wires, one for each direction. A device uses 1, 4, 8 or 16 lanes (x1, x4, x8, x16). The processor usually provides 16 lanes for the graphics card and 4 for an M.2 SSD, and the chipset provides more lanes for the rest. The number of lanes is limited, so sometimes using a second M.2 slot reduces the number of available SATA ports.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Propusnost PCIe (po smeru)</span><span lang="en">PCIe bandwidth (per direction)</span></caption><thead><tr><th><span lang="sr">Generacija</span><span lang="en">Generation</span></th><th>GT/s po traci / per lane</th><th>GB/s po traci / per lane</th><th>x4</th><th>x16</th></tr></thead><tbody><tr><td>PCIe 3.0</td><td>8</td><td>0,98</td><td>3,9</td><td>15,8</td></tr><tr><td>PCIe 4.0</td><td>16</td><td>1,97</td><td>7,9</td><td>31,5</td></tr><tr><td>PCIe 5.0</td><td>32</td><td>3,94</td><td>15,8</td><td>63,0</td></tr><tr><td>PCIe 6.0</td><td>64</td><td>7,56</td><td>30,2</td><td>121</td></tr></tbody></table></div><p lang="sr">Svaka nova generacija udvostručuje brzinu, a uređaji i slotovi su <strong>unazad kompatibilni</strong>: kartica PCIe 4.0 radi u slotu 3.0, ali brzinom 3.0. <strong>M.2</strong> je oblik uređaja, ne protokola: M.2 SSD može da koristi PCIe (NVMe, brz) ili SATA (isti kao 2,5″ SATA SSD). Proveri oznaku „M-key, PCIe/NVMe” u specifikaciji ploče.</p>
+<p lang="en">Each new generation doubles the speed, and devices and slots are <strong>backwards compatible</strong>: a PCIe 4.0 card works in a 3.0 slot, but at 3.0 speed. <strong>M.2</strong> is a shape of device, not a protocol: an M.2 SSD can use PCIe (NVMe, fast) or SATA (the same as a 2.5″ SATA SSD). Check the "M-key, PCIe/NVMe" mark in the board specification.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="vrm" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">napajanje procesora</span><span lang="en">powering the processor</span></p>
+    <h2><span lang="sr">VRM i napajanje ploče</span><span lang="en">The VRM and board power</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Procesor radi na oko 1 V, ali troši i do 250 A. Takvu struju ne možeš da vodiš sa 12 V kroz tanke trase, pa VRM (voltage regulator module) spušta napon <em>na samoj ploči</em>, blizu procesora. Svaka <strong>faza</strong> VRM-a ima dva MOSFET-a (jedan uključuje, jedan isključuje struju prema kalemu), prigušnicu (<em>choke</em>) i kondenzatore. Faze rade naizmenično (u „fazama”), pa je izlazni napon glatkiji. Kod <strong>DrMOS</strong> kola MOSFET-ovi i drajver su u jednom čipu.</p>
+<p lang="en">The processor runs at about 1 V, but draws up to 250 A. You cannot carry such a current from 12 V through thin traces, so the VRM (voltage regulator module) steps the voltage down <em>on the board itself</em>, close to the processor. Each <strong>phase</strong> of the VRM has two MOSFETs (one switches the current on, one off, towards the coil), a choke and capacitors. The phases work alternately (in "phases"), so the output voltage is smoother. In a <strong>DrMOS</strong> circuit the MOSFETs and the driver are in one chip.</p><div class="formula"><div class="tex">\[ D = \frac{U_{out}}{U_{in}} \qquad I_{faza} = \frac{I_{CPU}}{N} \qquad P_{gub} = P_{out}\left(\frac{1}{\eta} - 1\right) \]</div><dl class="legend"><div><dt>D</dt><dd><span lang="sr">faktor ispune (prekidač)</span><span lang="en">duty cycle (switch)</span></dd></div><div><dt>N</dt><dd><span lang="sr">broj faza</span><span lang="en">number of phases</span></dd></div><div><dt>I<sub>faza</sub></dt><dd><span lang="sr">struja jedne faze</span><span lang="en">current of one phase</span></dd><span class="unit">A</span></div></dl></div><p lang="sr">Ovo je isti princip „silazni pretvarač” (<em>buck</em>) koji smo videli u lekciji o napajanju: prekidač radi sa faktorom ispune \( D = U_{out}/U_{in} \). Za 12 V u i 1,2 V izlaz, \( D = 10\ \% \). Više faza znači manju struju po fazi, manje zagrevanje i stabilniji napon pri naglim promenama opterećenja.</p>
+<p lang="en">This is the same "step-down" (<em>buck</em>) principle we saw in the lesson on power supplies: the switch works with the duty cycle \( D = U_{out}/U_{in} \). For 12 V in and 1.2 V out, \( D = 10\ \% \). More phases mean a smaller current per phase, less heating and a steadier voltage when the load changes suddenly.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="bios" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">firmver</span><span lang="en">firmware</span></p>
+    <h2><span lang="sr">BIOS/UEFI i CMOS</span><span lang="en">BIOS/UEFI and CMOS</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Čim se računar uključi, procesor izvršava program iz <strong>BIOS/UEFI</strong> flash čipa. Taj program: (1) proverava hardver (<strong>POST</strong>, power-on self-test), (2) inicijalizuje memoriju i uređaje, (3) pronalazi disk sa operativnim sistemom po <strong>redosledu pokretanja</strong> (boot order) i (4) predaje mu kontrolu. Ako POST pronađe grešku, javlja je kodom na ploči (LED, 7-segmentni displej) ili zvučnim signalima.</p>
+<p lang="en">As soon as the computer is switched on, the processor runs a program from the <strong>BIOS/UEFI</strong> flash chip. That program (1) checks the hardware (<strong>POST</strong>, power-on self-test), (2) initialises the memory and devices, (3) finds the disk with the operating system by the <strong>boot order</strong> and (4) hands control over to it. If POST finds an error, it reports it with a code on the board (LEDs, a 7-segment display) or with beeps.</p><ul lang="sr"><li><strong>UEFI</strong> je moderni naslednik BIOS-a: grafički meni, podrška za diskove preko 2 TB (GPT), brže pokretanje i <strong>Secure Boot</strong>.</li><li><strong>TPM 2.0</strong> je bezbednosni čip (ili funkcija procesora) koji traži Windows 11.</li><li><strong>XMP/EXPO</strong> uključuje brzinu memorije, a <strong>krive ventilatora</strong> podešavaju buku i hlađenje.</li><li><strong>CMOS baterija</strong> čuva sat i podešavanja; <strong>Clear CMOS</strong> (jumper ili dugme) vraća fabrička podešavanja.</li><li><strong>BIOS flashback</strong> omogućava ažuriranje bez procesora, sa USB fleša.</li></ul>
+<ul lang="en"><li><strong>UEFI</strong> is the modern successor of the BIOS: a graphical menu, support for drives over 2 TB (GPT), faster start-up and <strong>Secure Boot</strong>.</li><li><strong>TPM 2.0</strong> is a security chip (or processor feature) required by Windows 11.</li><li><strong>XMP/EXPO</strong> switches on the memory speed, and <strong>fan curves</strong> set the noise and cooling.</li><li>The <strong>CMOS battery</strong> keeps the clock and the settings; <strong>Clear CMOS</strong> (a jumper or button) restores the factory settings.</li><li><strong>BIOS flashback</strong> allows updating without a processor, from a USB stick.</li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="io" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr">portovi i konektori</span><span lang="en">ports and connectors</span></p>
+    <h2><span lang="sr">Zadnja ploča i unutrašnji konektori</span><span lang="en">The rear panel and internal headers</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">USB standardi (teorijske brzine)</span><span lang="en">USB standards (theoretical speeds)</span></caption><thead><tr><th><span lang="sr">Naziv</span><span lang="en">Name</span></th><th><span lang="sr">Brzina</span><span lang="en">Speed</span></th><th><span lang="sr">Oko MB/s</span><span lang="en">About MB/s</span></th><th><span lang="sr">Boja porta</span><span lang="en">Port colour</span></th></tr></thead><tbody><tr><td>USB 2.0</td><td>480 Mb/s</td><td>60</td><td><span lang="sr">crna</span><span lang="en">black</span></td></tr><tr><td>USB 3.2 Gen 1</td><td>5 Gb/s</td><td>500</td><td><span lang="sr">plava</span><span lang="en">blue</span></td></tr><tr><td>USB 3.2 Gen 2</td><td>10 Gb/s</td><td>1000</td><td><span lang="sr">tirkizna/crvena</span><span lang="en">teal/red</span></td></tr><tr><td>USB 3.2 Gen 2×2</td><td>20 Gb/s</td><td>2000</td><td><span lang="sr">USB-C</span><span lang="en">USB-C</span></td></tr><tr><td>USB4 / Thunderbolt 4</td><td>40 Gb/s</td><td>4000</td><td><span lang="sr">USB-C</span><span lang="en">USB-C</span></td></tr></tbody></table></div><ul lang="sr"><li><strong>Video:</strong> HDMI i DisplayPort rade samo ako procesor ima integrisanu grafiku; inače se monitor priključuje na grafičku karticu.</li><li><strong>Mreža:</strong> Ethernet 1 Gb/s ili 2,5 Gb/s; mnoge ploče imaju i Wi-Fi 6/7 i Bluetooth.</li><li><strong>Zvuk:</strong> audio kodek i 3 do 5 utičnica (plava ulaz, zelena izlaz, ružičasta mikrofon); neke imaju S/PDIF.</li><li><strong>Unutrašnji konektori:</strong> F_PANEL (dugme, LED), F_USB (USB 2 i 3, USB-C), F_AUDIO, ventilatori (CPU_FAN, SYS_FAN), RGB, TPM, COM.</li></ul>
+<ul lang="en"><li><strong>Video:</strong> HDMI and DisplayPort work only if the processor has integrated graphics; otherwise the monitor goes on the graphics card.</li><li><strong>Network:</strong> Ethernet 1 Gb/s or 2.5 Gb/s; many boards also have Wi-Fi 6/7 and Bluetooth.</li><li><strong>Sound:</strong> an audio codec and 3 to 5 jacks (blue input, green output, pink microphone); some have S/PDIF.</li><li><strong>Internal headers:</strong> F_PANEL (button, LEDs), F_USB (USB 2 and 3, USB-C), F_AUDIO, fans (CPU_FAN, SYS_FAN), RGB, TPM, COM.</li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="izbor" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 9</span><span lang="en">Part 9</span></b> · <span lang="sr">kako birati</span><span lang="en">how to choose</span></p>
+    <h2><span lang="sr">Kako se bira matična ploča</span><span lang="en">How to choose a motherboard</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Počni od procesora, pa proveri redom: (1) <strong>podnožje</strong> odgovara procesoru; (2) <strong>čipset</strong> podržava potrebne funkcije i BIOS podržava taj model procesora; (3) <strong>vrsta memorije</strong> (DDR4 ili DDR5), broj slotova i maksimalna brzina; (4) <strong>form-faktor</strong> odgovara kućištu; (5) dovoljno <strong>M.2 i SATA</strong> za diskove i <strong>PCIe</strong> za kartice; (6) <strong>portovi</strong> (USB-C, 2,5 G mreža, Wi-Fi); (7) kvalitetan <strong>VRM</strong> ako je procesor jak ili se overklokuje; (8) cena i garancija.</p>
+<p lang="en">Start from the processor, then check in turn: (1) the <strong>socket</strong> matches the processor; (2) the <strong>chipset</strong> supports the needed features and the BIOS supports that processor model; (3) the <strong>memory type</strong> (DDR4 or DDR5), the number of slots and the maximum speed; (4) the <strong>form factor</strong> fits the case; (5) enough <strong>M.2 and SATA</strong> for drives and <strong>PCIe</strong> for cards; (6) the <strong>ports</strong> (USB-C, 2.5 G network, Wi-Fi); (7) a good <strong>VRM</strong> if the processor is powerful or overclocked; (8) price and warranty.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 10</span><span lang="en">Part 10</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · DDR5 propusnost</span><span lang="en">Example 1 · DDR5 bandwidth</span></h4><p class="given" lang="sr">Dato: DDR5-5600 u dvokanalnom režimu, svaki kanal je 64 bita. Kolika je propusnost?</p><p class="given" lang="en">Given: DDR5-5600 in dual-channel mode, each channel 64 bits wide. What is the bandwidth?</p><ol lang="sr"><li>Jedan kanal: \( \dfrac{5600\cdot 10^6\cdot 64}{8} = 44{,}8\ \mathrm{GB/s} \).</li><li>Dva kanala: \( 2\cdot 44{,}8 = 89{,}6\ \mathrm{GB/s} \).</li></ol>
+<ol lang="en"><li>One channel: \( \dfrac{5600\cdot 10^6\cdot 64}{8} = 44.8\ \mathrm{GB/s} \).</li><li>Two channels: \( 2\cdot 44.8 = 89.6\ \mathrm{GB/s} \).</li></ol><p class="answer"><span lang="sr">B = 89,6 GB/s</span><span lang="en">B = 89.6 GB/s</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · prenos preko USB-a</span><span lang="en">Example 2 · a USB transfer</span></h4><p class="given" lang="sr">Dato: kopira se datoteka od 12 GB preko USB 3.2 Gen 1 (5 Gb/s, u praksi oko 400 MB/s) i preko USB 2.0 (u praksi oko 35 MB/s). Koliko traje svaki prenos?</p><p class="given" lang="en">Given: a 12 GB file is copied over USB 3.2 Gen 1 (5 Gb/s, in practice about 400 MB/s) and over USB 2.0 (in practice about 35 MB/s). How long does each transfer take?</p><ol lang="sr"><li>USB 3.2: \( t = 12\,000\ \mathrm{MB}/400\ \mathrm{MB/s} = 30\ \mathrm{s} \).</li><li>USB 2.0: \( t = 12\,000/35 = 343\ \mathrm{s} \approx 5{,}7\ \mathrm{min} \).</li><li>Razlika je oko 11 puta.</li></ol>
+<ol lang="en"><li>USB 3.2: \( t = 12{,}000\ \mathrm{MB}/400\ \mathrm{MB/s} = 30\ \mathrm{s} \).</li><li>USB 2.0: \( t = 12{,}000/35 = 343\ \mathrm{s} \approx 5.7\ \mathrm{min} \).</li><li>The difference is about 11 times.</li></ol><p class="answer"><span lang="sr">30 s naspram 5,7 min</span><span lang="en">30 s versus 5.7 min</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · struja po fazi</span><span lang="en">Example 3 · current per phase</span></h4><p class="given" lang="sr">Dato: procesor povlači 150 A, VRM ima 12 faza. Kolika je struja po fazi i koliki je faktor ispune za 12 V → 1,2 V?</p><p class="given" lang="en">Given: the processor draws 150 A, the VRM has 12 phases. What is the current per phase, and the duty cycle for 12 V → 1.2 V?</p><ol lang="sr"><li>\( I_{faza} = 150/12 = 12{,}5\ \mathrm{A} \).</li><li>\( D = U_{out}/U_{in} = 1{,}2/12 = 0{,}1 = 10\ \% \).</li><li>Sa 6 faza bi struja po fazi bila 25 A, pa bi MOSFET-ovi bili dvostruko opterećeniji.</li></ol>
+<ol lang="en"><li>\( I_{phase} = 150/12 = 12.5\ \mathrm{A} \).</li><li>\( D = U_{out}/U_{in} = 1.2/12 = 0.1 = 10\ \% \).</li><li>With 6 phases the current per phase would be 25 A, so the MOSFETs would be loaded twice as much.</li></ol><p class="answer"><span lang="sr">I = 12,5 A po fazi, D = 10 %</span><span lang="en">I = 12.5 A per phase, D = 10 %</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 4 · provera kompatibilnosti</span><span lang="en">Example 4 · a compatibility check</span></h4><p class="given" lang="sr">Dato: želiš Ryzen sa podnožjem AM5 i DDR5 memoriju. Ponuđena je ploča sa podnožjem AM4 i DDR4 slotovima. Šta ne odgovara?</p><p class="given" lang="en">Given: you want a Ryzen with the AM5 socket and DDR5 memory. The offered board has an AM4 socket and DDR4 slots. What does not match?</p><ol lang="sr"><li>Procesor AM5 se ne može staviti u AM4 podnožje (drugačiji raspored i broj kontakata).</li><li>DDR5 modul se ne može staviti u DDR4 slot (urez je na drugom mestu i naponi su različiti).</li><li>Potrebna je ploča sa podnožjem AM5 i DDR5 slotovima (npr. sa čipsetom B650).</li></ol>
+<ol lang="en"><li>An AM5 processor cannot be put into an AM4 socket (a different layout and number of contacts).</li><li>A DDR5 module cannot be put into a DDR4 slot (the notch is in a different place and the voltages differ).</li><li>A board with the AM5 socket and DDR5 slots is needed (e.g. with the B650 chipset).</li></ol><p class="answer"><span lang="sr">Ne odgovaraju ni podnožje ni memorija</span><span lang="en">Neither the socket nor the memory matches</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 11</span><span lang="en">Part 11</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Ista marka, isto podnožje.</b> Intel i AMD menjaju podnožja i po nekoliko puta u deceniji. Uvek proveri tačan naziv (LGA1700, AM5).</div></li><li><div><b>Ploča podržava procesor, ali BIOS ne.</b> Starija verzija BIOS-a ne prepoznaje noviji procesor. Potrebno je ažuriranje (ponekad flashback).</div></li><li><div><b>Zanemarivanje traka.</b> Previše M.2 i PCIe uređaja može deliti iste trake i usporiti jedan drugog ili isključiti SATA portove.</div></li><li><div><b>Slabo hlađenje VRM-a.</b> Jak procesor na jeftinoj ploči pregreva VRM i procesor smanjuje brzinu (throttling).</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>Same brand, same socket.</b> Intel and AMD change sockets several times a decade. Always check the exact name (LGA1700, AM5).</div></li><li><div><b>The board supports the processor, but the BIOS does not.</b> An older BIOS version does not recognise a newer processor. An update is needed (sometimes flashback).</div></li><li><div><b>Ignoring lanes.</b> Too many M.2 and PCIe devices may share the same lanes and slow each other down or disable SATA ports.</div></li><li><div><b>Weak VRM cooling.</b> A powerful processor on a cheap board overheats the VRM and the processor slows down (throttling).</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 12</span><span lang="en">Part 12</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Matična ploča određuje šta se uopšte može spojiti: procesor (podnožje), memoriju, diskove, kartice i portove.</li><li>Najbrže veze (RAM, PCIe x16, M.2) idu direktno na procesor; ostalo ide preko čipseta.</li><li>Memorija je dvokanalna: ( B = fcdot 64/8 cdot N ). PCIe udvostručuje brzinu svakom generacijom.</li><li>VRM pretvara 12 V u ~1 V i veliku struju po fazama; više faza znači manje opterećenje po fazi.</li><li>BIOS/UEFI pokreće računar (POST, boot); CMOS baterija čuva podešavanja.</li><li>Biraj ploču redom: podnožje, čipset, memorija, form-faktor, M.2/SATA/PCIe, portovi, VRM.</li></ul><ul lang="en"><li>The motherboard decides what can be connected at all: the processor (socket), memory, drives, cards and ports.</li><li>The fastest links (RAM, PCIe x16, M.2) go directly to the processor; the rest goes through the chipset.</li><li>Memory is dual-channel: ( B = fcdot 64/8 cdot N ). PCIe doubles its speed with every generation.</li><li>The VRM converts 12 V into ~1 V and a large current in phases; more phases mean less load per phase.</li><li>The BIOS/UEFI starts the computer (POST, boot); the CMOS battery keeps the settings.</li><li>Choose a board in order: socket, chipset, memory, form factor, M.2/SATA/PCIe, ports, VRM.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC04" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/pc3d.js"></script>
+<script src="../assets/js/lessons/maticna-ploca.js"></script>
+</body>
+</html>

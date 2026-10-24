@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Korak po korak ugradnja matične ploče u kućište uz 3D prikaz: zaštita od ESD, distanceri, I/O štitnik, zavrtnji, 24-pin i EPS kablovi i prednji priključci.">
+<title>Ugradnja matične ploče u kućište · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="ugradnja-maticne-ploce">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš kako se zaštitiš od ESD pri radu sa pločom;</li><li>redom ugradiš ploču: distanceri, I/O štitnik, ploča, zavrtnji;</li><li>priključiš 24-pin, EPS i prednje kablove i znaš čemu služe;</li><li>dijagnostikuješ najčešće greške pri prvom paljenju.</li></ul>
+    <ul lang="en"><li>explain how to protect yourself from ESD when handling a board;</li><li>install a board in order: standoffs, I/O shield, board, screws;</li><li>connect the 24-pin, EPS and front cables and know what each is for;</li><li>diagnose the most common faults at first power-on.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="priprema" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">pre početka</span><span lang="en">before you start</span></p>
+    <h2><span lang="sr">Priprema i zaštita od statičkog elektriciteta</span><span lang="en">Preparation and protection against static electricity</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Ugradnja matične ploče traje desetak minuta, a greška može da je uništi. Zato prvo pripremi radno mesto: čist, suv sto, dobra svetlost, mali krstasti odvijač (Phillips #2) i kutijica za zavrtnje. Ploču vadi iz kutije <strong>tek kad si spreman</strong> i nikada je ne stavljaj na metalnu površinu.</p>
+<p lang="en">Installing a motherboard takes about ten minutes, but a mistake can destroy it. So first prepare the workplace: a clean, dry table, good light, a small Phillips #2 screwdriver and a small box for screws. Take the board out of its box <strong>only when you are ready</strong> and never put it on a metal surface.</p><p lang="sr">Glavni neprijatelj je <strong>elektrostatičko pražnjenje</strong> (ESD). Čovek koji hoda po tepihu može da se naelektriše na nekoliko hiljada volti. Dodir sa čipom taj napon prazni kroz njega, a čipovi su oštećeni već na desetak volti. Većinu pražnjenja ne osetiš: čovek ga oseti tek iznad oko 3 kV.</p>
+<p lang="en">The main enemy is <strong>electrostatic discharge</strong> (ESD). A person walking on a carpet can charge up to several thousand volts. Touching a chip discharges that voltage through it, and chips can be damaged by as little as ten volts. You do not feel most discharges: a person notices one only above about 3 kV.</p><ul lang="sr"><li>nosi antistatičku narukvicu spojenu na kućište, ili češće dodiruj metalni deo kućišta dok radiš;</li><li>ploču drži za ivice, ne dodiruj kontakte, čipove i lemne tačke;</li><li>radi na drvenom ili plastičnom stolu, ne na tepihu, i izbegavaj vunene i sintetičke džempere;</li><li>ploču odlaži samo na kutiju u kojoj je došla ili na antistatičku kesu.</li></ul>
+<ul lang="en"><li>wear an antistatic wrist strap clipped to the case, or touch a metal part of the case often while you work;</li><li>hold the board by its edges and do not touch contacts, chips or solder points;</li><li>work on a wooden or plastic table, not on a carpet, and avoid wool and synthetic sweaters;</li><li>put the board only on its own box or on an antistatic bag.</li></ul><details class="think"><summary><span lang="sr">Pomisli prvo: zašto nije dovoljno samo da isključiš računar iz struje?</span><span lang="en">Think first: why is it not enough just to switch the computer off?</span></summary><div class="ans"><p lang="sr">Ugašen računar ne štiti od ESD (taj problem je u tebi, a ne u mreži). Napajanje ipak treba da bude <strong>iskopčano</strong>: prekidač na 0 i kabl izvučen, jer ploča ima +5 V stand-by i kada je računar „ugašen”.</p>
+<p lang="en">A switched-off computer gives no ESD protection (the problem is in you, not in the mains). The power supply should still be <strong>unplugged</strong>: switch at 0 and the cable out, because the board carries +5 V standby even when the computer is "off".</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="koraci" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">korak po korak</span><span lang="en">step by step</span></p>
+    <h2><span lang="sr">Ugradnja u 3D: šest koraka</span><span lang="en">Installation in 3D: six steps</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Redosled je važan. Mnogo je lakše da procesor, hladnjak i memoriju stavljaš na ploču <strong>dok je još van kućišta</strong>, na kutiji, jer ćeš tako imati puno mesta za prste. Zato se u praksi ploča prvo opremi, pa tek onda ugrađuje. Šest koraka koje vidiš u modelu:</p>
+<p lang="en">The order matters. It is much easier to fit the processor, cooler and memory on the board <strong>while it is still outside the case</strong>, on its box, because then you have plenty of room for your fingers. So in practice the board is equipped first and installed afterwards. The six steps you see in the model:</p><ol lang="sr"><li>pripremi kućište i postavi distancere;</li><li>ugradi I/O štitnik;</li><li>spusti ploču;</li><li>zavrni zavrtnje;</li><li>priključi napajanje (24-pin i EPS);</li><li>priključi prednje priključke (dugmad, USB, audio).</li></ol>
+<ol lang="en"><li>prepare the case and fit the standoffs;</li><li>fit the I/O shield;</li><li>lower the board;</li><li>drive the screws;</li><li>connect the power (24-pin and EPS);</li><li>connect the front-panel connectors (buttons, USB, audio).</li></ol>
+</div><figure class="lab" id="lab-install">
+<div class="viewport" style="aspect-ratio:4/3"><canvas tabindex="0" aria-label="3D prikaz ugradnje matične ploče na ploču kućišta u šest koraka / 3D view of installing a motherboard onto the case tray in six steps"></canvas><span class="hint"><span lang="sr">Prevuci za okretanje</span><span lang="en">Drag to rotate</span></span></div>
+<div class="controls"><div class="btns"><span class="lbl"><span lang="sr">Korak</span><span lang="en">Step</span></span><div class="seg" id="as-step" role="group"><button type="button" data-v="1" aria-pressed="true">1</button><button type="button" data-v="2" aria-pressed="false">2</button><button type="button" data-v="3" aria-pressed="false">3</button><button type="button" data-v="4" aria-pressed="false">4</button><button type="button" data-v="5" aria-pressed="false">5</button><button type="button" data-v="6" aria-pressed="false">6</button></div></div></div>
+<div class="pc-info" id="as-info" aria-live="polite"></div>
+<figcaption><span lang="sr">Kućište je prikazano sa strane (sa skinutim bočnim limom): levo je zadnji zid sa I/O štitnikom, dole napajanje. Biraj korake 1–6 i gledaj kako se štitnik pomera na mesto, ploča spušta na distancere, zavrtnji zavrću i kablovi priključuju.</span><span lang="en">The case is shown from the side (with the side panel removed): the rear wall with the I/O shield is on the left and the power supply at the bottom. Pick steps 1–6 and watch the shield move into place, the board lower onto the standoffs, the screws go in and the cables connect.</span></figcaption>
+</figure><div class="rest">
+<div class="rule-box green"><p class="eyebrow"><span lang="sr">Pravilo ukrštanja</span><span lang="en">The crossing rule</span></p><p lang="sr">Zavrtnje zatežeš kao točak na automobilu: prvo jedan ugao, pa suprotni, pa ostala dva, pa sredinu. Tako se ploča ne iskrivi. Prvo svi zavrtnji lagano, pa tek onda svi čvrsto.</p>
+<p lang="en">You tighten the screws like a car wheel: first one corner, then the opposite one, then the other two, then the middle. That way the board does not warp. First all the screws lightly, only then all of them firmly.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="distanceri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">podloga ploče</span><span lang="en">what the board sits on</span></p>
+    <h2><span lang="sr">Distanceri i form-faktori</span><span lang="en">Standoffs and form factors</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Ploča nikada ne sme da dodiruje metalnu ploču kućišta. Između stoje <strong>distanceri</strong> (engl. <em>standoffs</em>): mesingani valjci visine oko 6 mm sa navojem. Kućište je bušeno za sve form-faktore, ali ploča ima rupe samo na nekim mestima, pa distancere stavljaš <strong>tačno na ta mesta</strong>. Svaka rupa na ploči mora da ima distancer, a distancer bez rupe iznad sebe može da kratko spoji tragove ploče.</p>
+<p lang="en">The board must never touch the metal tray of the case. Between them sit the <strong>standoffs</strong>: brass cylinders about 6 mm high with a thread. The case is drilled for all form factors, but a board has holes only in some places, so you fit the standoffs <strong>exactly at those places</strong>. Every hole in the board needs a standoff, and a standoff with no hole above it can short the tracks of the board.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Form-faktori ploča</span><span lang="en">Board form factors</span></caption><thead><tr><th><span lang="sr">Naziv</span><span lang="en">Name</span></th><th>Š × D (mm)</th><th><span lang="sr">Rupa za zavrtnje</span><span lang="en">Mounting holes</span></th></tr></thead><tbody><tr><td>E-ATX</td><td>305 × 330</td><td>9–10</td></tr><tr><td>ATX</td><td>305 × 244</td><td>9</td></tr><tr><td>Micro-ATX (mATX)</td><td>244 × 244</td><td>9</td></tr><tr><td>Mini-ITX</td><td>170 × 170</td><td>4</td></tr></tbody></table></div><p lang="sr">Zavrtnji su najčešće <strong>M3 × 5 mm</strong> (mali, sa širokom glavom) ili <strong>#6-32</strong>; distanceri imaju unutrašnji navoj iste vrste. Kućište obično dolazi sa kesicom pravih zavrtnjeva i distancera. Ne mešaj ih sa zavrtnjima za disk i kućište: imaju drugačiji navoj.</p>
+<p lang="en">The screws are most often <strong>M3 × 5 mm</strong> (small, with a wide head) or <strong>#6-32</strong>; the standoffs have an internal thread of the same kind. A case usually comes with a bag of the right screws and standoffs. Do not mix them with the screws for drives and the side panel: they have a different thread.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="kablovi" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">napajanje</span><span lang="en">power</span></p>
+    <h2><span lang="sr">Kablovi napajanja</span><span lang="en">Power cables</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Ploča dobija struju preko dva velika konektora. <strong>24-pin ATX</strong> napaja ceo sistem (3,3 V, 5 V, 12 V i signale PS_ON i PWR_OK), a <strong>8-pin EPS (ili 4+4 pin)</strong> je namenjen isključivo procesoru i njegovom VRM-u na 12 V. Grafička kartica ima svoj kabl (PCIe 6+2 pin) koji ide iz napajanja, a ne sa ploče.</p>
+<p lang="en">The board gets its power through two large connectors. The <strong>24-pin ATX</strong> powers the whole system (3.3 V, 5 V, 12 V and the PS_ON and PWR_OK signals), while the <strong>8-pin EPS (or 4+4 pin)</strong> is meant only for the processor and its VRM at 12 V. The graphics card has its own cable (PCIe 6+2 pin) that comes from the power supply, not from the board.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Najvažniji konektori</span><span lang="en">The most important connectors</span></caption><thead><tr><th><span lang="sr">Konektor</span><span lang="en">Connector</span></th><th><span lang="sr">Pinova</span><span lang="en">Pins</span></th><th><span lang="sr">Kuda ide</span><span lang="en">Where it goes</span></th></tr></thead><tbody><tr><td>ATX 24-pin</td><td>24 (20 + 4)</td><td><span lang="sr">desna ivica ploče</span><span lang="en">right edge of the board</span></td></tr><tr><td>EPS 8-pin</td><td>8 (4 + 4)</td><td><span lang="sr">gornji levi ugao, pored procesora</span><span lang="en">upper left corner, next to the processor</span></td></tr><tr><td>PCIe 6+2</td><td>8</td><td><span lang="sr">grafička kartica</span><span lang="en">graphics card</span></td></tr><tr><td>SATA napajanje</td><td>15</td><td><span lang="sr">SSD i HDD</span><span lang="en">SSD and HDD</span></td></tr><tr><td>CPU_FAN, SYS_FAN</td><td>3 ili 4</td><td><span lang="sr">ventilatori na ploči</span><span lang="en">fans on the board</span></td></tr></tbody></table></div><p lang="sr">Konektori imaju <strong>urez i štipaljku</strong>, pa se mogu ukopčati samo u jednom položaju. Ako ide teško, nešto je pogrešno: nikada ne tiskaj silom. Uvek čuj „klik” štipaljke.</p>
+<p lang="en">The connectors have a <strong>key and a latch</strong>, so they only go in one way. If it goes in hard, something is wrong: never force it. Always listen for the "click" of the latch.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="prednji" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">prednja ploča</span><span lang="en">front panel</span></p>
+    <h2><span lang="sr">Prednji priključci (front panel)</span><span lang="en">Front-panel connectors</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Najsitniji i najzahtevniji deo posla su prednji kablovi iz kućišta. Svaki je mali konektor koji ide na red pinova uz donju ivicu ploče. Skoro uvek je to <strong>jedan red od 2 × 5 pinova</strong> (grupa „F_PANEL” ili „JFP1”), a USB i audio imaju svoje, veće konektore.</p>
+<p lang="en">The smallest and most demanding part of the job is the front cables from the case. Each is a small connector that goes onto a row of pins along the bottom edge of the board. It is almost always <strong>one block of 2 × 5 pins</strong> (the "F_PANEL" or "JFP1" group), while USB and audio have their own, larger connectors.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Prednja ploča (2 × 5, okvirno)</span><span lang="en">Front panel (2 × 5, typical)</span></caption><thead><tr><th><span lang="sr">Kabl</span><span lang="en">Cable</span></th><th><span lang="sr">Polaritet</span><span lang="en">Polarity</span></th><th><span lang="sr">Šta radi</span><span lang="en">What it does</span></th></tr></thead><tbody><tr><td>PWR SW</td><td><span lang="sr">nema</span><span lang="en">none</span></td><td><span lang="sr">dugme za uključivanje, kratko spaja dva pina</span><span lang="en">the power button, shorts two pins briefly</span></td></tr><tr><td>RESET SW</td><td><span lang="sr">nema</span><span lang="en">none</span></td><td><span lang="sr">dugme za ponovno pokretanje</span><span lang="en">the restart button</span></td></tr><tr><td>PWR LED +/−</td><td><span lang="sr">ima</span><span lang="en">yes</span></td><td><span lang="sr">dioda napajanja</span><span lang="en">the power LED</span></td></tr><tr><td>HDD LED +/−</td><td><span lang="sr">ima</span><span lang="en">yes</span></td><td><span lang="sr">dioda aktivnosti diska</span><span lang="en">the drive activity LED</span></td></tr><tr><td>USB 3.0 (19-pin)</td><td><span lang="sr">jedan položaj</span><span lang="en">one way</span></td><td><span lang="sr">prednji USB portovi</span><span lang="en">front USB ports</span></td></tr><tr><td>HD AUDIO</td><td><span lang="sr">jedan položaj</span><span lang="en">one way</span></td><td><span lang="sr">slušalice i mikrofon</span><span lang="en">headphones and microphone</span></td></tr></tbody></table></div><div class="rule-box violet"><p class="eyebrow"><span lang="sr">Ako dioda ne svetli</span><span lang="en">If the LED does not light</span></p><p lang="sr">Dioda sija samo u jednom položaju. Okreni konektor za 180° pa probaj opet. Dugme radi u oba smera.</p>
+<p lang="en">An LED glows only one way round. Turn the connector 180° and try again. A button works either way.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="prvo-paljenje" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">prvo pokretanje</span><span lang="en">first power-on</span></p>
+    <h2><span lang="sr">Prvo paljenje i šta ako ne radi</span><span lang="en">First power-on and what to do if it does not work</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Pre nego što zatvoriš kućište, uključi računar sa otvorenim bokom. Redosled provere: 1. da li su oba konektora napajanja ukopčana do kraja; 2. da li je prekidač napajanja na „I”; 3. da li su memorija i grafička kartica zaglavljeni; 4. da li je kabl monitora u grafičkoj kartici (a ne u ploči).</p>
+<p lang="en">Before closing the case, switch the computer on with the side open. Order of checks: 1. both power connectors are fully plugged in; 2. the power switch is at "I"; 3. the memory and graphics card are fully seated; 4. the monitor cable is in the graphics card (not in the board).</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Najčešći simptomi</span><span lang="en">The most common symptoms</span></caption><thead><tr><th><span lang="sr">Simptom</span><span lang="en">Symptom</span></th><th><span lang="sr">Verovatan uzrok</span><span lang="en">Likely cause</span></th></tr></thead><tbody><tr><td><span lang="sr">ništa se ne dešava</span><span lang="en">nothing happens</span></td><td><span lang="sr">EPS ili 24-pin nije ukopčan, prekidač napajanja, dugme PWR SW pogrešno</span><span lang="en">EPS or 24-pin not plugged in, the PSU switch, PWR SW connected wrong</span></td></tr><tr><td><span lang="sr">ventilatori se vrte, nema slike</span><span lang="en">fans spin, no picture</span></td><td><span lang="sr">memorija nije do kraja, kabl monitora u ploči</span><span lang="en">memory not fully seated, monitor cable in the board</span></td></tr><tr><td><span lang="sr">piskanje pri paljenju</span><span lang="en">beeps at power-on</span></td><td><span lang="sr">POST kod: memorija ili grafička kartica (vidi priručnik)</span><span lang="en">a POST code: memory or graphics card (see the manual)</span></td></tr><tr><td><span lang="sr">uključi se i odmah ugasi</span><span lang="en">starts and shuts off at once</span></td><td><span lang="sr">kratak spoj: višak distancera, ili hladnjak loše naleže</span><span lang="en">a short: a spare standoff, or the cooler is seated badly</span></td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · broj distancera</span><span lang="en">Example 1 · number of standoffs</span></h4><p class="given" lang="sr">Dato: kućište za ATX ima 9 mesta za distancere, a ti ugrađuješ mATX ploču sa 9 rupa. Kupio si kutiju sa 6 distancera. Koliko ti fali?</p><p class="given" lang="en">Given: an ATX case has 9 standoff positions, and you are installing an mATX board with 9 holes. The bag has 6 standoffs. How many are missing?</p><ol lang="sr"><li>Ploča ima 9 rupa, a svaka mora da ima distancer.</li><li>Potrebno je 9, a imaš 6.</li><li>Fale \( 9 - 6 = 3 \) distancera.</li></ol>
+<ol lang="en"><li>The board has 9 holes and each needs a standoff.</li><li>You need 9 and you have 6.</li><li>\( 9 - 6 = 3 \) standoffs are missing.</li></ol><p class="answer"><span lang="sr">Fale 3 distancera</span><span lang="en">3 standoffs are missing</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · napajanje procesora</span><span lang="en">Example 2 · powering the processor</span></h4><p class="given" lang="sr">Dato: procesor povlači 200 W preko 8-pin EPS kabla, a po 12 V žici može da pređe oko 7 A. Koliko je struja i koliko žica je dovoljno? U 8-pin EPS-u su 4 žice od 12 V.</p><p class="given" lang="en">Given: a processor draws 200 W through an 8-pin EPS cable, and one 12 V wire can carry about 7 A. What is the current and are the wires enough? An 8-pin EPS has four 12 V wires.</p><ol lang="sr"><li>\( I = P/U = 200/12 \approx 16{,}7\ \mathrm{A} \).</li><li>Po žici: \( 16{,}7/4 \approx 4{,}2\ \mathrm{A} \), što je manje od 7 A.</li><li>Dakle 4 žice su dovoljne, uz rezervu od oko 40 %.</li></ol>
+<ol lang="en"><li>\( I = P/U = 200/12 \approx 16.7\ \mathrm{A} \).</li><li>Per wire: \( 16.7/4 \approx 4.2\ \mathrm{A} \), which is less than 7 A.</li><li>So four wires are enough, with a margin of about 40 %.</li></ol><p class="answer"><span lang="sr">I ≈ 16,7 A, po žici ≈ 4,2 A</span><span lang="en">I ≈ 16.7 A, ≈ 4.2 A per wire</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · ESD napon</span><span lang="en">Example 3 · ESD voltage</span></h4><p class="given" lang="sr">Dato: čovek je kao kondenzator kapaciteta \( C = 150\ \mathrm{pF} \) naelektrisan na \( U = 4\ \mathrm{kV} \). Kolika je energija koju može da isprazni kroz čip?</p><p class="given" lang="en">Given: a person acts as a capacitor of \( C = 150\ \mathrm{pF} \) charged to \( U = 4\ \mathrm{kV} \). How much energy can be discharged through a chip?</p><ol lang="sr"><li>\( W = \tfrac12 C U^2 = 0{,}5 \cdot 150\cdot 10^{-12}\cdot (4000)^2 \).</li><li>\( W = 0{,}5 \cdot 150\cdot 10^{-12}\cdot 1{,}6\cdot 10^{7} = 1{,}2\cdot 10^{-3}\ \mathrm{J} \).</li><li>To je 1,2 mJ. Malo je, ali je isprazni za nekoliko nanosekundi, pa je trenutna snaga ogromna.</li></ol>
+<ol lang="en"><li>\( W = \tfrac12 C U^2 = 0.5 \cdot 150\cdot 10^{-12}\cdot (4000)^2 \).</li><li>\( W = 0.5 \cdot 150\cdot 10^{-12}\cdot 1.6\cdot 10^{7} = 1.2\cdot 10^{-3}\ \mathrm{J} \).</li><li>That is 1.2 mJ. It is small, but it is released in a few nanoseconds, so the instantaneous power is huge.</li></ol><p class="answer"><span lang="sr">W = 1,2 mJ</span><span lang="en">W = 1.2 mJ</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 4 · zavrtnji</span><span lang="en">Example 4 · screws</span></h4><p class="given" lang="sr">Dato: ATX ploča se pričvršćuje sa 9 zavrtnjeva M3. Nacrtaj redosled: koje zavrtnje zavrćeš prvo?</p><p class="given" lang="en">Given: an ATX board is fixed with 9 M3 screws. Describe the order: which screws do you drive first?</p><ol lang="sr"><li>Prvo jedan ugao (npr. gore levo), pa dijagonalno suprotni (dole desno).</li><li>Zatim druga dva ugla i sredinu, sve lagano.</li><li>Na kraju svi čvrsto, istim ukrštenim redom.</li></ol>
+<ol lang="en"><li>First one corner (e.g. top left), then the diagonally opposite one (bottom right).</li><li>Then the other two corners and the centre, all lightly.</li><li>Finally all of them firmly, in the same crossing order.</li></ol><p class="answer"><span lang="sr">Ukršteno: ugao, suprotni ugao, ostali, sredina</span><span lang="en">Crossing: a corner, the opposite corner, the rest, the middle</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Višak distancera.</b> Distancer bez rupe iznad sebe može da kratko spoji ploču. Prebroj rupe na ploči pre nego što ih postaviš.</div></li><li><div><b>Zaboravljen I/O štitnik.</b> Kad je ploča već zavrnuta, štitnik se ne može lako staviti; moraš da je vadiš.</div></li><li><div><b>Zaboravljen EPS kabl.</b> Računar se ne pali, a sve ostalo izgleda ispravno. EPS ide u gornji levi ugao.</div></li><li><div><b>Prejako zatezanje.</b> Ploča puca oko rupe i tragovi se prekidaju. Zateži dok ne osetiš otpor, ne više.</div></li><li><div><b>Izvrnute diode.</b> Prednja dioda ne svetli. Okreni konektor, ne menjaj kabl.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>A spare standoff.</b> A standoff with no hole above it can short the board. Count the holes in the board before you place them.</div></li><li><div><b>A forgotten I/O shield.</b> Once the board is screwed in, the shield cannot be fitted easily; you have to take the board out.</div></li><li><div><b>A forgotten EPS cable.</b> The computer does not start while everything else looks fine. The EPS goes into the upper left corner.</div></li><li><div><b>Over-tightening.</b> The board cracks around the hole and the tracks break. Tighten until you feel resistance, not more.</div></li><li><div><b>Reversed LEDs.</b> The front LED does not light. Turn the connector round, do not swap the cable.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 9</span><span lang="en">Part 9</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Ploča se ugrađuje tek kad je kućište spremno; prvo se stavi procesor, hladnjak i memorija van kućišta.</li><li>Zaštiti ploču od ESD: dodiruj kućište, drži ploču za ivice, izvuci kabl napajanja.</li><li>Distanceri idu tačno ispod rupa ploče; I/O štitnik se stavlja pre ploče.</li><li>Zavrtnje zatežeš ukršteno, prvo lagano pa čvrsto.</li><li>24-pin napaja ploču, 8-pin EPS procesor; prednji priključci imaju polaritet kod dioda.</li><li>Prvo paljenje radi sa otvorenim kućištem; kod problema proveri napajanje, memoriju i kabl monitora.</li></ul><ul lang="en"><li>The board is installed only when the case is ready; the processor, cooler and memory go on first, outside the case.</li><li>Protect the board from ESD: touch the case, hold the board by its edges, unplug the power cable.</li><li>Standoffs go exactly under the holes of the board; the I/O shield goes in before the board.</li><li>You tighten the screws crosswise, lightly first and then firmly.</li><li>The 24-pin powers the board, the 8-pin EPS the processor; LEDs on the front panel have polarity.</li><li>The first power-on is done with the case open; if it fails, check the power, the memory and the monitor cable.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC05" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lab3d.js"></script>
+<script src="../assets/js/lessons/pc3d.js"></script>
+<script src="../assets/js/lessons/ugradnja-maticne-ploce.js"></script>
+</body>
+</html>
