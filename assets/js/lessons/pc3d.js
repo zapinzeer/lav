@@ -13,8 +13,8 @@ function p(id, sr, en, dsr, den, tsr, ten) {
 
 api.BOARD_PARTS = [
   p('cpu', 'Podnožje procesora', 'CPU socket',
-    'Mesto gde se ugrađuje procesor (CPU), „mozak” računara. Podnožje ima stotine kontakata (LGA: pinovi su na ploči, AM: pinovi su na procesoru) i metalni okvir sa polugom koji drži procesor. Podnožje određuje koji procesori mogu da se koriste.',
-    'The place where the processor (CPU), the "brain" of the computer, is installed. The socket has hundreds of contacts (LGA: the pins are on the board, PGA: the pins are on the processor) and a metal frame with a lever that holds the processor. The socket decides which processors can be used.',
+    'Mesto gde se ugrađuje procesor (CPU), „mozak” računara. Podnožje ima stotine kontakata (LGA: pinovi su na ploči, AM: pinovi su na procesoru) i metalni okvir sa polugom koji drži procesor. Podnožje određuje koji procesori mogu da se koriste. Pre ugradnje se skida plastični poklopac, a procesor se pridržava za ivice.',
+    'The place where the processor (CPU), the "brain" of the computer, is installed. The socket has hundreds of contacts (LGA: the pins are on the board, PGA: the pins are on the processor) and a metal frame with a lever that holds the processor. The socket decides which processors can be used. Before installation the plastic cover is removed, and the processor is held by its edges.',
     'Procesor se postavlja samo u jednom položaju: prati trougao na uglu. Nikad ne primenjuj silu.', 'A processor fits in only one orientation: follow the triangle on the corner. Never use force.'),
   p('ram', 'RAM slotovi (DIMM)', 'RAM slots (DIMM)',
     'Četiri duga ležišta za memorijske module. Radna memorija čuva programe i podatke koji se trenutno koriste. Ako se moduli stave u slotove iste boje (npr. 2 i 4), procesor ih koristi paralelno u dvokanalnom režimu, što ubrzava rad.',
@@ -49,22 +49,38 @@ api.BOARD_PARTS = [
     'Video izlaz sa ploče radi samo ako procesor ima ugrađenu grafiku.', 'The video output from the board only works if the processor has integrated graphics.'),
   p('cmos', 'CMOS baterija', 'CMOS battery', 'Dugmasta baterija (tip CR2032) koja čuva sat i podešavanja BIOS-a kada je računar isključen. Ako se istroši, računar gubi datum, vreme i postavke.', 'A coin battery (type CR2032) that keeps the clock and the BIOS settings when the computer is off. If it runs out, the computer loses the date, time and settings.', 'Zamena je laka: izvadi staru i ubaci novu.', 'Replacing it is easy: take out the old one and put in a new one.'),
   p('bios', 'BIOS/UEFI čip', 'BIOS/UEFI chip',
-    'Flash memorija sa osnovnim programom koji se pokreće prvi: proverava hardver (POST), omogućava podešavanja i zatim pokreće operativni sistem. Moderan naziv je UEFI.',
-    'Flash memory holding the basic program that runs first: it checks the hardware (POST), allows settings and then starts the operating system. The modern name is UEFI.',
+    'Flash memorija sa osnovnim programom koji se pokreće prvi: proverava hardver (POST), omogućava podešavanja i zatim pokreće operativni sistem. Moderan naziv je UEFI. Ima i grafički meni sa mišem, izbor uređaja za pokretanje i profile memorije (XMP/EXPO).',
+    'Flash memory holding the basic program that runs first: it checks the hardware (POST), allows settings and then starts the operating system. The modern name is UEFI. It has a graphical menu with mouse support, a boot-device choice and memory profiles (XMP/EXPO).',
     'Ažuriranje BIOS-a može da doda podršku za novije procesore, ali ne sme da se prekida.', 'Updating the BIOS can add support for newer processors, but it must not be interrupted.'),
   p('fan', 'Konektor za ventilator', 'Fan header', 'Četvoropinski konektor za ventilator procesora ili kućišta. Ploča očitava brzinu ventilatora i podešava je prema temperaturi, pa je računar tih dok je hladan.', 'A four-pin header for the CPU or case fan. The board reads the fan speed and adjusts it to the temperature, so the computer stays quiet while it is cool.', 'CPU_FAN je za hladnjak procesora i mora da bude zauzet.', 'CPU_FAN is for the processor cooler and must be in use.'),
   p('fpanel', 'Prednji panel (F_PANEL)', 'Front panel header',
-    'Redovi pinova za dugme za uključivanje, reset, LED lampice i zvučnik kućišta. Ploča pali računar kratkim spojem dva pina.',
-    'Rows of pins for the power button, reset, LEDs and the case speaker. The board turns the computer on by briefly shorting two pins.',
+    'Redovi pinova za dugme za uključivanje, reset, LED lampice i zvučnik kućišta. Ploča pali računar kad dugme dotakne dva pina.',
+    'Rows of pins for the power button, reset, LEDs and the case speaker. The board turns the computer on when the button touches two pins.',
     'Raspored pinova je odštampan na ploči i u priručniku. Polaritet je bitan samo za LED.', 'The pin layout is printed on the board and in the manual. Polarity matters only for LEDs.'),
   p('usbh', 'Prednji USB i audio konektori', 'Front USB and audio headers',
     'Pinovi na koje se priključuju USB portovi i audio utičnice sa prednje strane kućišta. USB 3 ima širi konektor sa 19/20 pinova, a USB-C ima poseban konektor.',
     'Pins to which the USB ports and audio jacks on the front of the case are connected. USB 3 has a wider 19/20-pin connector, and USB-C has a dedicated connector.',
     'Konektori imaju ključ (urez) pa ne mogu da se okrenu naopako.', 'The connectors are keyed (notched) so they cannot be turned the wrong way round.'),
+  p('m2b', 'Drugi M.2 slot sa hladnjakom', 'Second M.2 slot with heatsink',
+    'Mnoge ploče imaju još jedan M.2 slot, često ispod metalnog hladnjaka. Brzi NVMe SSD se greje kad dugo radi, pa ga hladnjak štiti od usporavanja. Neki M.2 slotovi dele trake sa SATA portovima, pa popunjavanje jednog može da isključi drugi.',
+    'Many boards have another M.2 slot, often under a metal heatsink. A fast NVMe SSD warms up when it works for a long time, and the heatsink keeps it from slowing down. Some M.2 slots share lanes with SATA ports, so filling one can switch the other off.',
+    'Skini hladnjak, ubaci SSD, zavrni ga i vrati hladnjak. Skini foliju sa termalne podloge.', 'Remove the heatsink, insert the SSD, screw it down and put the heatsink back. Peel the film off the thermal pad.'),
+  p('audio', 'Audio zona', 'Audio zone',
+    'Odvojen deo ploče sa zvučnim čipom (kodek) i zlatnim kondenzatorima, često sa vidljivom linijom koja ga odvaja od ostatka ploče da bi zvuk bio čistiji. Odavde ide signal do audio utičnica na zadnjoj ploči i do prednje audio utičnice.',
+    'A separate area of the board with the sound chip (codec) and golden capacitors, often with a visible line that separates it from the rest of the board for cleaner sound. From here the signal goes to the audio jacks on the rear panel and to the front audio jack.',
+    'Ako je zvuk loš, prvo proveri da li je kabl prednjeg audija pravilno uglavljen.', 'If the sound is poor, first check that the front-audio cable is properly seated.'),
+  p('debug', 'Dijagnostičke LED lampice', 'Debug LEDs',
+    'Četiri male lampice (CPU, DRAM, VGA, BOOT) pokazuju u kojoj fazi pokretanja računar stoji. Ako ostane da svetli jedna od njih, znaš koji deo je problem: procesor, memorija, grafička ili uređaj za pokretanje.',
+    'Four small lights (CPU, DRAM, VGA, BOOT) show at which stage of starting the computer is stuck. If one of them stays lit, you know which part to suspect: the processor, memory, graphics card or boot device.',
+    'Na skupljim pločama umesto lampica postoji dvocifreni ekran sa kodovima.', 'More expensive boards have a two-digit code display instead of lights.'),
+  p('rgb', 'RGB i ARGB konektori', 'RGB and ARGB headers',
+    'Konektori za osvetljenje: obični RGB (4 pina) za trake u jednoj boji i adresabilni ARGB (3 pina) za trake i ventilatore čije se svako dioda boji posebno. Osvetljenje se kontroliše iz programa proizvođača ploče.',
+    'Headers for lighting: plain RGB (4 pins) for single-colour strips and addressable ARGB (3 pins) for strips and fans where each LED has its own colour. The lighting is controlled from the board maker\'s software.',
+    'RGB i ARGB konektori izgledaju slično, ali nisu zamenjivi: proveri oznaku u priručniku.', 'RGB and ARGB headers look alike but are not interchangeable: check the label in the manual.'),
   p('holes', 'Rupe za zavrtnje', 'Mounting holes',
     'Rupe (obično 9 kod ATX ploče) kroz koje se ploča zavrtnjima pričvršćuje za odstojnike u kućištu. Njihov raspored je standardizovan za svaki form-faktor.',
     'Holes (usually 9 on an ATX board) through which the board is screwed to the standoffs in the case. Their layout is standardised for each form factor.',
-    'Odstojnik se stavlja samo tamo gde ploča ima rupu, inače može da napravi kratak spoj.', 'A standoff is placed only where the board has a hole, otherwise it can cause a short circuit.')
+    'Odstojnik se stavlja samo tamo gde ploča ima rupu, inače može da ošteti ploču.', 'A standoff is placed only where the board has a hole, otherwise it can damage the board.')
 ];
 
 api.PSU_PARTS = [
@@ -76,6 +92,10 @@ api.PSU_PARTS = [
   p('eps', '4+4 pin CPU kabl (EPS)', '4+4 pin CPU cable (EPS)', 'Poseban kabl za procesor. Deli se na dva dela po 4 pina, da bi mogao da se ukopča i u ploče sa 4-pinskim konektorom. Skuplje ploče traže dva EPS kabla.', 'A dedicated cable for the processor. It splits into two 4-pin halves so that it can also go into boards with a 4-pin connector. More expensive boards need two EPS cables.', 'Utakni ga u konektor pored procesora, ne u PCIe konektor grafičke.', 'Plug it into the connector next to the processor, not the PCIe connector of the graphics card.'),
   p('pcie', '6+2 pin PCIe kabl', '6+2 pin PCIe cable', 'Kabl za grafičku karticu. Ima 6-pinski i 8-pinski oblik, a jače kartice traže više konektora. Najnovije kartice koriste jedan 12-pinski konektor.', 'The cable for the graphics card. It comes in 6-pin and 8-pin forms, and more powerful cards need more connectors. The newest cards use a single 12-pin connector.', 'Za jaku karticu koristi dva odvojena kabla, a ne jedan kabl sa dva konektora.', 'For a power-hungry card use two separate cables, not one cable with two connectors.'),
   p('sata', 'SATA kabl za napajanje', 'SATA power cable', 'Plosnati konektor sa 15 pinova za HDD, SATA SSD i optičke uređaje. Na jednom kablu je obično 3 do 4 konektora.', 'A flat 15-pin connector for HDDs, SATA SSDs and optical drives. There are usually 3 to 4 connectors on one cable.', 'M.2 SSD ne koristi ovaj kabl: napaja se iz same ploče.', 'An M.2 SSD does not use this cable: it is powered from the board itself.'),
+  p('modular', 'Modularna ploča sa priključcima', 'Modular connector panel',
+    'Prednja strana modularnog napajanja ima utičnice u koje se ukopčavaju samo kablovi koji su ti potrebni. Utičnice su obeležene (CPU, PCIe, SATA/PERIPH, MB) i imaju različite oblike, pa ne možeš da ukopčaš pogrešan kabl. Tako je u kućištu manje kablova i više mesta za vazduh.',
+    'The front of a modular power supply has sockets where you plug in only the cables you need. The sockets are labelled (CPU, PCIe, SATA/PERIPH, MB) and have different shapes, so you cannot plug in the wrong cable. This leaves fewer cables in the case and more room for air.',
+    'Koristi samo kablove koji su došli uz to napajanje: kablovi drugih proizvođača nisu zamenjivi.', 'Use only the cables that came with that power supply: cables from other makers are not interchangeable.'),
   p('molex', 'Molex konektor', 'Molex connector', 'Stari 4-pinski konektor za ventilatore, kontrolere i starije uređaje. Danas se retko koristi, ali mnoga napajanja ga još imaju.', 'The old 4-pin connector for fans, controllers and older devices. It is rarely used today, but many power supplies still have it.', 'Ima zakošene ivice: ne može da se okrene naopako, ali traži dosta sile.', 'It has chamfered corners so it cannot be inserted the wrong way, but it takes quite some force.')
 ];
 
@@ -126,6 +146,25 @@ function traceTexture() {
     x.fillStyle = 'rgba(210,180,90,.35)';
     x.beginPath(); x.arc(px, py, 3.2, 0, Math.PI * 2); x.fill();
   }
+  // tiny SMD parts (resistors and capacitors)
+  for (var k = 0; k < 260; k++) {
+    var sx = 20 + rnd() * 984, sy = 20 + rnd() * 780, horiz = rnd() < 0.5;
+    x.fillStyle = rnd() < 0.5 ? 'rgba(30,30,32,.8)' : 'rgba(170,150,100,.55)';
+    x.fillRect(sx, sy, horiz ? 9 : 5, horiz ? 5 : 9);
+    x.fillStyle = 'rgba(215,215,215,.55)';
+    x.fillRect(sx - 1, sy, 2, horiz ? 5 : 9); x.fillRect(sx + (horiz ? 8 : 4), sy, 2, horiz ? 5 : 9);
+  }
+  // silkscreen labels at board coordinates
+  function lab(txt, bx, bz, size) {
+    x.fillStyle = 'rgba(245,245,245,.8)';
+    x.font = '600 ' + (size || 17) + 'px Arial';
+    x.fillText(txt, (bx + 1.525) / 3.05 * 1024, (bz + 1.22) / 2.44 * 820);
+  }
+  lab('CPU_FAN', 0.02, -1.08); lab('EATX12V', -0.78, -1.05); lab('ATX_PWR', 1.2, 0.2); lab('DIMM A1  B1  A2  B2', 0.18, -1.12, 14);
+  lab('PCIEX16_1', -0.95, 0.25); lab('PCIEX16_2', -0.95, 0.76); lab('PCIEX1_1', -1.0, 0.54, 14); lab('M.2_1', -1.0, 0.08);
+  lab('SATA 1-6', 1.08, 0.3, 15); lab('F_PANEL', 0.85, 1.12, 14); lab('CLR_CMOS', 0.22, 0.92, 13); lab('BAT', 0.0, 0.62, 14);
+  lab('USB3_1', 1.22, -0.78, 14); lab('AUDIO', -1.4, 0.7, 14); lab('LGA / AM5', -0.7, -0.05, 14); lab('M.2_2', 0.1, 0.94, 13);
+  lab('RGB', 0.72, -1.12, 14); lab('ARGB', 0.98, -1.12, 14); lab('LAV · ATX', -0.2, 1.0, 20);
   x.strokeStyle = 'rgba(240,240,240,.28)';
   x.lineWidth = 3;
   x.strokeRect(14, 14, 996, 792);
@@ -162,6 +201,8 @@ api.buildBoard = function () {
   put(g, cpu, -0.45, TOP + 0.085, -0.35);
   put(g, box(0.16, 0.036, 0.16, 0xaab3bd, { metalness: 0.7, roughness: 0.3 }), -0.45, TOP + 0.087, -0.35);
   put(g, cyl(0.012, 0.5, 0xd8dde3, { metalness: 0.8 }, 10), -0.45, TOP + 0.075, -0.07).rotation.z = Math.PI / 2;
+  put(g, box(0.5, 0.012, 0.03, 0x848d97, { metalness: 0.7 }), -0.45, TOP + 0.052, -0.6);
+  put(g, cyl(0.014, 0.1, 0xd8dde3, { metalness: 0.8 }, 10), -0.7, TOP + 0.058, -0.6).rotation.x = Math.PI / 2;
   parts.cpu.cpuMesh = cpu;
 
   // RAM slots
@@ -177,6 +218,9 @@ api.buildBoard = function () {
   put(g, box(0.89, 0.1, 0.08, DARK), -0.55, TOP + 0.05, 0.36);
   put(g, box(0.89, 0.1, 0.08, 0x2c3239), -0.55, TOP + 0.05, 0.86);
   put(g, box(0.09, 0.11, 0.095, 0xd8dde3), -0.06, TOP + 0.055, 0.36);
+  put(g, box(0.8, 0.012, 0.02, 0xd8b84c, { metalness: 0.8 }), -0.55, TOP + 0.104, 0.36);
+  put(g, box(0.8, 0.012, 0.02, 0xd8b84c, { metalness: 0.8 }), -0.55, TOP + 0.104, 0.86);
+  put(g, box(0.9, 0.012, 0.1, 0x9aa3ad, { metalness: 0.7 }), -0.55, TOP + 0.108, 0.61);
   g = part('pcie1');
   put(g, box(0.28, 0.1, 0.08, DARK), -0.86, TOP + 0.05, 0.62);
   put(g, box(0.28, 0.1, 0.08, DARK), -0.86, TOP + 0.05, 1.08);
@@ -251,6 +295,31 @@ api.buildBoard = function () {
   put(g, box(0.28, 0.1, 0.09, 0x15171a), 0.5, TOP + 0.05, 1.17);
   put(g, box(0.22, 0.075, 0.09, 0x15171a), -1.18, TOP + 0.038, 1.17);
   put(g, box(0.16, 0.1, 0.36, 0x15171a), 1.3, TOP + 0.05, -0.74);
+
+  // second M.2 with a heatsink
+  g = part('m2b');
+  put(g, box(0.5, 0.03, 0.14, 0x15171a), 0.35, TOP + 0.015, 1.0);
+  put(g, box(0.46, 0.05, 0.12, 0x8a949f, { metalness: 0.6, roughness: 0.4 }), 0.35, TOP + 0.055, 1.0);
+  for (s = 0; s < 6; s++) put(g, box(0.02, 0.03, 0.12, 0xa5aeb8, { metalness: 0.6 }), 0.17 + s * 0.07, TOP + 0.095, 1.0);
+
+  // audio zone
+  g = part('audio');
+  put(g, box(0.34, 0.012, 0.3, 0x0e2a22), -1.28, TOP + 0.006, 0.8);
+  put(g, box(0.1, 0.03, 0.1, 0x15171a), -1.2, TOP + 0.027, 0.86);
+  for (s = 0; s < 5; s++) { put(g, cyl(0.03, 0.06, 0xd8b84c, { metalness: 0.5 }, 14), -1.4 + s * 0.065, TOP + 0.04, 0.72); }
+  put(g, box(0.28, 0.008, 0.012, 0xe8e4d8), -1.28, TOP + 0.014, 0.64);
+
+  // debug LEDs
+  g = part('debug');
+  put(g, box(0.07, 0.03, 0.34, 0x15171a), 1.38, TOP + 0.015, 1.0);
+  [0xe85d3a, 0xf5f5f5, 0xf5c84c, 0x6fcf97].forEach(function (c, i) { put(g, box(0.045, 0.03, 0.045, c, { emissive: c, emissiveIntensity: 0.4 }), 1.38, TOP + 0.04, 0.88 + i * 0.08); });
+
+  // RGB headers
+  g = part('rgb');
+  put(g, box(0.18, 0.09, 0.07, 0xe8e4d8), 0.76, TOP + 0.045, -1.15);
+  put(g, box(0.14, 0.09, 0.07, 0x7a4ec2), 1.0, TOP + 0.045, -1.15);
+  for (s = 0; s < 4; s++) put(g, box(0.012, 0.04, 0.012, 0xd8b84c, { metalness: 0.8 }), 0.7 + s * 0.04, TOP + 0.1, -1.15);
+  for (s = 0; s < 3; s++) put(g, box(0.012, 0.04, 0.012, 0xd8b84c, { metalness: 0.8 }), 0.95 + s * 0.04, TOP + 0.1, -1.15);
 
   // mounting holes
   g = part('holes');
@@ -418,7 +487,7 @@ api.buildPSU = function () {
   x.fillStyle = '#141d26'; x.font = '800 40px Archivo, Arial'; x.fillText('ATX 650 W', 20, 56);
   x.font = '600 24px Arial'; x.fillText('80 PLUS GOLD', 20, 92);
   x.font = '500 20px Arial';
-  ['INPUT: 100-240 V~ 50-60 Hz 9-4.5 A', '+3.3 V  20 A    +5 V  20 A', '+12 V  54 A   −12 V  0.3 A', '+5 Vsb  3 A     650 W MAX'].forEach(function (t, i) { x.fillText(t, 20, 136 + i * 30); });
+  ['MODULAR · ATX 3.0', 'ZERO RPM FAN MODE', '10-YEAR WARRANTY', 'MADE FOR LAV'].forEach(function (t, i) { x.fillText(t, 20, 136 + i * 30); });
   var lab = new T.Mesh(new T.PlaneGeometry(1.2, 0.6), new T.MeshStandardMaterial({ map: new T.CanvasTexture(cv), roughness: 0.7 }));
   lab.rotation.y = Math.PI / 2;
   lab.position.set(0.762, 0.43, 0.0);
@@ -444,6 +513,14 @@ api.buildPSU = function () {
   put(fanG, cyl(0.12, 0.04, 0x0c0f13, null, 20), 0, 0.01, 0);
   for (i = 1; i <= 3; i++) { var gr = new T.Mesh(new T.TorusGeometry(i * 0.17, 0.006, 6, 40), mat(0x9aa3ad, { metalness: 0.7 })); gr.rotation.x = Math.PI / 2; gr.position.y = 0.03; fanG.add(gr); }
   root.userData.fanBlades = blades;
+  for (var vi = 0; vi < 9; vi++) put(g, box(1.1, 0.006, 0.03, 0x0c0f13), -0.1, 0.862, -0.45 + vi * 0.1);
+  [[-0.7, -0.62], [0.7, -0.62], [-0.7, 0.62], [0.7, 0.62]].forEach(function (q) { put(g, cyl(0.03, 0.01, 0x9aa3ad, { metalness: 0.7 }, 12), q[0], 0.866, q[1]); });
+  g = part('modular');
+  put(g, box(1.46, 0.8, 0.03, 0x1b1f25, { metalness: 0.4 }), 0, 0.42, 0.715);
+  [[-0.5, 0.62, 0.34], [-0.1, 0.62, 0.2], [0.2, 0.62, 0.2], [0.5, 0.62, 0.2], [-0.45, 0.3, 0.2], [-0.15, 0.3, 0.2], [0.15, 0.3, 0.2], [0.45, 0.3, 0.2]].forEach(function (q) {
+    put(g, box(q[2], 0.16, 0.035, 0x0c0f13), q[0], q[1], 0.73);
+    put(g, box(q[2] - 0.06, 0.06, 0.037, 0xd8b84c, { metalness: 0.8 }), q[0], q[1], 0.735);
+  });
   g = part('inlet');
   put(g, box(0.5, 0.32, 0.06, 0x111418), 0.35, 0.5, -0.72);
   put(g, box(0.3, 0.14, 0.04, 0x1b1f25), 0.35, 0.5, -0.76);
@@ -576,6 +653,18 @@ api.buildCase = function (st, kind, boardKey) {
   } else {
     for (i = 0; i < Math.min(3, c.fans); i++) addFan(0.1, H / 2 - 1.2 - i * (fanR * 2 + 0.1), -D / 2 + 0.05, 'z');
     addFan(0.1, H / 2 - 1.2, D / 2 - 0.05, 'z');
+  }
+  // installed parts shown inside the tower: cooler, RAM, graphics card, drive trays, PSU shroud, top fan and front ports
+  if (!horizontal) {
+    var bx = -W / 2 + 0.2 + 0.2, by = H / 2 - 0.3 - bw[1] * s / 2, bz = D / 2 - bw[0] * s / 2 - 0.15;
+    put(g, box(0.5, 0.5, 0.5, 0x8a949f, { metalness: 0.6, roughness: 0.4 }), bx + 0.25, by + bw[1] * s * 0.12, bz - bw[0] * s * 0.18);
+    put(g, box(0.1, 0.55, 0.55, 0x2d3640), bx + 0.55, by + bw[1] * s * 0.12, bz - bw[0] * s * 0.18);
+    [0.2, 0.3].forEach(function (dz) { put(g, box(0.06, 0.45, 0.03, 0x2a3a55, { metalness: 0.5 }), bx + 0.1, by + bw[1] * s * 0.18, bz - bw[0] * s * 0.05 - dz); });
+    put(g, box(0.28, 0.12, bw[0] * s * 0.75, 0x1b1f25, { metalness: 0.3 }), bx + 0.16, by - bw[1] * s * 0.18, bz - bw[0] * s * 0.05);
+    put(g, box(W * 0.92, 0.04, D * 0.35, 0x20262d, { metalness: 0.3 }), 0, -H / 2 + psuS[1] * s + 0.06, D * 0.1);
+    if (c.fans > 1) addFan(0.1, H / 2 - 0.05, D / 2 - 1.2, 'y');
+    for (i = 0; i < 2; i++) put(g, box(0.1, 0.05, 0.06, 0x15181d), -W / 2 + 0.6 + i * 0.2, H / 2 - 0.03, -D / 2 + 0.4);
+    put(g, box(0.22, 0.14, 0.04, 0xc23a3a), 0, H / 2 - 0.03, -D / 2 + 0.2);
   }
   // expansion slot brackets on the rear panel, from the bottom of the board upwards
   if (!horizontal) {
