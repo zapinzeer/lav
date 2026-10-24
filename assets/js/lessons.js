@@ -295,8 +295,8 @@ window.LAV_LESSONS = [
     quiz: 'PC02',
     title: { sr: 'Napajanje', en: 'Power supply unit' },
     summary: {
-      sr: 'ATX napajanje, kablovi i konektori, snaga i efikasnost, 80 PLUS, zaštite i kako se bira.',
-      en: 'The ATX power supply, cables and connectors, power and efficiency, 80 PLUS, protections and how to choose one.'
+      sr: 'ATX napajanje, kablovi i konektori, izbor snage i efikasnosti, 80 PLUS, zaštite i kako se bira.',
+      en: 'The ATX power supply, cables and connectors, choosing capacity and efficiency, 80 PLUS, protections and how to choose one.'
     },
     tags: ['3d', 'formulas']
   },
