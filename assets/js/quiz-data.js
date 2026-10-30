@@ -23,8 +23,6 @@ function quiz(title, questions, advanced) {
   return { builtin: true, title: title, settings: { showAnswers: true, shuffleO: true }, questions: questions, advanced: advanced || [] };
 }
 
-// compact helpers for the question banks: text is passed as separate Serbian and English strings,
-// an option is either one string (same in both languages) or a [sr, en] pair
 function o(x) { return Array.isArray(x) ? t(x[0], x[1]) : t(x, x); }
 window.LAV_QH = {
   t: t,

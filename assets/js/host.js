@@ -6,7 +6,6 @@ var FP = window.LAV_FP || null;
 function $(el, sel) { return el.querySelector(sel); }
 var locHtml = U.locHtml;
 
-// ---------- the rooms this browser has hosted ----------
 function mine() {
   try { var a = JSON.parse(localStorage.getItem('lav-host') || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; }
 }
@@ -28,7 +27,6 @@ function lessonTitle(code) {
   return l ? both(esc(l.title.sr), esc(l.title.en)) : esc(code);
 }
 
-// ---------- preview of the questions, with the answers ----------
 function optLine(ok, html) {
   return '<div class="pv-opt' + (ok ? ' ok' : '') + '"><span class="pv-mark">' + (ok ? '✓' : '') + '</span><span>' + html + '</span></div>';
 }
@@ -73,8 +71,6 @@ function openPreview(code) {
   }).catch(function (e) { m.body.innerHTML = U.errBanner('Pitanja se nisu učitala.', 'The questions could not be loaded.', e); });
 }
 
-// ---------- start a room ----------
-// no login: the room is owned by a silent anonymous identity (see auth.js), so anyone can host
 function roomErr(e, sr, en) {
   if (e && e.code && !e.detail) e.detail = e.code;
   if (e && e.anonOff) return U.errBanner('Sobe trenutno ne rade: anonimna prijava nije uključena u Firebase konzoli. Javi to autoru sajta.', 'Rooms are not available right now: anonymous sign-in is not switched on in the Firebase console. Tell the site author.', e);
@@ -112,7 +108,6 @@ function openSetup(code) {
   });
 }
 
-// ---------- the host panel ----------
 function pct(a, b) { return b ? Math.round(a / b * 100) : 0; }
 function when(ts) { return ts ? L.fmtTime(ts) : ''; }
 

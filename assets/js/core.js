@@ -361,7 +361,6 @@ function buildTestCta() {
   loadData().then(render).catch(function () {});
 }
 
-// ---------- secure mode: the lessons are locked while this browser is in a hosted test ----------
 function hsState() {
   try { var h = JSON.parse(localStorage.getItem('lav-hs') || 'null'); return h && h.sid && h.pid ? h : null; } catch (e) { return null; }
 }
@@ -389,7 +388,7 @@ function paintLock() {
   document.documentElement.classList.remove('lav-locked');
   if (!h) return;
   var lesson = !!document.getElementById('lesson-top');
-  // where fingerprint-lock.js is on the page its overlay replaces the lesson lock card
+
   var full = h.secure && lesson && !window.LAV_FP;
   var el = document.createElement('div');
   el.id = 'lock-layer';

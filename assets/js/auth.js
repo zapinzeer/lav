@@ -138,11 +138,6 @@ function token() {
   return refreshing;
 }
 
-// ---------- silent anonymous identity ----------
-// Hosting a test needs a database identity (the rules want auth != null), but not an account: this signs in
-// anonymously in the background. It is kept apart from the real session, so the header never shows it as a login.
-// The credentials are kept in localStorage, a cookie and IndexedDB (via fingerprint-lock.js) so the same
-// identity, and with it the rooms and the active-test marker it owns, survives clearing one of them.
 var AKEY = 'lav-anon';
 var anon = null;
 var anonBusy = null;
@@ -175,8 +170,7 @@ function anonAdopt(d) {
 function anonSignUp() {
   return call(ID + 'accounts:signUp?key=' + encodeURIComponent(apiKey), { returnSecureToken: true }).then(anonAdopt);
 }
-// resolves { uid, token }; rejects with an error whose code is NOT_CONFIGURED, NETWORK or, when Anonymous
-// sign-in is switched off in the Firebase console, one of ANON_OFF (e.anonOff is then true)
+
 function anonAuth() {
   if (!enabled) return Promise.reject(fail('NOT_CONFIGURED'));
   if (anon && anon.idToken && anon.exp - Date.now() > 60000) return Promise.resolve({ uid: anon.uid, token: anon.idToken });

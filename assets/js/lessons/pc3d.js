@@ -99,7 +99,6 @@ api.PSU_PARTS = [
   p('molex', 'Molex konektor', 'Molex connector', 'Stari 4-pinski konektor za ventilatore, kontrolere i starije uređaje. Danas se retko koristi, ali mnoga napajanja ga još imaju.', 'The old 4-pin connector for fans, controllers and older devices. It is rarely used today, but many power supplies still have it.', 'Ima zakošene ivice: ne može da se okrene naopako, ali traži dosta sile.', 'It has chamfered corners so it cannot be inserted the wrong way, but it takes quite some force.')
 ];
 
-// fallback for browsers without WebGL: the same list and descriptions, without the model
 api.staticUI = function (o) {
   var parts = o.parts, list = document.getElementById(o.listId), info = document.getElementById(o.infoId), cur = null;
   if (!list || !info) return;
@@ -120,7 +119,6 @@ if (!api.ok) return;
 var Cc = V3.C;
 var DARK = 0x14181d;
 
-// ---------- realism layer: sRGB output, tone mapping, image-based light, soft shadows, PBR materials ----------
 function srgb(c) { return new T.Color(c).convertSRGBToLinear(); }
 function canvasTex(w, h, draw, color, repeat) {
   var c = document.createElement('canvas');
@@ -134,7 +132,7 @@ function canvasTex(w, h, draw, color, repeat) {
 }
 var seedN = 11;
 function rn() { seedN = (seedN * 16807) % 2147483647; return seedN / 2147483647; }
-// streaks along x: the look of brushed aluminium
+
 var BRUSH = canvasTex(256, 256, function (x, w, h) {
   x.fillStyle = '#9a9a9a'; x.fillRect(0, 0, w, h);
   for (var i = 0; i < 900; i++) {
@@ -144,14 +142,13 @@ var BRUSH = canvasTex(256, 256, function (x, w, h) {
     x.fillRect(px - w, y, l, 1);
   }
 }, false, [3, 3]);
-// fine speckle: injection-moulded plastic and powder coating
+
 var GRAIN = canvasTex(128, 128, function (x, w, h) {
   x.fillStyle = '#808080'; x.fillRect(0, 0, w, h);
   for (var i = 0; i < 2600; i++) { var v = 70 + rn() * 130; x.fillStyle = 'rgb(' + v + ',' + v + ',' + v + ')'; x.fillRect(rn() * w, rn() * h, 1.5, 1.5); }
 }, false, [4, 4]);
 function isGold(c) { return c === 0xd8b84c || c === 0xb7a35c || c === 0xc9a24a || c === 0xd8a648; }
 
-// physically based material: metals get a brushed roughness map, plastics a fine grain
 V3.std = function (color, o) {
   o = o || {};
   var metal = o.metalness != null ? o.metalness : 0.0;
@@ -172,7 +169,6 @@ V3.std = function (color, o) {
 };
 function mat(c, o) { return V3.std(c, o); }
 
-// bevelled box: every edge is rounded a little, as on real injection-moulded and folded-metal parts
 var geoCache = {};
 function boxGeo(w, h, d) {
   var key = w.toFixed(3) + ',' + h.toFixed(3) + ',' + d.toFixed(3);
@@ -196,7 +192,6 @@ function cyl(r, h, c, o, seg) { return new T.Mesh(new T.CylinderGeometry(r, r, h
 function put(g, m, x, y, z) { m.position.set(x, y, z); g.add(m); return m; }
 var TOP = 0.02;
 
-// a soft studio environment (sky dome with two big soft boxes) baked once into a reflection map
 function studioEnv(renderer) {
   var sc = new T.Scene();
   var dome = new T.Mesh(new T.SphereGeometry(20, 32, 16), new T.MeshBasicMaterial({ side: T.BackSide, vertexColors: true }));
@@ -218,7 +213,6 @@ function studioEnv(renderer) {
   return rt.texture;
 }
 
-// wrap stage creation so every PC model gets the same lighting
 var origStage = V3.createStage;
 V3.createStage = function (fig, opt) {
   var st = origStage(fig, opt);
@@ -243,7 +237,7 @@ V3.createStage = function (fig, opt) {
       o.position.set(3.5, 8, 4.5);
     } else if (o.isDirectionalLight) o.intensity = 0.25;
   });
-  // meshes added later cast and receive shadows; the shadow map is refreshed a few times a second
+
   var add = sc.add;
   sc.add = function (obj) {
     add.apply(sc, arguments);
@@ -263,11 +257,11 @@ function traceTexture() {
   x.fillStyle = '#12362b'; x.fillRect(0, 0, W, H);
   xb.fillStyle = '#000'; xb.fillRect(0, 0, W, H);
   xr.fillStyle = '#5a5a5a'; xr.fillRect(0, 0, W, H);
-  // woven fibreglass shimmer under the solder mask
+
   for (var f = 0; f < 5000; f++) { var gx = Math.random() * W, gy = Math.random() * H; x.fillStyle = 'rgba(255,255,255,.025)'; x.fillRect(gx, gy, 8, 1.5); }
   var seed = 7;
   function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
-  // traces: raised copper under the mask, a little lighter, in bundles
+
   for (var i = 0; i < 260; i++) {
     var px = rnd() * W, py = rnd() * H, bundle = 1 + Math.floor(rnd() * 4), dirx = rnd() < 0.5;
     for (var bn = 0; bn < bundle; bn++) {
@@ -280,13 +274,13 @@ function traceTexture() {
       }
       x.strokeStyle = 'rgba(70,150,110,.34)'; x.lineWidth = 5; x.stroke();
       xb.strokeStyle = '#fff'; xb.lineWidth = 5; xb.stroke();
-      // vias: gold pads with a drilled centre
+
       x.fillStyle = 'rgba(214,176,86,.9)'; x.beginPath(); x.arc(qx, qy, 6.5, 0, 6.3); x.fill();
       x.fillStyle = '#0a1a14'; x.beginPath(); x.arc(qx, qy, 2.2, 0, 6.3); x.fill();
       xr.fillStyle = '#222'; xr.beginPath(); xr.arc(qx, qy, 6.5, 0, 6.3); xr.fill();
     }
   }
-  // SMD resistors, capacitors and ICs printed as flat shapes (their height comes from the bump map)
+
   for (var q = 0; q < 700; q++) {
     var sx = 30 + rnd() * (W - 60), sy = 30 + rnd() * (H - 60), hz = rnd() < 0.5, kind = rnd();
     var ww = hz ? 16 : 9, hh = hz ? 9 : 16;
@@ -316,7 +310,6 @@ function traceTexture() {
   return { map: col, bump: bump, rough: rough };
 }
 
-// the whole ATX motherboard lies flat: x is the long side (I/O on the left), z is the short side (slots at the bottom)
 api.buildBoard = function () {
   var root = new T.Group();
   var parts = {};
@@ -342,7 +335,6 @@ api.buildBoard = function () {
     return g;
   }
 
-  // CPU socket with the processor
   var g = part('cpu');
   put(g, box(0.52, 0.05, 0.52, 0x1a1d22), -0.45, TOP + 0.025, -0.35);
   put(g, box(0.47, 0.02, 0.47, 0xaeb6bf, { metalness: 0.7, roughness: 0.35 }), -0.45, TOP + 0.06, -0.35);
@@ -354,7 +346,6 @@ api.buildBoard = function () {
   put(g, cyl(0.014, 0.1, 0xd8dde3, { metalness: 0.8 }, 10), -0.7, TOP + 0.058, -0.6).rotation.x = Math.PI / 2;
   parts.cpu.cpuMesh = cpu;
 
-  // RAM slots
   g = part('ram');
   [0.3, 0.42, 0.54, 0.66].forEach(function (x, i) {
     put(g, box(0.075, 0.09, 1.36, i % 2 ? 0x15181d : 0x3a4048), x, TOP + 0.045, -0.42);
@@ -362,7 +353,6 @@ api.buildBoard = function () {
     put(g, box(0.075, 0.1, 0.05, 0xd8dde3), x, TOP + 0.05, -1.14);
   });
 
-  // PCIe slots
   g = part('pcie16');
   put(g, box(0.89, 0.1, 0.08, DARK), -0.55, TOP + 0.05, 0.36);
   put(g, box(0.89, 0.1, 0.08, 0x2c3239), -0.55, TOP + 0.05, 0.86);
@@ -374,24 +364,20 @@ api.buildBoard = function () {
   put(g, box(0.28, 0.1, 0.08, DARK), -0.86, TOP + 0.05, 0.62);
   put(g, box(0.28, 0.1, 0.08, DARK), -0.86, TOP + 0.05, 1.08);
 
-  // M.2
   g = part('m2');
   put(g, box(0.13, 0.05, 0.24, 0xd8b84c, { metalness: 0.8, roughness: 0.3 }), -0.96, TOP + 0.025, 0.14);
   put(g, cyl(0.035, 0.06, 0xd8b84c, { metalness: 0.8 }), -0.15, TOP + 0.03, 0.14);
   put(g, box(0.82, 0.008, 0.22, 0x2d3640, { transparent: true, opacity: 0.0 }), -0.55, TOP + 0.075, 0.14).visible = false;
 
-  // SATA
   g = part('sata');
   for (var s = 0; s < 6; s++) put(g, box(0.2, 0.1, 0.075, 0x1d2228), 1.22, TOP + 0.05, 0.36 + s * 0.1);
   for (s = 0; s < 6; s++) put(g, box(0.05, 0.02, 0.04, 0xd8dde3, { metalness: 0.7 }), 1.3, TOP + 0.108, 0.36 + s * 0.1);
 
-  // chipset
   g = part('chipset');
   put(g, box(0.4, 0.03, 0.4, 0x15171a), 0.62, TOP + 0.015, 0.52);
   put(g, box(0.34, 0.075, 0.34, 0x3f464e, { metalness: 0.6, roughness: 0.4 }), 0.62, TOP + 0.065, 0.52);
   for (s = -2; s <= 2; s++) put(g, box(0.34, 0.03, 0.025, 0x59626c, { metalness: 0.6 }), 0.62, TOP + 0.115, 0.52 + s * 0.065);
 
-  // VRM
   g = part('vrm');
   put(g, box(1.22, 0.16, 0.16, 0x3f464e, { metalness: 0.6, roughness: 0.4 }), -0.5, TOP + 0.08, -0.86);
   for (s = 0; s < 13; s++) put(g, box(0.02, 0.05, 0.17, 0x59626c, { metalness: 0.6 }), -1.08 + s * 0.1, TOP + 0.185, -0.86);
@@ -403,7 +389,6 @@ api.buildBoard = function () {
     put(g, cyl(0.046, 0.01, 0xd8b84c, { metalness: 0.8 }), -1.05 + s * 0.14, TOP + 0.13, -1.06);
   }
 
-  // power connectors
   g = part('atx24');
   put(g, box(0.17, 0.19, 0.54, 0xd9d3c0), 1.42, TOP + 0.095, -0.2);
   for (s = 0; s < 12; s++) { put(g, box(0.05, 0.02, 0.025, 0xb7a35c, { metalness: 0.8 }), 1.38, TOP + 0.195, -0.43 + s * 0.042); put(g, box(0.05, 0.02, 0.025, 0xb7a35c, { metalness: 0.8 }), 1.46, TOP + 0.195, -0.43 + s * 0.042); }
@@ -411,7 +396,6 @@ api.buildBoard = function () {
   put(g, box(0.33, 0.19, 0.17, 0xb9b3a2), -0.58, TOP + 0.095, -1.13);
   for (s = 0; s < 4; s++) { put(g, box(0.04, 0.02, 0.05, 0xb7a35c, { metalness: 0.8 }), -0.7 + s * 0.08, TOP + 0.195, -1.09); put(g, box(0.04, 0.02, 0.05, 0xb7a35c, { metalness: 0.8 }), -0.7 + s * 0.08, TOP + 0.195, -1.17); }
 
-  // rear I/O
   g = part('io');
   put(g, box(0.34, 0.32, 1.0, 0x1a1e24, { roughness: 0.4 }), -1.35, TOP + 0.16, -0.58);
   for (var ig = 0; ig < 4; ig++) put(g, box(0.32, 0.12, 0.2, 0xb4bcc6, { metalness: 0.9, roughness: 0.3 }), -1.36, TOP + 0.28 + (ig % 2) * 0.0, -0.95 + ig * 0.25);
@@ -422,22 +406,18 @@ api.buildBoard = function () {
   put(g, box(0.03, 0.12, 0.14, 0x15181d), -1.53, TOP + 0.26, -0.3);
   [0x6fcf97, 0x6cc6ee, 0xf28b82, 0xffb468].forEach(function (c, i) { var j = cyl(0.045, 0.04, c, null, 14); j.rotation.z = Math.PI / 2; put(g, j, -1.52, TOP + 0.12, -0.02 + i * 0.1); });
 
-  // CMOS battery
   g = part('cmos');
   put(g, box(0.25, 0.045, 0.25, 0x1d2228), 0.08, TOP + 0.022, 0.78);
   put(g, cyl(0.1, 0.035, 0xc9d0d8, { metalness: 0.8, roughness: 0.3 }, 28), 0.08, TOP + 0.062, 0.78);
 
-  // BIOS
   g = part('bios');
   put(g, box(0.24, 0.03, 0.16, 0x15171a), 0.98, TOP + 0.015, 1.02);
   for (s = 0; s < 4; s++) { put(g, box(0.012, 0.012, 0.03, 0xc9d0d8, { metalness: 0.8 }), 0.9 + s * 0.05, TOP + 0.01, 0.92); put(g, box(0.012, 0.012, 0.03, 0xc9d0d8, { metalness: 0.8 }), 0.9 + s * 0.05, TOP + 0.01, 1.12); }
 
-  // fan header
   g = part('fan');
   put(g, box(0.22, 0.1, 0.075, 0xe8e4d8), 0.12, TOP + 0.05, -1.16);
   put(g, box(0.22, 0.1, 0.075, 0xe8e4d8), 1.1, TOP + 0.05, 1.12);
 
-  // front panel + USB/audio headers
   g = part('fpanel');
   put(g, box(0.32, 0.075, 0.09, 0x15181d), 1.0, TOP + 0.038, 1.17);
   for (s = 0; s < 9; s++) { put(g, box(0.014, 0.05, 0.014, 0xd8b84c, { metalness: 0.8 }), 0.87 + s * 0.035, TOP + 0.1, 1.15); put(g, box(0.014, 0.05, 0.014, 0xd8b84c, { metalness: 0.8 }), 0.87 + s * 0.035, TOP + 0.1, 1.19); }
@@ -446,32 +426,27 @@ api.buildBoard = function () {
   put(g, box(0.22, 0.075, 0.09, 0x15171a), -1.18, TOP + 0.038, 1.17);
   put(g, box(0.16, 0.1, 0.36, 0x15171a), 1.3, TOP + 0.05, -0.74);
 
-  // second M.2 with a heatsink
   g = part('m2b');
   put(g, box(0.5, 0.03, 0.14, 0x15171a), 0.35, TOP + 0.015, 1.0);
   put(g, box(0.46, 0.05, 0.12, 0x3f464e, { metalness: 0.6, roughness: 0.4 }), 0.35, TOP + 0.055, 1.0);
   for (s = 0; s < 6; s++) put(g, box(0.02, 0.03, 0.12, 0x59626c, { metalness: 0.6 }), 0.17 + s * 0.07, TOP + 0.095, 1.0);
 
-  // audio zone
   g = part('audio');
   put(g, box(0.34, 0.012, 0.3, 0x0e2a22), -1.28, TOP + 0.006, 0.8);
   put(g, box(0.1, 0.03, 0.1, 0x15171a), -1.2, TOP + 0.027, 0.86);
   for (s = 0; s < 5; s++) { put(g, cyl(0.03, 0.06, 0xd8b84c, { metalness: 0.5 }, 14), -1.4 + s * 0.065, TOP + 0.04, 0.72); }
   put(g, box(0.28, 0.008, 0.012, 0xe8e4d8), -1.28, TOP + 0.014, 0.64);
 
-  // debug LEDs
   g = part('debug');
   put(g, box(0.07, 0.03, 0.34, 0x15171a), 1.38, TOP + 0.015, 1.0);
   [0xe85d3a, 0xf5f5f5, 0xf5c84c, 0x6fcf97].forEach(function (c, i) { put(g, box(0.045, 0.03, 0.045, c, { emissive: c, emissiveIntensity: 0.4 }), 1.38, TOP + 0.04, 0.88 + i * 0.08); });
 
-  // RGB headers
   g = part('rgb');
   put(g, box(0.18, 0.09, 0.07, 0xe8e4d8), 0.76, TOP + 0.045, -1.15);
   put(g, box(0.14, 0.09, 0.07, 0x7a4ec2), 1.0, TOP + 0.045, -1.15);
   for (s = 0; s < 4; s++) put(g, box(0.012, 0.04, 0.012, 0xd8b84c, { metalness: 0.8 }), 0.7 + s * 0.04, TOP + 0.1, -1.15);
   for (s = 0; s < 3; s++) put(g, box(0.012, 0.04, 0.012, 0xd8b84c, { metalness: 0.8 }), 0.95 + s * 0.04, TOP + 0.1, -1.15);
 
-  // mounting holes
   g = part('holes');
   [[-1.44, -1.15], [1.44, -1.15], [-1.44, 1.15], [1.44, 1.15], [-0.06, -1.15], [-0.06, 1.15], [-1.44, 0.2], [1.44, 0.2], [0.8, -0.65]].forEach(function (h) {
     var ring = new T.Mesh(new T.TorusGeometry(0.055, 0.016, 8, 24), mat(0xd8b84c, { metalness: 0.8, roughness: 0.3 }));
@@ -479,7 +454,6 @@ api.buildBoard = function () {
     put(g, ring, h[0], TOP + 0.012, h[1]);
   });
 
-  // installed components, shown with the "components" switch
   var extras = new T.Group();
   board.add(extras);
   function fanRotor(r, blades, c) {
@@ -496,7 +470,7 @@ api.buildBoard = function () {
     hub.rotation.x = Math.PI / 2; gr.add(hub);
     return gr;
   }
-  // tower cooler: copper base plate, heat pipes through an aluminium fin stack and a 120 mm fan
+
   var cooler = new T.Group();
   put(cooler, box(0.42, 0.03, 0.42, 0xb06a3a, { metalness: 1, roughness: 0.25 }), -0.45, TOP + 0.13, -0.35);
   for (s = 0; s < 4; s++) put(cooler, cyl(0.022, 0.62, 0xb8703c, { metalness: 1, roughness: 0.22 }, 14), -0.58 + s * 0.09, TOP + 0.45, -0.35);
@@ -508,7 +482,7 @@ api.buildBoard = function () {
   cfan.position.set(-0.45 + 0.29, TOP + 0.55, -0.35);
   cooler.add(cfan);
   extras.add(cooler);
-  // two RAM modules: green PCB, black chips, gold edge and an aluminium heat spreader with an RGB light bar
+
   var ramg = new T.Group();
   var ramLabel = canvasTex(256, 64, function (x, w, h) { x.fillStyle = '#16191e'; x.fillRect(0, 0, w, h); x.fillStyle = '#d9dde2'; x.font = '700 30px Arial'; x.fillText('LAV DDR5', 12, 28); x.font = '500 20px Arial'; x.fillStyle = '#9fb0c0'; x.fillText('6000 MT/s · CL30 · 16 GB', 12, 52); }, true);
   [0.42, 0.66].forEach(function (x) {
@@ -521,7 +495,7 @@ api.buildBoard = function () {
     lb.rotation.y = Math.PI / 2; lb.position.set(x + 0.0285, TOP + 0.09 + 0.17, -0.42); ramg.add(lb);
   });
   extras.add(ramg);
-  // graphics card: brushed dark shroud with a printed label, three bladed fans, backplate and I/O bracket
+
   var gpu = new T.Group();
   var shroud = canvasTex(1024, 256, function (x, w, h) {
     x.fillStyle = '#1b1e23'; x.fillRect(0, 0, w, h);
@@ -541,7 +515,7 @@ api.buildBoard = function () {
   for (s = 0; s < 3; s++) put(gpu, box(0.04, 0.05, 0.16, 0x0c0f13), -1.52, TOP + 0.3 + s * 0.12, 0.5);
   put(gpu, box(0.34, 0.03, 0.12, 0xd8b84c, { metalness: 1, roughness: 0.28 }), -0.55, TOP - 0.01, 0.36);
   extras.add(gpu);
-  // NVMe SSD with a label, controller and NAND chips
+
   var ssd = new T.Group();
   var ssdTex = canvasTex(512, 128, function (x, w, h) { x.fillStyle = '#1f2830'; x.fillRect(0, 0, w, h); x.fillStyle = '#e8edf2'; x.font = '800 30px Arial'; x.fillText('LAV NVMe 1TB', 12, 38); x.font = '500 18px Arial'; x.fillStyle = '#9fb0c0'; x.fillText('PCIe 4.0 x4 · M.2 2280', 12, 66); x.fillStyle = '#6cc6ee'; x.fillRect(0, 100, w, 4); }, true);
   put(ssd, box(0.8, 0.012, 0.22, 0x1c5a3a, { roughness: 0.4 }), -0.54, TOP + 0.085, 0.14);
@@ -564,7 +538,6 @@ api.buildBoard = function () {
   return root;
 };
 
-// helpers shared by the interactive parts lists
 api.worldBox = function (obj, id) {
   var b = new T.Box3();
   obj.userData.parts[id].group.traverse(function (o) { if (o.isMesh) b.expandByObject(o); });
@@ -572,7 +545,7 @@ api.worldBox = function (obj, id) {
 };
 
 api.attachUI = function (o) {
-  // o: { fig, st, root, parts[], listId, infoId, markers }
+
   var st = o.st, root = o.root, parts = o.parts, byId = {};
   parts.forEach(function (x) { byId[x.id] = x; });
   var objs = o.objs || root.userData.parts;
@@ -644,7 +617,7 @@ api.attachUI = function (o) {
       });
     });
   });
-  // picking
+
   var cv = st.canvas, ray = new T.Raycaster(), down = null;
   cv.addEventListener('pointerdown', function (e) { down = [e.clientX, e.clientY]; });
   cv.addEventListener('pointerup', function (e) {
@@ -715,7 +688,7 @@ api.buildPSU = function () {
   [-0.07, 0.07].forEach(function (dx) { put(g, box(0.03, 0.08, 0.05, 0xd8b84c, { metalness: 0.8 }), 0.35 + dx, 0.5, -0.8); });
   put(g, box(0.22, 0.14, 0.05, 0xc23a3a), -0.35, 0.62, -0.72);
   put(g, box(0.12, 0.1, 0.03, 0xe8e4d8), -0.35, 0.62, -0.75);
-  // cable bundles end in connectors lying on the floor in front of the unit
+
   function cable(id, ox, oy, pts, radius, colors, conn) {
     var gg = part(id);
     var curve = new T.CatmullRomCurve3([new T.Vector3(ox, oy, 0.7)].concat(pts));
@@ -755,7 +728,6 @@ api.buildPSU = function () {
   return root;
 };
 
-// animated "data and power paths" drawn over the board, one group per view
 api.buildOverlays = function () {
   var Y = 0.07, out = {};
   function pts(a) { return a.map(function (q) { return new T.Vector3(q[0], Y, q[1]); }); }
@@ -794,7 +766,6 @@ api.buildOverlays = function () {
   return out;
 };
 
-// ---------- case model ----------
 var CASES = {
   full: { w: 23, h: 55, d: 55, sr: 'Full tower', en: 'Full tower', boards: 'E-ATX · ATX · mATX · ITX', slots: 8, bays: 10, fans: 9 },
   mid: { w: 21, h: 46, d: 45, sr: 'Mid tower', en: 'Mid tower', boards: 'ATX · mATX · ITX', slots: 7, bays: 6, fans: 6 },
@@ -812,20 +783,20 @@ api.buildCase = function (st, kind, boardKey) {
   g.add(shell);
   var edges = new T.LineSegments(new T.EdgesGeometry(new T.BoxGeometry(W, H, D)), new T.LineBasicMaterial({ color: 0xa6b4c2 }));
   g.add(edges);
-  // front is -z, rear is +z; the open side is +x; the board stands against the -x wall
+
   var bw = { atx: [30.5, 24.4], matx: [24.4, 24.4], itx: [17, 17], eatx: [30.5, 33] }[boardKey] || [30.5, 24.4];
   var horizontal = kind === 'desk';
   var bd = box(horizontal ? bw[0] * s : 0.03, horizontal ? 0.03 : bw[1] * s, horizontal ? bw[1] * s : bw[0] * s, 0x1c3d32);
   if (horizontal) put(g, bd, -W / 2 + bw[0] * s / 2 + 0.2, -H / 2 + 0.25, 0);
   else put(g, bd, -W / 2 + 0.2, H / 2 - 0.3 - bw[1] * s / 2, D / 2 - bw[0] * s / 2 - 0.15);
-  // psu
+
   var psuS = kind === 'sff' ? [12.5, 6.3, 10] : [15, 8.6, 14];
   var psu = box(horizontal ? psuS[0] * s : psuS[1] * s, horizontal ? psuS[1] * s : psuS[1] * s, psuS[2] * s, 0x2b3139, { metalness: 0.4 });
   if (horizontal) put(g, psu, W / 2 - psuS[0] * s / 2 - 0.1, -H / 2 + psuS[1] * s / 2 + 0.02, D / 2 - psuS[2] * s / 2 - 0.1);
   else put(g, psu, 0, -H / 2 + psuS[1] * s / 2 + 0.02, D / 2 - psuS[2] * s / 2 - 0.1);
-  // drive cage
+
   if (!horizontal) for (var i = 0; i < Math.min(c.bays, 4); i++) put(g, box(W * 0.55, 0.12, 0.7, 0x3a424c), W * 0.12, -H / 2 + 1.2 + i * 0.16 + (kind === 'sff' ? 0.2 : 0), -D / 2 + 0.55);
-  // front fans (intake) and rear fan (exhaust)
+
   var fanR = kind === 'sff' ? 0.4 : 0.6, fans = [];
   function addFan(x, y, z, axis) {
     var f = cyl(fanR, 0.08, 0x0f1216, null, 28);
@@ -842,7 +813,7 @@ api.buildCase = function (st, kind, boardKey) {
     for (i = 0; i < Math.min(3, c.fans); i++) addFan(0.1, H / 2 - 1.2 - i * (fanR * 2 + 0.1), -D / 2 + 0.05, 'z');
     addFan(0.1, H / 2 - 1.2, D / 2 - 0.05, 'z');
   }
-  // installed parts shown inside the tower: cooler, RAM, graphics card, drive trays, PSU shroud, top fan and front ports
+
   if (!horizontal) {
     var bx = -W / 2 + 0.2 + 0.2, by = H / 2 - 0.3 - bw[1] * s / 2, bz = D / 2 - bw[0] * s / 2 - 0.15;
     put(g, box(0.5, 0.5, 0.5, 0x3f464e, { metalness: 0.6, roughness: 0.4 }), bx + 0.25, by + bw[1] * s * 0.12, bz - bw[0] * s * 0.18);
@@ -854,7 +825,7 @@ api.buildCase = function (st, kind, boardKey) {
     for (i = 0; i < 2; i++) put(g, box(0.1, 0.05, 0.06, 0x15181d), -W / 2 + 0.6 + i * 0.2, H / 2 - 0.03, -D / 2 + 0.4);
     put(g, box(0.22, 0.14, 0.04, 0xc23a3a), 0, H / 2 - 0.03, -D / 2 + 0.2);
   }
-  // expansion slot brackets on the rear panel, from the bottom of the board upwards
+
   if (!horizontal) {
     var boardBottom = H / 2 - bw[1] * s - 0.3;
     for (i = 0; i < c.slots; i++) put(g, box(0.5, 0.15, 0.02, 0x9aa3ad, { metalness: 0.6 }), -W / 2 + 0.6, boardBottom + 0.3 + i * 0.2, D / 2 - 0.01);

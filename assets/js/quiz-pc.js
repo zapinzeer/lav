@@ -3,9 +3,6 @@
 var H = window.LAV_QH, t = H.t, C = H.C, M = H.M, B = H.B;
 var Q = window.LAV_QUIZZES;
 
-// PC hardware banks: how the computer works, its parts, roles, compatibility and memory.
-// No formulas, no calculations and no electrical-engineering questions.
-
 Q.PC01 = H.quiz(t('Vrste kućišta · mali test', 'Types of cases · short test'), [
   C('Koje kućište je najveće?', 'Which case is the largest?',
     ['Full tower', 'Mid tower', 'Mini tower', 'Mini-ITX (SFF)'], 0, 'vrste', 'Full tower prima najviše komponenti, uključujući E-ATX ploče.', 'A full tower takes the most components, including E-ATX boards.'),

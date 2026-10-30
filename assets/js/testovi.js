@@ -74,7 +74,6 @@ document.getElementById('t-mine').addEventListener('click', function (e) {
   }
 });
 
-// "Back to the test" from the library lock: reopen the room this device is in
 (function () {
   var sid = '';
   try { sid = (new URLSearchParams(location.search).get('resume') || '').replace(/[^0-9]/g, ''); } catch (e) {}

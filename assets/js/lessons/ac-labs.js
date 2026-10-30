@@ -18,7 +18,6 @@ function rad(d) { return d * Math.PI / 180; }
 function sgn(x, d) { return (x < 0 ? '−' : '') + L.fmtNum(Math.abs(x), d); }
 function plotY(p, top) { p.y = [-top, top]; }
 
-// phasor lab: one or two rotating phasors, their sine projections and their vector sum
 function phasor(id) {
   var fig = $(id), cvs = fig.querySelectorAll('canvas');
   var st = { um: 10, ph: 30, speed: 0.25, two: false, um2: 6, ph2: 120, run: true, th: 0 };
@@ -103,7 +102,7 @@ function phasor(id) {
     c.setLineDash([]);
     c.fillStyle = COL.w;
     c.beginPath(); c.arc(barX, tip.y, 5, 0, TAU); c.fill();
-    // initial phase arc
+
     c.strokeStyle = 'rgba(245,200,76,.6)';
     c.lineWidth = 1.5;
     c.beginPath(); c.arc(CX, CY, 26, -th, -th - rad(st.ph), st.ph > 0); c.stroke();
@@ -125,7 +124,6 @@ function phasor(id) {
   readout();
 }
 
-// complex plane lab: two draggable numbers and an operation
 function complexLab(id) {
   var fig = $(id);
   var st = { a1: 3, b1: 2, a2: 1, b2: 3, op: 'add' };
@@ -227,7 +225,6 @@ function complexLab(id) {
   sync();
 }
 
-// waveform parameters lab: amplitude, frequency, initial phase, RMS and phase shift
 function waveform(id) {
   var fig = $(id), cvs = fig.querySelectorAll('canvas');
   var st = { um: 10, f: 50, ph: 0, im: 6, phi: -60, cur: false };
@@ -286,7 +283,6 @@ function waveform(id) {
   readout();
 }
 
-// one element (R, L or C) in an AC circuit: circuit, phasor diagram, u, i and p
 function element(id, type) {
   var fig = $(id), cvs = fig.querySelectorAll('canvas');
   var st = { um: 10, f: 50, val: type === 'R' ? 100 : type === 'L' ? 200 : 20, th: 0, flow: 0, speed: 0.25 };
@@ -325,12 +321,12 @@ function element(id, type) {
     st.flow += i * dt * 70;
     c.save();
     C.fit(c, s, LW, LH);
-    // wires
+
     c.strokeStyle = 'rgba(201,214,226,.75)';
     c.lineWidth = 2;
     c.lineJoin = 'round';
     c.beginPath(); c.moveTo(40, 40); c.lineTo(112, 40); c.moveTo(188, 40); c.lineTo(250, 40); c.lineTo(250, 150); c.lineTo(40, 150); c.lineTo(40, 40); c.stroke();
-    // source
+
     c.fillStyle = 'rgba(15,22,30,.95)';
     c.strokeStyle = COL.a;
     c.lineWidth = 2.4;
@@ -341,7 +337,7 @@ function element(id, type) {
     for (var k = 0; k <= 20; k++) { var xx = 29 + k * 22 / 20, yy = 95 - 7 * Math.sin(k / 20 * TAU); if (k) c.lineTo(xx, yy); else c.moveTo(xx, yy); }
     c.stroke();
     C.label(c, 'u', 40 + 36, 95, COL.a, 'left', 13);
-    // element symbol
+
     c.strokeStyle = COL.b;
     c.lineWidth = 2.6;
     c.lineCap = 'round';
@@ -356,7 +352,7 @@ function element(id, type) {
       c.beginPath(); c.moveTo(112, 40); c.lineTo(143, 40); c.moveTo(143, 20); c.lineTo(143, 60); c.moveTo(157, 20); c.lineTo(157, 60); c.moveTo(157, 40); c.lineTo(188, 40); c.stroke();
     }
     C.label(c, type, 150, type === 'R' ? 66 : 76, COL.b, 'center', 14);
-    // flow dots
+
     var tmp = [[40, 40], [250, 40], [250, 150], [40, 150], [40, 40]];
     var a = Math.abs(i), n2 = 18;
     c.fillStyle = 'rgba(255,180,104,' + (0.25 + 0.75 * a) + ')';
@@ -364,9 +360,9 @@ function element(id, type) {
       var p = C.pathAt(tmp, st.flow + d * (640 / n2));
       c.beginPath(); c.arc(p[0], p[1], 3.2, 0, TAU); c.fill();
     }
-    // i arrow
+
     C.label(c, i > 0.05 ? '→ i' : i < -0.05 ? '← i' : 'i = 0', 150, 18, COL.b, 'center', 12);
-    // phasor diagram
+
     var px = 300, py = 100, r = 46;
     c.strokeStyle = 'rgba(201,214,226,.3)';
     c.lineWidth = 1;
@@ -379,7 +375,6 @@ function element(id, type) {
     C.label(c, type === 'R' ? 'φ = 0°' : type === 'L' ? 'φ = +90°' : 'φ = −90°', px, py + r + 20, COL.f, 'center', 12);
     c.restore();
 
-    // plots
     if (plotUI.begin()) {
       plotUI.line(function (x) { return Math.sin(x); }, COL.a, 2.6);
       plotUI.line(function (x) { return Math.sin(x + shift); }, COL.b, 2.4);
@@ -413,7 +408,6 @@ function element(id, type) {
   readout();
 }
 
-// capacitor on a DC source: charging and discharging through a resistor
 function dcCharge(id) {
   var fig = $(id), cvs = fig.querySelectorAll('canvas');
   var st = { R: 1000, C: 100, E: 10, charging: true, vc: 0, t: 0, hist: [] };
@@ -452,16 +446,16 @@ function dcCharge(id) {
     C.fit(c, { w: w, h: h }, LW, LH);
     c.strokeStyle = 'rgba(201,214,226,.75)'; c.lineWidth = 2; c.lineJoin = 'round';
     c.beginPath(); c.moveTo(50, 40); c.lineTo(130, 40); c.moveTo(190, 40); c.lineTo(290, 40); c.lineTo(290, 85); c.moveTo(290, 105); c.lineTo(290, 150); c.lineTo(50, 150); c.lineTo(50, 40); c.stroke();
-    // battery
+
     c.strokeStyle = COL.a; c.lineWidth = 3;
     c.beginPath(); c.moveTo(50, 40); c.lineTo(50, 82); c.moveTo(38, 82); c.lineTo(62, 82); c.stroke();
     c.lineWidth = 3; c.beginPath(); c.moveTo(43, 92); c.lineTo(57, 92); c.stroke();
     C.label(c, 'E', 24, 88, COL.a, 'center', 13);
-    // resistor
+
     c.strokeStyle = COL.b; c.lineWidth = 2.6; c.fillStyle = 'rgba(15,22,30,.95)';
     c.beginPath(); c.rect(130, 30, 60, 20); c.fill(); c.stroke();
     C.label(c, 'R', 160, 64, COL.b, 'center', 13);
-    // capacitor with charge shading
+
     c.strokeStyle = COL.c; c.lineWidth = 3;
     c.beginPath(); c.moveTo(270, 85); c.lineTo(310, 85); c.moveTo(270, 105); c.lineTo(310, 105); c.stroke();
     var q = Math.max(0, Math.min(1, st.vc / st.E));
@@ -471,9 +465,9 @@ function dcCharge(id) {
     var m = Math.round(q * 5);
     for (var k = 0; k < m; k++) { c.fillText('+', 276 + k * 7, 80); c.fillText('−', 276 + k * 7, 112); }
     C.label(c, 'C', 330, 95, COL.c, 'center', 13);
-    // switch
+
     C.label(c, st.charging ? L.tr('puni se', 'charging') : L.tr('prazni se', 'discharging'), 180, 120, COL.f, 'center', 12);
-    // current dots
+
     var path = [[50, 40], [290, 40], [290, 150], [50, 150], [50, 40]];
     st.flow = (st.flow || 0) + (st.charging ? 1 : -1) * Math.abs(cur) / (st.E / st.R) * dt * 90;
     var a = Math.abs(cur) / (st.E / st.R);

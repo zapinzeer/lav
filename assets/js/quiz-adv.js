@@ -3,7 +3,6 @@
 var H = window.LAV_QH, C = H.C, M = H.M, B = H.B, N = H.N;
 var Q = window.LAV_QUIZZES;
 
-// the extra, in-depth questions that are used only in hosted tests; the lesson quizzes keep their short sets
 Q.FIZ01.advanced = [
   N('Indukcija je 0,4 T, struja 5 A, provodnik dug 0,3 m, a ugao između provodnika i polja je 30°. Kolika je sila u N?', 'The induction is 0.4 T, the current 5 A, the wire is 0.3 m long and the angle between the wire and the field is 30°. What is the force in N?', '0,3|0.3', 'N|njutn|newton', '', 'F = B·I·l·sin 30° = 0,4 · 5 · 0,3 · 0,5 = 0,3 N.', 'F = B·I·l·sin 30° = 0.4 · 5 · 0.3 · 0.5 = 0.3 N.'),
   N('Na provodnik dug 0,5 m sa strujom 4 A, normalan na polje, deluje sila 1,2 N. Kolika je indukcija u T?', 'A force of 1.2 N acts on a 0.5 m wire carrying 4 A, perpendicular to the field. What is the induction in T?', '0,6|0.6', 'T|tesla', '', 'B = F/(I·l) = 1,2/(4 · 0,5) = 0,6 T.', 'B = F/(I·l) = 1.2/(4 · 0.5) = 0.6 T.'),

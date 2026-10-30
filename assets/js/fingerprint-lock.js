@@ -2,11 +2,6 @@
 'use strict';
 if (window.LAV_FP) return;
 
-// Device fingerprint, the "active test" marker and the temporary library block.
-// Pages with data-lock on this script (biblioteka.html and the lessons) are hidden behind an overlay
-// while this device has an unfinished hosted test that started less than 30 minutes ago.
-// Other pages load the script lazily (core.js loadQuiz) only to record and finish the marker.
-
 var script = document.currentScript;
 var LOCK = !!(script && script.hasAttribute('data-lock'));
 var BASE = '';
@@ -14,7 +9,6 @@ try { BASE = new URL('../../', script.src).href; } catch (e) {}
 var LOCK_MS = 30 * 60 * 1000;
 var DAY = 63072000;
 
-// ---------- three stores, so that clearing one of them does not lose the value ----------
 function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 function ckGet(k) {
@@ -33,7 +27,7 @@ function idb() {
     var r = indexedDB.open('lav-fp', 1);
     r.onupgradeneeded = function () { r.result.createObjectStore('kv'); };
     r.onsuccess = function () {
-      // let "clear site data" in another tab go through
+
       r.result.onversionchange = function () { r.result.close(); idbP = null; };
       res(r.result);
     };
@@ -50,7 +44,7 @@ function idbGet(k) {
       q.onerror = function () { rej(q.error); };
     });
   }).catch(function () { return null; });
-  // never hold the page up for a store that does not answer
+
   return Promise.race([get, new Promise(function (res) { setTimeout(function () { res(null); }, 2000); })]);
 }
 function idbSet(k, v) {
@@ -63,7 +57,7 @@ function idbSet(k, v) {
     });
   }).catch(function () {});
 }
-// kv: the same value is written to localStorage, a cookie and IndexedDB; read back from whichever still has it
+
 function kvGet(k) {
   var v = lsGet('lav-' + k) || ckGet('lav_' + k);
   return v ? Promise.resolve(v) : idbGet(k);
@@ -74,8 +68,6 @@ function kvSet(k, v) {
   return idbSet(k, v);
 }
 
-// ---------- the fingerprint ----------
-// cyrb53: a small fast 53-bit string hash, good enough for telling devices apart (not for security)
 function cyrb53(str, seed) {
   var h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
   for (var i = 0, ch; i < str.length; i++) {
@@ -152,21 +144,16 @@ var stored = lsGet('lav-fp'), cookie = ckGet('lav_fp');
 fp = validFp(stored) ? stored : validFp(cookie) ? cookie : compute();
 function persistFp() { kvSet('fp', fp); }
 persistFp();
-// if both sync stores were wiped the IndexedDB copy wins over a recomputed value, so the id stays the same
+
 var ready = (validFp(stored) || validFp(cookie)) ? Promise.resolve(fp) : idbGet('fp').then(function (v) {
   if (validFp(v) && v !== fp) { fp = v; persistFp(); }
   return fp;
 });
 
-// the keys under which the marker is also kept on the server: it is the one place the database rules let anyone
-// look up by something the device owns (quizzes/<code> is readable by everyone). A record can only be rewritten by the
-// anonymous identity that created it, so if that identity is gone (all site data wiped) the next slot is used.
 var SLOTS = 6;
 function remoteCode(slot) { return 'Z' + ('000000' + (cyrb53(fp, 3) % 2176782336).toString(36).toUpperCase()).slice(-6) + (slot || 0); }
 function tag() { return fp.slice(0, 6); }
 
-// ---------- the active-test marker ----------
-// { fp, role: 'host'|'player', sid, pid, quiz, secure, at, upd, finished, fin }
 function parse(s) { try { var m = JSON.parse(s); return m && m.sid ? m : null; } catch (e) { return null; } }
 function newer(a, b) { return !a ? b : !b ? a : (b.upd || 0) > (a.upd || 0) ? b : a; }
 function readLocal() { return newer(parse(lsGet('lav-fpm')), parse(ckGet('lav_fpm'))); }
@@ -199,7 +186,7 @@ var api = {
   ready: ready,
   kvGet: kvGet,
   kvSet: kvSet,
-  // set by quiz-store.js: (code, body) -> Promise that writes quizzes/<code> with the owner filled in
+
   writer: null,
   current: function () { return cur; },
   locked: function () { return active(cur); },
@@ -215,7 +202,7 @@ var api = {
     m.upd = Date.now();
     save(m);
   },
-  // sid and pid are optional: without them whatever is active is finished
+
   finish: function (sid, pid) {
     if (!cur || cur.finished || (sid && cur.sid !== sid) || (pid && cur.pid !== pid)) return;
     var m = {};
@@ -227,7 +214,6 @@ var api = {
 };
 window.LAV_FP = api;
 
-// ---------- the same marker in the database (best effort, needs the silent anonymous sign-in) ----------
 function db(path) {
   var c = window.LAV_CONFIG || {};
   var u = String(c.databaseURL || '').trim().replace(/\/+$/, '');
@@ -263,7 +249,7 @@ function push(m) {
     try { return attempt(Math.min(SLOTS - 1, Number(n) || 0)); } catch (e) {}
   }).catch(function () {});
 }
-// the newest marker among the slots; null when there is none, undefined when the server could not be asked
+
 function pull() {
   return ready.then(function () {
     var all = [];
@@ -278,8 +264,7 @@ function pull() {
     return asked ? best : undefined;
   });
 }
-// 'finished' when the session itself says so (room deleted, ended, participant sent or removed), 'active' when it is
-// still going, 'unknown' when it could not be asked
+
 function verify(m) {
   return getJson('sessions/' + m.sid + '/info').then(function (info) {
     if (info === undefined) return 'unknown';
@@ -293,7 +278,6 @@ function verify(m) {
   });
 }
 
-// ---------- the overlay ----------
 function both(sr, en) { return '<span lang="sr">' + sr + '</span><span lang="en">' + en + '</span>'; }
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 var layer = null, tickT = null;
@@ -329,7 +313,6 @@ function paint() {
   tickT = setInterval(tick, 1000);
 }
 
-// ask the server (and the session) whether the block still stands; works even when this browser's own storage was wiped
 var checking = false;
 function check() {
   if (checking) return;
@@ -354,11 +337,11 @@ function check() {
 }
 
 if (LOCK) {
-  // before the first paint, from what this browser already knows
+
   if (active(cur)) document.documentElement.classList.add('fp-locked');
   var start = function () {
     ready.then(function () {
-      // the IndexedDB copy of the marker, in case localStorage and the cookie were both cleared
+
       return idbGet('fpm').then(function (s) { var m = parse(s); if (m && newer(cur, m) === m) { cur = m; } });
     }).then(function () {
       paint();

@@ -57,7 +57,6 @@ function normQuestion(x) {
   };
 }
 
-// the in-depth set used by hosted tests: the short questions of the lesson plus the advanced ones
 function full(quiz) {
   if (!quiz) return null;
   var out = JSON.parse(JSON.stringify(quiz));
@@ -111,8 +110,6 @@ function req(method, path, body, query, tokFn) {
   });
 }
 
-// calls made as the host of a test room: the signed-in account if there is one, otherwise the silent anonymous
-// identity (no login screen, no password). The rules need auth != null and host === auth.uid, nothing more.
 function hostAuth() {
   var u = A.user();
   if (!u) return A.anon();
@@ -121,7 +118,7 @@ function hostAuth() {
 function hreq(method, path, body, query) {
   return hostAuth().then(function (h) {
     return req(method, path, body, query, function () { return Promise.resolve(h.token); }).catch(function (e) {
-      // a room made earlier under the anonymous identity while an account is now signed in (or the other way round)
+
       var u = A.user();
       if (!e.denied || method === 'PUT' || !u || h.uid !== u.uid) throw e;
       return A.anon().then(function (a) { return req(method, path, body, query, function () { return Promise.resolve(a.token); }); });
@@ -349,8 +346,6 @@ function claimAdmin() {
   return asMe(function (id) { return req('PUT', 'admins/' + id, true).then(function () { return true; }); });
 }
 
-// ---------- hosted tests ----------
-// sessions/<6 digits>/{info, players/<pid>, results/<pid>}; in local mode the same shape lives in lav-db
 function sessionHostId() {
   if (!remote) return Promise.resolve('local');
   return hostAuth().then(function (h) { return h.uid; });
@@ -404,7 +399,7 @@ function sessionPatch(sid, obj) {
 }
 
 function sessionJoin(sid, name) {
-  // the first 6 characters of the player id are the device fingerprint tag (the id may only be a-z0-9, 6 to 20 long)
+
   var pid = (window.LAV_FP ? window.LAV_FP.tag() : '') + uid();
   var body = { name: name, at: Date.now(), state: 'lobby' };
   if (remote) return req('PUT', 'sessions/' + sid + '/players/' + pid, body).then(function () { return pid; });
@@ -488,8 +483,6 @@ function sessionDelete(sid) {
   return Promise.resolve();
 }
 
-// the active-test marker of this device is also kept in the database, under quizzes/<code> where the rules let an
-// anonymous identity write and everyone read (see fingerprint-lock.js); the owner field is the anonymous uid
 if (window.LAV_FP && remote) window.LAV_FP.writer = function (code, body) {
   return A.anon().then(function (a) {
     body.owner = a.uid;

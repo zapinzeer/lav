@@ -246,8 +246,6 @@ function countTiles(c) {
     '<div class="stat"><b>' + c.blank + '</b><span>' + both('bez odgovora', 'blank') + '</span></div></div>';
 }
 
-// the hosted attempt of this browser: { sid, pid, name, quiz, secure, until, began }
-// while it is stored and secure, the lessons are locked (see core.js)
 var LOCK_MS = 30 * 60 * 1000;
 function getHs() {
   try { var h = JSON.parse(localStorage.getItem('lav-hs') || 'null'); return h && h.sid && h.pid ? h : null; } catch (e) { return null; }
@@ -514,7 +512,6 @@ function renderPlayer(m, code, quiz, name, hs) {
   if (hs) hostedHooks(m, hs, qs, readAnswers, function () { submitNow(readAnswers(), true); }, function () { return submitted; });
 }
 
-// ---------- hosted tests: the player side ----------
 function enterHosted(m, hs, info) {
   if (info.state === 'lobby') renderWaiting(m, hs, info);
   else beginHosted(m, hs, info);
@@ -586,7 +583,7 @@ function beginHosted(m, hs, info) {
 
 function hostedHooks(m, hs, qs, readAnswers, autoSubmit, isDone) {
   var key = 'lav-draft-' + hs.sid + '-' + hs.pid;
-  // restore the draft after a reload
+
   try {
     var d = JSON.parse(localStorage.getItem(key) || 'null');
     if (d && d.a) {
@@ -608,7 +605,6 @@ function hostedHooks(m, hs, qs, readAnswers, autoSubmit, isDone) {
   m.body.addEventListener('input', save);
   m.body.addEventListener('change', save);
 
-  // leaving the tab is counted and shown to the host
   var last = 0;
   function away() {
     if (isDone() || m.closed) return;
@@ -659,7 +655,6 @@ function hostedHooks(m, hs, qs, readAnswers, autoSubmit, isDone) {
   var saveT = setInterval(save, 8000);
   m.timers.push(saveT);
 
-  // the host ended the test: whatever has been answered is sent
   function poll() {
     if (isDone() || m.closed) return;
     S.sessionInfo(hs.sid).then(function (inf) {
@@ -675,7 +670,6 @@ function hostedHooks(m, hs, qs, readAnswers, autoSubmit, isDone) {
   }, 20000));
 }
 
-// the "Return to test" button of the lock bar
 function resume() {
   var hs = getHs();
   if (!hs) return Promise.resolve(false);

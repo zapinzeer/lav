@@ -617,7 +617,6 @@ footer.site a{color:inherit}
 
 @media print{.top,.lp-toc,.test-cta,.pager,footer.site,.lab .controls{display:none!important}}
 
-/* classes: alternating current and computer hardware */
 .tag.amber{background:var(--warn-soft);color:var(--warn)}
 .tag.green{background:var(--good-soft);color:var(--good)}
 .class-card.amber{border-top-color:var(--warn)}
@@ -627,7 +626,6 @@ footer.site a{color:inherit}
 .ex.amber{border-left-color:var(--warn)}
 .ex.green{border-left-color:var(--good)}
 
-/* computer hardware: interactive parts list */
 .pc-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px;margin-top:12px}
 .pc-part{display:flex;gap:9px;align-items:center;text-align:left;border:1px solid var(--rule);background:var(--sheet);border-radius:9px;padding:7px 10px;cursor:pointer;font:600 .84rem/1.25 var(--body);min-height:40px}
 .pc-part b{flex:none;width:22px;height:22px;border-radius:50%;background:var(--paper);border:1px solid var(--rule);display:grid;place-items:center;font:700 .72rem/1 var(--mono)}
@@ -643,7 +641,6 @@ footer.site a{color:inherit}
 .pc-steps{display:flex;gap:6px;flex-wrap:wrap}
 .pc-steps .pc-part{flex:1 1 150px}
 
-/* ---------- hosted tests ---------- */
 a.tool{text-decoration:none}
 .stat.good b{color:var(--good)}
 .stat.bad b{color:var(--bad)}
@@ -691,9 +688,9 @@ a.tool{text-decoration:none}
 .trow{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid var(--rule);border-radius:12px;padding:12px 14px;background:var(--paper);margin-bottom:8px}
 .trow-main{display:grid;gap:3px;min-width:0;flex:1 1 260px}
 .trow-act{display:flex;gap:8px;flex-wrap:wrap}
-/* secure mode: the lessons are hidden while this browser is in a hosted test */
+
 html.lav-locked main,html.lav-locked .lp-toc,html.lav-locked #lesson-top,html.lav-locked footer.site{display:none!important}
-/* an unfinished test on this device (fingerprint-lock.js): only the header, the lock card and dialogs stay */
+
 html.fp-locked body>*:not(.top):not(#fp-lock):not(.modal-root):not(.toast-host):not(script):not(style){display:none!important}
 .lock-card{max-width:620px;margin:56px auto;padding:0 var(--gutter,16px)}
 .lock-in{border:1px solid var(--rule);background:var(--paper);border-radius:16px;padding:26px;display:grid;gap:12px;justify-items:start}

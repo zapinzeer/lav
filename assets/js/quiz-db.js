@@ -3,8 +3,6 @@
 var H = window.LAV_QH, t = H.t, C = H.C, M = H.M, B = H.B, N = H.N;
 var Q = window.LAV_QUIZZES;
 
-// Data, SQL and Firebase bank: the basics of databases, SQL statements and the Firebase Realtime Database.
-
 Q.DB01 = H.quiz(t('Podaci, SQL i Firebase · mali test', 'Data, SQL and Firebase · short test'), [
   C('Šta je red (zapis) u tabeli?', 'What is a row (record) in a table?',
     [['jedna konkretna stvar, npr. jedan učenik', 'one concrete thing, e.g. one student'], ['jedna osobina svih stvari', 'one property of all the things'], ['ime tabele', 'the name of the table'], ['jedan SQL jezik', 'an SQL language']], 0, 'tabele', 'Kolona je osobina, a red je jedan zapis sa vrednostima svih kolona.', 'A column is a property, and a row is one record with a value for each column.'),

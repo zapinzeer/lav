@@ -244,7 +244,6 @@ Plot.prototype.text = function (s, xv, yv, color, align, dx, dy) {
   c.fillText(s, this.X(xv) + (dx || 0), this.Y(yv) + (dy || 0));
 };
 
-
 function fmtB(t) {
   var a = Math.abs(t);
   if (a === 0) return '0 T';
