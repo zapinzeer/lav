@@ -167,6 +167,7 @@ function loadData() {
 function loadQuiz() {
   if (!quizReady) {
     quizReady = loadData()
+      .then(function () { return window.LAV_FP ? null : loadScript('assets/js/fingerprint-lock.js'); })
       .then(function () { return loadScript('assets/js/auth.js'); })
       .then(function () { return loadScript('assets/js/quiz-store.js'); })
       .then(function () { return loadScript('assets/js/mathbox.js'); })
@@ -387,7 +388,8 @@ function paintLock() {
   document.documentElement.classList.remove('lav-locked');
   if (!h) return;
   var lesson = !!document.getElementById('lesson-top');
-  var full = h.secure && lesson;
+  // where fingerprint-lock.js is on the page its overlay replaces the lesson lock card
+  var full = h.secure && lesson && !window.LAV_FP;
   var el = document.createElement('div');
   el.id = 'lock-layer';
   el.className = full ? 'lock-card' : 'lock-bar';

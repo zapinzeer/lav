@@ -254,6 +254,7 @@ function getHs() {
 }
 function saveHs(h) { try { localStorage.setItem('lav-hs', JSON.stringify(h)); } catch (e) {} }
 function clearHs(hs) {
+  if (window.LAV_FP) window.LAV_FP.finish(hs && hs.sid, hs && hs.pid);
   try {
     var cur = getHs();
     if (!hs || (cur && cur.sid === hs.sid && cur.pid === hs.pid)) localStorage.removeItem('lav-hs');
@@ -327,6 +328,7 @@ function openJoin(prefill) {
         S.sessionJoin(code, name).then(function (pid) {
           var hs = { sid: code, pid: pid, name: name, quiz: info.quiz, secure: !!info.secure, joined: Date.now(), until: Date.now() + (info.secure ? LOCK_MS : 3 * 3600 * 1000) };
           saveHs(hs);
+          if (window.LAV_FP) window.LAV_FP.begin({ role: 'player', sid: code, pid: pid, quiz: info.quiz, secure: !!info.secure });
           window.dispatchEvent(new Event('lav-lock'));
           enterHosted(m, hs, info);
         }).catch(function (e) {
@@ -528,8 +530,8 @@ function renderWaiting(m, hs, info) {
     '<p style="font-size:1.1rem;margin:0">' + (lesson ? both(esc(lesson.title.sr), esc(lesson.title.en)) : esc(info.quiz)) + '</p>' +
     '<p class="help" id="w-count"></p><span class="spin" aria-hidden="true"></span></div>' +
     (info.secure ? '<div class="banner" style="margin-top:12px">' + icon('info') + '<div>' + both(
-      '<b>Zaštićeni režim.</b> Dok si u testu, lekcije su zaključane. Zaključavanje traje 30 minuta od početka testa ili dok ne pošalješ odgovore.',
-      '<b>Secure mode.</b> While you are in the test the lessons are locked. The lock lasts 30 minutes from the start of the test, or until you submit your answers.') + '</div></div>' : '') +
+      '<b>Zaštićeni režim.</b> Dok si u testu, biblioteka i lekcije su zaključane. Zaključavanje traje 30 minuta od početka testa ili dok ne pošalješ odgovore.',
+      '<b>Secure mode.</b> While you are in the test the library and the lessons are locked. The lock lasts 30 minutes from the start of the test, or until you submit your answers.') + '</div></div>' : '') +
     '<p class="help" style="margin-top:12px">' + both('Ne zatvaraj ovu stranicu. Test će se otvoriti sam kad ga domaćin pokrene.', 'Keep this page open. The test opens by itself when the host starts it.') + '</p>';
   m.setFoot('<button type="button" class="btn" id="w-leave">' + both('Napusti test', 'Leave the test') + '</button>');
   L.applyAttrs(m.root);
@@ -572,6 +574,7 @@ function beginHosted(m, hs, info) {
       hs.began = Date.now();
       if (hs.secure) hs.until = hs.began + LOCK_MS;
       saveHs(hs);
+      if (window.LAV_FP) window.LAV_FP.touch({ at: hs.began });
       window.dispatchEvent(new Event('lav-lock'));
     }
     S.playerPatch(hs.sid, hs.pid, { state: 'testing' }).catch(function () {});
@@ -646,10 +649,10 @@ function hostedHooks(m, hs, qs, readAnswers, autoSubmit, isDone) {
   info.appendChild(blurEl);
   if (hs.blur) blurEl.innerHTML = both('Napuštanje stranice: ' + hs.blur + '×', 'Left the page: ' + hs.blur + '×');
   warn.innerHTML = '<div class="banner">' + icon('info') + '<div>' + (hs.secure
-    ? both('<b>Zaštićeni režim.</b> Lekcije su zaključane do kraja testa (najviše 30 minuta). Izlazak sa ove stranice beleži se i vidi ga domaćin. Odgovori se čuvaju dok pišeš.', '<b>Secure mode.</b> The lessons are locked until the test ends (30 minutes at most). Leaving this page is recorded and the host can see it. Your answers are saved while you type.')
+    ? both('<b>Zaštićeni režim.</b> Biblioteka i lekcije su zaključane do kraja testa (najviše 30 minuta). Izlazak sa ove stranice beleži se i vidi ga domaćin. Odgovori se čuvaju dok pišeš.', '<b>Secure mode.</b> The library and the lessons are locked until the test ends (30 minutes at most). Leaving this page is recorded and the host can see it. Your answers are saved while you type.')
     : both('Izlazak sa ove stranice se beleži i vidi ga domaćin. Odgovori se čuvaju dok pišeš.', 'Leaving this page is recorded and the host can see it. Your answers are saved while you type.')) + '</div></div>';
   function paint() {
-    if (hs.secure) extra.innerHTML = both('Lekcije su zaključane još ' + leftText(hs.until - Date.now()), 'Lessons stay locked for ' + leftText(hs.until - Date.now()));
+    if (hs.secure) extra.innerHTML = both('Biblioteka je zaključana još ' + leftText(hs.until - Date.now()), 'The library stays locked for ' + leftText(hs.until - Date.now()));
   }
   paint();
   m.timers.push(setInterval(paint, 1000));

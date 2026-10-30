@@ -138,6 +138,72 @@ function token() {
   return refreshing;
 }
 
+// ---------- silent anonymous identity ----------
+// Hosting a test needs a database identity (the rules want auth != null), but not an account: this signs in
+// anonymously in the background. It is kept apart from the real session, so the header never shows it as a login.
+// The credentials are kept in localStorage, a cookie and IndexedDB (via fingerprint-lock.js) so the same
+// identity, and with it the rooms and the active-test marker it owns, survives clearing one of them.
+var AKEY = 'lav-anon';
+var anon = null;
+var anonBusy = null;
+var ANON_OFF = { ADMIN_ONLY_OPERATION: 1, OPERATION_NOT_ALLOWED: 1, SERVICE_DISABLED: 1 };
+
+function anonParse(raw) {
+  try { var a = JSON.parse(raw); return a && a.uid && a.refreshToken ? a : null; } catch (e) { return null; }
+}
+function anonLoad() {
+  var raw = null;
+  try { raw = localStorage.getItem(AKEY); } catch (e) {}
+  var a = anonParse(raw);
+  if (a) return Promise.resolve(a);
+  var fp = window.LAV_FP;
+  return fp && fp.kvGet ? fp.kvGet('anon').then(anonParse, function () { return null; }) : Promise.resolve(null);
+}
+function anonAdopt(d) {
+  anon = {
+    uid: d.localId || d.user_id || (anon && anon.uid),
+    idToken: d.idToken || d.id_token,
+    refreshToken: d.refreshToken || d.refresh_token || (anon && anon.refreshToken),
+    exp: Date.now() + (Number(d.expiresIn || d.expires_in) || 3600) * 1000
+  };
+  var s = JSON.stringify(anon);
+  try { localStorage.setItem(AKEY, s); } catch (e) {}
+  var fp = window.LAV_FP;
+  if (fp && fp.kvSet) fp.kvSet('anon', JSON.stringify({ uid: anon.uid, refreshToken: anon.refreshToken }));
+  return anon;
+}
+function anonSignUp() {
+  return call(ID + 'accounts:signUp?key=' + encodeURIComponent(apiKey), { returnSecureToken: true }).then(anonAdopt);
+}
+// resolves { uid, token }; rejects with an error whose code is NOT_CONFIGURED, NETWORK or, when Anonymous
+// sign-in is switched off in the Firebase console, one of ANON_OFF (e.anonOff is then true)
+function anonAuth() {
+  if (!enabled) return Promise.reject(fail('NOT_CONFIGURED'));
+  if (anon && anon.idToken && anon.exp - Date.now() > 60000) return Promise.resolve({ uid: anon.uid, token: anon.idToken });
+  if (!anonBusy) {
+    anonBusy = (anon ? Promise.resolve(anon) : anonLoad()).then(function (a) {
+      if (a && a.idToken && a.exp - Date.now() > 60000) { anon = a; return a; }
+      if (a && a.refreshToken) {
+        anon = a;
+        return call(TOK + '?key=' + encodeURIComponent(apiKey), 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(a.refreshToken), true).then(anonAdopt, function (e) {
+          if (e.code === 'NETWORK') throw e;
+          anon = null;
+          return anonSignUp();
+        });
+      }
+      return anonSignUp();
+    }).then(function (a) {
+      anonBusy = null;
+      return { uid: a.uid, token: a.idToken };
+    }, function (e) {
+      anonBusy = null;
+      if (ANON_OFF[e.code]) e.anonOff = true;
+      throw e;
+    });
+  }
+  return anonBusy;
+}
+
 window.addEventListener('storage', function (e) {
   if (e.key !== KEY) return;
   session = readStored();
@@ -156,6 +222,7 @@ L.auth = {
   reset: reset,
   updateName: updateName,
   removeAccount: removeAccount,
-  token: token
+  token: token,
+  anon: anonAuth
 };
 })();

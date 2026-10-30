@@ -68,10 +68,27 @@ document.getElementById('t-mine').addEventListener('click', function (e) {
   if (o) L.loadQuiz().then(function () { window.LAV.host.open(o.getAttribute('data-open')); });
   if (f) {
     var sid = f.getAttribute('data-forget');
+    if (window.LAV_FP) window.LAV_FP.finish(sid);
     try { localStorage.setItem('lav-host', JSON.stringify(JSON.parse(localStorage.getItem('lav-host') || '[]').filter(function (x) { return x.sid !== sid; }))); } catch (er) {}
     mine();
   }
 });
+
+// "Back to the test" from the library lock: reopen the room this device is in
+(function () {
+  var sid = '';
+  try { sid = (new URLSearchParams(location.search).get('resume') || '').replace(/[^0-9]/g, ''); } catch (e) {}
+  if (!sid) return;
+  L.loadQuiz().then(function () {
+    var hs = null;
+    try { hs = JSON.parse(localStorage.getItem('lav-hs') || 'null'); } catch (e) {}
+    if (hs && hs.sid === sid) return window.LAV.quiz.resume();
+    if (window.LAV.host.mine().some(function (x) { return x.sid === sid; })) return window.LAV.host.open(sid);
+    var m = window.LAV_FP && window.LAV_FP.current();
+    if (m && m.role === 'host') L.toast('Ovu sobu otvori na uređaju na kome je napravljena.', 'Open this room on the device where it was created.');
+    else L.openJoin(sid);
+  }).catch(function () {});
+})();
 
 draw();
 mine();

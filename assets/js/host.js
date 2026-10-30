@@ -2,6 +2,7 @@
 'use strict';
 var L = window.LAV, S = L.store, Qz = L.quiz, U = Qz.ui;
 var esc = L.esc, both = L.both, icon = L.icon;
+var FP = window.LAV_FP || null;
 function $(el, sel) { return el.querySelector(sel); }
 var locHtml = U.locHtml;
 
@@ -15,6 +16,7 @@ function remember(sid, quiz) {
   try { localStorage.setItem('lav-host', JSON.stringify(a.slice(0, 12))); } catch (e) {}
 }
 function forget(sid) {
+  if (FP) FP.finish(sid);
   try { localStorage.setItem('lav-host', JSON.stringify(mine().filter(function (x) { return x.sid !== sid; }))); } catch (e) {}
 }
 
@@ -72,39 +74,40 @@ function openPreview(code) {
 }
 
 // ---------- start a room ----------
-function ensureAccount(next) {
-  if (!S.remote || L.auth.user()) { next(); return; }
-  L.account.open('in', { required: true, onDone: next });
+// no login: the room is owned by a silent anonymous identity (see auth.js), so anyone can host
+function roomErr(e, sr, en) {
+  if (e && e.code && !e.detail) e.detail = e.code;
+  if (e && e.anonOff) return U.errBanner('Sobe trenutno ne rade: anonimna prijava nije uključena u Firebase konzoli. Javi to autoru sajta.', 'Rooms are not available right now: anonymous sign-in is not switched on in the Firebase console. Tell the site author.', e);
+  if (e && (e.code === 'API_KEY_INVALID' || e.code === 'API_KEY_BLOCKED')) return U.errBanner('Ključ za Firebase nije ispravan ili je blokiran. Javi to autoru sajta.', 'The Firebase key is invalid or blocked. Tell the site author.', e);
+  if (e && e.denied) return U.errBanner(sr + ' Možda pravila baze nisu objavljena.', en + ' The database rules may not be published.', e);
+  return U.errBanner(sr + ' Proveri vezu pa probaj ponovo.', en + ' Check your connection and try again.', e);
 }
 
 function openSetup(code) {
-  ensureAccount(function () {
-    var m = U.openModal({ cls: 'compact' });
-    m.setHead('Pokreni test', 'Host a test', '<span class="code-chip">' + esc(code) + '</span>');
-    m.body.innerHTML = U.localBanner() + '<div class="qp-title">' + lessonTitle(code) + '</div>' +
-      '<p class="help" id="su-n"></p>' +
-      '<label class="switch" for="su-secure" style="margin-top:12px"><input type="checkbox" id="su-secure" checked><span>' + both('Zaštićeni režim: lekcije su zaključane do 30 minuta dok učesnik radi test', 'Secure mode: lessons are locked for up to 30 minutes while a participant is in the test') + '</span></label>' +
-      '<label class="switch" for="su-show" style="margin-top:8px"><input type="checkbox" id="su-show" checked><span>' + both('Učesnik posle slanja vidi svoj rezultat i tačne odgovore', 'After submitting, the participant sees their score and the correct answers') + '</span></label>' +
-      '<div id="su-err"></div>';
-    m.setFoot('<button type="button" class="btn" id="su-prev">' + both('Pogledaj pitanja', 'View the questions') + '</button><button type="button" class="btn primary" id="su-go">' + icon('join') + both('Napravi sobu', 'Create the room') + '</button>');
-    L.applyAttrs(m.root);
-    fullQuiz(code).then(function (q) {
-      if (q && !m.closed) $(m.root, '#su-n').innerHTML = both(q.questions.length + ' pitanja (' + q.easyCount + ' osnovnih i ' + (q.questions.length - q.easyCount) + ' produbljenih).', q.questions.length + ' questions (' + q.easyCount + ' basic and ' + (q.questions.length - q.easyCount) + ' in depth).');
-    });
-    $(m.root, '#su-prev').addEventListener('click', function () { openPreview(code); });
-    $(m.root, '#su-go').addEventListener('click', function () {
-      var b = $(m.root, '#su-go');
-      b.disabled = true;
-      S.sessionCreate(code, { secure: $(m.root, '#su-secure').checked, showAnswers: $(m.root, '#su-show').checked }).then(function (r) {
-        remember(r.sid, code);
-        m.close();
-        openPanel(r.sid);
-      }).catch(function (e) {
-        b.disabled = false;
-        $(m.root, '#su-err').innerHTML = e && e.denied
-          ? U.errBanner('Soba nije napravljena. Prijavi se nalogom (ili pravila baze nisu objavljena).', 'The room was not created. Sign in with an account (or the database rules are not published).', e)
-          : U.errBanner('Soba nije napravljena. Proveri vezu pa probaj ponovo.', 'The room was not created. Check your connection and try again.', e);
-      });
+  var m = U.openModal({ cls: 'compact' });
+  m.setHead('Pokreni test', 'Host a test', '<span class="code-chip">' + esc(code) + '</span>');
+  m.body.innerHTML = U.localBanner() + '<div class="qp-title">' + lessonTitle(code) + '</div>' +
+    '<p class="help" id="su-n"></p>' +
+    '<label class="switch" for="su-secure" style="margin-top:12px"><input type="checkbox" id="su-secure" checked><span>' + both('Zaštićeni režim: biblioteka i lekcije su zaključane do 30 minuta dok test traje', 'Secure mode: the library and lessons are locked for up to 30 minutes while the test is in progress') + '</span></label>' +
+    '<label class="switch" for="su-show" style="margin-top:8px"><input type="checkbox" id="su-show" checked><span>' + both('Učesnik posle slanja vidi svoj rezultat i tačne odgovore', 'After submitting, the participant sees their score and the correct answers') + '</span></label>' +
+    '<div id="su-err"></div>';
+  m.setFoot('<button type="button" class="btn" id="su-prev">' + both('Pogledaj pitanja', 'View the questions') + '</button><button type="button" class="btn primary" id="su-go">' + icon('join') + both('Napravi sobu', 'Create the room') + '</button>');
+  L.applyAttrs(m.root);
+  fullQuiz(code).then(function (q) {
+    if (q && !m.closed) $(m.root, '#su-n').innerHTML = both(q.questions.length + ' pitanja (' + q.easyCount + ' osnovnih i ' + (q.questions.length - q.easyCount) + ' produbljenih).', q.questions.length + ' questions (' + q.easyCount + ' basic and ' + (q.questions.length - q.easyCount) + ' in depth).');
+  });
+  $(m.root, '#su-prev').addEventListener('click', function () { openPreview(code); });
+  $(m.root, '#su-go').addEventListener('click', function () {
+    var b = $(m.root, '#su-go');
+    b.disabled = true;
+    S.sessionCreate(code, { secure: $(m.root, '#su-secure').checked, showAnswers: $(m.root, '#su-show').checked }).then(function (r) {
+      remember(r.sid, code);
+      if (FP) FP.begin({ role: 'host', sid: r.sid, quiz: code, secure: r.info.secure });
+      m.close();
+      openPanel(r.sid);
+    }).catch(function (e) {
+      b.disabled = false;
+      $(m.root, '#su-err').innerHTML = roomErr(e, 'Soba nije napravljena.', 'The room was not created.');
     });
   });
 }
@@ -182,16 +185,17 @@ function openPanel(sid) {
     var finished = results.length;
     var avg = finished ? results.reduce(function (t, r) { return t + (r.max ? r.score / r.max : 0); }, 0) / finished : 0;
     var rc = results.reduce(function (t, r) { t.c += r.correct; t.w += r.wrong; t.b += r.blank; return t; }, { c: 0, w: 0, b: 0 });
-    var link = L.base + 'index.html?room=' + sid;
+    var link = L.base + 'testovi.html?room=' + sid;
     var h = U.localBanner() +
-      '<div class="hs-top"><div><span class="eyebrow">' + both('Kod za pridruživanje', 'Join code') + '</span><div class="hs-code" id="hp-code">' + esc(sid) + '</div>' +
-      '<p class="help">' + both('Učesnici upisuju kod preko dugmeta „Pridruži se” na bilo kojoj stranici, ili otvore link.', 'Participants enter the code with the “Join” button on any page, or open the link.') + '</p></div>' +
+      '<div class="hs-top"><div><span class="eyebrow">' + both('Kod za pridruživanje', 'Join code') + '</span><div class="hs-code" id="hp-code" role="button" tabindex="0" style="cursor:pointer" data-aria-sr="Kopiraj kod" data-aria-en="Copy code" data-title-on>' + esc(sid) + '</div>' +
+      '<p class="help">' + both('Učesnici upisuju kod preko dugmeta „Pridruži se” na bilo kojoj stranici, ili otvore link. Prijava nije potrebna.', 'Participants enter the code with the “Join” button on any page, or open the link. No login needed.') + '</p>' +
+      '<input class="input" id="hp-url" type="text" readonly value="' + esc(link) + '" aria-label="link" style="font-size:.85rem;max-width:380px"></div>' +
       '<div class="hs-meta"><div class="qp-title">' + lessonTitle(info.quiz) + '</div><div class="row">' + stateBadge() + '<span class="help">' + info.n + ' ' + both('pitanja', 'questions') + '</span></div>' +
       '<div class="row"><button type="button" class="btn small" id="hp-copy">' + icon('copy') + both('Kopiraj kod', 'Copy code') + '</button><button type="button" class="btn small" id="hp-link">' + icon('copy') + both('Kopiraj link', 'Copy link') + '</button><button type="button" class="btn small" id="hp-prev">' + both('Pitanja i odgovori', 'Questions and answers') + '</button></div></div></div>';
     if (info.state === 'lobby') {
       h += '<h3 class="hs-h">' + both('U čekaonici (' + players.length + ')', 'In the lobby (' + players.length + ')') + '</h3>' +
         (players.length ? '<div class="hs-chips">' + players.map(function (p) { return '<span class="hs-chip">' + esc(p.name) + '<button type="button" class="hs-x" data-kick="' + esc(p.id) + '" aria-label="remove">×</button></span>'; }).join('') + '</div>' : '<p class="help">' + both('Još niko nije ušao. Podeli kod.', 'Nobody has joined yet. Share the code.') + '</p>') +
-        '<label class="switch" for="hp-secure" style="margin-top:14px"><input type="checkbox" id="hp-secure"' + (info.secure ? ' checked' : '') + '><span>' + both('Zaštićeni režim (lekcije su zaključane)', 'Secure mode (lessons are locked)') + '</span></label>' +
+        '<label class="switch" for="hp-secure" style="margin-top:14px"><input type="checkbox" id="hp-secure"' + (info.secure ? ' checked' : '') + '><span>' + both('Zaštićeni režim (biblioteka je zaključana)', 'Secure mode (the library is locked)') + '</span></label>' +
         '<label class="switch" for="hp-show" style="margin-top:6px"><input type="checkbox" id="hp-show"' + (info.showAnswers ? ' checked' : '') + '><span>' + both('Učesnik vidi rezultat posle slanja', 'Participants see their result after submitting') + '</span></label>';
     } else {
       h += '<div class="stat-row" style="margin-top:14px"><div class="stat"><b>' + players.length + '</b><span>' + both('učesnika', 'participants') + '</span></div>' +
@@ -232,8 +236,14 @@ function openPanel(sid) {
 
   function bind() {
     var b;
-    if ((b = $(m.root, '#hp-copy'))) b.addEventListener('click', function () { U.copyText(sid, 'Kod kopiran: ' + sid, 'Code copied: ' + sid); });
-    if ((b = $(m.root, '#hp-link'))) b.addEventListener('click', function () { var u = L.base + 'index.html?room=' + sid; U.copyText(u, 'Link kopiran.', 'Link copied.'); });
+    function copyCode() { U.copyText(sid, 'Kod kopiran: ' + sid, 'Code copied: ' + sid); }
+    if ((b = $(m.root, '#hp-copy'))) b.addEventListener('click', copyCode);
+    if ((b = $(m.root, '#hp-code'))) {
+      b.addEventListener('click', copyCode);
+      b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); copyCode(); } });
+    }
+    if ((b = $(m.root, '#hp-url'))) b.addEventListener('focus', function () { b.select(); });
+    if ((b = $(m.root, '#hp-link'))) b.addEventListener('click', function () { U.copyText(L.base + 'testovi.html?room=' + sid, 'Link kopiran.', 'Link copied.'); });
     if ((b = $(m.root, '#hp-prev'))) b.addEventListener('click', function () { openPreview(info.quiz); });
     if ((b = $(m.root, '#hp-secure'))) b.addEventListener('change', function (e) { patch({ secure: e.target.checked }, true); });
     if ((b = $(m.root, '#hp-show'))) b.addEventListener('change', function (e) { patch({ showAnswers: e.target.checked }, true); });
@@ -250,7 +260,13 @@ function openPanel(sid) {
   function patch(obj, quiet) {
     if (busy) return;
     busy = true;
-    S.sessionPatch(sid, obj).then(function () { busy = false; Object.keys(obj).forEach(function (k) { info[k] = obj[k]; }); if (!quiet) draw(); load(); }).catch(function (e) {
+    S.sessionPatch(sid, obj).then(function () {
+      busy = false;
+      Object.keys(obj).forEach(function (k) { info[k] = obj[k]; });
+      if (FP) { if (obj.state === 'live') FP.touch({ at: Date.now() }); else if (obj.state === 'ended') FP.finish(sid); else if (obj.secure != null) FP.touch({ secure: obj.secure }); }
+      if (!quiet) draw();
+      load();
+    }).catch(function (e) {
       busy = false;
       L.toast('Nije uspelo: proveri da li su pravila baze objavljena.', 'Failed: check that the database rules are published.');
     });
@@ -284,7 +300,7 @@ function openPanel(sid) {
     if (m.closed || busy) return;
     S.sessionInfo(sid).then(function (inf) {
       if (m.closed) return;
-      if (!inf) { info = null; draw(); return; }
+      if (!inf) { info = null; if (FP) FP.finish(sid); draw(); return; }
       info = inf;
       return Promise.all([S.sessionPlayers(sid), inf.state === 'lobby' ? Promise.resolve([]) : S.sessionResults(sid), quiz ? Promise.resolve(quiz) : fullQuiz(inf.quiz)]).then(function (r) {
         if (m.closed) return;
@@ -293,9 +309,9 @@ function openPanel(sid) {
         if (sig !== last) { last = sig; draw(); }
       });
     }).catch(function (e) {
-      if (!info) m.body.innerHTML = e && e.denied
-        ? U.errBanner('Ne možeš da vidiš ovu sobu. Prijavi se nalogom kojim je napravljena.', 'You cannot see this room. Sign in with the account that created it.', e)
-        : U.errBanner('Ne mogu da se povežem sa serverom. Proveri internet pa probaj ponovo.', 'Could not reach the server. Check your connection and try again.', e);
+      if (!info) m.body.innerHTML = e && e.denied && !e.anonOff
+        ? U.errBanner('Ne možeš da vidiš ovu sobu. Otvori je na uređaju na kome je napravljena.', 'You cannot see this room. Open it on the device where it was created.', e)
+        : roomErr(e, 'Soba se nije otvorila.', 'The room could not be opened.');
     });
   }
   load();

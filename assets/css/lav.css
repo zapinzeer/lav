@@ -693,6 +693,8 @@ a.tool{text-decoration:none}
 .trow-act{display:flex;gap:8px;flex-wrap:wrap}
 /* secure mode: the lessons are hidden while this browser is in a hosted test */
 html.lav-locked main,html.lav-locked .lp-toc,html.lav-locked #lesson-top,html.lav-locked footer.site{display:none!important}
+/* an unfinished test on this device (fingerprint-lock.js): only the header, the lock card and dialogs stay */
+html.fp-locked body>*:not(.top):not(#fp-lock):not(.modal-root):not(.toast-host):not(script):not(style){display:none!important}
 .lock-card{max-width:620px;margin:56px auto;padding:0 var(--gutter,16px)}
 .lock-in{border:1px solid var(--rule);background:var(--paper);border-radius:16px;padding:26px;display:grid;gap:12px;justify-items:start}
 .lock-in svg{width:34px;height:34px;stroke:var(--warn);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
