@@ -43,6 +43,15 @@ window.LAV_CLASSES = {
       sr: 'Kućišta, napajanje, matična ploča sa 3D modelom, ugradnja i memorija.',
       en: 'Cases, power supplies, the motherboard with a 3D model, assembly and memory.'
     }
+  },
+  podaci: {
+    sr: 'Podaci i baze',
+    en: 'Data and databases',
+    color: 'violet',
+    blurb: {
+      sr: 'Osnove podataka, SQL-a i Firebase baze kao servisa za podatke.',
+      en: 'The basics of data, SQL and the Firebase database as a data service.'
+    }
   }
 };
 
@@ -351,5 +360,18 @@ window.LAV_LESSONS = [
       en: 'Registers, cache, RAM and ROM, then HDD, SSD, optical and portable media, with a comparison of speed and capacity.'
     },
     tags: ['formulas']
+  },
+  {
+    slug: 'podaci-sql-firebase',
+    cls: 'podaci',
+    date: '2026-10-30',
+    minutes: 24,
+    quiz: 'DB01',
+    title: { sr: 'Podaci, SQL i Firebase', en: 'Data, SQL and Firebase' },
+    summary: {
+      sr: 'Šta su podaci i baze, tabele i ključevi, osnovni SQL (SELECT, WHERE, INSERT, UPDATE, DELETE, JOIN) i Firebase Realtime Database kao servis.',
+      en: 'What data and databases are, tables and keys, basic SQL (SELECT, WHERE, INSERT, UPDATE, DELETE, JOIN) and Firebase Realtime Database as a service.'
+    },
+    tags: []
   }
 ];

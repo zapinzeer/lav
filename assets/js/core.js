@@ -160,7 +160,8 @@ function loadData() {
     loadData.p = loadScript('assets/js/quiz-data.js')
       .then(function () { return loadScript('assets/js/quiz-ac.js'); })
       .then(function () { return loadScript('assets/js/quiz-pc.js'); })
-      .then(function () { return loadScript('assets/js/quiz-adv.js'); });
+      .then(function () { return loadScript('assets/js/quiz-adv.js'); })
+      .then(function () { return loadScript('assets/js/quiz-db.js'); });
   }
   return loadData.p || Promise.resolve();
 }

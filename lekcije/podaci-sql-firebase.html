@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Osnove podataka: tabele, ključevi, SQL (SELECT, WHERE, INSERT, UPDATE, DELETE, JOIN) i Firebase Realtime Database kao servis za podatke.">
+<title>Podaci, SQL i Firebase · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="podaci-sql-firebase">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš šta su podaci i čemu služi baza podataka;</li><li>opišeš tabelu, red, kolonu, primarni i strani ključ;</li><li>napišeš osnovne SQL naredbe: SELECT, WHERE, INSERT, UPDATE, DELETE i prost JOIN;</li><li>objasniš kako Firebase Realtime Database čuva podatke u JSON drvetu i kako se čitaju i upisuju;</li><li>razumeš čemu služe pravila bezbednosti.</li></ul>
+    <ul lang="en"><li>explain what data is and what a database is for;</li><li>describe a table, row, column, primary and foreign key;</li><li>write the basic SQL statements: SELECT, WHERE, INSERT, UPDATE, DELETE and a simple JOIN;</li><li>explain how Firebase Realtime Database stores data in a JSON tree and how it is read and written;</li><li>understand what security rules are for.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="podaci" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">šta su podaci</span><span lang="en">what data is</span></p>
+    <h2><span lang="sr">Šta su podaci i čemu služe baze?</span><span lang="en">What is data and what are databases for?</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Podatak</strong> je zapisana činjenica: ime učenika, ocena, cena, datum. Sam po sebi podatak malo znači, a kad ga povežemo sa značenjem („Ana ima 5 iz fizike”) dobijamo <strong>informaciju</strong>. <strong>Baza podataka</strong> je organizovano mesto na kome se podaci čuvaju tako da ih možemo brzo naći, menjati i brisati, i da se ne izgube kad se program ugasi.</p>
+<p lang="en">A <strong>piece of data</strong> is a recorded fact: a student name, a grade, a price, a date. On its own a piece of data means little, but once we link it to a meaning ("Ana has a 5 in physics") we get <strong>information</strong>. A <strong>database</strong> is an organised place where data is kept so we can find, change and delete it quickly, and so that it is not lost when a program is closed.</p><p lang="sr">Zašto ne bismo sve držali u običnom tekstualnom fajlu ili Excel tabeli? Za malo podataka može. Ali kad podatke koristi mnogo ljudi odjednom, kad ih ima mnogo, ili kad moraju da budu tačni i povezani, treba nam sistem koji se brine o tome: <strong>sistem za upravljanje bazom podataka</strong> (DBMS).</p>
+<p lang="en">Why not keep everything in a plain text file or a spreadsheet? For a little data you can. But when many people use the data at once, when there is a lot of it, or when it must be correct and linked together, we need a system that takes care of that: a <strong>database management system</strong> (DBMS).</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Dve velike porodice baza</span><span lang="en">Two big families of databases</span></caption><thead><tr><th><span lang="sr">Osobina</span><span lang="en">Property</span></th><th><span lang="sr">Relaciona (SQL)</span><span lang="en">Relational (SQL)</span></th><th><span lang="sr">Dokumentna / drvo (NoSQL)</span><span lang="en">Document / tree (NoSQL)</span></th></tr></thead><tbody><tr><td><span lang="sr">Oblik podataka</span><span lang="en">Shape of data</span></td><td><span lang="sr">tabele sa redovima i kolonama</span><span lang="en">tables with rows and columns</span></td><td><span lang="sr">JSON objekti u drvetu</span><span lang="en">JSON objects in a tree</span></td></tr><tr><td><span lang="sr">Jezik</span><span lang="en">Language</span></td><td><span lang="sr">SQL</span><span lang="en">SQL</span></td><td><span lang="sr">zavisi od servisa (kod Firebase-a: čitanje i upis po putanji)</span><span lang="en">depends on the service (in Firebase: reading and writing by path)</span></td></tr><tr><td><span lang="sr">Struktura</span><span lang="en">Structure</span></td><td><span lang="sr">unapred zadata (šema)</span><span lang="en">fixed in advance (a schema)</span></td><td><span lang="sr">slobodna, može da se menja usput</span><span lang="en">free, can change as you go</span></td></tr><tr><td><span lang="sr">Primeri</span><span lang="en">Examples</span></td><td><span lang="sr">MySQL, PostgreSQL, SQLite</span><span lang="en">MySQL, PostgreSQL, SQLite</span></td><td><span lang="sr">Firebase Realtime Database, Firestore, MongoDB</span><span lang="en">Firebase Realtime Database, Firestore, MongoDB</span></td></tr></tbody></table></div><details class="think"><summary><span lang="sr">Pomisli prvo: gde sve u toku jednog dana tvoji podaci završe u nekoj bazi?</span><span lang="en">Think first: where in one day does your data end up in some database?</span></summary><div class="ans"><p lang="sr">Skoro svuda: školski dnevnik, nalog na društvenoj mreži, poruke, kupovina u radnji, istorija pretrage, plejlista. Iza gotovo svake aplikacije stoji baza.</p>
+<p lang="en">Almost everywhere: the school register, a social media account, messages, a purchase in a shop, search history, a playlist. Behind almost every app there is a database.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="tabele" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">tabele i ključevi</span><span lang="en">tables and keys</span></p>
+    <h2><span lang="sr">Tabele, redovi, kolone i ključevi</span><span lang="en">Tables, rows, columns and keys</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">U relacionoj bazi podaci žive u <strong>tabelama</strong>. Tabela opisuje jednu vrstu stvari, na primer učenike. Svaka <strong>kolona</strong> (polje) je jedna osobina: ime, razred, e-pošta. Svaki <strong>red</strong> (zapis) je jedna konkretna stvar: jedan učenik. Presek reda i kolone je jedna vrednost.</p>
+<p lang="en">In a relational database data lives in <strong>tables</strong>. A table describes one kind of thing, for example students. Each <strong>column</strong> (field) is one property: name, class, e-mail. Each <strong>row</strong> (record) is one concrete thing: one student. Where a row and a column cross there is a single value.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Tabela ucenici</span><span lang="en">Table ucenici (students)</span></caption><thead><tr><th>id</th><th>ime</th><th>razred</th><th>email</th></tr></thead><tbody><tr><td>1</td><td>Ana</td><td>2B</td><td>ana@skola.rs</td></tr><tr><td>2</td><td>Marko</td><td>2A</td><td>marko@skola.rs</td></tr><tr><td>3</td><td>Jovana</td><td>2B</td><td>jovana@skola.rs</td></tr></tbody></table></div><p lang="sr"><strong>Primarni ključ</strong> je kolona (ovde <code>id</code>) čija je vrednost različita u svakom redu, pa jednoznačno određuje red. Ime ne može da bude ključ, jer dva učenika mogu da se zovu isto. <strong>Strani ključ</strong> je kolona koja čuva primarni ključ iz druge tabele i tako povezuje tabele.</p>
+<p lang="en">A <strong>primary key</strong> is a column (here <code>id</code>) whose value is different in every row, so it identifies the row unambiguously. A name cannot be a key, because two students may have the same name. A <strong>foreign key</strong> is a column that stores the primary key from another table and so links the tables.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Tabela ocene</span><span lang="en">Table ocene (grades)</span></caption><thead><tr><th>id</th><th>ucenik_id</th><th>predmet</th><th>ocena</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>Fizika</td><td>5</td></tr><tr><td>2</td><td>1</td><td>Informatika</td><td>4</td></tr><tr><td>3</td><td>3</td><td>Fizika</td><td>3</td></tr></tbody></table></div><p lang="sr">Kolona <code>ucenik_id</code> je strani ključ: vrednost 1 znači „učenik sa id = 1”, dakle Ana. Zahvaljujući tome ime „Ana” ne moramo da ponavljamo u svakoj oceni; ako se promeni na jednom mestu, promenjeno je svuda.</p>
+<p lang="en">The column <code>ucenik_id</code> is a foreign key: the value 1 means "the student with id = 1", that is Ana. Thanks to this we do not have to repeat the name "Ana" in every grade; if it changes in one place, it is changed everywhere.</p><p lang="sr">Svaka kolona ima i <strong>tip</strong>: ceo broj (<code>INTEGER</code>), tekst (<code>TEXT</code>), datum (<code>DATE</code>), logička vrednost. Baza odbija vrednost pogrešnog tipa, što čuva podatke od grešaka.</p>
+<p lang="en">Every column also has a <strong>type</strong>: a whole number (<code>INTEGER</code>), text (<code>TEXT</code>), a date (<code>DATE</code>), a true/false value. The database refuses a value of the wrong type, which protects the data from mistakes.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sql" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">osnove SQL-a</span><span lang="en">SQL basics</span></p>
+    <h2><span lang="sr">SQL: razgovor sa bazom</span><span lang="en">SQL: talking to a database</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>SQL</strong> (Structured Query Language) je jezik kojim tražimo od relacione baze da nešto pročita ili promeni. Naredbe liče na rečenice na engleskom. Ključne reči se po dogovoru pišu velikim slovima, a naredba se završava tačkom i zarezom.</p>
+<p lang="en"><strong>SQL</strong> (Structured Query Language) is the language we use to ask a relational database to read or change something. The statements look like English sentences. By convention keywords are written in capitals, and a statement ends with a semicolon.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Četiri osnovne radnje (CRUD)</span><span lang="en">The four basic actions (CRUD)</span></caption><thead><tr><th><span lang="sr">Radnja</span><span lang="en">Action</span></th><th><span lang="sr">SQL naredba</span><span lang="en">SQL statement</span></th><th><span lang="sr">Šta radi</span><span lang="en">What it does</span></th></tr></thead><tbody><tr><td><span lang="sr">čitanje (Read)</span><span lang="en">Read</span></td><td>SELECT</td><td><span lang="sr">izdvaja redove i kolone</span><span lang="en">picks rows and columns</span></td></tr><tr><td><span lang="sr">pravljenje (Create)</span><span lang="en">Create</span></td><td>INSERT</td><td><span lang="sr">dodaje novi red</span><span lang="en">adds a new row</span></td></tr><tr><td><span lang="sr">izmena (Update)</span><span lang="en">Update</span></td><td>UPDATE</td><td><span lang="sr">menja vrednosti u postojećim redovima</span><span lang="en">changes values in existing rows</span></td></tr><tr><td><span lang="sr">brisanje (Delete)</span><span lang="en">Delete</span></td><td>DELETE</td><td><span lang="sr">briše redove</span><span lang="en">removes rows</span></td></tr></tbody></table></div><h3>SELECT</h3>
+<p lang="sr"><code>SELECT</code> bira kolone, <code>FROM</code> kaže iz koje tabele. Zvezdica znači „sve kolone”.</p>
+<p lang="en"><code>SELECT</code> chooses columns, <code>FROM</code> says which table. The star means "all columns".</p><pre style="font:500 .9rem/1.55 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:14px 0;white-space:pre">SELECT * FROM ucenici;
+SELECT ime, razred FROM ucenici;</pre><h3>WHERE</h3>
+<p lang="sr"><code>WHERE</code> zadržava samo redove koji ispunjavaju uslov. Uslovi se spajaju sa <code>AND</code> i <code>OR</code>, a redosled se zadaje sa <code>ORDER BY</code>. Tekst ide pod jednostrukim navodnicima.</p>
+<p lang="en"><code>WHERE</code> keeps only the rows that meet a condition. Conditions are combined with <code>AND</code> and <code>OR</code>, and the order is set with <code>ORDER BY</code>. Text goes in single quotes.</p><pre style="font:500 .9rem/1.55 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:14px 0;white-space:pre">SELECT ime FROM ucenici WHERE razred = '2B';
+SELECT * FROM ocene WHERE predmet = 'Fizika' AND ocena &gt;= 4;
+SELECT * FROM ocene ORDER BY ocena DESC;</pre><h3>INSERT</h3>
+<p lang="sr"><code>INSERT INTO</code> dodaje novi red. Navedemo kolone, pa vrednosti istim redom.</p>
+<p lang="en"><code>INSERT INTO</code> adds a new row. We list the columns and then the values in the same order.</p><pre style="font:500 .9rem/1.55 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:14px 0;white-space:pre">INSERT INTO ucenici (id, ime, razred, email)
+VALUES (4, 'Luka', '2A', 'luka@skola.rs');</pre><h3>UPDATE</h3>
+<p lang="sr"><code>UPDATE</code> menja vrednosti, a <code>SET</code> kaže šta se menja. <strong>Uvek stavi WHERE</strong>: bez njega se menjaju svi redovi u tabeli.</p>
+<p lang="en"><code>UPDATE</code> changes values, and <code>SET</code> says what changes. <strong>Always add WHERE</strong>: without it every row in the table is changed.</p><pre style="font:500 .9rem/1.55 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:14px 0;white-space:pre">UPDATE ucenici SET razred = '3A' WHERE id = 2;</pre><h3>DELETE</h3>
+<p lang="sr"><code>DELETE FROM</code> briše redove. Ista opasnost: bez <code>WHERE</code> nestaje cela tabela sadržaja.</p>
+<p lang="en"><code>DELETE FROM</code> removes rows. The same danger: without <code>WHERE</code> the whole content of the table disappears.</p><pre style="font:500 .9rem/1.55 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:14px 0;white-space:pre">DELETE FROM ocene WHERE id = 3;</pre><details class="think"><summary><span lang="sr">Pomisli prvo: šta radi naredba DELETE FROM ocene; bez WHERE?</span><span lang="en">Think first: what does DELETE FROM ocene; do without WHERE?</span></summary><div class="ans"><p lang="sr">Briše sve redove iz tabele ocene. Tabela ostaje, ali je prazna. Zato pre UPDATE i DELETE proveri uslov običnim SELECT-om sa istim WHERE.</p>
+<p lang="en">It removes every row from the grades table. The table stays, but it is empty. So before UPDATE and DELETE, check the condition with a plain SELECT using the same WHERE.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="join" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">spajanje tabela</span><span lang="en">joining tables</span></p>
+    <h2><span lang="sr">JOIN: spajanje tabela preko ključa</span><span lang="en">JOIN: linking tables through a key</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Podaci su podeljeni u više tabela, a često nam trebaju zajedno: ime učenika i njegove ocene. <code>JOIN</code> spaja redove dve tabele kad se strani ključ poklopi sa primarnim. Uslov spajanja piše se iza <code>ON</code>.</p>
+<p lang="en">Data is split across several tables, but we often need it together: a student name and their grades. <code>JOIN</code> pairs up rows of two tables when a foreign key matches a primary key. The joining condition is written after <code>ON</code>.</p><pre style="font:500 .9rem/1.55 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:14px 0;white-space:pre">SELECT ucenici.ime, ocene.predmet, ocene.ocena
+FROM ocene
+JOIN ucenici ON ocene.ucenik_id = ucenici.id;</pre><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Rezultat</span><span lang="en">Result</span></caption><thead><tr><th>ime</th><th>predmet</th><th>ocena</th></tr></thead><tbody><tr><td>Ana</td><td>Fizika</td><td>5</td></tr><tr><td>Ana</td><td>Informatika</td><td>4</td></tr><tr><td>Jovana</td><td>Fizika</td><td>3</td></tr></tbody></table></div><p lang="sr">Marko nema nijednu ocenu, pa ga nema u rezultatu: obični <code>JOIN</code> (<code>INNER JOIN</code>) prikazuje samo parove koji se poklapaju. Kad bismo hteli sve učenike, i one bez ocena, koristili bismo <code>LEFT JOIN</code>. Ispred imena kolone piše se ime tabele (<code>ucenici.ime</code>) kad bi inače bilo nejasno.</p>
+<p lang="en">Marko has no grades, so he does not appear in the result: a plain <code>JOIN</code> (<code>INNER JOIN</code>) shows only pairs that match. If we wanted all students, including those without grades, we would use <code>LEFT JOIN</code>. The table name is put before the column name (<code>ucenici.ime</code>) when it would otherwise be unclear.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="firebase" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">Firebase kao servis</span><span lang="en">Firebase as a service</span></p>
+    <h2><span lang="sr">Firebase Realtime Database kao servis za podatke</span><span lang="en">Firebase Realtime Database as a data service</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Bazu ne moramo sami da instaliramo i održavamo. <strong>Firebase</strong> (Google) nudi bazu kao <strong>servis u oblaku</strong>: napraviš projekat, dobiješ adresu baze, a stranica u pregledaču čita i piše podatke preko interneta. Zato odmah radi na svakom uređaju, a promene se vide kod svih za deliće sekunde.</p>
+<p lang="en">We do not have to install and maintain a database ourselves. <strong>Firebase</strong> (Google) offers a database as a <strong>cloud service</strong>: you create a project, get the address of the database, and a web page reads and writes data over the internet. So it works on every device at once, and changes show up for everyone within a fraction of a second.</p><p lang="sr"><strong>Realtime Database</strong> ne koristi tabele. Podaci su jedno veliko <strong>JSON drvo</strong>: čvorovi sa ključevima i vrednostima, gde vrednost može da bude broj, tekst, tačno/netačno ili novi čvor sa podacima. Svaki čvor ima <strong>putanju</strong>, na primer <code>/ucenici/ana/razred</code>.</p>
+<p lang="en"><strong>Realtime Database</strong> does not use tables. The data is one big <strong>JSON tree</strong>: nodes with keys and values, where a value can be a number, text, true/false, or another node holding more data. Every node has a <strong>path</strong>, for example <code>/ucenici/ana/razred</code>.</p><pre style="font:500 .9rem/1.55 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:14px 0;white-space:pre">{
+  "ucenici": {
+    "ana":   { "razred": "2B", "ocene": { "fizika": 5, "informatika": 4 } },
+    "marko": { "razred": "2A" }
+  }
+}</pre><p lang="sr">Upoređenje sa SQL-om: tabela je otprilike čvor <code>ucenici</code>, red je čvor <code>ana</code>, a kolone su njegova polja. Razlika je što ovde ocene mogu da žive unutar učenika, bez posebne tabele i JOIN-a. Drvo je brzo za čitanje onoga što je upakovano zajedno, ali se teže pretražuje na više načina.</p>
+<p lang="en">Compared with SQL: a table is roughly the node <code>ucenici</code>, a row is the node <code>ana</code>, and the columns are its fields. The difference is that here the grades can live inside the student, with no separate table and no JOIN. A tree is fast for reading what is packed together, but harder to search in many different ways.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Osnovne radnje u Firebase-u</span><span lang="en">Basic actions in Firebase</span></caption><thead><tr><th><span lang="sr">Radnja</span><span lang="en">Action</span></th><th>JavaScript</th><th><span lang="sr">SQL slično</span><span lang="en">Similar in SQL</span></th></tr></thead><tbody><tr><td><span lang="sr">pročitaj jednom</span><span lang="en">read once</span></td><td>get(ref(db, "ucenici/ana"))</td><td>SELECT</td></tr><tr><td><span lang="sr">slušaj promene uživo</span><span lang="en">listen live</span></td><td>onValue(ref(db, "ucenici"), callback)</td><td><span lang="sr">nema pravog parnjaka</span><span lang="en">no real counterpart</span></td></tr><tr><td><span lang="sr">upiši / zameni</span><span lang="en">write / replace</span></td><td>set(ref(db, "ucenici/ana/razred"), "3B")</td><td>INSERT / UPDATE</td></tr><tr><td><span lang="sr">dodaj sa novim ključem</span><span lang="en">add with a new key</span></td><td>push(ref(db, "poruke"), {...})</td><td>INSERT</td></tr><tr><td><span lang="sr">izmeni samo neka polja</span><span lang="en">change only some fields</span></td><td>update(ref(db, "ucenici/ana"), {razred: "3B"})</td><td>UPDATE</td></tr><tr><td><span lang="sr">obriši</span><span lang="en">delete</span></td><td>remove(ref(db, "ucenici/marko"))</td><td>DELETE</td></tr></tbody></table></div><pre style="font:500 .9rem/1.55 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:14px 0;white-space:pre">import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set, get, onValue } from "firebase/database";
+
+const app = initializeApp({ apiKey: "...", databaseURL: "https://moj-projekat-default-rtdb.firebaseio.com" });
+const db  = getDatabase(app);
+
+await set(ref(db, "ucenici/luka"), { razred: "2A" });      // upis
+const snap = await get(ref(db, "ucenici/luka"));            // čitanje
+console.log(snap.val());                                   // { razred: "2A" }
+
+onValue(ref(db, "ucenici"), s =&gt; console.log(s.val()));     // uživo</pre><p lang="sr">Pozivi su <strong>asinhroni</strong>: odgovor stiže kasnije, pa se koristi <code>await</code> ili povratna funkcija. <code>push</code> pravi jedinstven ključ (kao automatski id), pa dva korisnika koja istovremeno dodaju poruku ne prepisuju jedan drugog.</p>
+<p lang="en">The calls are <strong>asynchronous</strong>: the answer arrives later, so we use <code>await</code> or a callback. <code>push</code> makes a unique key (like an automatic id), so two users adding a message at the same moment do not overwrite each other.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="pravila" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pravila i bezbednost</span><span lang="en">rules and security</span></p>
+    <h2><span lang="sr">Pravila baze: ko sme šta da čita i piše</span><span lang="en">Database rules: who may read and write what</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Adresa Firebase baze i <code>apiKey</code> nalaze se u kodu stranice, pa ih svako može videti. Zato ne štite podatke. Zaštitu daju <strong>pravila bezbednosti</strong> (security rules), koja se čuvaju na serveru i odlučuju ko sme da <code>.read</code> (čita) i <code>.write</code> (piše), i koje vrednosti su ispravne (<code>.validate</code>). Pravila se pišu po putanjama, a važe i za sve ispod njih.</p>
+<p lang="en">The address of a Firebase database and the <code>apiKey</code> sit in the code of the page, so anyone can see them. They do not protect the data. Protection comes from <strong>security rules</strong>, which are stored on the server and decide who may <code>.read</code> and <code>.write</code>, and which values are valid (<code>.validate</code>). Rules are written per path and apply to everything below them.</p><pre style="font:500 .9rem/1.55 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:14px 0;white-space:pre">{
+  "rules": {
+    "javno": {
+      ".read": true,
+      ".write": false
+    },
+    "poruke": {
+      ".read": true,
+      "$id": {
+        ".write": "auth != null",
+        ".validate": "newData.child('tekst').isString() &amp;&amp; newData.child('tekst').val().length &lt;= 200"
+      }
+    }
+  }
+}</pre><p lang="sr">Ovde svako sme da čita <code>javno</code>, ali niko ne sme da piše. U <code>poruke</code> svako čita, a piše samo prijavljen korisnik (<code>auth != null</code>), i samo ako je <code>tekst</code> niz znakova do 200 znakova. <code>$id</code> je zamena za bilo koji ključ.</p>
+<p lang="en">Here anyone may read <code>javno</code> (public), but nobody may write. In <code>poruke</code> (messages) anyone reads, and only a signed-in user writes (<code>auth != null</code>), and only if <code>tekst</code> is a string of up to 200 characters. <code>$id</code> stands for any key.</p><p lang="sr">Pravilo <code>".read": true, ".write": true</code> znači „svi mogu sve”. Dobro je za brzu probu, ali nikad za pravu aplikaciju. Tajni podaci (lozinke, privatne poruke) ne smeju u bazu koja je javno čitljiva.</p>
+<p lang="en">The rule <code>".read": true, ".write": true</code> means "everyone can do everything". It is fine for a quick test, but never for a real app. Secret data (passwords, private messages) must not go into a database that anyone can read.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">vežba</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Primeri iz prakse</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · SQL upit</span><span lang="en">Example 1 · an SQL query</span></h4><p class="given" lang="sr">Dato: iz tabele <code>ucenici</code> treba imena svih učenika iz razreda 2B, po abecedi.</p><p class="given" lang="en">Given: from the table <code>ucenici</code> we need the names of all students in class 2B, alphabetically.</p><ol lang="sr"><li>Kolona koju hoćemo je <code>ime</code>: <code>SELECT ime</code>.</li><li>Tabela je <code>ucenici</code>: <code>FROM ucenici</code>.</li><li>Uslov je razred: <code>WHERE razred = '2B'</code>.</li><li>Redosled: <code>ORDER BY ime</code>.</li></ol>
+<ol lang="en"><li>The column we want is <code>ime</code>: <code>SELECT ime</code>.</li><li>The table is <code>ucenici</code>: <code>FROM ucenici</code>.</li><li>The condition is the class: <code>WHERE razred = '2B'</code>.</li><li>The order: <code>ORDER BY ime</code>.</li></ol><p class="answer"><span lang="sr">SELECT ime FROM ucenici WHERE razred = '2B' ORDER BY ime;</span><span lang="en">SELECT ime FROM ucenici WHERE razred = '2B' ORDER BY ime;</span></p></div><div class="ex"><h4><span lang="sr">Primer 2 · bezbedna izmena</span><span lang="en">Example 2 · a safe update</span></h4><p class="given" lang="sr">Dato: Marko prelazi u razred 3A. Kako menjaš bazu, a da ne pokvariš druge učenike?</p><p class="given" lang="en">Given: Marko moves to class 3A. How do you change the database without damaging other students?</p><ol lang="sr"><li>Prvo proveriš koji red menjaš: <code>SELECT * FROM ucenici WHERE id = 2;</code>.</li><li>Isti uslov staviš u <code>UPDATE</code>.</li><li>Posle toga ponovo proveriš SELECT-om.</li></ol>
+<ol lang="en"><li>First check which row you are changing: <code>SELECT * FROM ucenici WHERE id = 2;</code>.</li><li>Put the same condition into the <code>UPDATE</code>.</li><li>Then check again with a SELECT.</li></ol><p class="answer"><span lang="sr">UPDATE ucenici SET razred = '3A' WHERE id = 2;</span><span lang="en">UPDATE ucenici SET razred = '3A' WHERE id = 2;</span></p></div><div class="ex"><h4><span lang="sr">Primer 3 · JOIN</span><span lang="en">Example 3 · a JOIN</span></h4><p class="given" lang="sr">Dato: treba prikazati imena učenika i njihove ocene iz fizike.</p><p class="given" lang="en">Given: show the names of the students and their grades in physics.</p><ol lang="sr"><li>Imena su u <code>ucenici</code>, ocene u <code>ocene</code>.</li><li>Spoji ih: <code>ocene.ucenik_id = ucenici.id</code>.</li><li>Filtriraj: <code>WHERE ocene.predmet = 'Fizika'</code>.</li></ol>
+<ol lang="en"><li>Names are in <code>ucenici</code>, grades in <code>ocene</code>.</li><li>Join them: <code>ocene.ucenik_id = ucenici.id</code>.</li><li>Filter: <code>WHERE ocene.predmet = 'Fizika'</code>.</li></ol><p class="answer"><span lang="sr">SELECT ucenici.ime, ocene.ocena FROM ocene JOIN ucenici ON ocene.ucenik_id = ucenici.id WHERE ocene.predmet = 'Fizika';</span><span lang="en">SELECT ucenici.ime, ocene.ocena FROM ocene JOIN ucenici ON ocene.ucenik_id = ucenici.id WHERE ocene.predmet = 'Fizika';</span></p></div><div class="ex"><h4><span lang="sr">Primer 4 · Firebase putanja</span><span lang="en">Example 4 · a Firebase path</span></h4><p class="given" lang="sr">Dato: u drvetu iz Dela 5 učenica Ana prelazi u razred 3B. Šta pozivaš?</p><p class="given" lang="en">Given: in the tree from Part 5 the student Ana moves to class 3B. What do you call?</p><ol lang="sr"><li>Putanja do vrednosti je <code>ucenici/ana/razred</code>.</li><li>Menja se jedna vrednost, pa je <code>set</code> dovoljan.</li><li>Ocene pod <code>ana</code> ostaju netaknute.</li></ol>
+<ol lang="en"><li>The path to the value is <code>ucenici/ana/razred</code>.</li><li>One value changes, so <code>set</code> is enough.</li><li>The grades under <code>ana</code> stay untouched.</li></ol><p class="answer"><span lang="sr">set(ref(db, "ucenici/ana/razred"), "3B")</span><span lang="en">set(ref(db, "ucenici/ana/razred"), "3B")</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>UPDATE ili DELETE bez WHERE.</b> Menja ili briše sve redove. Prvo proveri uslov sa SELECT.</div></li><li><div><b>Ime kao primarni ključ.</b> Imena se ponavljaju. Koristi id koji je jedinstven.</div></li><li><div><b>Navodnici.</b> U SQL-u tekst ide pod jednostrukim navodnicima, brojevi bez njih.</div></li><li><div><b>„Firebase je tabela.”</b> Realtime Database je JSON drvo; nema redova, kolona ni JOIN-a.</div></li><li><div><b>Pravila „sve dozvoljeno”.</b> Svako sa adresom baze može da je promeni ili obriše.</div></li><li><div><b>Očekivanje trenutnog odgovora.</b> Pozivi ka Firebase-u su asinhroni, pa se rezultat koristi tek posle <code>await</code> ili u povratnoj funkciji.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>UPDATE or DELETE without WHERE.</b> It changes or removes every row. Check the condition with a SELECT first.</div></li><li><div><b>A name as the primary key.</b> Names repeat. Use an id, which is unique.</div></li><li><div><b>Quotes.</b> In SQL text goes in single quotes, numbers without.</div></li><li><div><b>"Firebase is a table."</b> Realtime Database is a JSON tree; it has no rows, columns or JOIN.</div></li><li><div><b>"Allow everything" rules.</b> Anyone with the database address can change or wipe it.</div></li><li><div><b>Expecting an instant answer.</b> Firebase calls are asynchronous, so the result is used only after <code>await</code> or in a callback.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 9</span><span lang="en">Part 9</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Podatak je zapisana činjenica; baza ih čuva organizovano, trajno i deli sa mnogo korisnika.</li><li>Relaciona baza: tabele sa kolonama (osobine) i redovima (zapisi); primarni ključ jednoznačno određuje red, strani ključ povezuje tabele.</li><li>SQL: SELECT čita, WHERE filtrira, INSERT dodaje, UPDATE menja, DELETE briše; UPDATE i DELETE uvek sa WHERE.</li><li>JOIN spaja tabele kad se strani ključ poklopi sa primarnim.</li><li>Firebase Realtime Database je servis u oblaku: JSON drvo sa putanjama; get, onValue, set, push, update i remove.</li><li>Zaštitu daju pravila (.read, .write, .validate), a ne skrivanje adrese baze.</li></ul>
+<ul lang="en"><li>Data is a recorded fact; a database keeps it organised, permanent and shared among many users.</li><li>A relational database: tables with columns (properties) and rows (records); a primary key identifies a row, a foreign key links tables.</li><li>SQL: SELECT reads, WHERE filters, INSERT adds, UPDATE changes, DELETE removes; always use WHERE with UPDATE and DELETE.</li><li>JOIN links tables when a foreign key matches a primary key.</li><li>Firebase Realtime Database is a cloud service: a JSON tree with paths; get, onValue, set, push, update and remove.</li><li>Protection comes from rules (.read, .write, .validate), not from hiding the database address.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="DB01" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+</body>
+</html>
