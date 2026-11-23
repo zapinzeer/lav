@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ekvivalentna šema bipolarnog tranzistora u režimu zasićenja: uslov zasićenja, model sa izvorima U_BEsat i U_CEsat, faktor prezasićenja i tranzistor kao prekidač.">
+<title>Ekvivalentna šema tranzistora u zasićenju · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="ekvivalentna-sema-rezim-zasicenja">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš šta je zasićenje i kada tranzistor ulazi u njega;</li><li>nacrtaš ekvivalentnu šemu tranzistora u zasićenju i njome rešiš kolo;</li><li>izračunaš struju zasićenja, potrebnu baznu struju i faktor prezasićenja;</li><li>projektuješ jednostavan tranzistorski prekidač za LED ili relej.</li></ul>
+    <ul lang="en"><li>explain what saturation is and when a transistor enters it;</li><li>draw the equivalent circuit of a transistor in saturation and use it to solve a circuit;</li><li>calculate the saturation current, the required base current and the overdrive factor;</li><li>design a simple transistor switch for an LED or a relay.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="uslov" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">βI<sub>B</sub> &gt; I<sub>Csat</sub></span><span lang="en">βI<sub>B</sub> &gt; I<sub>Csat</sub></span></p>
+    <h2><span lang="sr">Kada tranzistor ulazi u zasićenje</span><span lang="en">When a transistor enters saturation</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">U aktivnom režimu kolektorska struja raste sa baznom: \( I_C = \beta I_B \). Ali ona ne može da raste beskonačno. Najveća struja koju spoljašnje kolo može da propusti teče kada je napon na tranzistoru najmanji mogući. Taj najmanji napon je <strong>napon zasićenja U<sub>CEsat</sub></strong>, oko 0,1–0,3 V. Tada je struja kolektora:</p>
+<p lang="en">In the active mode the collector current grows with the base current: \( I_C = \beta I_B \). But it cannot grow without limit. The largest current the external circuit can pass flows when the voltage across the transistor is as small as possible. That smallest voltage is the <strong>saturation voltage U<sub>CEsat</sub></strong>, about 0.1–0.3 V. The collector current is then:</p><div class="formula"><div class="tex">\[ I_{Csat} = \frac{U_{CC} - U_{CEsat}}{R_C} \qquad I_{Bsat} = \frac{I_{Csat}}{\beta} \]</div><dl class="legend"><div><dt>I<sub>Csat</sub></dt><dd><span lang="sr">kolektorska struja zasićenja, određuje je spoljašnje kolo</span><span lang="en">collector saturation current, set by the external circuit</span></dd><span class="unit">A</span></div><div><dt>I<sub>Bsat</sub></dt><dd><span lang="sr">najmanja bazna struja koja dovodi u zasićenje</span><span lang="en">the smallest base current that brings saturation</span></dd><span class="unit">A</span></div></dl></div><p lang="sr">Ako je bazna struja veća od I<sub>Bsat</sub>, tranzistor bi „hteo” da propusti βI<sub>B</sub>, ali kolo mu to ne dozvoljava. Kolektor se spušta skoro do napona emitora, pa i spoj C–B postaje <strong>direktno polarisan</strong>. To je <strong>zasićenje</strong>: oba spoja vode, a tranzistor se ponaša kao zatvoren prekidač.</p>
+<p lang="en">If the base current is larger than I<sub>Bsat</sub>, the transistor "wants" to pass βI<sub>B</sub>, but the circuit does not let it. The collector drops almost to the emitter voltage, so the C–B junction also becomes <strong>forward biased</strong>. That is <strong>saturation</strong>: both junctions conduct and the transistor behaves like a closed switch.</p><div class="formula"><div class="tex">\[ \beta I_B > I_{Csat} \qquad k = \frac{I_B}{I_{Bsat}} = \frac{\beta I_B}{I_{Csat}} > 1 \]</div><dl class="legend"><div><dt>k</dt><dd><span lang="sr">faktor prezasićenja (koliko puta je bazna struja veća od potrebne)</span><span lang="en">overdrive factor (how many times the base current exceeds what is needed)</span></dd><span class="unit">—</span></div></dl></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="model" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">dva izvora</span><span lang="en">two sources</span></p>
+    <h2><span lang="sr">Ekvivalentna šema u zasićenju</span><span lang="en">The equivalent circuit in saturation</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">U zasićenju oba spoja vode i na oba je skoro stalan napon. Zato tranzistor zamenjujemo sa <strong>dva naponska izvora</strong>: između baze i emitora U<sub>BEsat</sub> ≈ 0,8 V, a između kolektora i emitora U<sub>CEsat</sub> ≈ 0,2 V. Strujnog izvora βI<sub>B</sub> više nema: obe struje sada određuje <strong>spoljašnje kolo</strong>.</p>
+<p lang="en">In saturation both junctions conduct and both have an almost constant voltage. That is why we replace the transistor with <strong>two voltage sources</strong>: between the base and the emitter U<sub>BEsat</sub> ≈ 0.8 V, and between the collector and the emitter U<sub>CEsat</sub> ≈ 0.2 V. The current source βI<sub>B</sub> is gone: both currents are now set by the <strong>external circuit</strong>.</p><div class="formula"><div class="tex">\[ I_B = \frac{U_{BB} - U_{BEsat}}{R_B} \qquad I_C = \frac{U_{CC} - U_{CEsat}}{R_C} \qquad I_C < \beta I_B \]</div></div><p lang="sr">Poslednja nejednakost je <strong>uslov</strong> koji proveravamo na kraju: ako nije ispunjena, tranzistor nije u zasićenju već u aktivnom režimu, i treba koristiti model iz prethodne lekcije.</p>
+<p lang="en">The last inequality is the <strong>condition</strong> we check at the end: if it does not hold, the transistor is not in saturation but in the active mode, and the model from the previous lesson must be used.</p>
+</div>
+<div class="rest">
+<figure class="fig" style="max-width:600px">
+<svg class="dg" viewBox="0 0 470 200" role="img" aria-label="Ekvivalentne šeme tranzistora u tri režima / equivalent circuits of the transistor in three modes">
+<defs><marker id="ah-zs" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillc"/></marker></defs>
+<path class="w" d="M20 50H50V88M50 108V160H120V108M120 88V40H140M50 160"/>
+<path class="w" d="M36 88H64"/><path class="w" style="stroke-width:4" d="M42 98H58"/>
+<path class="w" d="M108 88H132"/><path class="w" style="stroke-width:4" d="M114 98H126"/>
+<path class="w" d="M50 98V108M120 98V108"/>
+<circle class="fillk" cx="20" cy="50" r="3.5"/><circle class="fillk" cx="140" cy="40" r="3.5"/><circle class="fillk" cx="85" cy="160" r="3.5"/>
+<text class="sm" x="14" y="40">B</text><text class="sm" x="136" y="30">C</text><text class="sm" x="81" y="180">E</text>
+<text class="sm vi" x="12" y="128" lang="sr">0,8 V</text><text class="sm vi" x="12" y="128" lang="en">0.8 V</text>
+<text class="sm vi" x="128" y="128" lang="sr">0,2 V</text><text class="sm vi" x="128" y="128" lang="en">0.2 V</text>
+<text class="sm mu" x="80" y="16" text-anchor="middle" lang="sr">zasićenje</text><text class="sm mu" x="80" y="16" text-anchor="middle" lang="en">saturation</text>
+<path class="w" d="M180 50H210V88M210 108V160H280V130M280 90V40H300"/>
+<path class="w" d="M196 88H224"/><path class="w" style="stroke-width:4" d="M202 98H218"/><path class="w" d="M210 98V108"/>
+<circle class="box" cx="280" cy="110" r="20"/>
+<path class="wc" d="M280 124V98" marker-end="url(#ah-zs)"/>
+<circle class="fillk" cx="180" cy="50" r="3.5"/><circle class="fillk" cx="300" cy="40" r="3.5"/><circle class="fillk" cx="245" cy="160" r="3.5"/>
+<text class="sm" x="174" y="40">B</text><text class="sm" x="296" y="30">C</text><text class="sm" x="241" y="180">E</text>
+<text class="sm" x="172" y="128" lang="sr">0,7 V</text><text class="sm" x="172" y="128" lang="en">0.7 V</text>
+<text class="it" x="306" y="115">βI<tspan font-size="10" dy="3">B</tspan></text>
+<text class="sm mu" x="240" y="16" text-anchor="middle" lang="sr">aktivni režim</text><text class="sm mu" x="240" y="16" text-anchor="middle" lang="en">active mode</text>
+<path class="w" d="M350 50H380V90M380 130V160H450V130M450 90V40H470"/>
+<path class="wr" d="M380 90L392 126M450 90L462 126"/>
+<circle class="fillk" cx="350" cy="50" r="3.5"/><circle class="fillk" cx="466" cy="40" r="3.5"/><circle class="fillk" cx="415" cy="160" r="3.5"/>
+<text class="sm" x="344" y="40">B</text><text class="sm" x="456" y="30">C</text><text class="sm" x="411" y="180">E</text>
+<text class="sm mu" x="410" y="16" text-anchor="middle" lang="sr">zakočenje</text><text class="sm mu" x="410" y="16" text-anchor="middle" lang="en">cut-off</text>
+</svg>
+<figcaption><span lang="sr">Tri ekvivalentne šeme jednog NPN tranzistora. U zasićenju: dva naponska izvora (B–E 0,8 V, C–E 0,2 V). U aktivnom režimu: izvor 0,7 V i strujni izvor βI<sub>B</sub>. U zakočenju: oba spoja su otvorena, struje nema.</span><span lang="en">Three equivalent circuits of one NPN transistor. In saturation: two voltage sources (B–E 0.8 V, C–E 0.2 V). In the active mode: a 0.7 V source and a current source βI<sub>B</sub>. In cut-off: both junctions are open, there is no current.</span></figcaption>
+</figure>
+<div class="rule-box blue"><p class="eyebrow"><span lang="sr">Idealni prekidač</span><span lang="en">The ideal switch</span></p><p lang="sr">Kada je U<sub>CC</sub> mnogo veće od 0,2 V, napon zasićenja možemo zanemariti i tranzistor između C i E zameniti <strong>kratkim spojem</strong>. U zakočenju ga zamenjujemo <strong>prekidom</strong>. Tako tranzistor postaje elektronski prekidač kojim upravlja bazna struja.</p>
+<p lang="en">When U<sub>CC</sub> is much larger than 0.2 V, we can neglect the saturation voltage and replace the transistor between C and E with a <strong>short circuit</strong>. In cut-off we replace it with an <strong>open circuit</strong>. So the transistor becomes an electronic switch controlled by the base current.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="prekidac" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">uključeno, isključeno</span><span lang="en">on, off</span></p>
+    <h2><span lang="sr">Tranzistor kao prekidač</span><span lang="en">The transistor as a switch</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Mikrokontroler ili logičko kolo daje samo nekoliko miliampera, a sijalica, motor ili relej traže mnogo više. Tranzistor rešava problem: mala bazna struja ga uključuje, a kroz kolektor teče velika struja iz posebnog izvora. Dobar prekidač je ili <strong>potpuno zakočen</strong> ili <strong>duboko u zasićenju</strong>, nikad između.</p>
+<p lang="en">A microcontroller or a logic circuit gives only a few milliamperes, while a lamp, a motor or a relay needs much more. The transistor solves the problem: a small base current turns it on, and a large current from a separate source flows through the collector. A good switch is either <strong>fully cut off</strong> or <strong>deep in saturation</strong>, never in between.</p>
+<p lang="sr">Razlog je <strong>snaga gubitaka</strong> na tranzistoru, \( P_T = U_{CE}I_C \). U zakočenju je I<sub>C</sub> ≈ 0, a u zasićenju je U<sub>CE</sub> ≈ 0,2 V, pa je u oba slučaja P<sub>T</sub> mala. U aktivnom režimu i napon i struja su veliki i tranzistor se greje. Zato se u praksi bira prezasićenje <strong>k ≈ 2–10</strong>: prekidač ostaje u zasićenju i kada je β manje od očekivanog.</p>
+<p lang="en">The reason is the <strong>power loss</strong> in the transistor, \( P_T = U_{CE}I_C \). In cut-off I<sub>C</sub> ≈ 0, and in saturation U<sub>CE</sub> ≈ 0.2 V, so in both cases P<sub>T</sub> is small. In the active mode both the voltage and the current are large and the transistor heats up. That is why in practice an overdrive of <strong>k ≈ 2–10</strong> is chosen: the switch stays in saturation even when β is smaller than expected.</p>
+</div><figure class="lab" id="lab-zs">
+<div class="viewport" style="aspect-ratio:440/220"><canvas tabindex="0" aria-label="Tranzistorski prekidač i njegova ekvivalentna šema / a transistor switch and its equivalent circuit"></canvas></div>
+<div class="plot" style="margin-top:10px"><canvas aria-label="Kolektorska struja u funkciji bazne struje / collector current against base current"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="lab-zs-uin"><span lang="sr">Ulazni napon U<sub>BB</sub></span><span lang="en">Input voltage U<sub>BB</sub></span></label><output id="lab-zs-uin-out" for="lab-zs-uin"></output><input type="range" id="lab-zs-uin" min="0" max="5" step="0.1" value="5"></div>
+<div class="ctl"><label for="lab-zs-rb"><span lang="sr">Otpornik baze R<sub>B</sub></span><span lang="en">Base resistor R<sub>B</sub></span></label><output id="lab-zs-rb-out" for="lab-zs-rb"></output><input type="range" id="lab-zs-rb" min="1" max="200" step="1" value="10"></div>
+<div class="ctl"><label for="lab-zs-rc"><span lang="sr">Potrošač R<sub>C</sub> (sijalica)</span><span lang="en">Load R<sub>C</sub> (lamp)</span></label><output id="lab-zs-rc-out" for="lab-zs-rc"></output><input type="range" id="lab-zs-rc" min="100" max="2000" step="10" value="470"></div>
+<div class="ctl"><label for="lab-zs-beta"><span lang="sr">Strujno pojačanje β</span><span lang="en">Current gain β</span></label><output id="lab-zs-beta-out" for="lab-zs-beta"></output><input type="range" id="lab-zs-beta" min="20" max="300" step="10" value="100"></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-zs-calc"></div><div class="result" id="lab-zs-result"></div><div class="calc" id="lab-zs-note"></div></div>
+<figcaption><span lang="sr">Levo: tranzistor uključuje sijalicu na 12 V. Desno: ekvivalentna šema za trenutni režim, koja se menja sama. Dole: I<sub>C</sub> u funkciji I<sub>B</sub>. Prava β·I<sub>B</sub> raste dok ne udari u „plafon” I<sub>Csat</sub>; levo od žute linije I<sub>Bsat</sub> je aktivni režim, desno zasićenje. Povećaj R<sub>B</sub> ili smanji β: tačka klizi levo, izlazi iz zasićenja, a sijalica slabije svetli. Spusti U<sub>BB</sub> ispod 0,7 V: tranzistor se zakoči.</span><span lang="en">Left: the transistor switches a lamp on 12 V. Right: the equivalent circuit for the current mode, which changes by itself. Bottom: I<sub>C</sub> against I<sub>B</sub>. The line β·I<sub>B</sub> rises until it hits the "ceiling" I<sub>Csat</sub>; left of the yellow line I<sub>Bsat</sub> is the active mode, right of it saturation. Increase R<sub>B</sub> or reduce β: the point slides left, leaves saturation, and the lamp glows less. Lower U<sub>BB</sub> below 0.7 V: the transistor cuts off.</span></figcaption>
+</figure><div class="rest">
+<div class="rule-box warn"><p class="eyebrow"><span lang="sr">Relej i zaštitna dioda</span><span lang="en">A relay and the protection diode</span></p><p lang="sr">Kalem releja ne trpi naglu promenu struje. Kada tranzistor naglo isključi struju, kalem indukuje veliki napon (\( u = L\,di/dt \)) koji može da probije tranzistor. Zato se paralelno kalemu, inverzno, vezuje <strong>zaštitna (zamajna) dioda</strong> kroz koju struja kalema može postepeno da opadne.</p>
+<p lang="en">A relay coil does not tolerate a sudden change of current. When the transistor suddenly switches the current off, the coil induces a large voltage (\( u = L\,di/dt \)) that can break down the transistor. That is why a <strong>protection (flyback) diode</strong> is connected across the coil, reverse biased, so the coil current can decay gradually through it.</p></div>
+<div class="rule-box violet"><p class="eyebrow"><span lang="sr">Cena dubokog zasićenja</span><span lang="en">The price of deep saturation</span></p><p lang="sr">U zasićenju se u bazi nagomila višak nosilaca. Kada isključimo baznu struju, treba vremena da se oni uklone, pa tranzistor kasni sa isključenjem (<strong>vreme nagomilavanja</strong> t<sub>s</sub>). Zato preveliko k usporava prekidač; za brze prekidače k se drži malim.</p>
+<p lang="en">In saturation excess carriers pile up in the base. When the base current is switched off, it takes time to remove them, so the transistor switches off late (<strong>storage time</strong> t<sub>s</sub>). That is why too large a k slows the switch down; for fast switches k is kept small.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · da li je u zasićenju?</span><span lang="en">Example 1 · is it in saturation?</span></h4><p class="given" lang="sr">Dato: U<sub>BB</sub> = 5 V, R<sub>B</sub> = 10 kΩ, U<sub>CC</sub> = 12 V, R<sub>C</sub> = 470 Ω, β = 100.</p><p class="given" lang="en">Given: U<sub>BB</sub> = 5 V, R<sub>B</sub> = 10 kΩ, U<sub>CC</sub> = 12 V, R<sub>C</sub> = 470 Ω, β = 100.</p><ol lang="sr"><li>Pretpostavimo zasićenje: \( I_B = (5 - 0{,}8)/10\ \mathrm{k\Omega} = 0{,}42\ \mathrm{mA} \).</li><li>\( I_C = (12 - 0{,}2)/470 = 25{,}1\ \mathrm{mA} \).</li><li>Provera: \( \beta I_B = 42\ \mathrm{mA} > 25{,}1\ \mathrm{mA} \). Pretpostavka je tačna, \( k = 42/25{,}1 = 1{,}67 \).</li></ol>
+<ol lang="en"><li>Assume saturation: \( I_B = (5 - 0.8)/10\ \mathrm{k\Omega} = 0.42\ \mathrm{mA} \).</li><li>\( I_C = (12 - 0.2)/470 = 25.1\ \mathrm{mA} \).</li><li>Check: \( \beta I_B = 42\ \mathrm{mA} > 25.1\ \mathrm{mA} \). The assumption holds, \( k = 42/25.1 = 1.67 \).</li></ol><p class="answer"><span lang="sr">zasićenje, I<sub>C</sub> = 25,1 mA, U<sub>CE</sub> ≈ 0,2 V, k ≈ 1,7</span><span lang="en">saturation, I<sub>C</sub> = 25.1 mA, U<sub>CE</sub> ≈ 0.2 V, k ≈ 1.7</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · prekidač za LED</span><span lang="en">Example 2 · a switch for an LED</span></h4><p class="given" lang="sr">Dato: LED (2 V, 20 mA) na U<sub>CC</sub> = 5 V, upravljanje sa 5 V, β<sub>min</sub> = 100, želimo k = 3. Nađi R<sub>C</sub> i R<sub>B</sub>.</p><p class="given" lang="en">Given: an LED (2 V, 20 mA) on U<sub>CC</sub> = 5 V, driven from 5 V, β<sub>min</sub> = 100, we want k = 3. Find R<sub>C</sub> and R<sub>B</sub>.</p><ol lang="sr"><li>\( R_C = (5 - 2 - 0{,}2)/20\ \mathrm{mA} = 140\ \Omega \) (standardno 150 Ω).</li><li>\( I_{Bsat} = 20\ \mathrm{mA}/100 = 0{,}2\ \mathrm{mA} \), pa \( I_B = 3\cdot 0{,}2 = 0{,}6\ \mathrm{mA} \).</li><li>\( R_B = (5 - 0{,}8)/0{,}6\ \mathrm{mA} = 7\ \mathrm{k\Omega} \) (standardno 6,8 kΩ).</li></ol>
+<ol lang="en"><li>\( R_C = (5 - 2 - 0.2)/20\ \mathrm{mA} = 140\ \Omega \) (standard 150 Ω).</li><li>\( I_{Bsat} = 20\ \mathrm{mA}/100 = 0.2\ \mathrm{mA} \), so \( I_B = 3\cdot 0.2 = 0.6\ \mathrm{mA} \).</li><li>\( R_B = (5 - 0.8)/0.6\ \mathrm{mA} = 7\ \mathrm{k\Omega} \) (standard 6.8 kΩ).</li></ol><p class="answer"><span lang="sr">R<sub>C</sub> ≈ 150 Ω, R<sub>B</sub> ≈ 6,8 kΩ</span><span lang="en">R<sub>C</sub> ≈ 150 Ω, R<sub>B</sub> ≈ 6.8 kΩ</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · relej iz mikrokontrolera</span><span lang="en">Example 3 · a relay from a microcontroller</span></h4><p class="given" lang="sr">Dato: relej 12 V sa otpornošću kalema 400 Ω, izlaz mikrokontrolera 3,3 V, β<sub>min</sub> = 50, k = 2.</p><p class="given" lang="en">Given: a 12 V relay with a coil resistance of 400 Ω, a microcontroller output of 3.3 V, β<sub>min</sub> = 50, k = 2.</p><ol lang="sr"><li>\( I_C = (12 - 0{,}2)/400 = 29{,}5\ \mathrm{mA} \).</li><li>\( I_B = 2\cdot 29{,}5/50 = 1{,}18\ \mathrm{mA} \): to izlaz mikrokontrolera može da da.</li><li>\( R_B = (3{,}3 - 0{,}8)/1{,}18\ \mathrm{mA} = 2{,}1\ \mathrm{k\Omega} \) (standardno 2,2 kΩ), i obavezno zaštitna dioda paralelno kalemu.</li></ol>
+<ol lang="en"><li>\( I_C = (12 - 0.2)/400 = 29.5\ \mathrm{mA} \).</li><li>\( I_B = 2\cdot 29.5/50 = 1.18\ \mathrm{mA} \): the microcontroller output can supply that.</li><li>\( R_B = (3.3 - 0.8)/1.18\ \mathrm{mA} = 2.1\ \mathrm{k\Omega} \) (standard 2.2 kΩ), and always a protection diode across the coil.</li></ol><p class="answer"><span lang="sr">R<sub>B</sub> ≈ 2,2 kΩ, I<sub>C</sub> = 29,5 mA</span><span lang="en">R<sub>B</sub> ≈ 2.2 kΩ, I<sub>C</sub> = 29.5 mA</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>I<sub>C</sub> = βI<sub>B</sub> u zasićenju.</b> U zasićenju je I<sub>C</sub> manja od βI<sub>B</sub> i određuje je R<sub>C</sub>.</div></li><li><div><b>Bez provere uslova.</b> Posle računa proveri βI<sub>B</sub> &gt; I<sub>C</sub>; ako ne važi, kolo je u aktivnom režimu.</div></li><li><div><b>Računanje sa tipičnim β.</b> Prekidač se projektuje sa najmanjim β iz kataloga i sa prezasićenjem k &gt; 1.</div></li><li><div><b>Relej bez diode.</b> Indukovani napon pri isključenju može da uništi tranzistor.</div></li><li><div><b>Baza bez otpornika.</b> Spoj B–E je dioda; bez R<sub>B</sub> bazna struja nije ograničena.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>I<sub>C</sub> = βI<sub>B</sub> in saturation.</b> In saturation I<sub>C</sub> is smaller than βI<sub>B</sub> and is set by R<sub>C</sub>.</div></li><li><div><b>Not checking the condition.</b> After the calculation check βI<sub>B</sub> &gt; I<sub>C</sub>; if it does not hold, the circuit is in the active mode.</div></li><li><div><b>Calculating with a typical β.</b> A switch is designed with the smallest β from the datasheet and with an overdrive k &gt; 1.</div></li><li><div><b>A relay without a diode.</b> The induced voltage at switch-off can destroy the transistor.</div></li><li><div><b>A base without a resistor.</b> The B–E junction is a diode; without R<sub>B</sub> the base current is not limited.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>U zasićenju oba spoja vode, U<sub>CE</sub> ≈ 0,2 V, a tranzistor je zatvoren prekidač.</li><li>Uslov: \( \beta I_B > I_{Csat} = (U_{CC} - U_{CEsat})/R_C \); faktor prezasićenja \( k = \beta I_B/I_{Csat} \).</li><li>Ekvivalentna šema: izvor U<sub>BEsat</sub> ≈ 0,8 V između B i E i izvor U<sub>CEsat</sub> ≈ 0,2 V između C i E.</li><li>Prekidač radi između zakočenja i zasićenja; tada su gubici \( P_T = U_{CE}I_C \) mali. Projektuje se sa β<sub>min</sub> i k ≈ 2–10.</li></ul><ul lang="en"><li>In saturation both junctions conduct, U<sub>CE</sub> ≈ 0.2 V, and the transistor is a closed switch.</li><li>Condition: \( \beta I_B > I_{Csat} = (U_{CC} - U_{CEsat})/R_C \); overdrive factor \( k = \beta I_B/I_{Csat} \).</li><li>Equivalent circuit: a source U<sub>BEsat</sub> ≈ 0.8 V between B and E and a source U<sub>CEsat</sub> ≈ 0.2 V between C and E.</li><li>A switch works between cut-off and saturation; the losses \( P_T = U_{CE}I_C \) are then small. It is designed with β<sub>min</sub> and k ≈ 2–10.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="ELE05" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/bjt-labs.js"></script>
+<script src="../assets/js/lessons/ekvivalentna-sema-rezim-zasicenja.js"></script>
+</body>
+</html>

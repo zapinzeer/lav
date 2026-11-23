@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Snaga u kolu sa realnim kalemom: trenutna snaga, aktivna, reaktivna i prividna snaga, trougao snaga i faktor snage cos φ, sa modelom RL kola.">
+<title>Snaga u kolu sa kalemom · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="snaga-u-kolu-sa-kalemom">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>nacrtaš model realnog kalema i izračunaš impedansu i fazni stav RL kola;</li><li>objasniš kako izgleda trenutna snaga kada struja kasni za naponom;</li><li>izračunaš aktivnu, reaktivnu i prividnu snagu i nacrtaš trougao snaga;</li><li>objasniš šta je faktor snage i zašto je loš kada je mali.</li></ul>
+    <ul lang="en"><li>draw the model of a real coil and calculate the impedance and the phase shift of an RL circuit;</li><li>explain what the instantaneous power looks like when the current lags the voltage;</li><li>calculate the active, reactive and apparent power and draw the power triangle;</li><li>explain what the power factor is and why a small one is bad.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="rl" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">R i L na red</span><span lang="en">R and L in series</span></p>
+    <h2><span lang="sr">Realni kalem kao RL kolo</span><span lang="en">A real coil as an RL circuit</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Idealan kalem, kao što smo videli u lekciji o kalemu, ne troši snagu: energiju samo prima u magnetno polje i vraća izvoru. Pravi kalem je namotan od bakarne žice koja ima otpornost, pa se uvek malo i greje. Zato ga crtamo kao <strong>rednu vezu otpornika R i idealnog kalema L</strong>. Isti model važi i za mnoge potrošače u kući: motor, transformator i prigušnica fluorescentne cevi su „otpornik i kalem” istovremeno.</p>
+<p lang="en">An ideal coil, as we saw in the lesson on the coil, consumes no power: it only takes energy into its magnetic field and returns it to the source. A real coil is wound from copper wire that has resistance, so it always heats up a little. That is why we draw it as a <strong>series connection of a resistor R and an ideal coil L</strong>. The same model fits many loads in the home too: a motor, a transformer and the choke of a fluorescent tube are a "resistor and a coil" at the same time.</p>
+<p lang="sr">Kroz oba elementa teče ista struja <span class="v">I</span>. Napon na otporniku \( U_R = RI \) je u fazi sa strujom, a napon na kalemu \( U_L = X_L I \) prednjači struji za 90°. Ukupni napon je njihov <strong>fazorski</strong> (vektorski) zbir, ne običan zbir:</p>
+<p lang="en">The same current <span class="v">I</span> flows through both elements. The voltage across the resistor \( U_R = RI \) is in phase with the current, and the voltage across the coil \( U_L = X_L I \) leads the current by 90°. The total voltage is their <strong>phasor</strong> (vector) sum, not an ordinary sum:</p><div class="formula"><div class="tex">\[ U = \sqrt{U_R^2 + U_L^2} \qquad Z = \sqrt{R^2 + X_L^2} \qquad \operatorname{tg}\varphi = \frac{X_L}{R} \qquad I = \frac{U}{Z} \]</div><dl class="legend"><div><dt>Z</dt><dd><span lang="sr">impedansa kola</span><span lang="en">impedance of the circuit</span></dd><span class="unit">Ω</span></div><div><dt>X<sub>L</sub></dt><dd><span lang="sr">induktivna reaktansa, ωL</span><span lang="en">inductive reactance, ωL</span></dd><span class="unit">Ω</span></div><div><dt>φ</dt><dd><span lang="sr">fazni stav između napona i struje</span><span lang="en">phase shift between voltage and current</span></dd><span class="unit">°</span></div></dl></div><p lang="sr">Fazni stav je sada između 0° i 90°: što je kalem „čistiji” (manje R u odnosu na X<sub>L</sub>), to je φ bliži 90°. Ako preovlada otpornost, φ je blizu nule.</p>
+<p lang="en">The phase shift is now between 0° and 90°: the "cleaner" the coil (less R compared to X<sub>L</sub>), the closer φ is to 90°. If the resistance dominates, φ is close to zero.</p>
+</div>
+<div class="rest">
+<figure class="fig" style="max-width:520px">
+<svg class="dg" viewBox="0 0 420 190" role="img" aria-label="Redna RL veza i trougao napona / series RL circuit and the voltage triangle">
+<defs><marker id="ah-rl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillc"/></marker><marker id="ah-rlf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillf"/></marker><marker id="ah-rlg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillg"/></marker></defs>
+<path class="w" d="M30 40H60M110 40H130M190 40H210V160H30V120M30 80V40"/>
+<circle class="box" cx="30" cy="100" r="20"/>
+<path class="w" d="M20 100q5-10 10 0t10 0"/>
+<rect class="box" x="60" y="31" width="50" height="18" rx="2"/>
+<path class="w" d="M130 40a7.5 7.5 0 0 1 15 0a7.5 7.5 0 0 1 15 0a7.5 7.5 0 0 1 15 0a7.5 7.5 0 0 1 15 0"/>
+<text class="it" x="85" y="22" text-anchor="middle">R</text>
+<text class="it" x="160" y="22" text-anchor="middle">L</text>
+<text class="it" x="62" y="104">U</text>
+<path class="wc" d="M150 160H120" marker-end="url(#ah-rl)"/>
+<text class="it cu" x="160" y="178" text-anchor="middle">I</text>
+<line class="wg" x1="260" y1="160" x2="380" y2="160" marker-end="url(#ah-rlg)"/>
+<line class="wf" x1="380" y1="160" x2="380" y2="60" marker-end="url(#ah-rlf)"/>
+<line class="wc" x1="260" y1="160" x2="378" y2="62" marker-end="url(#ah-rl)"/>
+<text class="it go" x="320" y="180" text-anchor="middle">U<tspan font-size="11" dy="3">R</tspan></text>
+<text class="it fl" x="392" y="112">U<tspan font-size="11" dy="3">L</tspan></text>
+<text class="it cu" x="306" y="100" text-anchor="end">U</text>
+<path class="thin" d="M296 160a36 36 0 0 0-8-23"/>
+<text class="it" x="302" y="150">φ</text>
+</svg>
+<figcaption><span lang="sr">Levo: realni kalem kao R i L na red, priključen na izvor naizmeničnog napona. Desno: trougao napona. U<sub>R</sub> leži u pravcu struje, U<sub>L</sub> je 90° ispred nje, a ukupni napon U je hipotenuza. Ako sve stranice podelimo strujom I, dobijamo trougao impedanse R, X<sub>L</sub>, Z.</span><span lang="en">Left: a real coil as R and L in series, connected to an AC voltage source. Right: the voltage triangle. U<sub>R</sub> lies along the current, U<sub>L</sub> is 90° ahead of it, and the total voltage U is the hypotenuse. If we divide every side by the current I, we get the impedance triangle R, X<sub>L</sub>, Z.</span></figcaption>
+</figure>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="trenutna" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">p = u · i</span><span lang="en">p = u · i</span></p>
+    <h2><span lang="sr">Trenutna snaga u RL kolu</span><span lang="en">Instantaneous power in an RL circuit</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Neka je napon \( u = U_m\sin\omega t \), a struja kasni za uglom φ: \( i = I_m\sin(\omega t - \varphi) \). Trenutna snaga je proizvod trenutnog napona i trenutne struje. Posle malo trigonometrije (proizvod dva sinusa) dobijamo:</p>
+<p lang="en">Let the voltage be \( u = U_m\sin\omega t \), and let the current lag by the angle φ: \( i = I_m\sin(\omega t - \varphi) \). The instantaneous power is the product of the instantaneous voltage and the instantaneous current. After a little trigonometry (the product of two sines) we get:</p><div class="formula"><div class="tex">\[ p = u\,i = UI\cos\varphi - UI\cos(2\omega t - \varphi) \]</div><dl class="legend"><div><dt>U, I</dt><dd><span lang="sr">efektivne vrednosti, U = U<sub>m</sub>/√2</span><span lang="en">RMS values, U = U<sub>m</sub>/√2</span></dd><span class="unit">V, A</span></div><div><dt>p</dt><dd><span lang="sr">trenutna snaga</span><span lang="en">instantaneous power</span></dd><span class="unit">W</span></div></dl></div><p lang="sr">Prvi sabirak je <strong>stalan</strong>, a drugi je sinusoida dvostruke učestanosti čija je srednja vrednost nula. Zato je srednja snaga jednaka baš prvom sabirku, \( UI\cos\varphi \). Trenutna snaga je veći deo periode pozitivna (izvor daje energiju), a kratko negativna (kalem vraća deo energije iz magnetnog polja).</p>
+<p lang="en">The first term is <strong>constant</strong>, and the second is a sine of double frequency whose average is zero. That is why the average power equals exactly the first term, \( UI\cos\varphi \). The instantaneous power is positive for most of the period (the source gives energy), and briefly negative (the coil returns part of the energy from its magnetic field).</p><details class="think"><summary><span lang="sr">Pomisli prvo: kada trenutna snaga postaje negativna?</span><span lang="en">Think first: when does the instantaneous power become negative?</span></summary><div class="ans"><p lang="sr">Kada napon i struja imaju suprotne znakove, to jest u intervalu dužine φ posle svakog prolaska napona kroz nulu. Za φ = 0 (čist otpornik) tog intervala nema, a za φ = 90° (idealni kalem) on traje pola vremena.</p>
+<p lang="en">When the voltage and the current have opposite signs, that is in an interval of length φ after every zero crossing of the voltage. For φ = 0 (a pure resistor) there is no such interval, and for φ = 90° (an ideal coil) it lasts half the time.</p></div></details>
+</div><figure class="lab" id="lab-pl">
+<div class="viewport" style="aspect-ratio:380/200"><canvas tabindex="0" aria-label="RL kolo i trougao snaga / the RL circuit and the power triangle"></canvas></div>
+<div class="plot" style="margin-top:10px"><canvas aria-label="Napon i struja u funkciji ωt / voltage and current against ωt"></canvas></div>
+<div class="plot short" style="margin-top:10px"><canvas aria-label="Trenutna snaga p(t) / instantaneous power p(t)"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="lab-pl-u"><span lang="sr">Napon U (efektivno)</span><span lang="en">Voltage U (RMS)</span></label><output id="lab-pl-u-out" for="lab-pl-u"></output><input type="range" id="lab-pl-u" min="10" max="400" step="10" value="230"></div>
+<div class="ctl"><label for="lab-pl-f"><span lang="sr">Učestanost f</span><span lang="en">Frequency f</span></label><output id="lab-pl-f-out" for="lab-pl-f"></output><input type="range" id="lab-pl-f" min="10" max="400" step="10" value="50"></div>
+<div class="ctl"><label for="lab-pl-r"><span lang="sr">Otpornost R</span><span lang="en">Resistance R</span></label><output id="lab-pl-r-out" for="lab-pl-r"></output><input type="range" id="lab-pl-r" min="5" max="500" step="5" value="100"></div>
+<div class="ctl"><label for="lab-pl-val"><span lang="sr">Induktivnost L</span><span lang="en">Inductance L</span></label><output id="lab-pl-val-out" for="lab-pl-val"></output><input type="range" id="lab-pl-val" min="10" max="2000" step="10" value="500"></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-pl-calc"></div><div class="result" id="lab-pl-result"></div><div class="calc" id="lab-pl-note"></div></div>
+<figcaption><span lang="sr">Realni kalem (R i L na red). Struja (narandžasta) kasni za naponom (plava) za ugao φ. U donjem grafiku zelena površina je energija koju izvor daje kolu, a crvena energija koju kalem vraća. Žuta isprekidana linija je srednja, aktivna snaga P. Povećaj L ili f: φ raste, crvena površina se širi, a P i cos φ opadaju. Smanji L skoro do nule: kolo postaje čist otpornik i p(t) nikad nije negativna.</span><span lang="en">A real coil (R and L in series). The current (orange) lags the voltage (blue) by the angle φ. In the bottom graph the green area is the energy the source gives the circuit, and the red area the energy the coil returns. The yellow dashed line is the average, active power P. Increase L or f: φ grows, the red area widens, and P and cos φ fall. Reduce L almost to zero: the circuit becomes a pure resistor and p(t) is never negative.</span></figcaption>
+</figure><div class="rest">
+<div class="rule-box violet"><p class="eyebrow"><span lang="sr">Dva granična slučaja</span><span lang="en">Two limiting cases</span></p><p lang="sr">Za φ = 0 je \( p = UI(1 - \cos 2\omega t) \ge 0 \) i srednja snaga je UI. Za φ = 90° je \( p = UI\sin 2\omega t \), a srednja snaga je nula. Realni kalem je uvek negde između.</p>
+<p lang="en">For φ = 0, \( p = UI(1 - \cos 2\omega t) \ge 0 \) and the average power is UI. For φ = 90°, \( p = UI\sin 2\omega t \) and the average power is zero. A real coil is always somewhere in between.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="snage" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">P, Q, S</span><span lang="en">P, Q, S</span></p>
+    <h2><span lang="sr">Aktivna, reaktivna i prividna snaga</span><span lang="en">Active, reactive and apparent power</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">U kolu naizmenične struje razlikujemo tri snage. Sve tri dobijamo iz trougla napona tako što svaku stranicu pomnožimo strujom <span class="v">I</span>. Tako nastaje <strong>trougao snaga</strong>, sličan trouglu napona i trouglu impedanse, sa istim uglom φ.</p>
+<p lang="en">In an AC circuit we distinguish three powers. We get all three from the voltage triangle by multiplying every side by the current <span class="v">I</span>. That gives the <strong>power triangle</strong>, similar to the voltage triangle and the impedance triangle, with the same angle φ.</p><div class="formula"><div class="tex">\[ P = UI\cos\varphi = RI^2 \qquad Q_L = UI\sin\varphi = X_L I^2 \qquad S = UI = ZI^2 \qquad S^2 = P^2 + Q_L^2 \]</div><dl class="legend"><div><dt>P</dt><dd><span lang="sr">aktivna snaga, pretvara se u toplotu ili rad</span><span lang="en">active power, turned into heat or work</span></dd><span class="unit">W</span></div><div><dt>Q<sub>L</sub></dt><dd><span lang="sr">reaktivna snaga, energija koja „šeta” između izvora i kalema</span><span lang="en">reactive power, energy that "travels" between the source and the coil</span></dd><span class="unit">var</span></div><div><dt>S</dt><dd><span lang="sr">prividna snaga, ono što opterećuje izvor i vodove</span><span lang="en">apparent power, what loads the source and the lines</span></dd><span class="unit">VA</span></div></dl></div>
+</div>
+<div class="rest">
+<div class="tbl-wrap"><table class="scale free"><caption><span lang="sr">Tri snage u RL kolu</span><span lang="en">The three powers in an RL circuit</span></caption><thead><tr><th><span lang="sr">Snaga</span><span lang="en">Power</span></th><th><span lang="sr">Formula</span><span lang="en">Formula</span></th><th><span lang="sr">Jedinica</span><span lang="en">Unit</span></th><th><span lang="sr">Šta znači</span><span lang="en">What it means</span></th></tr></thead><tbody><tr><td><span lang="sr">aktivna</span><span lang="en">active</span></td><td>P = UI cos φ</td><td>W</td><td><span lang="sr">srednja snaga, troši se na otporniku</span><span lang="en">the average power, used up in the resistor</span></td></tr><tr><td><span lang="sr">reaktivna</span><span lang="en">reactive</span></td><td>Q = UI sin φ</td><td>var</td><td><span lang="sr">amplituda razmene energije sa magnetnim poljem</span><span lang="en">the amplitude of the energy exchange with the magnetic field</span></td></tr><tr><td><span lang="sr">prividna</span><span lang="en">apparent</span></td><td>S = UI</td><td>VA</td><td><span lang="sr">proizvod efektivnih vrednosti; po njoj se biraju izvor, transformator i presek žice</span><span lang="en">the product of the RMS values; the source, the transformer and the wire size are chosen by it</span></td></tr></tbody></table></div>
+<div class="rule-box blue"><p class="eyebrow"><span lang="sr">Zašto tri različite jedinice?</span><span lang="en">Why three different units?</span></p><p lang="sr">Fizički su sve tri „volt puta amper”. Različita imena (W, var, VA) su dogovor da odmah vidimo o kojoj snazi je reč. Na pločici transformatora piše na primer 1 kVA, a na grejalici 2 kW.</p>
+<p lang="en">Physically all three are "volts times amperes". The different names (W, var, VA) are a convention so we can see at once which power we mean. A transformer plate says for example 1 kVA, and a heater says 2 kW.</p></div>
+<div class="rule-box green"><p class="eyebrow"><span lang="sr">Znak reaktivne snage</span><span lang="en">The sign of reactive power</span></p><p lang="sr">Po dogovoru, kalem <strong>uzima</strong> reaktivnu snagu, pa je Q<sub>L</sub> pozitivna. U sledećoj lekciji videćemo da kondenzator reaktivnu snagu <strong>daje</strong>, pa je njegova Q negativna. Zato se kalem i kondenzator mogu međusobno „poništiti”.</p>
+<p lang="en">By convention a coil <strong>draws</strong> reactive power, so Q<sub>L</sub> is positive. In the next lesson we will see that a capacitor <strong>supplies</strong> reactive power, so its Q is negative. That is why a coil and a capacitor can "cancel" each other.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="faktor" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">cos φ</span><span lang="en">cos φ</span></p>
+    <h2><span lang="sr">Faktor snage</span><span lang="en">The power factor</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Odnos aktivne i prividne snage zove se <strong>faktor snage</strong>. U kolu sa sinusnim naponom i strujom on je jednak kosinusu faznog stava:</p>
+<p lang="en">The ratio of the active and the apparent power is called the <strong>power factor</strong>. In a circuit with a sinusoidal voltage and current it equals the cosine of the phase shift:</p><div class="formula"><div class="tex">\[ \cos\varphi = \frac{P}{S} = \frac{R}{Z} = \frac{U_R}{U} \]</div></div><p lang="sr">Faktor snage pokazuje koliki deo struje koja teče kroz vodove zaista „radi”. Ako motor treba da da 1 kW pri 230 V, uz cos φ = 1 mu treba 4,35 A, a uz cos φ = 0,5 čak 8,7 A. Dvostruka struja znači četiri puta veće gubitke u žicama (\( P_g = R_vI^2 \)), deblje provodnike i jači transformator. Zato elektrodistribucija naplaćuje industriji višak reaktivne energije, a veliki potrošači popravljaju cos φ kondenzatorima.</p>
+<p lang="en">The power factor shows how much of the current flowing through the lines really "works". If a motor has to deliver 1 kW at 230 V, with cos φ = 1 it needs 4.35 A, and with cos φ = 0.5 as much as 8.7 A. A doubled current means four times larger losses in the wires (\( P_g = R_wI^2 \)), thicker conductors and a stronger transformer. That is why the power company charges industry for excess reactive energy, and big consumers improve cos φ with capacitors.</p>
+</div>
+<div class="rest">
+<div class="cases"><div><p class="h">cos φ = 1</p><p class="note" lang="sr">Čist otpornik: grejalica, sijalica sa vlaknom. Sva snaga je aktivna.</p><p class="note" lang="en">A pure resistor: a heater, a filament bulb. All the power is active.</p></div><div><p class="h">cos φ ≈ 0,7–0,9</p><p class="note" lang="sr">Asinhroni motor pod opterećenjem, transformator. Kolo je induktivno.</p><p class="note" lang="en">An induction motor under load, a transformer. The circuit is inductive.</p></div><div><p class="h">cos φ ≈ 0,1–0,3</p><p class="note" lang="sr">Motor u praznom hodu, prigušnica: skoro čista reaktivna snaga.</p><p class="note" lang="en">A motor running idle, a choke: almost purely reactive power.</p></div></div>
+<div class="rule-box warn"><p class="eyebrow"><span lang="sr">Merenje u laboratoriji</span><span lang="en">Measuring in the lab</span></p><p lang="sr">Ampermetar i voltmetar daju U i I, pa i prividnu snagu S = UI. Vatmetar meri direktno aktivnu snagu P. Faktor snage tada dobijamo kao cos φ = P/(UI), a reaktivnu snagu kao \( Q = \sqrt{S^2 - P^2} \).</p>
+<p lang="en">An ammeter and a voltmeter give U and I, and so the apparent power S = UI. A wattmeter measures the active power P directly. The power factor is then cos φ = P/(UI), and the reactive power is \( Q = \sqrt{S^2 - P^2} \).</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · sve tri snage</span><span lang="en">Example 1 · all three powers</span></h4><p class="given" lang="sr">Dato: kalem sa R = 30 Ω i X<sub>L</sub> = 40 Ω priključen je na 100 V. Izračunaj Z, I, cos φ, P, Q i S.</p><p class="given" lang="en">Given: a coil with R = 30 Ω and X<sub>L</sub> = 40 Ω is connected to 100 V. Calculate Z, I, cos φ, P, Q and S.</p><ol lang="sr"><li>\( Z = \sqrt{30^2 + 40^2} = 50\ \Omega \), \( I = 100/50 = 2\ \mathrm{A} \).</li><li>\( \cos\varphi = R/Z = 30/50 = 0{,}6 \), \( \sin\varphi = 0{,}8 \), \( \varphi = 53{,}1^\circ \).</li><li>\( P = RI^2 = 30\cdot 4 = 120\ \mathrm{W} \), \( Q = X_LI^2 = 40\cdot 4 = 160\ \mathrm{var} \), \( S = UI = 200\ \mathrm{VA} \).</li><li>Provera: \( \sqrt{120^2 + 160^2} = 200 \).</li></ol>
+<ol lang="en"><li>\( Z = \sqrt{30^2 + 40^2} = 50\ \Omega \), \( I = 100/50 = 2\ \mathrm{A} \).</li><li>\( \cos\varphi = R/Z = 30/50 = 0.6 \), \( \sin\varphi = 0.8 \), \( \varphi = 53.1^\circ \).</li><li>\( P = RI^2 = 30\cdot 4 = 120\ \mathrm{W} \), \( Q = X_LI^2 = 40\cdot 4 = 160\ \mathrm{var} \), \( S = UI = 200\ \mathrm{VA} \).</li><li>Check: \( \sqrt{120^2 + 160^2} = 200 \).</li></ol><p class="answer"><span lang="sr">P = 120 W, Q = 160 var, S = 200 VA, cos φ = 0,6</span><span lang="en">P = 120 W, Q = 160 var, S = 200 VA, cos φ = 0.6</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · podaci sa motora</span><span lang="en">Example 2 · data from a motor</span></h4><p class="given" lang="sr">Dato: na pločici jednofaznog motora piše 230 V, 5 A, cos φ = 0,8. Kolike su P, Q i S?</p><p class="given" lang="en">Given: the plate of a single-phase motor says 230 V, 5 A, cos φ = 0.8. What are P, Q and S?</p><ol lang="sr"><li>\( S = UI = 230\cdot 5 = 1150\ \mathrm{VA} \).</li><li>\( P = S\cos\varphi = 1150\cdot 0{,}8 = 920\ \mathrm{W} \).</li><li>\( \sin\varphi = \sqrt{1 - 0{,}8^2} = 0{,}6 \), pa je \( Q = 1150\cdot 0{,}6 = 690\ \mathrm{var} \).</li></ol>
+<ol lang="en"><li>\( S = UI = 230\cdot 5 = 1150\ \mathrm{VA} \).</li><li>\( P = S\cos\varphi = 1150\cdot 0.8 = 920\ \mathrm{W} \).</li><li>\( \sin\varphi = \sqrt{1 - 0.8^2} = 0.6 \), so \( Q = 1150\cdot 0.6 = 690\ \mathrm{var} \).</li></ol><p class="answer"><span lang="sr">S = 1150 VA, P = 920 W, Q = 690 var</span><span lang="en">S = 1150 VA, P = 920 W, Q = 690 var</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · iz merenja do L</span><span lang="en">Example 3 · from measurements to L</span></h4><p class="given" lang="sr">Dato: kalem na 230 V, 50 Hz. Ampermetar pokazuje 2 A, a vatmetar 92 W. Nađi R, X<sub>L</sub> i L.</p><p class="given" lang="en">Given: a coil on 230 V, 50 Hz. The ammeter shows 2 A and the wattmeter 92 W. Find R, X<sub>L</sub> and L.</p><ol lang="sr"><li>\( R = P/I^2 = 92/4 = 23\ \Omega \), \( Z = U/I = 115\ \Omega \).</li><li>\( X_L = \sqrt{115^2 - 23^2} = 112{,}7\ \Omega \).</li><li>\( L = X_L/\omega = 112{,}7/314 = 0{,}36\ \mathrm{H} \), a \( \cos\varphi = 23/115 = 0{,}2 \).</li></ol>
+<ol lang="en"><li>\( R = P/I^2 = 92/4 = 23\ \Omega \), \( Z = U/I = 115\ \Omega \).</li><li>\( X_L = \sqrt{115^2 - 23^2} = 112.7\ \Omega \).</li><li>\( L = X_L/\omega = 112.7/314 = 0.36\ \mathrm{H} \), and \( \cos\varphi = 23/115 = 0.2 \).</li></ol><p class="answer"><span lang="sr">R = 23 Ω, X<sub>L</sub> = 112,7 Ω, L ≈ 0,36 H</span><span lang="en">R = 23 Ω, X<sub>L</sub> = 112.7 Ω, L ≈ 0.36 H</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Sabiranje napona kao brojeva.</b> U<sub>R</sub> i U<sub>L</sub> su pomereni za 90°, pa je \( U = \sqrt{U_R^2 + U_L^2} \), a ne U<sub>R</sub> + U<sub>L</sub>.</div></li><li><div><b>P = UI.</b> To je prividna snaga. Aktivna je P = UI cos φ.</div></li><li><div><b>Sabiranje P i Q.</b> S nije P + Q, već \( \sqrt{P^2 + Q^2} \).</div></li><li><div><b>I²R sa pogrešnom otpornošću.</b> Aktivna snaga je RI², a ne ZI². Toplota nastaje samo na otporniku.</div></li><li><div><b>Mešanje jedinica.</b> P je u W, Q u var, S u VA. Odgovor „160 W reaktivne snage” nije tačan.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>Adding voltages as numbers.</b> U<sub>R</sub> and U<sub>L</sub> are 90° apart, so \( U = \sqrt{U_R^2 + U_L^2} \), not U<sub>R</sub> + U<sub>L</sub>.</div></li><li><div><b>P = UI.</b> That is the apparent power. The active power is P = UI cos φ.</div></li><li><div><b>Adding P and Q.</b> S is not P + Q but \( \sqrt{P^2 + Q^2} \).</div></li><li><div><b>I²R with the wrong resistance.</b> The active power is RI², not ZI². Heat appears only in the resistor.</div></li><li><div><b>Mixing units.</b> P is in W, Q in var, S in VA. The answer "160 W of reactive power" is not correct.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Realni kalem je R i L na red: \( Z = \sqrt{R^2 + X_L^2} \), \( \operatorname{tg}\varphi = X_L/R \), struja kasni za uglom 0° &lt; φ &lt; 90°.</li><li>Trenutna snaga \( p = UI\cos\varphi - UI\cos(2\omega t - \varphi) \) je kratko negativna dok kalem vraća energiju.</li><li>\( P = UI\cos\varphi = RI^2 \) [W], \( Q_L = UI\sin\varphi = X_LI^2 \) [var], \( S = UI \) [VA], \( S^2 = P^2 + Q^2 \).</li><li>Faktor snage \( \cos\varphi = P/S \). Mali cos φ znači veću struju i veće gubitke za istu korisnu snagu.</li></ul><ul lang="en"><li>A real coil is R and L in series: \( Z = \sqrt{R^2 + X_L^2} \), \( \tan\varphi = X_L/R \), the current lags by an angle 0° &lt; φ &lt; 90°.</li><li>The instantaneous power \( p = UI\cos\varphi - UI\cos(2\omega t - \varphi) \) is briefly negative while the coil returns energy.</li><li>\( P = UI\cos\varphi = RI^2 \) [W], \( Q_L = UI\sin\varphi = X_LI^2 \) [var], \( S = UI \) [VA], \( S^2 = P^2 + Q^2 \).</li><li>The power factor \( \cos\varphi = P/S \). A small cos φ means a larger current and larger losses for the same useful power.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="OSN03" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/snaga-labs.js"></script>
+<script src="../assets/js/lessons/snaga-u-kolu-sa-kalemom.js"></script>
+</body>
+</html>

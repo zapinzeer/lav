@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Bipolarni tranzistori: građa NPN i PNP, struje emitora, baze i kolektora, strujno pojačanje β, režimi rada, karakteristike i radna prava, sa modelom kola.">
+<title>Bipolarni tranzistori · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="bipolarni-tranzistori">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>opišeš građu NPN i PNP tranzistora i nacrtaš njihove simbole;</li><li>objasniš kako mala bazna struja upravlja velikom kolektorskom strujom;</li><li>koristiš veze \( I_E = I_B + I_C \), \( I_C = \beta I_B \) i \( \alpha = \beta/(\beta + 1) \);</li><li>prepoznaš režim rada tranzistora i nađeš radnu tačku pomoću radne prave.</li></ul>
+    <ul lang="en"><li>describe the structure of NPN and PNP transistors and draw their symbols;</li><li>explain how a small base current controls a large collector current;</li><li>use the relations \( I_E = I_B + I_C \), \( I_C = \beta I_B \) and \( \alpha = \beta/(\beta + 1) \);</li><li>recognise the operating mode of a transistor and find the operating point with the load line.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="gradja" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">tri sloja, dva spoja</span><span lang="en">three layers, two junctions</span></p>
+    <h2><span lang="sr">Građa i simboli</span><span lang="en">Structure and symbols</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Bipolarni tranzistor</strong> (BJT, od engl. <em>bipolar junction transistor</em>) je poluprovodnička komponenta sa tri sloja i tri izvoda. Kod <strong>NPN</strong> tranzistora tanak sloj P tipa nalazi se između dva sloja N tipa, a kod <strong>PNP</strong> tranzistora obrnuto. „Bipolarni” znači da u provođenju učestvuju obe vrste nosilaca, i elektroni i šupljine.</p>
+<p lang="en">A <strong>bipolar transistor</strong> (BJT, bipolar junction transistor) is a semiconductor component with three layers and three leads. In an <strong>NPN</strong> transistor a thin P-type layer sits between two N-type layers, and in a <strong>PNP</strong> transistor it is the other way round. "Bipolar" means that both kinds of carriers, electrons and holes, take part in conduction.</p>
+<p lang="sr">Izvodi su <strong>emitor</strong> (E), <strong>baza</strong> (B) i <strong>kolektor</strong> (C). Slojevi nisu jednaki: emitor je jako dopiran (ima mnogo nosilaca koje „emituje”), baza je veoma tanka i slabo dopirana, a kolektor je najveći, jer „skuplja” nosioce i na njemu se razvija toplota. Zato se emitor i kolektor ne smeju zameniti iako su istog tipa.</p>
+<p lang="en">The leads are the <strong>emitter</strong> (E), the <strong>base</strong> (B) and the <strong>collector</strong> (C). The layers are not equal: the emitter is heavily doped (it has many carriers to "emit"), the base is very thin and lightly doped, and the collector is the largest, because it "collects" the carriers and heat is produced there. That is why the emitter and the collector must not be swapped even though they are of the same type.</p>
+<p lang="sr">Tranzistor ima dva PN spoja: <strong>spoj emitor–baza</strong> i <strong>spoj kolektor–baza</strong>. Multimetrom na opsegu za diode tranzistor izgleda kao dve diode vezane u bazi, što se koristi za proveru ispravnosti i za određivanje tipa.</p>
+<p lang="en">A transistor has two PN junctions: the <strong>emitter–base junction</strong> and the <strong>collector–base junction</strong>. On the diode range of a multimeter a transistor looks like two diodes joined at the base, which is used to check it and to find its type.</p>
+</div>
+<div class="rest">
+<figure class="fig" style="max-width:640px">
+<svg class="dg" viewBox="0 0 520 210" role="img" aria-label="Slojevi NPN i PNP tranzistora i njihovi simboli / the layers of NPN and PNP transistors and their symbols">
+<defs><marker id="ah-npn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillc"/></marker></defs>
+<rect class="fillfs" x="20" y="40" width="70" height="56"/><rect class="fillcs" x="90" y="40" width="22" height="56"/><rect class="fillfs" x="112" y="40" width="100" height="56"/>
+<rect class="thin" x="20" y="40" width="192" height="56"/>
+<text x="55" y="73" text-anchor="middle">N⁺</text><text x="101" y="73" text-anchor="middle">P</text><text x="162" y="73" text-anchor="middle">N</text>
+<path class="w" d="M20 68H4M212 68H228M101 96V114"/>
+<text class="sm" x="4" y="58">E</text><text class="sm" x="220" y="58">C</text><text class="sm" x="108" y="114">B</text>
+<text class="sm mu" x="116" y="28" text-anchor="middle">NPN</text>
+<rect class="fillcs" x="20" y="134" width="70" height="56"/><rect class="fillfs" x="90" y="134" width="22" height="56"/><rect class="fillcs" x="112" y="134" width="100" height="56"/>
+<rect class="thin" x="20" y="134" width="192" height="56"/>
+<text x="55" y="167" text-anchor="middle">P⁺</text><text x="101" y="167" text-anchor="middle">N</text><text x="162" y="167" text-anchor="middle">P</text>
+<text class="sm mu" x="116" y="126" text-anchor="middle">PNP</text>
+<circle class="thin" cx="330" cy="100" r="34"/>
+<path class="w" d="M276 100H318M318 80V120M318 90L346 72V50M318 110L346 128V150"/>
+<path class="wc" d="M326 115L344 127" marker-end="url(#ah-npn)"/>
+<text class="sm" x="282" y="92">B</text><text class="sm" x="352" y="56">C</text><text class="sm" x="352" y="150">E</text>
+<text class="sm mu" x="330" y="190" text-anchor="middle">NPN</text>
+<circle class="thin" cx="450" cy="100" r="34"/>
+<path class="w" d="M396 100H438M438 80V120M438 90L466 72V50M438 110L466 128V150"/>
+<path class="wc" d="M462 126L442 113" marker-end="url(#ah-npn)"/>
+<text class="sm" x="402" y="92">B</text><text class="sm" x="472" y="56">C</text><text class="sm" x="472" y="150">E</text>
+<text class="sm mu" x="450" y="190" text-anchor="middle">PNP</text>
+</svg>
+<figcaption><span lang="sr">Levo: raspored slojeva. Baza je u stvarnosti mnogo tanja nego na crtežu, svega nekoliko mikrometara. Desno: simboli. Strelica je uvek na emitoru i pokazuje smer struje kroz spoj B–E: kod NPN strelica izlazi iz tranzistora, a kod PNP ulazi u njega.</span><span lang="en">Left: the order of the layers. In reality the base is much thinner than in the drawing, only a few micrometres. Right: the symbols. The arrow is always on the emitter and shows the direction of the current through the B–E junction: in an NPN it points out of the transistor, and in a PNP it points in ("PNP: Points iN Proudly").</span></figcaption>
+</figure>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="struje" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">I<sub>C</sub> = β I<sub>B</sub></span><span lang="en">I<sub>C</sub> = β I<sub>B</sub></span></p>
+    <h2><span lang="sr">Kako tranzistor pojačava struju</span><span lang="en">How a transistor amplifies current</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Posmatrajmo NPN tranzistor kada je spoj B–E <strong>direktno</strong> polarisan (baza oko 0,7 V iznad emitora), a spoj C–B <strong>inverzno</strong> polarisan (kolektor na višem naponu od baze). Emitor tada ubacuje (injektuje) mnogo elektrona u bazu. Baza je tanka i ima malo šupljina, pa se samo mali deo elektrona tu rekombinuje i izađe kroz izvod baze. Ogromna većina prođe kroz bazu, a jako električno polje inverzno polarisanog spoja C–B ih „povuče” u kolektor.</p>
+<p lang="en">Consider an NPN transistor when the B–E junction is <strong>forward</strong> biased (the base about 0.7 V above the emitter) and the C–B junction is <strong>reverse</strong> biased (the collector at a higher voltage than the base). The emitter then injects many electrons into the base. The base is thin and has few holes, so only a small part of the electrons recombine there and leave through the base lead. The vast majority pass through the base, and the strong electric field of the reverse-biased C–B junction "pulls" them into the collector.</p>
+<p lang="sr">Rezultat: struja kolektora je mnogo veća od struje baze, ali je baza ta koja je <strong>kontroliše</strong>. Ako udvostručimo baznu struju, udvostručiće se i kolektorska. Po Kirhofovom zakonu za struje, sve što uđe u tranzistor mora i da izađe:</p>
+<p lang="en">The result: the collector current is much larger than the base current, but it is the base that <strong>controls</strong> it. If we double the base current, the collector current doubles too. By Kirchhoff's current law, everything that enters the transistor must also leave:</p><div class="formula"><div class="tex">\[ I_E = I_B + I_C \qquad I_C = \beta\,I_B \qquad I_C = \alpha\,I_E \qquad \alpha = \frac{\beta}{\beta + 1} \]</div><dl class="legend"><div><dt>β</dt><dd><span lang="sr">strujno pojačanje u spoju sa zajedničkim emitorom (h<sub>FE</sub>), obično 50–500</span><span lang="en">current gain in common emitter (h<sub>FE</sub>), usually 50–500</span></dd><span class="unit">—</span></div><div><dt>α</dt><dd><span lang="sr">strujno pojačanje u spoju sa zajedničkom bazom, malo manje od 1</span><span lang="en">current gain in common base, a little less than 1</span></dd><span class="unit">—</span></div><div><dt>I<sub>E</sub>, I<sub>B</sub>, I<sub>C</sub></dt><dd><span lang="sr">struje emitora, baze i kolektora</span><span lang="en">emitter, base and collector currents</span></dd><span class="unit">A</span></div></dl></div><details class="think"><summary><span lang="sr">Pomisli prvo: ako je β = 100, koji deo struje emitora odlazi u bazu?</span><span lang="en">Think first: if β = 100, what fraction of the emitter current goes to the base?</span></summary><div class="ans"><p lang="sr">Na svakih 100 delova kolektorske struje dolazi 1 deo bazne, pa je I<sub>E</sub> = 101 deo. Baza dobija 1/101 ≈ 1 %, a α = 100/101 ≈ 0,99.</p>
+<p lang="en">For every 100 parts of collector current there is 1 part of base current, so I<sub>E</sub> = 101 parts. The base gets 1/101 ≈ 1 %, and α = 100/101 ≈ 0.99.</p></div></details>
+</div>
+<div class="rest">
+<div class="rule-box warn"><p class="eyebrow"><span lang="sr">β nije stalan broj</span><span lang="en">β is not a fixed number</span></p><p lang="sr">Čak i tranzistori iste oznake imaju različito β (u katalogu za BC547 piše raspon, npr. 110–800, po grupama A, B, C), a β se menja i sa temperaturom i sa strujom. Zato se dobra kola projektuju tako da rade ispravno bez obzira na tačnu vrednost β.</p>
+<p lang="en">Even transistors with the same marking have different β (the datasheet of a BC547 gives a range, e.g. 110–800, in groups A, B, C), and β also changes with temperature and current. That is why good circuits are designed to work correctly whatever the exact value of β.</p></div>
+<div class="rule-box blue"><p class="eyebrow">PNP</p><p lang="sr">Kod PNP tranzistora sve je isto, samo su naponi i struje suprotnih smerova: emitor je na najvišem potencijalu, baza je oko 0,7 V niža, a struje izlaze iz baze i kolektora.</p>
+<p lang="en">In a PNP transistor everything is the same, only the voltages and currents have opposite directions: the emitter is at the highest potential, the base is about 0.7 V lower, and the currents flow out of the base and the collector.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="rezimi" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">dva spoja, četiri kombinacije</span><span lang="en">two junctions, four combinations</span></p>
+    <h2><span lang="sr">Režimi rada</span><span lang="en">Operating modes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Svaki od dva spoja može biti direktno ili inverzno polarisan, pa tranzistor ima četiri režima rada. U praksi se koriste tri: <strong>aktivni</strong> režim za pojačavače, a <strong>zakočenje</strong> i <strong>zasićenje</strong> kada tranzistor radi kao prekidač.</p>
+<p lang="en">Each of the two junctions can be forward or reverse biased, so a transistor has four operating modes. In practice three are used: the <strong>active</strong> mode for amplifiers, and <strong>cut-off</strong> and <strong>saturation</strong> when the transistor works as a switch.</p>
+</div>
+<div class="rest">
+<div class="tbl-wrap"><table class="scale free"><caption><span lang="sr">Režimi rada NPN tranzistora</span><span lang="en">Operating modes of an NPN transistor</span></caption><thead><tr><th><span lang="sr">Režim</span><span lang="en">Mode</span></th><th><span lang="sr">Spoj B–E</span><span lang="en">B–E junction</span></th><th><span lang="sr">Spoj C–B</span><span lang="en">C–B junction</span></th><th><span lang="sr">Ponašanje</span><span lang="en">Behaviour</span></th></tr></thead><tbody>
+<tr><td><span lang="sr">zakočenje</span><span lang="en">cut-off</span></td><td><span lang="sr">inverzno (U<sub>BE</sub> &lt; 0,6 V)</span><span lang="en">reverse (U<sub>BE</sub> &lt; 0.6 V)</span></td><td><span lang="sr">inverzno</span><span lang="en">reverse</span></td><td><span lang="sr">I<sub>B</sub> ≈ 0, I<sub>C</sub> ≈ 0: otvoren prekidač</span><span lang="en">I<sub>B</sub> ≈ 0, I<sub>C</sub> ≈ 0: an open switch</span></td></tr>
+<tr><td><span lang="sr">aktivni (normalni)</span><span lang="en">active (forward)</span></td><td><span lang="sr">direktno (≈ 0,7 V)</span><span lang="en">forward (≈ 0.7 V)</span></td><td><span lang="sr">inverzno</span><span lang="en">reverse</span></td><td><span lang="sr">I<sub>C</sub> = β I<sub>B</sub>: pojačavač</span><span lang="en">I<sub>C</sub> = β I<sub>B</sub>: an amplifier</span></td></tr>
+<tr><td><span lang="sr">zasićenje</span><span lang="en">saturation</span></td><td><span lang="sr">direktno</span><span lang="en">forward</span></td><td><span lang="sr">direktno</span><span lang="en">forward</span></td><td><span lang="sr">U<sub>CE</sub> ≈ 0,2 V, I<sub>C</sub> &lt; β I<sub>B</sub>: zatvoren prekidač</span><span lang="en">U<sub>CE</sub> ≈ 0.2 V, I<sub>C</sub> &lt; β I<sub>B</sub>: a closed switch</span></td></tr>
+<tr><td><span lang="sr">inverzni</span><span lang="en">reverse active</span></td><td><span lang="sr">inverzno</span><span lang="en">reverse</span></td><td><span lang="sr">direktno</span><span lang="en">forward</span></td><td><span lang="sr">emitor i kolektor zamenjeni, β vrlo malo; retko se koristi</span><span lang="en">emitter and collector swapped, very small β; rarely used</span></td></tr>
+</tbody></table></div>
+<div class="rule-box violet"><p class="eyebrow"><span lang="sr">Brza provera u kolu</span><span lang="en">A quick check in a circuit</span></p><p lang="sr">Izmeri U<sub>BE</sub> i U<sub>CE</sub>. Ako je U<sub>BE</sub> manje od oko 0,6 V, tranzistor je zakočen. Ako je U<sub>BE</sub> ≈ 0,7 V, a U<sub>CE</sub> nekoliko volti, radi u aktivnom režimu. Ako je U<sub>CE</sub> samo 0,1–0,3 V, u zasićenju je.</p>
+<p lang="en">Measure U<sub>BE</sub> and U<sub>CE</sub>. If U<sub>BE</sub> is less than about 0.6 V, the transistor is cut off. If U<sub>BE</sub> ≈ 0.7 V and U<sub>CE</sub> is a few volts, it works in the active mode. If U<sub>CE</sub> is only 0.1–0.3 V, it is in saturation.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="karakteristike" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">I<sub>C</sub>(U<sub>CE</sub>)</span><span lang="en">I<sub>C</sub>(U<sub>CE</sub>)</span></p>
+    <h2><span lang="sr">Karakteristike i radna prava</span><span lang="en">Characteristics and the load line</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr"><strong>Ulazna karakteristika</strong> I<sub>B</sub>(U<sub>BE</sub>) izgleda kao karakteristika diode: dok je U<sub>BE</sub> ispod oko 0,6 V bazne struje skoro nema, a posle naglo raste. <strong>Izlazne karakteristike</strong> I<sub>C</sub>(U<sub>CE</sub>) crtaju se kao familija krivih, po jedna za svaku baznu struju. Posle kratkog strmog dela (zasićenje) svaka kriva postaje skoro vodoravna: kolektorska struja tada zavisi od I<sub>B</sub>, a skoro ne zavisi od U<sub>CE</sub>.</p>
+<p lang="en">The <strong>input characteristic</strong> I<sub>B</sub>(U<sub>BE</sub>) looks like the characteristic of a diode: while U<sub>BE</sub> is below about 0.6 V there is almost no base current, and after that it rises sharply. The <strong>output characteristics</strong> I<sub>C</sub>(U<sub>CE</sub>) are drawn as a family of curves, one for each base current. After a short steep part (saturation) every curve becomes almost flat: the collector current then depends on I<sub>B</sub> and hardly depends on U<sub>CE</sub>.</p>
+<p lang="sr">U kolu na slici, po drugom Kirhofovom zakonu za izlazno kolo važi \( U_{CC} = R_CI_C + U_{CE} \). To je jednačina prave u ravni izlaznih karakteristika, <strong>radne prave</strong>. Ona seče osu U<sub>CE</sub> u tački U<sub>CC</sub> (tranzistor zakočen) i osu I<sub>C</sub> u tački U<sub>CC</sub>/R<sub>C</sub> (tranzistor kao kratak spoj). Stvarno stanje, <strong>radna tačka Q</strong>, je presek radne prave i karakteristike za zadatu baznu struju.</p>
+<p lang="en">In the circuit in the figure, by Kirchhoff's voltage law for the output circuit, \( U_{CC} = R_CI_C + U_{CE} \). That is the equation of a line in the plane of the output characteristics, the <strong>load line</strong>. It crosses the U<sub>CE</sub> axis at U<sub>CC</sub> (transistor cut off) and the I<sub>C</sub> axis at U<sub>CC</sub>/R<sub>C</sub> (transistor as a short circuit). The real state, the <strong>operating point Q</strong>, is where the load line crosses the characteristic for the given base current.</p><div class="formula"><div class="tex">\[ I_B = \frac{U_{BB} - U_{BE}}{R_B} \qquad I_C = \beta I_B \qquad U_{CE} = U_{CC} - R_CI_C \]</div></div>
+</div><figure class="lab" id="lab-bt">
+<div class="viewport" style="aspect-ratio:380/240"><canvas tabindex="0" aria-label="Kolo sa NPN tranzistorom / a circuit with an NPN transistor"></canvas></div>
+<div class="plot" style="margin-top:10px"><canvas aria-label="Izlazne karakteristike i radna prava / output characteristics and the load line"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="lab-bt-ubb"><span lang="sr">Napon baze U<sub>BB</sub></span><span lang="en">Base voltage U<sub>BB</sub></span></label><output id="lab-bt-ubb-out" for="lab-bt-ubb"></output><input type="range" id="lab-bt-ubb" min="0" max="5" step="0.05" value="1.5"></div>
+<div class="ctl"><label for="lab-bt-rb"><span lang="sr">Otpornik baze R<sub>B</sub></span><span lang="en">Base resistor R<sub>B</sub></span></label><output id="lab-bt-rb-out" for="lab-bt-rb"></output><input type="range" id="lab-bt-rb" min="10" max="200" step="1" value="47"></div>
+<div class="ctl"><label for="lab-bt-ucc"><span lang="sr">Napajanje U<sub>CC</sub></span><span lang="en">Supply U<sub>CC</sub></span></label><output id="lab-bt-ucc-out" for="lab-bt-ucc"></output><input type="range" id="lab-bt-ucc" min="3" max="15" step="1" value="12"></div>
+<div class="ctl"><label for="lab-bt-rc"><span lang="sr">Otpornik kolektora R<sub>C</sub></span><span lang="en">Collector resistor R<sub>C</sub></span></label><output id="lab-bt-rc-out" for="lab-bt-rc"></output><input type="range" id="lab-bt-rc" min="0.5" max="5" step="0.1" value="2.2"></div>
+<div class="ctl"><label for="lab-bt-beta"><span lang="sr">Strujno pojačanje β</span><span lang="en">Current gain β</span></label><output id="lab-bt-beta-out" for="lab-bt-beta"></output><input type="range" id="lab-bt-beta" min="50" max="300" step="10" value="150"></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-bt-calc"></div><div class="result" id="lab-bt-result"></div><div class="calc" id="lab-bt-note"></div></div>
+<figcaption><span lang="sr">NPN tranzistor u spoju sa zajedničkim emitorom. Gore je kolo sa strujama, dole izlazne karakteristike: istaknuta kriva odgovara trenutnoj baznoj struji, žuta isprekidana linija je radna prava, a bela tačka radna tačka Q. Povećavaj U<sub>BB</sub>: Q se penje uz radnu pravu dok ne stigne do strmog dela levo, u zasićenje. Spusti U<sub>BB</sub> ispod 0,7 V: tranzistor se zakoči i Q pada na osu U<sub>CE</sub> = U<sub>CC</sub>.</span><span lang="en">An NPN transistor in common emitter. Above is the circuit with its currents, below are the output characteristics: the highlighted curve belongs to the current base current, the yellow dashed line is the load line, and the white dot is the operating point Q. Increase U<sub>BB</sub>: Q climbs along the load line until it reaches the steep part on the left, saturation. Lower U<sub>BB</sub> below 0.7 V: the transistor cuts off and Q drops onto the axis at U<sub>CE</sub> = U<sub>CC</sub>.</span></figcaption>
+</figure><div class="rest">
+<div class="rule-box green"><p class="eyebrow"><span lang="sr">Gde postaviti radnu tačku</span><span lang="en">Where to place the operating point</span></p><p lang="sr">Za pojačavač Q se postavlja otprilike na sredinu radne prave (U<sub>CE</sub> ≈ U<sub>CC</sub>/2), da bi signal mogao da se ljulja i gore i dole bez sečenja. Za prekidač Q skače između dva kraja radne prave: zakočenja i zasićenja.</p>
+<p lang="en">For an amplifier Q is placed roughly in the middle of the load line (U<sub>CE</sub> ≈ U<sub>CC</sub>/2), so the signal can swing both up and down without clipping. For a switch Q jumps between the two ends of the load line: cut-off and saturation.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · struje tranzistora</span><span lang="en">Example 1 · transistor currents</span></h4><p class="given" lang="sr">Dato: I<sub>B</sub> = 20 μA, β = 200. Nađi I<sub>C</sub>, I<sub>E</sub> i α.</p><p class="given" lang="en">Given: I<sub>B</sub> = 20 μA, β = 200. Find I<sub>C</sub>, I<sub>E</sub> and α.</p><ol lang="sr"><li>\( I_C = \beta I_B = 200\cdot 20\ \mu\mathrm{A} = 4\ \mathrm{mA} \).</li><li>\( I_E = I_B + I_C = 4{,}02\ \mathrm{mA} \).</li><li>\( \alpha = 200/201 = 0{,}995 \).</li></ol>
+<ol lang="en"><li>\( I_C = \beta I_B = 200\cdot 20\ \mu\mathrm{A} = 4\ \mathrm{mA} \).</li><li>\( I_E = I_B + I_C = 4.02\ \mathrm{mA} \).</li><li>\( \alpha = 200/201 = 0.995 \).</li></ol><p class="answer"><span lang="sr">I<sub>C</sub> = 4 mA, I<sub>E</sub> = 4,02 mA, α = 0,995</span><span lang="en">I<sub>C</sub> = 4 mA, I<sub>E</sub> = 4.02 mA, α = 0.995</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · radna tačka</span><span lang="en">Example 2 · the operating point</span></h4><p class="given" lang="sr">Dato: U<sub>BB</sub> = 5 V, R<sub>B</sub> = 100 kΩ, U<sub>CC</sub> = 12 V, R<sub>C</sub> = 2 kΩ, β = 100. Nađi I<sub>B</sub>, I<sub>C</sub>, U<sub>CE</sub> i režim.</p><p class="given" lang="en">Given: U<sub>BB</sub> = 5 V, R<sub>B</sub> = 100 kΩ, U<sub>CC</sub> = 12 V, R<sub>C</sub> = 2 kΩ, β = 100. Find I<sub>B</sub>, I<sub>C</sub>, U<sub>CE</sub> and the mode.</p><ol lang="sr"><li>\( I_B = (5 - 0{,}7)/100\ \mathrm{k\Omega} = 43\ \mu\mathrm{A} \).</li><li>\( I_C = 100\cdot 43\ \mu\mathrm{A} = 4{,}3\ \mathrm{mA} \).</li><li>\( U_{CE} = 12 - 2\ \mathrm{k\Omega}\cdot 4{,}3\ \mathrm{mA} = 3{,}4\ \mathrm{V} \). Pošto je U<sub>CE</sub> &gt; 0,2 V, tranzistor je u aktivnom režimu.</li></ol>
+<ol lang="en"><li>\( I_B = (5 - 0.7)/100\ \mathrm{k\Omega} = 43\ \mu\mathrm{A} \).</li><li>\( I_C = 100\cdot 43\ \mu\mathrm{A} = 4.3\ \mathrm{mA} \).</li><li>\( U_{CE} = 12 - 2\ \mathrm{k\Omega}\cdot 4.3\ \mathrm{mA} = 3.4\ \mathrm{V} \). Since U<sub>CE</sub> &gt; 0.2 V, the transistor is in the active mode.</li></ol><p class="answer"><span lang="sr">I<sub>C</sub> = 4,3 mA, U<sub>CE</sub> = 3,4 V, aktivni režim</span><span lang="en">I<sub>C</sub> = 4.3 mA, U<sub>CE</sub> = 3.4 V, active mode</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · kada račun „ne izađe”</span><span lang="en">Example 3 · when the calculation "does not work out"</span></h4><p class="given" lang="sr">Dato: isto kolo, ali R<sub>B</sub> = 22 kΩ.</p><p class="given" lang="en">Given: the same circuit, but R<sub>B</sub> = 22 kΩ.</p><ol lang="sr"><li>\( I_B = 4{,}3/22\ \mathrm{k\Omega} = 195\ \mu\mathrm{A} \), pa bi bilo \( \beta I_B = 19{,}5\ \mathrm{mA} \).</li><li>Tada bi \( U_{CE} = 12 - 2\cdot 19{,}5 = -27\ \mathrm{V} \), što je nemoguće.</li><li>Tranzistor je u <strong>zasićenju</strong>: \( U_{CE} \approx 0{,}2\ \mathrm{V} \), \( I_C = (12 - 0{,}2)/2\ \mathrm{k\Omega} = 5{,}9\ \mathrm{mA} \).</li></ol>
+<ol lang="en"><li>\( I_B = 4.3/22\ \mathrm{k\Omega} = 195\ \mu\mathrm{A} \), so it would be \( \beta I_B = 19.5\ \mathrm{mA} \).</li><li>Then \( U_{CE} = 12 - 2\cdot 19.5 = -27\ \mathrm{V} \), which is impossible.</li><li>The transistor is in <strong>saturation</strong>: \( U_{CE} \approx 0.2\ \mathrm{V} \), \( I_C = (12 - 0.2)/2\ \mathrm{k\Omega} = 5.9\ \mathrm{mA} \).</li></ol><p class="answer"><span lang="sr">zasićenje, I<sub>C</sub> ≈ 5,9 mA, U<sub>CE</sub> ≈ 0,2 V</span><span lang="en">saturation, I<sub>C</sub> ≈ 5.9 mA, U<sub>CE</sub> ≈ 0.2 V</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>I<sub>C</sub> = β I<sub>B</sub> uvek.</b> Važi samo u aktivnom režimu. Ako račun da negativan U<sub>CE</sub>, tranzistor je u zasićenju.</div></li><li><div><b>Zaboravljenih 0,7 V.</b> Bazna struja je \( (U_{BB} - 0{,}7)/R_B \), a ne \( U_{BB}/R_B \).</div></li><li><div><b>Zamena emitora i kolektora.</b> Slojevi nisu simetrični; obrnut tranzistor ima vrlo malo β.</div></li><li><div><b>Strelica na pogrešnom izvodu.</b> Strelica je uvek na emitoru, a njen smer razlikuje NPN od PNP.</div></li><li><div><b>Tranzistor „pravi” struju.</b> Energiju daje izvor U<sub>CC</sub>; tranzistor samo upravlja koliko struje propušta.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>I<sub>C</sub> = β I<sub>B</sub> always.</b> It holds only in the active mode. If the calculation gives a negative U<sub>CE</sub>, the transistor is in saturation.</div></li><li><div><b>Forgetting the 0.7 V.</b> The base current is \( (U_{BB} - 0.7)/R_B \), not \( U_{BB}/R_B \).</div></li><li><div><b>Swapping the emitter and the collector.</b> The layers are not symmetric; a reversed transistor has a very small β.</div></li><li><div><b>The arrow on the wrong lead.</b> The arrow is always on the emitter, and its direction tells NPN from PNP.</div></li><li><div><b>The transistor "makes" current.</b> The energy comes from the source U<sub>CC</sub>; the transistor only controls how much current it lets through.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Bipolarni tranzistor ima tri sloja (NPN ili PNP), tri izvoda (E, B, C) i dva PN spoja. Strelica u simbolu je na emitoru.</li><li>U aktivnom režimu: B–E direktno, C–B inverzno, \( I_C = \beta I_B \), \( I_E = I_B + I_C \), \( \alpha = \beta/(\beta + 1) \).</li><li>Zakočenje i zasićenje koriste se za prekidače, aktivni režim za pojačavače.</li><li>Radna prava \( U_{CE} = U_{CC} - R_CI_C \) i karakteristika za zadato I<sub>B</sub> daju radnu tačku Q.</li></ul><ul lang="en"><li>A bipolar transistor has three layers (NPN or PNP), three leads (E, B, C) and two PN junctions. The arrow in the symbol is on the emitter.</li><li>In the active mode: B–E forward, C–B reverse, \( I_C = \beta I_B \), \( I_E = I_B + I_C \), \( \alpha = \beta/(\beta + 1) \).</li><li>Cut-off and saturation are used for switches, the active mode for amplifiers.</li><li>The load line \( U_{CE} = U_{CC} - R_CI_C \) and the characteristic for the given I<sub>B</sub> give the operating point Q.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="ELE03" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/bjt-labs.js"></script>
+<script src="../assets/js/lessons/bipolarni-tranzistori.js"></script>
+</body>
+</html>

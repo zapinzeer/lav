@@ -4,17 +4,17 @@ window.LAV_CLASSES = {
     en: 'Physics',
     color: 'copper',
     blurb: {
-      sr: 'Magnetizam, sile, motori i indukcija.',
-      en: 'Magnetism, forces, motors and induction.'
+      sr: 'Magnetizam, sile, motori i indukcija, i Nikola Tesla.',
+      en: 'Magnetism, forces, motors and induction, and Nikola Tesla.'
     }
   },
   osnove: {
-    sr: 'Osnove elektronike · Vežbe',
-    en: 'Fundamentals of Electronics · Labs',
+    sr: 'Osnove elektronike',
+    en: 'Fundamentals of Electronics',
     color: 'field',
     blurb: {
-      sr: 'Laboratorijske vežbe: kako se meri instrumentima i osciloskopom.',
-      en: 'Lab exercises: how to measure with meters and an oscilloscope.'
+      sr: 'Laboratorijske vežbe merenja instrumentima i osciloskopom, i snaga u kolima sa kalemom i kondenzatorom.',
+      en: 'Lab exercises on measuring with meters and an oscilloscope, and power in circuits with a coil and a capacitor.'
     }
   },
   elektronika: {
@@ -22,8 +22,8 @@ window.LAV_CLASSES = {
     en: 'Electronics',
     color: 'violet',
     blurb: {
-      sr: 'Diode i usmerivači: od naizmenične do jednosmerne struje.',
-      en: 'Diodes and rectifiers: from alternating to direct current.'
+      sr: 'Diode i usmerivači, bipolarni tranzistori i njihove ekvivalentne šeme.',
+      en: 'Diodes and rectifiers, bipolar transistors and their equivalent circuits.'
     }
   },
   naizmenicna: {
@@ -148,6 +148,19 @@ window.LAV_LESSONS = [
     tags: ['3d', 'animation', 'formulas']
   },
   {
+    slug: 'nikola-tesla',
+    cls: 'fizika',
+    date: '2026-11-23',
+    minutes: 22,
+    quiz: 'FIZ08',
+    title: { sr: 'Nikola Tesla i njegovi doprinosi i otkrića', en: 'Nikola Tesla, his contributions and discoveries' },
+    summary: {
+      sr: 'Život Nikole Tesle, obrtno magnetno polje i višefazni sistem, asinhroni motor, rat struja, Teslin transformator, radio i daljinsko upravljanje.',
+      en: 'The life of Nikola Tesla, the rotating magnetic field and the polyphase system, the induction motor, the war of the currents, the Tesla coil, radio and remote control.'
+    },
+    tags: ['animation']
+  },
+  {
     slug: 'merenje-struje-i-napona',
     cls: 'osnove',
     date: '2026-10-09',
@@ -180,6 +193,32 @@ window.LAV_LESSONS = [
     tags: ['animation', 'formulas', 'lab']
   },
   {
+    slug: 'snaga-u-kolu-sa-kalemom',
+    cls: 'osnove',
+    date: '2026-11-23',
+    minutes: 20,
+    quiz: 'OSN03',
+    title: { sr: 'Snaga u kolu sa kalemom', en: 'Power in a circuit with a coil' },
+    summary: {
+      sr: 'Realni kalem kao RL kolo, trenutna snaga, aktivna, reaktivna i prividna snaga, trougao snaga i faktor snage cos φ.',
+      en: 'A real coil as an RL circuit, instantaneous power, active, reactive and apparent power, the power triangle and the power factor cos φ.'
+    },
+    tags: ['animation', 'formulas']
+  },
+  {
+    slug: 'snaga-u-kolu-sa-kondenzatorom',
+    cls: 'osnove',
+    date: '2026-11-23',
+    minutes: 20,
+    quiz: 'OSN04',
+    title: { sr: 'Snaga u kolu sa kondenzatorom', en: 'Power in a circuit with a capacitor' },
+    summary: {
+      sr: 'RC kolo, struja koja prednjači naponu, negativna reaktivna snaga kondenzatora i popravka faktora snage kondenzatorima.',
+      en: 'The RC circuit, a current that leads the voltage, the negative reactive power of a capacitor and improving the power factor with capacitors.'
+    },
+    tags: ['animation', 'formulas']
+  },
+  {
     slug: 'usmerivac',
     cls: 'elektronika',
     date: '2026-10-09',
@@ -202,6 +241,45 @@ window.LAV_LESSONS = [
     summary: {
       sr: 'Četiri diode, obe poluperiode i ceo lanac napajanja, od transformatora do regulatora.',
       en: 'Four diodes, both half-cycles and the whole power-supply chain, from transformer to regulator.'
+    },
+    tags: ['animation', 'formulas']
+  },
+  {
+    slug: 'bipolarni-tranzistori',
+    cls: 'elektronika',
+    date: '2026-11-23',
+    minutes: 24,
+    quiz: 'ELE03',
+    title: { sr: 'Bipolarni tranzistori', en: 'Bipolar transistors' },
+    summary: {
+      sr: 'Građa NPN i PNP tranzistora, struje i pojačanje β, četiri režima rada, ulazne i izlazne karakteristike i radna prava.',
+      en: 'The structure of NPN and PNP transistors, currents and the gain β, the four operating modes, input and output characteristics and the load line.'
+    },
+    tags: ['animation', 'formulas']
+  },
+  {
+    slug: 'ekvivalentna-sema-aktivni-rezim',
+    cls: 'elektronika',
+    date: '2026-11-23',
+    minutes: 22,
+    quiz: 'ELE04',
+    title: { sr: 'Ekvivalentna šema bipolarnog tranzistora u aktivnom režimu rada', en: 'Equivalent circuit of a bipolar transistor in the active mode' },
+    summary: {
+      sr: 'Jednosmerni model sa U_BE ≈ 0,7 V i strujnim izvorom βI_B, model za male signale sa g_m, r_π i r_o, i h-parametri.',
+      en: 'The DC model with U_BE ≈ 0.7 V and a current source βI_B, the small-signal model with g_m, r_π and r_o, and the h-parameters.'
+    },
+    tags: ['animation', 'formulas']
+  },
+  {
+    slug: 'ekvivalentna-sema-rezim-zasicenja',
+    cls: 'elektronika',
+    date: '2026-11-23',
+    minutes: 18,
+    quiz: 'ELE05',
+    title: { sr: 'Ekvivalentna šema bipolarnog tranzistora u režimu zasićenja', en: 'Equivalent circuit of a bipolar transistor in saturation' },
+    summary: {
+      sr: 'Uslov zasićenja βI_B > I_C, model sa dva naponska izvora U_BEsat i U_CEsat, faktor prezasićenja i tranzistor kao prekidač.',
+      en: 'The saturation condition βI_B > I_C, the model with two voltage sources U_BEsat and U_CEsat, the overdrive factor and the transistor as a switch.'
     },
     tags: ['animation', 'formulas']
   },

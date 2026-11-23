@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Snaga u kolu sa kondenzatorom: trenutna snaga RC kola, aktivna, reaktivna i prividna snaga, kapacitivna reaktivna snaga i popravka faktora snage kondenzatorima.">
+<title>Snaga u kolu sa kondenzatorom · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="snaga-u-kolu-sa-kondenzatorom">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>izračunaš impedansu, struju i fazni stav redne RC veze;</li><li>objasniš kako izgleda trenutna snaga kada struja prednjači naponu;</li><li>izračunaš P, Q i S u kolu sa kondenzatorom i objasniš znak reaktivne snage;</li><li>izračunaš kondenzator koji popravlja faktor snage induktivnog potrošača.</li></ul>
+    <ul lang="en"><li>calculate the impedance, the current and the phase shift of a series RC circuit;</li><li>explain what the instantaneous power looks like when the current leads the voltage;</li><li>calculate P, Q and S in a circuit with a capacitor and explain the sign of the reactive power;</li><li>calculate the capacitor that improves the power factor of an inductive load.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="rc" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">R i C na red</span><span lang="en">R and C in series</span></p>
+    <h2><span lang="sr">Kondenzator i otpornik u kolu</span><span lang="en">A capacitor and a resistor in a circuit</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Idealan kondenzator, kao i idealan kalem, ne troši snagu: energiju čuva u električnom polju između ploča i vraća je izvoru. U pravom kolu uz kondenzator uvek postoji neka otpornost: otpornik, potrošač ili gubici u dielektriku. Zato posmatramo <strong>rednu vezu otpornika R i kondenzatora C</strong>.</p>
+<p lang="en">An ideal capacitor, like an ideal coil, consumes no power: it stores energy in the electric field between its plates and returns it to the source. In a real circuit there is always some resistance next to the capacitor: a resistor, a load, or losses in the dielectric. That is why we look at a <strong>series connection of a resistor R and a capacitor C</strong>.</p>
+<p lang="sr">Napon na otporniku je u fazi sa strujom, a napon na kondenzatoru <strong>kasni</strong> za strujom 90°. Kod kondenzatora je dakle obrnuto nego kod kalema: <strong>struja prednjači naponu</strong> (ICE).</p>
+<p lang="en">The voltage across the resistor is in phase with the current, and the voltage across the capacitor <strong>lags</strong> the current by 90°. So for a capacitor it is the opposite of a coil: <strong>the current leads the voltage</strong> (ICE).</p><div class="formula"><div class="tex">\[ X_C = \frac{1}{\omega C} \qquad Z = \sqrt{R^2 + X_C^2} \qquad \operatorname{tg}\varphi = -\frac{X_C}{R} \qquad I = \frac{U}{Z} \]</div><dl class="legend"><div><dt>X<sub>C</sub></dt><dd><span lang="sr">kapacitivna reaktansa</span><span lang="en">capacitive reactance</span></dd><span class="unit">Ω</span></div><div><dt>C</dt><dd><span lang="sr">kapacitivnost</span><span lang="en">capacitance</span></dd><span class="unit">F</span></div><div><dt>φ</dt><dd><span lang="sr">fazni stav, negativan jer struja prednjači</span><span lang="en">phase shift, negative because the current leads</span></dd><span class="unit">°</span></div></dl></div><p lang="sr">Fazni stav je sada između −90° i 0°. Što je kondenzator manji ili učestanost niža, X<sub>C</sub> je veća i kolo je „kapacitivnije”.</p>
+<p lang="en">The phase shift is now between −90° and 0°. The smaller the capacitor or the lower the frequency, the larger X<sub>C</sub> and the "more capacitive" the circuit.</p>
+</div>
+<div class="rest">
+<figure class="fig" style="max-width:520px">
+<svg class="dg" viewBox="0 0 420 190" role="img" aria-label="Redna RC veza i trougao napona / series RC circuit and the voltage triangle">
+<defs><marker id="ah-rc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillc"/></marker><marker id="ah-rcf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillf"/></marker><marker id="ah-rcg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillg"/></marker></defs>
+<path class="w" d="M30 40H60M110 40H154M166 40H210V160H30V120M30 80V40M154 24V56M166 24V56"/>
+<circle class="box" cx="30" cy="100" r="20"/>
+<path class="w" d="M20 100q5-10 10 0t10 0"/>
+<rect class="box" x="60" y="31" width="50" height="18" rx="2"/>
+<text class="it" x="85" y="22" text-anchor="middle">R</text>
+<text class="it" x="160" y="16" text-anchor="middle">C</text>
+<text class="it" x="62" y="104">U</text>
+<path class="wc" d="M150 160H120" marker-end="url(#ah-rc)"/>
+<text class="it cu" x="160" y="178" text-anchor="middle">I</text>
+<line class="wg" x1="260" y1="40" x2="380" y2="40" marker-end="url(#ah-rcg)"/>
+<line class="wf" x1="380" y1="40" x2="380" y2="130" marker-end="url(#ah-rcf)"/>
+<line class="wc" x1="260" y1="40" x2="378" y2="128" marker-end="url(#ah-rc)"/>
+<text class="it go" x="320" y="30" text-anchor="middle">U<tspan font-size="11" dy="3">R</tspan></text>
+<text class="it fl" x="392" y="90">U<tspan font-size="11" dy="3">C</tspan></text>
+<text class="it cu" x="306" y="100" text-anchor="end">U</text>
+<path class="thin" d="M296 40a36 36 0 0 1-7 21"/>
+<text class="it" x="302" y="58">φ</text>
+</svg>
+<figcaption><span lang="sr">Levo: R i C na red. Desno: trougao napona. U<sub>R</sub> leži u pravcu struje, a U<sub>C</sub> je 90° iza nje, pa je trougao „okrenut nadole”. Ukupni napon kasni za strujom za ugao φ.</span><span lang="en">Left: R and C in series. Right: the voltage triangle. U<sub>R</sub> lies along the current, and U<sub>C</sub> is 90° behind it, so the triangle "points down". The total voltage lags the current by the angle φ.</span></figcaption>
+</figure>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="trenutna" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">p = u · i</span><span lang="en">p = u · i</span></p>
+    <h2><span lang="sr">Trenutna snaga u RC kolu</span><span lang="en">Instantaneous power in an RC circuit</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Neka je \( u = U_m\sin\omega t \), a struja prednjači za ugao |φ|: \( i = I_m\sin(\omega t - \varphi) \) uz φ &lt; 0. Ista formula kao kod kalema i dalje važi:</p>
+<p lang="en">Let \( u = U_m\sin\omega t \), and let the current lead by the angle |φ|: \( i = I_m\sin(\omega t - \varphi) \) with φ &lt; 0. The same formula as for the coil still holds:</p><div class="formula"><div class="tex">\[ p = UI\cos\varphi - UI\cos(2\omega t - \varphi) \qquad P = UI\cos\varphi \]</div></div><p lang="sr">Pošto je \( \cos(-\varphi) = \cos\varphi \), aktivna snaga ne zavisi od toga da li struja kasni ili prednjači, već samo od veličine ugla. Razlika je u tome <strong>kada</strong> se energija vraća: kondenzator vraća energiju dok se prazni, u delu periode pre nego što napon prođe kroz nulu.</p>
+<p lang="en">Since \( \cos(-\varphi) = \cos\varphi \), the active power does not depend on whether the current lags or leads, only on the size of the angle. The difference is <strong>when</strong> the energy is returned: a capacitor returns energy while it discharges, in the part of the period just before the voltage crosses zero.</p><div class="formula"><div class="tex">\[ W_C = \tfrac{1}{2}Cu^2 \]</div><dl class="legend"><div><dt>W<sub>C</sub></dt><dd><span lang="sr">energija u električnom polju kondenzatora</span><span lang="en">energy in the electric field of the capacitor</span></dd><span class="unit">J</span></div></dl></div>
+</div><figure class="lab" id="lab-pc">
+<div class="viewport" style="aspect-ratio:380/200"><canvas tabindex="0" aria-label="RC kolo i trougao snaga / the RC circuit and the power triangle"></canvas></div>
+<div class="plot" style="margin-top:10px"><canvas aria-label="Napon i struja u funkciji ωt / voltage and current against ωt"></canvas></div>
+<div class="plot short" style="margin-top:10px"><canvas aria-label="Trenutna snaga p(t) / instantaneous power p(t)"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="lab-pc-u"><span lang="sr">Napon U (efektivno)</span><span lang="en">Voltage U (RMS)</span></label><output id="lab-pc-u-out" for="lab-pc-u"></output><input type="range" id="lab-pc-u" min="10" max="400" step="10" value="230"></div>
+<div class="ctl"><label for="lab-pc-f"><span lang="sr">Učestanost f</span><span lang="en">Frequency f</span></label><output id="lab-pc-f-out" for="lab-pc-f"></output><input type="range" id="lab-pc-f" min="10" max="400" step="10" value="50"></div>
+<div class="ctl"><label for="lab-pc-r"><span lang="sr">Otpornost R</span><span lang="en">Resistance R</span></label><output id="lab-pc-r-out" for="lab-pc-r"></output><input type="range" id="lab-pc-r" min="5" max="500" step="5" value="100"></div>
+<div class="ctl"><label for="lab-pc-val"><span lang="sr">Kapacitivnost C</span><span lang="en">Capacitance C</span></label><output id="lab-pc-val-out" for="lab-pc-val"></output><input type="range" id="lab-pc-val" min="1" max="200" step="1" value="20"></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-pc-calc"></div><div class="result" id="lab-pc-result"></div><div class="calc" id="lab-pc-note"></div></div>
+<figcaption><span lang="sr">R i C na red. Struja (narandžasta) sada <strong>prednjači</strong> naponu (plava). U trouglu snaga reaktivna snaga Q crta se nadole, jer je negativna. Smanji C ili f: X<sub>C</sub> raste, ugao se približava −90° i aktivna snaga opada. Povećaj C: kondenzator propušta struju sve lakše i kolo se ponaša skoro kao čist otpornik.</span><span lang="en">R and C in series. The current (orange) now <strong>leads</strong> the voltage (blue). In the power triangle the reactive power Q is drawn downwards, because it is negative. Reduce C or f: X<sub>C</sub> grows, the angle approaches −90° and the active power falls. Increase C: the capacitor passes current more and more easily and the circuit behaves almost like a pure resistor.</span></figcaption>
+</figure><div class="rest">
+<div class="rule-box violet"><p class="eyebrow"><span lang="sr">Kalem i kondenzator rade u suprotnom ritmu</span><span lang="en">The coil and the capacitor work in opposite rhythm</span></p><p lang="sr">Kalem prima energiju dok struja raste, a kondenzator dok napon raste. Pošto su struja i napon pomereni, u kolu sa oba elementa jedan vraća energiju upravo kada je drugi uzima. Energija tada može da „šeta” između njih umesto da ide nazad do izvora.</p>
+<p lang="en">A coil takes in energy while the current grows, and a capacitor while the voltage grows. Since the current and the voltage are shifted, in a circuit with both elements one returns energy exactly when the other takes it. The energy can then "travel" between them instead of going back to the source.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="snage" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">Q &lt; 0</span><span lang="en">Q &lt; 0</span></p>
+    <h2><span lang="sr">Snage u RC kolu</span><span lang="en">Powers in an RC circuit</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Aktivna i prividna snaga računaju se isto kao kod kalema. Reaktivna snaga kondenzatora po dogovoru ima <strong>negativan znak</strong>: kondenzator reaktivnu snagu daje mreži, a kalem je uzima.</p>
+<p lang="en">The active and the apparent power are calculated the same way as for a coil. The reactive power of a capacitor has a <strong>negative sign</strong> by convention: a capacitor supplies reactive power to the mains, and a coil draws it.</p><div class="formula"><div class="tex">\[ P = UI\cos\varphi = RI^2 \qquad Q_C = UI\sin\varphi = -X_CI^2 = -\frac{U_C^2}{X_C} \qquad S = UI = \sqrt{P^2 + Q_C^2} \]</div><dl class="legend"><div><dt>Q<sub>C</sub></dt><dd><span lang="sr">reaktivna snaga kondenzatora (negativna)</span><span lang="en">reactive power of the capacitor (negative)</span></dd><span class="unit">var</span></div><div><dt>U<sub>C</sub></dt><dd><span lang="sr">napon na kondenzatoru</span><span lang="en">voltage across the capacitor</span></dd><span class="unit">V</span></div></dl></div><p lang="sr">U zadacima se često piše samo veličina, „kondenzator ima 166 var”, a iz konteksta se zna da je kapacitivna. Ako u kolu postoje i kalem i kondenzator, ukupna reaktivna snaga je njihov <strong>algebarski zbir</strong>: \( Q = Q_L + Q_C = Q_L - |Q_C| \).</p>
+<p lang="en">In problems we often write only the size, "the capacitor has 166 var", and the context tells us it is capacitive. If a circuit has both a coil and a capacitor, the total reactive power is their <strong>algebraic sum</strong>: \( Q = Q_L + Q_C = Q_L - |Q_C| \).</p>
+</div>
+<div class="rest">
+<div class="tbl-wrap"><table class="scale free"><caption><span lang="sr">Kalem i kondenzator jedan pored drugog</span><span lang="en">The coil and the capacitor side by side</span></caption><thead><tr><th></th><th><span lang="sr">Kalem (RL)</span><span lang="en">Coil (RL)</span></th><th><span lang="sr">Kondenzator (RC)</span><span lang="en">Capacitor (RC)</span></th></tr></thead><tbody><tr><td><span lang="sr">reaktansa</span><span lang="en">reactance</span></td><td>X<sub>L</sub> = ωL</td><td>X<sub>C</sub> = 1/(ωC)</td></tr><tr><td><span lang="sr">sa porastom f</span><span lang="en">as f grows</span></td><td><span lang="sr">raste</span><span lang="en">grows</span></td><td><span lang="sr">opada</span><span lang="en">falls</span></td></tr><tr><td><span lang="sr">struja u odnosu na napon</span><span lang="en">current compared to voltage</span></td><td><span lang="sr">kasni</span><span lang="en">lags</span></td><td><span lang="sr">prednjači</span><span lang="en">leads</span></td></tr><tr><td>φ</td><td>0° … +90°</td><td>−90° … 0°</td></tr><tr><td>Q</td><td>&gt; 0 <span lang="sr">(uzima)</span><span lang="en">(draws)</span></td><td>&lt; 0 <span lang="sr">(daje)</span><span lang="en">(supplies)</span></td></tr><tr><td><span lang="sr">energija u</span><span lang="en">energy in</span></td><td><span lang="sr">magnetnom polju, Li²/2</span><span lang="en">the magnetic field, Li²/2</span></td><td><span lang="sr">električnom polju, Cu²/2</span><span lang="en">the electric field, Cu²/2</span></td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="kompenzacija" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">popravka cos φ</span><span lang="en">improving cos φ</span></p>
+    <h2><span lang="sr">Kompenzacija reaktivne snage</span><span lang="en">Reactive power compensation</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Većina potrošača u fabrikama su motori, dakle induktivni: uzimaju reaktivnu snagu Q<sub>L</sub> i imaju mali cos φ. Ako im <strong>paralelno</strong> vežemo kondenzator, on daje reaktivnu snagu na licu mesta, pa mreža više ne mora da je dovodi. Aktivna snaga motora se ne menja, ali ukupna struja iz mreže opada.</p>
+<p lang="en">Most loads in factories are motors, so they are inductive: they draw reactive power Q<sub>L</sub> and have a small cos φ. If we connect a capacitor <strong>in parallel</strong> with them, it supplies the reactive power on the spot, so the mains no longer has to bring it. The active power of the motor does not change, but the total current from the mains falls.</p><div class="formula"><div class="tex">\[ Q_C = P(\operatorname{tg}\varphi_1 - \operatorname{tg}\varphi_2) \qquad C = \frac{Q_C}{\omega U^2} \]</div><dl class="legend"><div><dt>φ<sub>1</sub></dt><dd><span lang="sr">fazni stav pre kompenzacije</span><span lang="en">phase shift before compensation</span></dd><span class="unit">°</span></div><div><dt>φ<sub>2</sub></dt><dd><span lang="sr">željeni fazni stav posle kompenzacije</span><span lang="en">the desired phase shift after compensation</span></dd><span class="unit">°</span></div><div><dt>Q<sub>C</sub></dt><dd><span lang="sr">reaktivna snaga koju kondenzator treba da da</span><span lang="en">the reactive power the capacitor must supply</span></dd><span class="unit">var</span></div></dl></div><p lang="sr">Formula za C dolazi iz \( |Q_C| = U^2/X_C = \omega C U^2 \), jer je kondenzator vezan paralelno i na njemu je ceo napon mreže. U praksi se cos φ popravlja na oko 0,95, a ne na 1: potpuna kompenzacija zahteva veliki kondenzator, a mala promena opterećenja tada bi kolo učinila kapacitivnim.</p>
+<p lang="en">The formula for C comes from \( |Q_C| = U^2/X_C = \omega C U^2 \), because the capacitor is connected in parallel and has the full mains voltage across it. In practice cos φ is improved to about 0.95, not to 1: full compensation needs a large capacitor, and a small change in the load would then make the circuit capacitive.</p>
+</div><figure class="lab" id="lab-kc">
+<div class="viewport" style="aspect-ratio:380/220"><canvas tabindex="0" aria-label="Trougao snaga pre i posle kompenzacije / the power triangle before and after compensation"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="lab-kc-p"><span lang="sr">Aktivna snaga P</span><span lang="en">Active power P</span></label><output id="lab-kc-p-out" for="lab-kc-p"></output><input type="range" id="lab-kc-p" min="200" max="10000" step="100" value="2000"></div>
+<div class="ctl"><label for="lab-kc-pf1"><span lang="sr">cos φ₁ pre</span><span lang="en">cos φ₁ before</span></label><output id="lab-kc-pf1-out" for="lab-kc-pf1"></output><input type="range" id="lab-kc-pf1" min="0.3" max="0.95" step="0.01" value="0.6"></div>
+<div class="ctl"><label for="lab-kc-pf2"><span lang="sr">cos φ₂ posle</span><span lang="en">cos φ₂ after</span></label><output id="lab-kc-pf2-out" for="lab-kc-pf2"></output><input type="range" id="lab-kc-pf2" min="0.3" max="1" step="0.01" value="0.95"></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-kc-calc"></div><div class="result" id="lab-kc-result"></div><div class="calc" id="lab-kc-note"></div></div>
+<figcaption><span lang="sr">Potrošač od P vati na mreži 230 V, 50 Hz. Narandžasta stranica Q₁ je reaktivna snaga motora, a plava strelica Q<sub>C</sub> je ono što kondenzator „oduzme”. Bleda žuta hipotenuza je prividna snaga pre, a jarko žuta posle kompenzacije. P se ne menja, a S i struja se smanjuju.</span><span lang="en">A load of P watts on a 230 V, 50 Hz mains. The orange side Q₁ is the reactive power of the motor, and the blue arrow Q<sub>C</sub> is what the capacitor "takes away". The pale yellow hypotenuse is the apparent power before, and the bright yellow one after compensation. P does not change, while S and the current get smaller.</span></figcaption>
+</figure><div class="rest">
+<figure class="fig" style="max-width:420px">
+<svg class="dg" viewBox="0 0 300 150" role="img" aria-label="Kondenzator vezan paralelno sa motorom / a capacitor connected in parallel with a motor">
+<path class="w" d="M20 30H250M20 120H250M140 30V64M140 76V120M128 64H152M128 76H152M250 30V55M250 95V120"/>
+<circle class="box" cx="250" cy="75" r="20"/>
+<text x="250" y="80" text-anchor="middle">M</text>
+<circle class="fillk" cx="140" cy="30" r="3"/><circle class="fillk" cx="140" cy="120" r="3"/>
+<text class="it" x="162" y="75">C</text>
+<text class="sm mu" x="20" y="20">230 V, 50 Hz</text>
+<text class="sm mu" x="250" y="142" text-anchor="middle">P, cos φ₁</text>
+</svg>
+<figcaption><span lang="sr">Kondenzator se vezuje paralelno sa motorom, pa motor i dalje dobija pun napon i radi kao pre.</span><span lang="en">The capacitor is connected in parallel with the motor, so the motor still gets the full voltage and works as before.</span></figcaption>
+</figure>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · RC kolo</span><span lang="en">Example 1 · an RC circuit</span></h4><p class="given" lang="sr">Dato: R = 40 Ω i X<sub>C</sub> = 30 Ω na red, napon 100 V. Izračunaj Z, I, φ, P, Q i S.</p><p class="given" lang="en">Given: R = 40 Ω and X<sub>C</sub> = 30 Ω in series, voltage 100 V. Calculate Z, I, φ, P, Q and S.</p><ol lang="sr"><li>\( Z = \sqrt{40^2 + 30^2} = 50\ \Omega \), \( I = 100/50 = 2\ \mathrm{A} \).</li><li>\( \cos\varphi = 40/50 = 0{,}8 \), \( \varphi = -36{,}9^\circ \): struja prednjači.</li><li>\( P = 40\cdot 2^2 = 160\ \mathrm{W} \), \( Q = -30\cdot 2^2 = -120\ \mathrm{var} \), \( S = 200\ \mathrm{VA} \).</li></ol>
+<ol lang="en"><li>\( Z = \sqrt{40^2 + 30^2} = 50\ \Omega \), \( I = 100/50 = 2\ \mathrm{A} \).</li><li>\( \cos\varphi = 40/50 = 0.8 \), \( \varphi = -36.9^\circ \): the current leads.</li><li>\( P = 40\cdot 2^2 = 160\ \mathrm{W} \), \( Q = -30\cdot 2^2 = -120\ \mathrm{var} \), \( S = 200\ \mathrm{VA} \).</li></ol><p class="answer"><span lang="sr">P = 160 W, Q = −120 var, S = 200 VA</span><span lang="en">P = 160 W, Q = −120 var, S = 200 VA</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · kondenzator na mreži</span><span lang="en">Example 2 · a capacitor on the mains</span></h4><p class="given" lang="sr">Dato: kondenzator od 10 μF priključen na 230 V, 50 Hz. Kolike su struja i reaktivna snaga?</p><p class="given" lang="en">Given: a 10 μF capacitor connected to 230 V, 50 Hz. What are the current and the reactive power?</p><ol lang="sr"><li>\( X_C = 1/(2\pi\cdot 50\cdot 10\cdot 10^{-6}) = 318{,}3\ \Omega \).</li><li>\( I = 230/318{,}3 = 0{,}723\ \mathrm{A} \).</li><li>\( |Q_C| = UI = 230\cdot 0{,}723 = 166\ \mathrm{var} \), kapacitivno; P = 0.</li></ol>
+<ol lang="en"><li>\( X_C = 1/(2\pi\cdot 50\cdot 10\cdot 10^{-6}) = 318.3\ \Omega \).</li><li>\( I = 230/318.3 = 0.723\ \mathrm{A} \).</li><li>\( |Q_C| = UI = 230\cdot 0.723 = 166\ \mathrm{var} \), capacitive; P = 0.</li></ol><p class="answer"><span lang="sr">I = 0,723 A, Q<sub>C</sub> = −166 var</span><span lang="en">I = 0.723 A, Q<sub>C</sub> = −166 var</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · kompenzacija motora</span><span lang="en">Example 3 · compensating a motor</span></h4><p class="given" lang="sr">Dato: motor 2 kW, cos φ<sub>1</sub> = 0,6, mreža 230 V, 50 Hz. Koliki kondenzator popravlja cos φ na 0,95?</p><p class="given" lang="en">Given: a 2 kW motor, cos φ<sub>1</sub> = 0.6, mains 230 V, 50 Hz. What capacitor improves cos φ to 0.95?</p><ol lang="sr"><li>\( \operatorname{tg}\varphi_1 = 1{,}333 \), \( \operatorname{tg}\varphi_2 = 0{,}329 \).</li><li>\( Q_C = 2000\,(1{,}333 - 0{,}329) = 2010\ \mathrm{var} \).</li><li>\( C = 2010/(314\cdot 230^2) = 121\ \mu\mathrm{F} \).</li><li>Struja iz mreže pada sa \( 2000/(230\cdot 0{,}6) = 14{,}5\ \mathrm{A} \) na \( 2000/(230\cdot 0{,}95) = 9{,}2\ \mathrm{A} \).</li></ol>
+<ol lang="en"><li>\( \tan\varphi_1 = 1.333 \), \( \tan\varphi_2 = 0.329 \).</li><li>\( Q_C = 2000\,(1.333 - 0.329) = 2010\ \mathrm{var} \).</li><li>\( C = 2010/(314\cdot 230^2) = 121\ \mu\mathrm{F} \).</li><li>The current from the mains drops from \( 2000/(230\cdot 0.6) = 14.5\ \mathrm{A} \) to \( 2000/(230\cdot 0.95) = 9.2\ \mathrm{A} \).</li></ol><p class="answer"><span lang="sr">C ≈ 121 μF, struja 14,5 A → 9,2 A</span><span lang="en">C ≈ 121 μF, current 14.5 A → 9.2 A</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Pogrešan smer.</b> Kod kondenzatora struja prednjači (ICE), pa je φ negativan.</div></li><li><div><b>X<sub>C</sub> = ωC.</b> Kapacitivna reaktansa je recipročna: \( X_C = 1/(\omega C) \). I pretvori μF u F.</div></li><li><div><b>Kompenzacioni kondenzator na red.</b> Kondenzator se vezuje paralelno; na red bi promenio napon na motoru.</div></li><li><div><b>Sabiranje Q<sub>L</sub> i |Q<sub>C</sub>|.</b> Reaktivne snage kalema i kondenzatora se oduzimaju, jer imaju suprotne znakove.</div></li><li><div><b>Kompenzacija menja P.</b> Ne menja. Smanjuju se samo Q, S i struja iz mreže.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>The wrong direction.</b> In a capacitor the current leads (ICE), so φ is negative.</div></li><li><div><b>X<sub>C</sub> = ωC.</b> The capacitive reactance is reciprocal: \( X_C = 1/(\omega C) \). And convert μF to F.</div></li><li><div><b>A compensation capacitor in series.</b> The capacitor is connected in parallel; in series it would change the voltage on the motor.</div></li><li><div><b>Adding Q<sub>L</sub> and |Q<sub>C</sub>|.</b> The reactive powers of a coil and a capacitor subtract, because they have opposite signs.</div></li><li><div><b>Compensation changes P.</b> It does not. Only Q, S and the current from the mains get smaller.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>U RC kolu \( Z = \sqrt{R^2 + X_C^2} \), \( X_C = 1/(\omega C) \), a struja prednjači naponu za ugao do 90°.</li><li>\( P = UI\cos\varphi = RI^2 \), \( Q_C = -X_CI^2 \) (kondenzator daje reaktivnu snagu), \( S = UI \).</li><li>Reaktivne snage kalema i kondenzatora se algebarski sabiraju, pa se mogu poništiti.</li><li>Kompenzacija: \( Q_C = P(\operatorname{tg}\varphi_1 - \operatorname{tg}\varphi_2) \), \( C = Q_C/(\omega U^2) \), kondenzator paralelno potrošaču.</li></ul><ul lang="en"><li>In an RC circuit \( Z = \sqrt{R^2 + X_C^2} \), \( X_C = 1/(\omega C) \), and the current leads the voltage by an angle up to 90°.</li><li>\( P = UI\cos\varphi = RI^2 \), \( Q_C = -X_CI^2 \) (the capacitor supplies reactive power), \( S = UI \).</li><li>The reactive powers of a coil and a capacitor add algebraically, so they can cancel.</li><li>Compensation: \( Q_C = P(\tan\varphi_1 - \tan\varphi_2) \), \( C = Q_C/(\omega U^2) \), with the capacitor in parallel with the load.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="OSN04" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/snaga-labs.js"></script>
+<script src="../assets/js/lessons/snaga-u-kolu-sa-kondenzatorom.js"></script>
+</body>
+</html>

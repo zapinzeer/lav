@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ekvivalentna šema bipolarnog tranzistora u aktivnom režimu: jednosmerni model sa izvorom 0,7 V i strujnim izvorom βI_B, hibridni π model za male signale i h-parametri.">
+<title>Ekvivalentna šema tranzistora u aktivnom režimu · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="ekvivalentna-sema-aktivni-rezim">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš zašto tranzistor zamenjujemo ekvivalentnom šemom;</li><li>nacrtaš jednosmerni model tranzistora u aktivnom režimu i njime izračunaš radnu tačku;</li><li>izračunaš parametre modela za male signale \( g_m \), \( r_\pi \) i \( r_o \);</li><li>povežeš h-parametre sa hibridnim π modelom i proceniš naponsko pojačanje.</li></ul>
+    <ul lang="en"><li>explain why we replace a transistor with an equivalent circuit;</li><li>draw the DC model of a transistor in the active mode and use it to calculate the operating point;</li><li>calculate the small-signal model parameters \( g_m \), \( r_\pi \) and \( r_o \);</li><li>link the h-parameters to the hybrid-π model and estimate the voltage gain.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="zasto" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">od krive do kola</span><span lang="en">from curves to a circuit</span></p>
+    <h2><span lang="sr">Zašto ekvivalentna šema</span><span lang="en">Why an equivalent circuit</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Tranzistor je <strong>nelinearna</strong> komponenta: njegove struje zavise od napona eksponencijalno, a karakteristike su krive. Računati direktno sa krivama je teško. Zato tranzistor zamenjujemo <strong>ekvivalentnom šemom</strong>: kolom od jednostavnih elemenata (izvora i otpornika) koje se, u određenim uslovima, spolja ponaša isto kao tranzistor. Posle toga kolo rešavamo Omovim i Kirhofovim zakonima, kao svako drugo.</p>
+<p lang="en">A transistor is a <strong>nonlinear</strong> component: its currents depend on the voltages exponentially, and its characteristics are curves. Calculating directly with curves is hard. That is why we replace the transistor with an <strong>equivalent circuit</strong>: a circuit of simple elements (sources and resistors) that, under certain conditions, behaves from the outside the same as the transistor. After that we solve the circuit with Ohm's and Kirchhoff's laws, like any other.</p>
+<p lang="sr">Ekvivalentna šema važi samo za jedan <strong>režim rada</strong>. U ovoj lekciji gledamo aktivni režim, u kom tranzistor pojačava. Pojačavač analiziramo u dva koraka:</p>
+<p lang="en">An equivalent circuit holds only for one <strong>operating mode</strong>. In this lesson we look at the active mode, in which the transistor amplifies. We analyse an amplifier in two steps:</p>
+<ol class="steps-inline" lang="sr"><li><span><b>Jednosmerna analiza:</b> sa jednosmernim modelom nalazimo radnu tačku Q (I<sub>B</sub>, I<sub>C</sub>, U<sub>CE</sub>).</span></li><li><span><b>Analiza za male signale:</b> sa modelom za male signale, čiji parametri zavise od Q, računamo pojačanje i otpornosti.</span></li></ol>
+<ol class="steps-inline" lang="en"><li><span><b>DC analysis:</b> with the DC model we find the operating point Q (I<sub>B</sub>, I<sub>C</sub>, U<sub>CE</sub>).</span></li><li><span><b>Small-signal analysis:</b> with the small-signal model, whose parameters depend on Q, we calculate the gain and the resistances.</span></li></ol>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="dc" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">0,7 V i βI<sub>B</sub></span><span lang="en">0.7 V and βI<sub>B</sub></span></p>
+    <h2><span lang="sr">Jednosmerni model</span><span lang="en">The DC model</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">U aktivnom režimu spoj B–E je direktno polarisan i ponaša se kao dioda koja vodi: napon na njemu je skoro stalan, oko 0,7 V za silicijum. Zamenjujemo ga <strong>naponskim izvorom U<sub>BE</sub> ≈ 0,7 V</strong>. Kolektorska struja ne zavisi od U<sub>CE</sub>, već samo od bazne struje, pa izlaz zamenjujemo <strong>strujnim izvorom βI<sub>B</sub></strong> koji je upravljan strujom baze.</p>
+<p lang="en">In the active mode the B–E junction is forward biased and behaves like a conducting diode: the voltage across it is almost constant, about 0.7 V for silicon. We replace it with a <strong>voltage source U<sub>BE</sub> ≈ 0.7 V</strong>. The collector current does not depend on U<sub>CE</sub>, only on the base current, so we replace the output with a <strong>current source βI<sub>B</sub></strong> controlled by the base current.</p><div class="formula"><div class="tex">\[ U_{BE} = U_{BE0} \qquad I_C = \beta I_B \qquad I_B > 0 \qquad U_{CE} > U_{CEsat} \]</div></div><p lang="sr">Posle računanja uvek <strong>proveri uslove</strong>. Ako je I<sub>B</sub> ≤ 0, tranzistor je zakočen; ako je U<sub>CE</sub> manji od oko 0,2 V (ili čak negativan), u zasićenju je, i treba koristiti model iz sledeće lekcije.</p>
+<p lang="en">After the calculation always <strong>check the conditions</strong>. If I<sub>B</sub> ≤ 0, the transistor is cut off; if U<sub>CE</sub> is below about 0.2 V (or even negative), it is in saturation, and the model from the next lesson must be used.</p>
+</div>
+<div class="rest">
+<figure class="fig" style="max-width:560px">
+<svg class="dg" viewBox="0 0 440 200" role="img" aria-label="Tranzistor i njegov jednosmerni model u aktivnom režimu / the transistor and its DC model in the active mode">
+<defs><marker id="ah-dc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillc"/></marker></defs>
+<circle class="thin" cx="90" cy="100" r="34"/>
+<path class="w" d="M36 100H78M78 80V120M78 90L106 72V40M78 110L106 128V160"/>
+<path class="wc" d="M86 115L104 127" marker-end="url(#ah-dc)"/>
+<text class="sm" x="40" y="92">B</text><text class="sm" x="112" y="46">C</text><text class="sm" x="112" y="160">E</text>
+<text x="190" y="108" text-anchor="middle" style="font-size:26px">⇔</text>
+<path class="w" d="M250 60H290V94M290 104V170H380V130M380 90V60H410"/>
+<path class="w" d="M276 94H304"/>
+<path class="w" style="stroke-width:4" d="M282 104H298"/>
+<circle class="box" cx="380" cy="110" r="20"/>
+<path class="wc" d="M380 124V98" marker-end="url(#ah-dc)"/>
+<circle class="fillk" cx="250" cy="60" r="3.5"/><circle class="fillk" cx="410" cy="60" r="3.5"/><circle class="fillk" cx="335" cy="170" r="3.5"/>
+<text class="sm" x="244" y="50">B</text><text class="sm" x="406" y="50">C</text><text class="sm" x="331" y="190">E</text>
+<text class="sm" x="270" y="103" text-anchor="end" lang="sr">0,7 V</text><text class="sm" x="270" y="103" text-anchor="end" lang="en">0.7 V</text>
+<text class="it" x="342" y="114" text-anchor="end">βI<tspan font-size="11" dy="3">B</tspan></text>
+<text class="sm mu" x="268" y="52">I<tspan dy="3" font-size="8">B</tspan> →</text>
+</svg>
+<figcaption><span lang="sr">Levo: NPN tranzistor. Desno: njegov jednosmerni model u aktivnom režimu. Između baze i emitora je izvor U<sub>BE0</sub> ≈ 0,7 V (u stvari dioda koja vodi), a između kolektora i emitora strujni izvor βI<sub>B</sub>. Primeti da strujni izvor „ne mari” za napon na sebi: zato kolektorska struja ne zavisi od R<sub>C</sub>, dok je tranzistor u aktivnom režimu.</span><span lang="en">Left: an NPN transistor. Right: its DC model in the active mode. Between the base and the emitter there is a source U<sub>BE0</sub> ≈ 0.7 V (really a conducting diode), and between the collector and the emitter a current source βI<sub>B</sub>. Notice that a current source "does not care" about the voltage across it: that is why the collector current does not depend on R<sub>C</sub> while the transistor is in the active mode.</span></figcaption>
+</figure>
+<div class="rule-box blue"><p class="eyebrow"><span lang="sr">Tačniji model</span><span lang="en">A more accurate model</span></p><p lang="sr">Ponekad se izvoru od 0,7 V dodaje i mala otpornost baze r<sub>bb'</sub> (desetine do stotine oma), a strujnom izvoru paralelno izlazna otpornost r<sub>o</sub>. Za većinu školskih zadataka dovoljni su izvor 0,7 V i βI<sub>B</sub>.</p>
+<p lang="en">Sometimes a small base resistance r<sub>bb'</sub> (tens to hundreds of ohms) is added to the 0.7 V source, and an output resistance r<sub>o</sub> in parallel with the current source. For most school problems the 0.7 V source and βI<sub>B</sub> are enough.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="mali-signali" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">hibridni π model</span><span lang="en">the hybrid-π model</span></p>
+    <h2><span lang="sr">Model za male signale</span><span lang="en">The small-signal model</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Pojačavač pojačava <strong>male promene</strong> oko radne tačke. Kada se U<sub>BE</sub> promeni za mali iznos u<sub>be</sub>, bazna struja se promeni za i<sub>b</sub>, a kolektorska za i<sub>c</sub>. Za male promene kriva se može zameniti svojom tangentom u tački Q, pa veze postaju <strong>linearne</strong>. Tako nastaje hibridni π model:</p>
+<p lang="en">An amplifier amplifies <strong>small changes</strong> around the operating point. When U<sub>BE</sub> changes by a small amount u<sub>be</sub>, the base current changes by i<sub>b</sub>, and the collector current by i<sub>c</sub>. For small changes a curve can be replaced by its tangent at the point Q, so the relations become <strong>linear</strong>. That gives the hybrid-π model:</p><div class="formula"><div class="tex">\[ g_m = \frac{I_C}{U_T} \qquad r_\pi = \frac{\beta}{g_m} = \frac{\beta\,U_T}{I_C} \qquad r_o = \frac{U_A}{I_C} \qquad i_c = g_m u_{be} = \beta\,i_b \]</div><dl class="legend"><div><dt>g<sub>m</sub></dt><dd><span lang="sr">strmina (transkonduktansa)</span><span lang="en">transconductance</span></dd><span class="unit">S</span></div><div><dt>r<sub>π</sub></dt><dd><span lang="sr">ulazna otpornost između baze i emitora</span><span lang="en">input resistance between base and emitter</span></dd><span class="unit">Ω</span></div><div><dt>r<sub>o</sub></dt><dd><span lang="sr">izlazna otpornost</span><span lang="en">output resistance</span></dd><span class="unit">Ω</span></div><div><dt>U<sub>T</sub></dt><dd><span lang="sr">termički napon, ≈ 25 mV na sobnoj temperaturi</span><span lang="en">thermal voltage, ≈ 25 mV at room temperature</span></dd><span class="unit">V</span></div><div><dt>U<sub>A</sub></dt><dd><span lang="sr">Erlijev napon, obično 50–200 V</span><span lang="en">Early voltage, usually 50–200 V</span></dd><span class="unit">V</span></div></dl></div><p lang="sr">Važno je da <strong>parametri zavise od radne tačke</strong>: dvostruko veća struja I<sub>C</sub> daje dvostruko veću strminu i dvostruko manje r<sub>π</sub> i r<sub>o</sub>. Zato se prvo uvek radi jednosmerna analiza.</p>
+<p lang="en">It is important that <strong>the parameters depend on the operating point</strong>: a collector current I<sub>C</sub> twice as large gives twice the transconductance and half the r<sub>π</sub> and r<sub>o</sub>. That is why the DC analysis is always done first.</p>
+</div><figure class="lab" id="lab-ak">
+<div class="viewport" style="aspect-ratio:420/210"><canvas tabindex="0" aria-label="Hibridni π model sa vrednostima / the hybrid-π model with values"></canvas></div>
+<div class="plot" style="margin-top:10px"><canvas aria-label="Ulazna karakteristika i tangenta u radnoj tački / the input characteristic and the tangent at the operating point"></canvas></div>
+<div class="controls">
+<div class="ctl"><label for="lab-ak-ic"><span lang="sr">Kolektorska struja I<sub>C</sub></span><span lang="en">Collector current I<sub>C</sub></span></label><output id="lab-ak-ic-out" for="lab-ak-ic"></output><input type="range" id="lab-ak-ic" min="0.1" max="10" step="0.1" value="1"></div>
+<div class="ctl"><label for="lab-ak-beta"><span lang="sr">Strujno pojačanje β</span><span lang="en">Current gain β</span></label><output id="lab-ak-beta-out" for="lab-ak-beta"></output><input type="range" id="lab-ak-beta" min="50" max="300" step="10" value="100"></div>
+<div class="ctl"><label for="lab-ak-ua"><span lang="sr">Erlijev napon U<sub>A</sub></span><span lang="en">Early voltage U<sub>A</sub></span></label><output id="lab-ak-ua-out" for="lab-ak-ua"></output><input type="range" id="lab-ak-ua" min="20" max="200" step="10" value="100"></div>
+</div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-ak-calc"></div><div class="result" id="lab-ak-result"></div><div class="calc" id="lab-ak-note"></div></div>
+<figcaption><span lang="sr">Gore: hibridni π model sa vrednostima za izabranu radnu tačku. Dole: ulazna karakteristika I<sub>B</sub>(U<sub>BE</sub>) i njena tangenta u tački Q (žuto). Nagib tangente je 1/r<sub>π</sub>. Povećaj I<sub>C</sub>: tačka Q se penje, kriva je tu strmija, pa r<sub>π</sub> opada, a g<sub>m</sub> raste. Povećaj β pri istoj I<sub>C</sub>: bazna struja je manja i r<sub>π</sub> raste.</span><span lang="en">Top: the hybrid-π model with values for the chosen operating point. Bottom: the input characteristic I<sub>B</sub>(U<sub>BE</sub>) and its tangent at the point Q (yellow). The slope of the tangent is 1/r<sub>π</sub>. Increase I<sub>C</sub>: the point Q climbs, the curve is steeper there, so r<sub>π</sub> falls and g<sub>m</sub> grows. Increase β at the same I<sub>C</sub>: the base current is smaller and r<sub>π</sub> grows.</span></figcaption>
+</figure><div class="rest">
+<div class="rule-box violet"><p class="eyebrow"><span lang="sr">Mala slova, velika slova</span><span lang="en">Small letters, capital letters</span></p><p lang="sr">Po dogovoru, velika slova sa velikim indeksima (I<sub>C</sub>, U<sub>BE</sub>) su jednosmerne vrednosti u radnoj tački, a mala slova sa malim indeksima (i<sub>c</sub>, u<sub>be</sub>) su male promene, signal. U modelu za male signale jednosmerni izvori se kratko spajaju (njihova promena je nula), pa U<sub>CC</sub> postaje masa.</p>
+<p lang="en">By convention, capital letters with capital subscripts (I<sub>C</sub>, U<sub>BE</sub>) are DC values at the operating point, and small letters with small subscripts (i<sub>c</sub>, u<sub>be</sub>) are small changes, the signal. In the small-signal model the DC sources are shorted (their change is zero), so U<sub>CC</sub> becomes ground.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="h-parametri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">h<sub>11e</sub>, h<sub>12e</sub>, h<sub>21e</sub>, h<sub>22e</sub></span><span lang="en">h<sub>11e</sub>, h<sub>12e</sub>, h<sub>21e</sub>, h<sub>22e</sub></span></p>
+    <h2><span lang="sr">h-parametri</span><span lang="en">h-parameters</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">U katalozima i mnogim udžbenicima tranzistor se opisuje <strong>hibridnim (h) parametrima</strong>, kao četvoropol sa ulazom B–E i izlazom C–E. Indeks „e” znači spoj sa zajedničkim emitorom. Jednačine su:</p>
+<p lang="en">In datasheets and many textbooks a transistor is described by <strong>hybrid (h) parameters</strong>, as a two-port network with the input B–E and the output C–E. The subscript "e" means common emitter. The equations are:</p><div class="formula"><div class="tex">\[ u_{be} = h_{11e}\,i_b + h_{12e}\,u_{ce} \qquad i_c = h_{21e}\,i_b + h_{22e}\,u_{ce} \]</div></div>
+</div>
+<div class="rest">
+<div class="tbl-wrap"><table class="scale free"><caption><span lang="sr">Značenje h-parametara</span><span lang="en">The meaning of the h-parameters</span></caption><thead><tr><th><span lang="sr">Parametar</span><span lang="en">Parameter</span></th><th><span lang="sr">Definicija</span><span lang="en">Definition</span></th><th><span lang="sr">Ime</span><span lang="en">Name</span></th><th><span lang="sr">Veza sa π modelom</span><span lang="en">Link to the π model</span></th></tr></thead><tbody>
+<tr><td>h<sub>11e</sub></td><td>u<sub>be</sub>/i<sub>b</sub> (u<sub>ce</sub> = 0)</td><td><span lang="sr">ulazna otpornost</span><span lang="en">input resistance</span></td><td>≈ r<sub>π</sub>, <span lang="sr">reda kΩ</span><span lang="en">of the order of kΩ</span></td></tr>
+<tr><td>h<sub>12e</sub></td><td>u<sub>be</sub>/u<sub>ce</sub> (i<sub>b</sub> = 0)</td><td><span lang="sr">povratni naponski odnos</span><span lang="en">reverse voltage ratio</span></td><td><span lang="sr">≈ 10⁻⁴, obično se zanemaruje</span><span lang="en">≈ 10⁻⁴, usually neglected</span></td></tr>
+<tr><td>h<sub>21e</sub></td><td>i<sub>c</sub>/i<sub>b</sub> (u<sub>ce</sub> = 0)</td><td><span lang="sr">strujno pojačanje</span><span lang="en">current gain</span></td><td>≈ β</td></tr>
+<tr><td>h<sub>22e</sub></td><td>i<sub>c</sub>/u<sub>ce</sub> (i<sub>b</sub> = 0)</td><td><span lang="sr">izlazna provodnost</span><span lang="en">output conductance</span></td><td>≈ 1/r<sub>o</sub>, <span lang="sr">reda μS</span><span lang="en">of the order of μS</span></td></tr>
+</tbody></table></div>
+<figure class="fig" style="max-width:560px">
+<svg class="dg" viewBox="0 0 440 180" role="img" aria-label="Uprošćena h-šema tranzistora / simplified h-parameter model of the transistor">
+<defs><marker id="ah-h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="fillc"/></marker></defs>
+<path class="w" d="M30 40H110V62M110 118V150H30M30 150"/>
+<rect class="box" x="101" y="62" width="18" height="56" rx="2"/>
+<path class="w" d="M110 150H410M240 40H410M260 40V70M260 110V150M340 40V62M340 118V150"/>
+<circle class="box" cx="260" cy="90" r="20"/>
+<path class="wc" d="M260 104V78" marker-end="url(#ah-h)"/>
+<rect class="box" x="331" y="62" width="18" height="56" rx="2"/>
+<circle class="fillk" cx="30" cy="40" r="3.5"/><circle class="fillk" cx="30" cy="150" r="3.5"/><circle class="fillk" cx="410" cy="40" r="3.5"/><circle class="fillk" cx="410" cy="150" r="3.5"/>
+<text class="sm" x="16" y="44">B</text><text class="sm" x="16" y="154">E</text><text class="sm" x="418" y="44">C</text><text class="sm" x="418" y="154">E</text>
+<text class="it" x="128" y="96">h<tspan font-size="10" dy="3">11e</tspan></text>
+<text class="it" x="200" y="96" text-anchor="end">h<tspan font-size="10" dy="3">21e</tspan><tspan dy="-3">i</tspan><tspan font-size="10" dy="3">b</tspan></text>
+<text class="it" x="356" y="96">1/h<tspan font-size="10" dy="3">22e</tspan></text>
+<text class="sm mu" x="56" y="30">i<tspan font-size="8" dy="3">b</tspan><tspan dy="-3"> →</tspan></text>
+<text class="sm mu" x="370" y="30">← i<tspan font-size="8" dy="3">c</tspan></text>
+<text class="sm mu" x="54" y="100">u<tspan font-size="8" dy="3">be</tspan></text>
+</svg>
+<figcaption><span lang="sr">Uprošćena h-šema (uz h<sub>12e</sub> ≈ 0). Ulaz je otpornost h<sub>11e</sub>, a izlaz strujni izvor h<sub>21e</sub>i<sub>b</sub> paralelno sa otpornošću 1/h<sub>22e</sub>. To je isti oblik kao hibridni π model.</span><span lang="en">The simplified h-parameter model (with h<sub>12e</sub> ≈ 0). The input is the resistance h<sub>11e</sub>, and the output is a current source h<sub>21e</sub>i<sub>b</sub> in parallel with the resistance 1/h<sub>22e</sub>. It has the same shape as the hybrid-π model.</span></figcaption>
+</figure>
+<div class="rule-box green"><p class="eyebrow"><span lang="sr">Naponsko pojačanje</span><span lang="en">Voltage gain</span></p><p lang="sr">Kada se na kolektor priključi otpornik R<sub>C</sub>, izlazni napon je \( u_{iz} = -g_m u_{be}(R_C \parallel r_o) \), pa je pojačanje stepena sa zajedničkim emitorom \( A_u = -g_m (R_C \parallel r_o) \approx -g_m R_C \). Minus znači da je izlaz u protivfazi sa ulazom.</p>
+<p lang="en">When a resistor R<sub>C</sub> is connected to the collector, the output voltage is \( u_{out} = -g_m u_{be}(R_C \parallel r_o) \), so the gain of a common-emitter stage is \( A_u = -g_m (R_C \parallel r_o) \approx -g_m R_C \). The minus means the output is in antiphase with the input.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · radna tačka pomoću modela</span><span lang="en">Example 1 · the operating point with the model</span></h4><p class="given" lang="sr">Dato: U<sub>BB</sub> = 3 V, R<sub>B</sub> = 115 kΩ, U<sub>CC</sub> = 10 V, R<sub>C</sub> = 2,5 kΩ, β = 100.</p><p class="given" lang="en">Given: U<sub>BB</sub> = 3 V, R<sub>B</sub> = 115 kΩ, U<sub>CC</sub> = 10 V, R<sub>C</sub> = 2.5 kΩ, β = 100.</p><ol lang="sr"><li>Ulazno kolo sa izvorom 0,7 V: \( I_B = (3 - 0{,}7)/115\ \mathrm{k\Omega} = 20\ \mu\mathrm{A} \).</li><li>Strujni izvor: \( I_C = 100\cdot 20\ \mu\mathrm{A} = 2\ \mathrm{mA} \).</li><li>Izlazno kolo: \( U_{CE} = 10 - 2{,}5\cdot 2 = 5\ \mathrm{V} \).</li><li>Provera: I<sub>B</sub> &gt; 0 i U<sub>CE</sub> = 5 V &gt; 0,2 V, pa je model ispravno upotrebljen.</li></ol>
+<ol lang="en"><li>The input circuit with the 0.7 V source: \( I_B = (3 - 0.7)/115\ \mathrm{k\Omega} = 20\ \mu\mathrm{A} \).</li><li>The current source: \( I_C = 100\cdot 20\ \mu\mathrm{A} = 2\ \mathrm{mA} \).</li><li>The output circuit: \( U_{CE} = 10 - 2.5\cdot 2 = 5\ \mathrm{V} \).</li><li>Check: I<sub>B</sub> &gt; 0 and U<sub>CE</sub> = 5 V &gt; 0.2 V, so the model was used correctly.</li></ol><p class="answer"><span lang="sr">I<sub>C</sub> = 2 mA, U<sub>CE</sub> = 5 V</span><span lang="en">I<sub>C</sub> = 2 mA, U<sub>CE</sub> = 5 V</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · parametri za male signale</span><span lang="en">Example 2 · small-signal parameters</span></h4><p class="given" lang="sr">Dato: radna tačka iz primera 1 (I<sub>C</sub> = 2 mA), β = 100, U<sub>A</sub> = 100 V, U<sub>T</sub> = 25 mV.</p><p class="given" lang="en">Given: the operating point from example 1 (I<sub>C</sub> = 2 mA), β = 100, U<sub>A</sub> = 100 V, U<sub>T</sub> = 25 mV.</p><ol lang="sr"><li>\( g_m = 2\ \mathrm{mA}/25\ \mathrm{mV} = 80\ \mathrm{mS} \).</li><li>\( r_\pi = 100/0{,}08 = 1{,}25\ \mathrm{k\Omega} \).</li><li>\( r_o = 100\ \mathrm{V}/2\ \mathrm{mA} = 50\ \mathrm{k\Omega} \).</li></ol>
+<ol lang="en"><li>\( g_m = 2\ \mathrm{mA}/25\ \mathrm{mV} = 80\ \mathrm{mS} \).</li><li>\( r_\pi = 100/0.08 = 1.25\ \mathrm{k\Omega} \).</li><li>\( r_o = 100\ \mathrm{V}/2\ \mathrm{mA} = 50\ \mathrm{k\Omega} \).</li></ol><p class="answer"><span lang="sr">g<sub>m</sub> = 80 mS, r<sub>π</sub> = 1,25 kΩ, r<sub>o</sub> = 50 kΩ</span><span lang="en">g<sub>m</sub> = 80 mS, r<sub>π</sub> = 1.25 kΩ, r<sub>o</sub> = 50 kΩ</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · pojačanje stepena</span><span lang="en">Example 3 · the gain of the stage</span></h4><p class="given" lang="sr">Dato: isto kolo, R<sub>C</sub> = 2,5 kΩ. Koliko je naponsko pojačanje?</p><p class="given" lang="en">Given: the same circuit, R<sub>C</sub> = 2.5 kΩ. What is the voltage gain?</p><ol lang="sr"><li>\( R_C \parallel r_o = 2{,}5\cdot 50/52{,}5 = 2{,}38\ \mathrm{k\Omega} \).</li><li>\( A_u = -g_m(R_C \parallel r_o) = -0{,}08\cdot 2380 = -190 \).</li><li>Bez r<sub>o</sub> bi bilo \( -0{,}08\cdot 2500 = -200 \): razlika od 5 %.</li></ol>
+<ol lang="en"><li>\( R_C \parallel r_o = 2.5\cdot 50/52.5 = 2.38\ \mathrm{k\Omega} \).</li><li>\( A_u = -g_m(R_C \parallel r_o) = -0.08\cdot 2380 = -190 \).</li><li>Without r<sub>o</sub> it would be \( -0.08\cdot 2500 = -200 \): a difference of 5 %.</li></ol><p class="answer"><span lang="sr">A<sub>u</sub> ≈ −190</span><span lang="en">A<sub>u</sub> ≈ −190</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Model bez provere.</b> Jednosmerni model aktivnog režima važi samo ako je I<sub>B</sub> &gt; 0 i U<sub>CE</sub> &gt; U<sub>CEsat</sub>. Proveri na kraju.</div></li><li><div><b>Mešanje modela.</b> Izvor 0,7 V pripada jednosmernom modelu. U modelu za male signale ga nema: tu je r<sub>π</sub>.</div></li><li><div><b>r<sub>π</sub> kao stalna vrednost.</b> r<sub>π</sub> i g<sub>m</sub> zavise od I<sub>C</sub>; prvo nađi radnu tačku.</div></li><li><div><b>U<sub>T</sub> u voltima.</b> U<sub>T</sub> = 25 mV = 0,025 V; g<sub>m</sub> = 1 mA/25 mV = 40 mS, ne 0,04 mS.</div></li><li><div><b>Zaboravljen minus.</b> Stepen sa zajedničkim emitorom obrće fazu: A<sub>u</sub> je negativno.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>Using the model without checking.</b> The active-mode DC model holds only if I<sub>B</sub> &gt; 0 and U<sub>CE</sub> &gt; U<sub>CEsat</sub>. Check at the end.</div></li><li><div><b>Mixing the models.</b> The 0.7 V source belongs to the DC model. It is not in the small-signal model: r<sub>π</sub> is there instead.</div></li><li><div><b>r<sub>π</sub> as a fixed value.</b> r<sub>π</sub> and g<sub>m</sub> depend on I<sub>C</sub>; find the operating point first.</div></li><li><div><b>U<sub>T</sub> in volts.</b> U<sub>T</sub> = 25 mV = 0.025 V; g<sub>m</sub> = 1 mA/25 mV = 40 mS, not 0.04 mS.</div></li><li><div><b>Forgetting the minus.</b> A common-emitter stage inverts the phase: A<sub>u</sub> is negative.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Ekvivalentna šema zamenjuje nelinearni tranzistor linearnim elementima i važi za jedan režim rada.</li><li>Jednosmerni model u aktivnom režimu: izvor U<sub>BE</sub> ≈ 0,7 V između B i E i strujni izvor βI<sub>B</sub> između C i E; uslovi I<sub>B</sub> &gt; 0 i U<sub>CE</sub> &gt; 0,2 V.</li><li>Model za male signale: \( g_m = I_C/U_T \), \( r_\pi = \beta/g_m \), \( r_o = U_A/I_C \); parametri zavise od radne tačke.</li><li>h<sub>11e</sub> ≈ r<sub>π</sub>, h<sub>21e</sub> ≈ β, h<sub>22e</sub> ≈ 1/r<sub>o</sub>, h<sub>12e</sub> ≈ 0; pojačanje \( A_u \approx -g_mR_C \).</li></ul><ul lang="en"><li>An equivalent circuit replaces the nonlinear transistor with linear elements and holds for one operating mode.</li><li>The DC model in the active mode: a source U<sub>BE</sub> ≈ 0.7 V between B and E and a current source βI<sub>B</sub> between C and E; conditions I<sub>B</sub> &gt; 0 and U<sub>CE</sub> &gt; 0.2 V.</li><li>The small-signal model: \( g_m = I_C/U_T \), \( r_\pi = \beta/g_m \), \( r_o = U_A/I_C \); the parameters depend on the operating point.</li><li>h<sub>11e</sub> ≈ r<sub>π</sub>, h<sub>21e</sub> ≈ β, h<sub>22e</sub> ≈ 1/r<sub>o</sub>, h<sub>12e</sub> ≈ 0; the gain \( A_u \approx -g_mR_C \).</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="ELE04" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/bjt-labs.js"></script>
+<script src="../assets/js/lessons/ekvivalentna-sema-aktivni-rezim.js"></script>
+</body>
+</html>

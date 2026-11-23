@@ -161,7 +161,8 @@ function loadData() {
       .then(function () { return loadScript('assets/js/quiz-ac.js'); })
       .then(function () { return loadScript('assets/js/quiz-pc.js'); })
       .then(function () { return loadScript('assets/js/quiz-adv.js'); })
-      .then(function () { return loadScript('assets/js/quiz-db.js'); });
+      .then(function () { return loadScript('assets/js/quiz-db.js'); })
+      .then(function () { return loadScript('assets/js/quiz-ele.js'); });
   }
   return loadData.p || Promise.resolve();
 }
