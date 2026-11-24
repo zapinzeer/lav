@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Kako se bezbedno menjaju RAM, disk, napajanje, grafička kartica i termalna pasta: priprema, kompatibilnost, postupak, provera i reciklaža, uz animaciju zamene.">
+<title>Zamena neispravnih komponenti · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="zamena-neispravnih-komponenti">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>pripremiš zamenu: dijagnoza, garancija, bekap, kompatibilnost i alat;</li><li>primeniš opšti postupak bezbedne zamene dela;</li><li>zameniš RAM, disk, napajanje, grafičku karticu i termalnu pastu;</li><li>proveriš rad posle zamene i pravilno odložiš stari deo.</li></ul>
+    <ul lang="en"><li>prepare a replacement: diagnosis, warranty, backup, compatibility and tools;</li><li>apply the general procedure for safely replacing a part;</li><li>replace RAM, a drive, the power supply, the graphics card and thermal paste;</li><li>test after replacing and dispose of the old part properly.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="priprema" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">pre zamene</span><span lang="en">before replacing</span></p>
+    <h2><span lang="sr">Pre zamene: dijagnoza, podaci, kompatibilnost</span><span lang="en">Before replacing: diagnosis, data, compatibility</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Zamena dela je poslednji korak traženja kvara. Pre nego što bilo šta odvrneš:</p>
+<p lang="en">Replacing a part is the last step of finding a fault. Before you unscrew anything:</p><ol lang="sr"><li><strong>potvrdi dijagnozu</strong>: proveri deo zamenom ispravnim ili testom (MemTest86, S.M.A.R.T.), da ne bacaš ispravan deo;</li><li>proveri <strong>garanciju</strong>: otvaranje laptopa ili skidanje nalepnice može da je poništi, a deo u garanciji menja prodavac;</li><li>napravi <strong>bekap</strong> podataka, naročito pre zamene diska;</li><li>nabavi <strong>kompatibilan</strong> deo;</li><li>pripremi <strong>alat</strong> i radno mesto.</li></ol>
+<ol lang="en"><li><strong>confirm the diagnosis</strong>: check the part by swapping or testing (MemTest86, S.M.A.R.T.), so you do not throw away a good part;</li><li>check the <strong>warranty</strong>: opening a laptop or removing a sticker can void it, and a part under warranty is replaced by the seller;</li><li>make a <strong>backup</strong> of the data, especially before replacing a drive;</li><li>get a <strong>compatible</strong> part;</li><li>prepare the <strong>tools</strong> and the workplace.</li></ol><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Šta mora da se slaže</span><span lang="en">What must match</span></caption><thead><tr><th><span lang="sr">Deo</span><span lang="en">Part</span></th><th><span lang="sr">Proveri</span><span lang="en">Check</span></th></tr></thead><tbody><tr><td>RAM</td><td><span lang="sr">tip (DDR4 ili DDR5), oblik (DIMM za stoni, SO-DIMM za laptop), brzinu i kapacitet koji ploča podržava</span><span lang="en">type (DDR4 or DDR5), form (DIMM for desktops, SO-DIMM for laptops), the speed and capacity the board supports</span></td></tr><tr><td><span lang="sr">disk</span><span lang="en">drive</span></td><td><span lang="sr">interfejs (SATA, M.2 NVMe), format (2,5″, 3,5″, M.2 2280) i kapacitet</span><span lang="en">interface (SATA, M.2 NVMe), format (2.5″, 3.5″, M.2 2280) and capacity</span></td></tr><tr><td><span lang="sr">napajanje</span><span lang="en">power supply</span></td><td><span lang="sr">format (ATX, SFX), snagu u vatima, konektore (24-pin, EPS, PCIe)</span><span lang="en">form (ATX, SFX), wattage, connectors (24-pin, EPS, PCIe)</span></td></tr><tr><td><span lang="sr">grafička kartica</span><span lang="en">graphics card</span></td><td><span lang="sr">dužinu i širinu, snagu napajanja, konektore napajanja</span><span lang="en">length and width, PSU capacity, power connectors</span></td></tr><tr><td><span lang="sr">procesor</span><span lang="en">processor</span></td><td><span lang="sr">socket i čipset ploče, BIOS verzija</span><span lang="en">the board socket and chipset, BIOS version</span></td></tr><tr><td><span lang="sr">hladnjak</span><span lang="en">cooler</span></td><td><span lang="sr">nosač za socket, visinu u odnosu na kućište</span><span lang="en">socket mounting, height relative to the case</span></td></tr></tbody></table></div><p lang="sr">Alat: krstasti odvijač (PH2, a za M.2 i laptopove PH0/PH1), antistatička narukvica, kutijica za zavrtnje, baterijska lampa, plastična „lopatica” za otvaranje, termalna pasta, izopropil alkohol (90 % i više) i krpica koja ne ostavlja dlačice. Pre rastavljanja <strong>fotografiši</strong> raspored kablova.</p>
+<p lang="en">Tools: a Phillips screwdriver (PH2, and PH0/PH1 for M.2 and laptops), an antistatic wrist strap, a small screw box, a torch, a plastic pry tool, thermal paste, isopropyl alcohol (90 % or more) and a lint-free cloth. Before taking things apart, <strong>photograph</strong> how the cables are laid out.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="opsti" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">opšti postupak</span><span lang="en">general procedure</span></p>
+    <h2><span lang="sr">Opšti postupak zamene</span><span lang="en">The general replacement procedure</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<ol lang="sr"><li>Ugasi računar iz sistema, isključi prekidač na napajanju i <strong>izvuci kabl</strong>.</li><li>Drži dugme za paljenje 5 sekundi da se isprazni preostala energija.</li><li>Skini bočnu stranicu, stavi narukvicu ili dodirni kućište.</li><li>Fotografiši, pa isključi kablove sa dela koji menjaš.</li><li>Izvadi neispravan deo i odloži ga u antistatičku kesu.</li><li>Ugradi novi deo istim putem, unazad.</li><li>Vrati kablove prema fotografiji, uključi računar <strong>pre zatvaranja</strong> kućišta i proveri rad.</li><li>Zatvori kućište, zapiši šta je urađeno i stari deo predaj na reciklažu.</li></ol>
+<ol lang="en"><li>Shut the computer down from the system, switch off the PSU switch and <strong>pull out the cable</strong>.</li><li>Hold the power button for 5 seconds to drain the remaining energy.</li><li>Remove the side panel, put on the strap or touch the case.</li><li>Photograph, then disconnect the cables from the part you are replacing.</li><li>Take out the faulty part and put it in an antistatic bag.</li><li>Install the new part the same way, in reverse.</li><li>Reconnect the cables from the photo, switch the computer on <strong>before closing</strong> the case and check that it works.</li><li>Close the case, record what was done and hand the old part in for recycling.</li></ol>
+</div><figure class="lab" id="lab-swap">
+<div class="viewport" style="aspect-ratio:16/10"><canvas tabindex="0" aria-label="Animacija zamene komponenti u kućištu / Animation of replacing parts in a case"></canvas></div>
+<div class="controls"><div class="btns"><span class="lbl"><span lang="sr">Deo</span><span lang="en">Part</span></span><div class="seg" id="swap-part" role="group"><button type="button" data-v="ram" aria-pressed="true">RAM</button><button type="button" data-v="disk" aria-pressed="false"><span lang="sr">disk</span><span lang="en">drive</span></button><button type="button" data-v="psu" aria-pressed="false"><span lang="sr">napajanje</span><span lang="en">PSU</span></button><button type="button" data-v="gpu" aria-pressed="false"><span lang="sr">grafička</span><span lang="en">graphics</span></button><button type="button" data-v="paste" aria-pressed="false"><span lang="sr">pasta</span><span lang="en">paste</span></button></div></div><div class="btns"><span class="lbl"><span lang="sr">Korak</span><span lang="en">Step</span></span><div class="seg" id="swap-step" role="group"><button type="button" data-v="1" aria-pressed="true">1</button><button type="button" data-v="2" aria-pressed="false">2</button><button type="button" data-v="3" aria-pressed="false">3</button><button type="button" data-v="4" aria-pressed="false">4</button></div></div></div>
+<div class="pc-info" id="lab-swap-info" aria-live="polite"></div>
+<figcaption><span lang="sr">Izaberi deo i prođi kroz korake: crveno je neispravan deo koji izlazi, zeleno novi koji ulazi. Ispod piše šta se radi u svakom koraku.</span><span lang="en">Pick a part and go through the steps: red is the faulty part coming out, green the new one going in. Below is what is done in each step.</span></figcaption>
+</figure>
+  </div>
+</section>
+
+<section class="sec" id="ram-disk" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">memorija i diskovi</span><span lang="en">memory and drives</span></p>
+    <h2><span lang="sr">Zamena RAM-a i diska</span><span lang="en">Replacing RAM and a drive</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>RAM</strong>: otvori bravice na krajevima slota (kod nekih ploča samo na jednom kraju), izvadi modul i novi postavi tako da se <strong>urez</strong> poklopi sa ispupčenjem u slotu. Pritisni oba kraja odjednom dok bravice ne kliknu. Za dvokanalni rad dva modula idu u slotove iste boje, obično A2 i B2 (drugi i četvrti od procesora). Moduli treba da budu isti po brzini i kapacitetu.</p>
+<p lang="en"><strong>RAM</strong>: open the latches at the ends of the slot (on some boards only at one end), take out the module and fit the new one so that the <strong>notch</strong> matches the key in the slot. Press both ends at once until the latches click. For dual-channel two modules go into slots of the same colour, usually A2 and B2 (second and fourth from the processor). The modules should match in speed and capacity.</p><p lang="sr"><strong>Disk</strong>: ako stari disk još radi, podaci se mogu preneti <strong>kloniranjem</strong>: novi disk se priključi (u slobodan port ili preko USB adaptera), program (npr. Macrium Reflect, Clonezilla ili alat proizvođača) kopira ceo disk sa sistemom, pa se stari izvadi. Ako stari ne radi, na novi se <strong>ponovo instalira</strong> operativni sistem, a podaci se vraćaju iz bekapa. Stari disk sa ličnim podacima pre bacanja treba bezbedno obrisati ili fizički uništiti.</p>
+<p lang="en"><strong>Drive</strong>: if the old drive still works, the data can be moved by <strong>cloning</strong>: the new drive is connected (to a free port or through a USB adapter), a program (e.g. Macrium Reflect, Clonezilla or the maker's tool) copies the whole drive with the system, then the old one is removed. If the old one does not work, the operating system is <strong>reinstalled</strong> on the new drive and the data is restored from the backup. An old drive with personal data should be securely wiped or physically destroyed before it is thrown away.</p><details class="think"><summary><span lang="sr">Pomisli prvo: zašto se zamena HDD-a SSD-om smatra najboljom nadogradnjom starog računara?</span><span lang="en">Think first: why is replacing an HDD with an SSD considered the best upgrade for an old computer?</span></summary><div class="ans"><p lang="sr">Kod starih računara najsporiji deo je skoro uvek HDD: sistem i programi se sa njega učitavaju desetinama sekundi. SSD je desetine puta brži pri nasumičnom čitanju, pa računar odjednom deluje kao nov, a zamena je jeftina i jednostavna.</p>
+<p lang="en">In old computers the slowest part is almost always the HDD: the system and programs take tens of seconds to load from it. An SSD is dozens of times faster at random reads, so the computer suddenly feels new, and the swap is cheap and simple.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="psu-gpu" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">napajanje i grafika</span><span lang="en">power and graphics</span></p>
+    <h2><span lang="sr">Zamena napajanja i grafičke kartice</span><span lang="en">Replacing the power supply and graphics card</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Napajanje</strong>: neispravno napajanje se nikada ne otvara i ne popravlja, nego menja. Isključi sve kablove iz ploče i uređaja (24-pin, EPS, PCIe, SATA), odvrni četiri zavrtnja na zadnjoj strani kućišta i izvadi ga. Novo postavi tako da ventilator <strong>usisava hladan vazduh</strong> (obično okrenut nadole, ako kućište ima filter ispod). Snaga novog treba da pokrije sve komponente uz rezervu od oko 30 %. Kod modularnih napajanja koristi <strong>samo kablove koji su došli uz to napajanje</strong>: raspored pinova na strani napajanja nije standardan.</p>
+<p lang="en"><strong>Power supply</strong>: a faulty PSU is never opened or repaired, only replaced. Disconnect all cables from the board and devices (24-pin, EPS, PCIe, SATA), remove the four screws at the back of the case and take it out. Fit the new one so its fan <strong>draws in cool air</strong> (usually facing down, if the case has a filter underneath). Its capacity should cover all components with a reserve of about 30 %. With modular PSUs use <strong>only the cables that came with that PSU</strong>: the pin layout on the PSU side is not standard.</p><p lang="sr"><strong>Grafička kartica</strong>: pre vađenja stare je dobro ukloniti njen drajver (posebno ako se menja proizvođač, npr. NVIDIA → AMD), alatom kao što je DDU (Display Driver Uninstaller). Isključi kablove napajanja kartice, odvrni nosač, pritisni bravicu PCIe slota i izvuci karticu ravno nagore. Novu ugradi obrnutim redom i instaliraj njen drajver.</p>
+<p lang="en"><strong>Graphics card</strong>: before taking out the old one it is good to remove its driver (especially when changing maker, e.g. NVIDIA → AMD) with a tool such as DDU (Display Driver Uninstaller). Unplug the card's power cables, unscrew the bracket, press the PCIe slot latch and pull the card straight up. Fit the new one in reverse order and install its driver.</p><div class="rule-box violet"><p class="eyebrow"><span lang="sr">Upozorenje</span><span lang="en">Warning</span></p><p lang="sr">Kablovi modularnih napajanja različitih proizvođača, pa čak i različitih modela istog proizvođača, izgledaju isto, ali mogu imati drugačiji raspored. Pogrešan kabl može u trenutku da uništi disk ili ploču.</p>
+<p lang="en">Modular PSU cables from different makers, and even from different models of the same maker, look the same but may be wired differently. The wrong cable can destroy a drive or a board in an instant.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="pasta" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">hlađenje</span><span lang="en">cooling</span></p>
+    <h2><span lang="sr">Hladnjak i termalna pasta</span><span lang="en">The cooler and thermal paste</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Termalna pasta popunjava sitne neravnine između procesora i hladnjaka, kroz koje bi inače ostao vazduh, loš provodnik toplote. Posle nekoliko godina se osuši, pa je treba zameniti, kao i svaki put kad se hladnjak skida.</p>
+<p lang="en">Thermal paste fills the tiny gaps between the processor and the cooler, which would otherwise hold air, a poor conductor of heat. After a few years it dries out and needs replacing, as it does every time the cooler is removed.</p><ol lang="sr"><li>Isključi kabl ventilatora (CPU_FAN) i otpusti zavrtnje hladnjaka <strong>unakrsno</strong>, malo po malo.</li><li>Hladnjak lagano zakreni levo-desno pa ga podigni; ne čupaj ga, jer može da izvuče procesor iz podnožja.</li><li>Staru pastu skini sa procesora i hladnjaka krpicom i izopropil alkoholom.</li><li>Nanesi novu pastu: <strong>zrno veličine graška</strong> u sredinu (ili tanak iks kod velikih procesora).</li><li>Spusti hladnjak ravno i zavrći ga unakrsno, pa vrati kabl ventilatora.</li><li>Proveri temperaturu u mirovanju i pod opterećenjem.</li></ol>
+<ol lang="en"><li>Unplug the fan cable (CPU_FAN) and loosen the cooler screws <strong>crosswise</strong>, a little at a time.</li><li>Twist the cooler gently left and right, then lift it; do not yank it, as it can pull the processor out of the socket.</li><li>Wipe the old paste off the processor and the cooler with a cloth and isopropyl alcohol.</li><li>Apply new paste: <strong>a pea-sized dot</strong> in the middle (or a thin X on large processors).</li><li>Lower the cooler straight down and tighten it crosswise, then reconnect the fan cable.</li><li>Check the temperature at idle and under load.</li></ol><figure class="fig" style="max-width:600px"><svg class="dg" viewBox="0 0 600 170" role="img" aria-label="Nanošenje termalne paste / Applying thermal paste" style="width:100%;height:auto">
+<g><rect x="30" y="30" width="110" height="110" rx="6" class="fills" stroke="var(--ink)" stroke-width="1.5"/><circle cx="85" cy="85" r="13" fill="#b9c2cc" stroke="var(--muted)"/><text x="85" y="160" text-anchor="middle" class="go" lang="sr">✓ zrno graška</text><text x="85" y="160" text-anchor="middle" class="go" lang="en">✓ pea-sized dot</text></g>
+<g><rect x="175" y="30" width="110" height="110" rx="6" class="fills" stroke="var(--ink)" stroke-width="1.5"/><path d="M195 50L265 120M265 50L195 120" stroke="#b9c2cc" stroke-width="7" stroke-linecap="round"/><text x="230" y="160" text-anchor="middle" class="go" lang="sr">✓ iks</text><text x="230" y="160" text-anchor="middle" class="go" lang="en">✓ an X</text></g>
+<g><rect x="320" y="30" width="110" height="110" rx="6" class="fills" stroke="var(--ink)" stroke-width="1.5"/><rect x="312" y="22" width="126" height="126" rx="10" fill="#b9c2cc" opacity=".9"/><text x="375" y="160" text-anchor="middle" class="rd" lang="sr">✗ previše, curi</text><text x="375" y="160" text-anchor="middle" class="rd" lang="en">✗ too much, it spills</text></g>
+<g><rect x="465" y="30" width="110" height="110" rx="6" class="fills" stroke="var(--ink)" stroke-width="1.5"/><circle cx="520" cy="85" r="3" fill="#b9c2cc"/><text x="520" y="160" text-anchor="middle" class="rd" lang="sr">✗ premalo</text><text x="520" y="160" text-anchor="middle" class="rd" lang="en">✗ too little</text></g>
+</svg><figcaption><span lang="sr">Koliko paste: zrno graška ili tanak iks se pod pritiskom hladnjaka rašire u tanak sloj. Previše paste curi preko ivica, a premalo ostavlja suve delove.</span><span lang="en">How much paste: a pea-sized dot or a thin X spread into a thin layer under the pressure of the cooler. Too much spills over the edges, and too little leaves dry patches.</span></figcaption></figure>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="posle" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">posle zamene</span><span lang="en">after replacing</span></p>
+    <h2><span lang="sr">Provera, zapis i reciklaža</span><span lang="en">Testing, records and recycling</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<ul lang="sr"><li><strong>Prvo paljenje</strong> sa otvorenim kućištem: prolazi li POST, da li se deo vidi u BIOS-u i u sistemu.</li><li><strong>Test opterećenja</strong> (stress test) od 15–30 minuta: npr. Prime95 ili OCCT za procesor i napajanje, FurMark ili 3DMark za grafiku, MemTest86 za RAM. Prati temperature.</li><li><strong>Drajveri i ažuriranja</strong>: za novu grafičku karticu, eventualno nova verzija BIOS-a za novi procesor.</li><li><strong>Zapis</strong>: datum, simptom, šta je zamenjeno, serijski broj novog dela i rezultat testa.</li><li><strong>Reciklaža</strong>: elektronski otpad ne ide u kantu za smeće. Sadrži olovo, živu i druge štetne materije, ali i vredne metale. Predaje se ovlašćenom sakupljaču ili prodavnici koja ga preuzima.</li></ul>
+<ul lang="en"><li><strong>First power-on</strong> with the case open: does POST pass, is the part visible in the BIOS and in the system.</li><li>A <strong>stress test</strong> of 15–30 minutes: e.g. Prime95 or OCCT for the processor and PSU, FurMark or 3DMark for graphics, MemTest86 for RAM. Watch the temperatures.</li><li><strong>Drivers and updates</strong>: for a new graphics card, and perhaps a new BIOS version for a new processor.</li><li><strong>Records</strong>: the date, the symptom, what was replaced, the serial number of the new part and the test result.</li><li><strong>Recycling</strong>: electronic waste does not go in the rubbish bin. It contains lead, mercury and other harmful substances, but also valuable metals. It is handed to an authorised collector or a shop that takes it back.</li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · izbor RAM-a</span><span lang="en">Example 1 · choosing RAM</span></h4><p class="given" lang="sr">Dato: ploča ima DDR4 slotove i 2 × 4 GB. Jedan modul je neispravan (MemTest86). Šta kupuješ?</p><p class="given" lang="en">Given: a board has DDR4 slots and 2 × 4 GB. One module is faulty (MemTest86). What do you buy?</p><ol lang="sr"><li>Novi modul mora biti DDR4 DIMM; DDR5 ne staje.</li><li>Najbolje je kupiti komplet 2 × 8 GB iste brzine, da oba budu isti i radi dvokanalno.</li><li>Ako se kupuje samo jedan modul od 4 GB, iste brzine kao preostali.</li></ol>
+<ol lang="en"><li>The new module must be DDR4 DIMM; DDR5 does not fit.</li><li>It is best to buy a 2 × 8 GB kit of the same speed, so both match and run dual-channel.</li><li>If only one 4 GB module is bought, the same speed as the remaining one.</li></ol><p class="answer"><span lang="sr">DDR4 DIMM, najbolje par istih modula</span><span lang="en">DDR4 DIMM, ideally a matched pair</span></p></div><div class="ex"><h4><span lang="sr">Primer 2 · snaga napajanja</span><span lang="en">Example 2 · PSU wattage</span></h4><p class="given" lang="sr">Dato: procesor troši do 125 W, grafička do 220 W, a ostalo (ploča, diskovi, ventilatori) oko 75 W. Koliko jako napajanje biraš?</p><p class="given" lang="en">Given: the processor uses up to 125 W, the graphics card up to 220 W, and the rest (board, drives, fans) about 75 W. How strong a power supply do you choose?</p><ol lang="sr"><li>Ukupno: 125 + 220 + 75 = 420 W.</li><li>Sa rezervom od 30 %: 420 · 1,3 ≈ 546 W.</li><li>Biramo prvu standardnu vrednost iznad: 550 W ili 600 W, kvalitetan model.</li></ol>
+<ol lang="en"><li>Total: 125 + 220 + 75 = 420 W.</li><li>With a 30 % reserve: 420 · 1.3 ≈ 546 W.</li><li>Pick the next standard size up: 550 W or 600 W, a good-quality model.</li></ol><p class="answer"><span lang="sr">550–600 W</span><span lang="en">550–600 W</span></p></div><div class="ex"><h4><span lang="sr">Primer 3 · redosled</span><span lang="en">Example 3 · order</span></h4><p class="given" lang="sr">Dato: treba zameniti grafičku karticu NVIDIA karticom AMD. Napiši redosled.</p><p class="given" lang="en">Given: you need to replace an NVIDIA graphics card with an AMD one. Write the order.</p><ol lang="sr"><li>U sistemu ukloni NVIDIA drajver (DDU), pa ugasi računar i izvuci kabl.</li><li>Isključi napajanje kartice, odvrni nosač, otvori bravicu, izvadi karticu.</li><li>Ugradi novu, priključi napajanje i monitor, upali računar i instaliraj AMD drajver.</li></ol>
+<ol lang="en"><li>Remove the NVIDIA driver in the system (DDU), then shut down and pull the cable.</li><li>Unplug the card's power, unscrew the bracket, open the latch, take out the card.</li><li>Fit the new one, connect power and the monitor, switch on and install the AMD driver.</li></ol><p class="answer"><span lang="sr">drajver → vađenje → ugradnja → novi drajver</span><span lang="en">driver → removal → install → new driver</span></p></div><div class="ex"><h4><span lang="sr">Primer 4 · posle paste</span><span lang="en">Example 4 · after the paste</span></h4><p class="given" lang="sr">Dato: posle zamene paste procesor u mirovanju ima 85 °C, a pre zamene je imao 60 °C. Šta nije u redu?</p><p class="given" lang="en">Given: after replacing the paste the processor idles at 85 °C, while before it was at 60 °C. What is wrong?</p><ol lang="sr"><li>Temperatura je porasla, pa hladnjak ne naleže dobro.</li><li>Mogući uzroci: zaostala zaštitna folija na dnu hladnjaka, previše ili premalo paste, nejednako zategnuti zavrtnji, isključen ventilator.</li><li>Skini hladnjak, proveri foliju i pastu, ponovo ga zavrni unakrsno i proveri kabl CPU_FAN.</li></ol>
+<ol lang="en"><li>The temperature went up, so the cooler is not seated properly.</li><li>Possible causes: the protective film left on the cooler base, too much or too little paste, unevenly tightened screws, the fan unplugged.</li><li>Remove the cooler, check the film and the paste, tighten it again crosswise and check the CPU_FAN cable.</li></ol><p class="answer"><span lang="sr">hladnjak loše naleže</span><span lang="en">the cooler is not seated properly</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Zamena bez potvrđene dijagnoze.</b> Nov deo, isti kvar, potrošen novac. Prvo potvrdi da je deo zaista neispravan.</div></li><li><div><b>Rad dok je kabl u struji.</b> Ploča je pod naponom i kad je računar ugašen. Uvek izvuci kabl.</div></li><li><div><b>Pomešani kablovi modularnog napajanja.</b> Kabl od starog napajanja na novom može da spali komponente.</div></li><li><div><b>Zaboravljena folija na hladnjaku.</b> Novi hladnjaci imaju zaštitnu nalepnicu na dnu. Ako ostane, procesor se pregreva.</div></li><li><div><b>Stari disk u smeću.</b> Na njemu su lični podaci, a elektronski otpad zagađuje. Obriši ga i predaj na reciklažu.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>Replacing without a confirmed diagnosis.</b> New part, same fault, money wasted. First confirm the part really is faulty.</div></li><li><div><b>Working with the cable plugged in.</b> The board is powered even when the computer is off. Always pull the cable.</div></li><li><div><b>Mixed modular PSU cables.</b> A cable from the old PSU on the new one can burn components.</div></li><li><div><b>A forgotten film on the cooler.</b> New coolers have a protective sticker on the base. If it stays on, the processor overheats.</div></li><li><div><b>An old drive in the bin.</b> It holds personal data, and e-waste pollutes. Wipe it and hand it in for recycling.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 9</span><span lang="en">Part 9</span></b> · <span lang="sr"></span><span lang="en"></span></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Pre zamene: potvrdi dijagnozu, proveri garanciju, napravi bekap i nabavi kompatibilan deo.</li><li>Opšti postupak: isključi i izvuci kabl, ESD zaštita, fotografiši, izvadi, ugradi, proveri pre zatvaranja.</li><li>RAM: urez, klik, parovi u slotovima iste boje; disk: kloniranje ili nova instalacija.</li><li>Napajanje se menja, ne popravlja; koristi samo njegove kablove i rezervu snage od oko 30 %.</li><li>Grafička: ukloni stari drajver, bravica slota, novi drajver; termalna pasta: zrno graška, unakrsno zatezanje.</li><li>Posle zamene: test opterećenja, temperature, zapis i reciklaža starog dela.</li></ul><ul lang="en"><li>Before replacing: confirm the diagnosis, check the warranty, back up and get a compatible part.</li><li>General procedure: switch off and unplug, ESD protection, photograph, remove, install, test before closing.</li><li>RAM: notch, click, pairs in slots of the same colour; drive: cloning or a fresh install.</li><li>A PSU is replaced, not repaired; use only its own cables and a power reserve of about 30 %.</li><li>Graphics: remove the old driver, slot latch, new driver; thermal paste: a pea-sized dot, crosswise tightening.</li><li>After replacing: stress test, temperatures, records and recycling of the old part.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC14" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/periferije-labs.js"></script>
+</body>
+</html>

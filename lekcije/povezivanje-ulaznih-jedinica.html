@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="USB, PS/2, audio priključci, Bluetooth i bežični prijemnici, prozivanje i drajveri, uz animaciju prenosa podataka od miša do računara.">
+<title>Povezivanje ulaznih jedinica sa računarom · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="povezivanje-ulaznih-jedinica">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>nabrojiš načine povezivanja ulaznih jedinica i njihove konektore;</li><li>objasniš osobine USB-a: Plug and Play, hot swap, HID i verzije;</li><li>povežeš uređaj preko PS/2, Bluetootha ili bežičnog prijemnika;</li><li>objasniš prozivanje i rešiš osnovne probleme sa drajverima.</li></ul>
+    <ul lang="en"><li>list the ways of connecting input devices and their connectors;</li><li>explain the features of USB: Plug and Play, hot swap, HID and the versions;</li><li>connect a device over PS/2, Bluetooth or a wireless receiver;</li><li>explain polling and fix basic driver problems.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="nacini" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">pregled</span><span lang="en">overview</span></p>
+    <h2><span lang="sr">Kako se ulazne jedinice povezuju</span><span lang="en">How input devices are connected</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Ulazna jedinica mora nekako da preda podatke računaru. To radi preko <strong>interfejsa</strong>: dogovorenog načina povezivanja koji određuje oblik konektora, brzinu i pravila razgovora između uređaja i računara. Veza može biti:</p>
+<p lang="en">An input device has to hand its data to the computer somehow. It does so through an <strong>interface</strong>: an agreed way of connecting that defines the shape of the connector, the speed and the rules of the conversation between the device and the computer. The link can be:</p><ul lang="sr"><li><strong>žična</strong>: USB (danas skoro sve), PS/2 (stare tastature i miševi), 3,5 mm audio priključak (mikrofon), a nekada i serijski COM port i „gameport” za džojstike;</li><li><strong>bežična</strong>: Bluetooth, radio-veza na 2,4 GHz preko malog USB prijemnika (dongle) i infracrvena veza (daljinski upravljači).</li></ul>
+<ul lang="en"><li><strong>wired</strong>: USB (almost everything today), PS/2 (old keyboards and mice), the 3.5 mm audio jack (microphone), and in the past the serial COM port and the "gameport" for joysticks;</li><li><strong>wireless</strong>: Bluetooth, a 2.4 GHz radio link through a small USB receiver (dongle), and infrared (remote controls).</li></ul><figure class="fig" style="max-width:680px"><svg class="dg" viewBox="0 0 640 170" role="img" aria-label="USB konektori / USB connectors" style="width:100%;height:auto">
+<g><rect x="20" y="40" width="80" height="34" rx="3" class="fills" stroke="var(--ink)" stroke-width="1.5"/><rect x="30" y="48" width="60" height="10" class="fillf"/><text x="60" y="100" text-anchor="middle">USB-A</text><text x="60" y="118" text-anchor="middle" class="sm mu" lang="sr">računar, punjači</text><text x="60" y="118" text-anchor="middle" class="sm mu" lang="en">computers, chargers</text></g>
+<g><path d="M140 36h50v24l-8 10h-34l-8-10z" class="fills" stroke="var(--ink)" stroke-width="1.5"/><rect x="152" y="44" width="26" height="14" class="fillf"/><text x="165" y="100" text-anchor="middle">USB-B</text><text x="165" y="118" text-anchor="middle" class="sm mu" lang="sr">štampači, skeneri</text><text x="165" y="118" text-anchor="middle" class="sm mu" lang="en">printers, scanners</text></g>
+<g><path d="M232 48h56v14l-6 6h-44l-6-6z" class="fills" stroke="var(--ink)" stroke-width="1.5"/><text x="260" y="100" text-anchor="middle">Micro-USB</text><text x="260" y="118" text-anchor="middle" class="sm mu" lang="sr">stariji telefoni</text><text x="260" y="118" text-anchor="middle" class="sm mu" lang="en">older phones</text></g>
+<g><rect x="330" y="46" width="64" height="22" rx="11" class="fills" stroke="var(--ink)" stroke-width="1.5"/><rect x="342" y="54" width="40" height="6" rx="3" class="fillf"/><text x="362" y="100" text-anchor="middle">USB-C</text><text x="362" y="118" text-anchor="middle" class="sm mu" lang="sr">okreće se na obe strane</text><text x="362" y="118" text-anchor="middle" class="sm mu" lang="en">fits either way up</text></g>
+<g><circle cx="470" cy="56" r="22" fill="#8a6fd1" stroke="var(--ink)" stroke-width="1.5"/><g class="fillk"><circle cx="460" cy="50" r="3"/><circle cx="480" cy="50" r="3"/><circle cx="458" cy="62" r="3"/><circle cx="482" cy="62" r="3"/><circle cx="465" cy="70" r="2.5"/><circle cx="475" cy="70" r="2.5"/></g><text x="470" y="100" text-anchor="middle" lang="sr">PS/2 tastatura</text><text x="470" y="100" text-anchor="middle" lang="en">PS/2 keyboard</text></g>
+<g><circle cx="580" cy="56" r="22" fill="#5fae6b" stroke="var(--ink)" stroke-width="1.5"/><g class="fillk"><circle cx="570" cy="50" r="3"/><circle cx="590" cy="50" r="3"/><circle cx="568" cy="62" r="3"/><circle cx="592" cy="62" r="3"/><circle cx="575" cy="70" r="2.5"/><circle cx="585" cy="70" r="2.5"/></g><text x="580" y="100" text-anchor="middle" lang="sr">PS/2 miš</text><text x="580" y="100" text-anchor="middle" lang="en">PS/2 mouse</text></g>
+<text x="525" y="118" text-anchor="middle" class="sm mu" lang="sr">ljubičasti i zeleni, stariji</text><text x="525" y="118" text-anchor="middle" class="sm mu" lang="en">purple and green, older</text>
+<text x="320" y="156" text-anchor="middle" class="mu sm" lang="sr">USB-A plavi iznutra obično znači USB 3.x, crni USB 2.0</text><text x="320" y="156" text-anchor="middle" class="mu sm" lang="en">a USB-A port that is blue inside usually means USB 3.x, black means USB 2.0</text>
+</svg><figcaption><span lang="sr">Najčešći konektori za ulazne jedinice. USB-C je simetričan i polako zamenjuje ostale.</span><span lang="en">The most common connectors for input devices. USB-C is symmetrical and is slowly replacing the others.</span></figcaption></figure>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="usb" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">univerzalna serijska magistrala</span><span lang="en">universal serial bus</span></p>
+    <h2><span lang="sr">USB</span><span lang="en">USB</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>USB</strong> (Universal Serial Bus) je napravljen da zameni mnoštvo različitih priključaka jednim. Njegove najvažnije osobine:</p>
+<p lang="en"><strong>USB</strong> (Universal Serial Bus) was made to replace many different ports with one. Its most important features:</p><ul lang="sr"><li><strong>Plug and Play</strong>: sistem sam prepozna uređaj i učita drajver;</li><li><strong>hot swap</strong>: uređaj se priključuje i isključuje dok računar radi;</li><li>kroz isti kabl uređaj dobija i <strong>napajanje</strong>, pa tastatura i miš ne trebaju poseban adapter;</li><li>tastature, miševi i džojstici pripadaju klasi <strong>HID</strong> (Human Interface Device), za koju operativni sistem već ima drajver;</li><li>preko <strong>USB habova</strong> na jedan kontroler može da se poveže do 127 uređaja.</li></ul>
+<ul lang="en"><li><strong>Plug and Play</strong>: the system recognises the device by itself and loads the driver;</li><li><strong>hot swap</strong>: a device can be connected and disconnected while the computer is running;</li><li>the device gets <strong>power</strong> through the same cable, so a keyboard and a mouse need no separate adapter;</li><li>keyboards, mice and joysticks belong to the <strong>HID</strong> (Human Interface Device) class, for which the operating system already has a driver;</li><li>through <strong>USB hubs</strong> up to 127 devices can be connected to one controller.</li></ul><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Verzije USB-a</span><span lang="en">USB versions</span></caption><thead><tr><th><span lang="sr">Verzija</span><span lang="en">Version</span></th><th><span lang="sr">Najveća brzina</span><span lang="en">Top speed</span></th><th><span lang="sr">Godina</span><span lang="en">Year</span></th></tr></thead><tbody><tr><td>USB 1.1</td><td>12 Mb/s</td><td>1998</td></tr><tr><td>USB 2.0</td><td>480 Mb/s</td><td>2000</td></tr><tr><td>USB 3.2 Gen 1 (3.0)</td><td>5 Gb/s</td><td>2008</td></tr><tr><td>USB 3.2 Gen 2</td><td>10 Gb/s</td><td>2013</td></tr><tr><td>USB 3.2 Gen 2×2</td><td>20 Gb/s</td><td>2017</td></tr><tr><td>USB4</td><td>40–80 Gb/s</td><td>2019</td></tr></tbody></table></div><p lang="sr">Tastaturi i mišu je dovoljan i USB 2.0, jer šalju vrlo malo podataka. Brzi portovi su važni za spoljne diskove, kamere i skenere visoke rezolucije.</p>
+<p lang="en">A keyboard and a mouse are fine with USB 2.0, because they send very little data. Fast ports matter for external drives, cameras and high-resolution scanners.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="ps2" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">stariji standard</span><span lang="en">older standard</span></p>
+    <h2><span lang="sr">PS/2 priključak</span><span lang="en">The PS/2 port</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>PS/2</strong> je okrugli priključak sa 6 pinova (mini-DIN). Po dogovoru je <strong>ljubičasti za tastaturu</strong>, a <strong>zeleni za miš</strong>, i nisu zamenljivi. Neke ploče imaju jedan dvobojni PS/2 port koji prima bilo koji od njih.</p>
+<p lang="en"><strong>PS/2</strong> is a round 6-pin (mini-DIN) port. By convention <strong>purple is for the keyboard</strong> and <strong>green for the mouse</strong>, and they are not interchangeable. Some boards have one two-colour PS/2 port that takes either.</p><p lang="sr">PS/2 <strong>ne podržava hot swap</strong>: uređaj se priključuje dok je računar ugašen, inače ga sistem možda neće prepoznati. Ipak, neki ga i danas koriste jer tastatura šalje podatke odmah, preko prekida (interrupt), i radi i u najranijoj fazi pokretanja računara.</p>
+<p lang="en">PS/2 <strong>does not support hot swap</strong>: the device is plugged in while the computer is off, otherwise the system may not recognise it. Still, some people use it today because the keyboard sends data right away, through an interrupt, and works even in the earliest stage of start-up.</p><details class="think"><summary><span lang="sr">Pomisli prvo: imaš PS/2 tastaturu, a računar ima samo USB. Šta radiš?</span><span lang="en">Think first: you have a PS/2 keyboard and the computer only has USB. What do you do?</span></summary><div class="ans"><p lang="sr">Koristiš aktivni adapter PS/2→USB. Pasivni adapter radi samo sa uređajima koji „znaju” oba protokola, a obična PS/2 tastatura zahteva aktivni (sa čipom).</p>
+<p lang="en">You use an active PS/2→USB adapter. A passive adapter only works with devices that "know" both protocols, while an ordinary PS/2 keyboard needs an active one (with a chip).</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="bezicno" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">bez kablova</span><span lang="en">without cables</span></p>
+    <h2><span lang="sr">Bežično povezivanje</span><span lang="en">Wireless connections</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Bežične veze za ulazne jedinice</span><span lang="en">Wireless links for input devices</span></caption><thead><tr><th><span lang="sr">Veza</span><span lang="en">Link</span></th><th><span lang="sr">Domet</span><span lang="en">Range</span></th><th><span lang="sr">Kako se povezuje</span><span lang="en">How it connects</span></th></tr></thead><tbody><tr><td>Bluetooth</td><td><span lang="sr">≈ 10 m</span><span lang="en">≈ 10 m</span></td><td><span lang="sr">uparivanje (pairing) u podešavanjima; ne treba prijemnik ako računar ima Bluetooth</span><span lang="en">pairing in the settings; no receiver needed if the computer has Bluetooth</span></td></tr><tr><td><span lang="sr">radio 2,4 GHz</span><span lang="en">2.4 GHz radio</span></td><td><span lang="sr">≈ 10 m</span><span lang="en">≈ 10 m</span></td><td><span lang="sr">mali USB prijemnik (dongle), radi odmah, manje kašnjenje</span><span lang="en">a small USB receiver (dongle), works at once, lower delay</span></td></tr><tr><td><span lang="sr">infracrveno (IR)</span><span lang="en">infrared (IR)</span></td><td><span lang="sr">≈ 5 m, mora da „vidi”</span><span lang="en">≈ 5 m, needs line of sight</span></td><td><span lang="sr">daljinski upravljači</span><span lang="en">remote controls</span></td></tr></tbody></table></div><p lang="sr">Bežični uređaji rade na <strong>baterije</strong> ili ugrađeni akumulator, pa kada baterija slabi, kursor počinje da „seče”. Signal mogu da ometaju Wi-Fi ruter, metalne površine i USB 3.0 portovi pored prijemnika, pa je dobro da prijemnik bude blizu uređaja (na primer preko produžnog kabla na prednjem USB-u).</p>
+<p lang="en">Wireless devices run on <strong>batteries</strong> or a built-in rechargeable battery, so when it gets weak the cursor starts to "stutter". The signal can be disturbed by a Wi-Fi router, metal surfaces and USB 3.0 ports next to the receiver, so it helps to keep the receiver close to the device (for example on an extension cable in a front USB port).</p><p lang="sr">Bluetooth uparivanje ide ovako: uključi režim uparivanja na uređaju (obično dugme koje se drži 3 sekunde), na računaru otvori <em>Podešavanja → Bluetooth i uređaji → Dodaj uređaj</em>, izaberi ga sa spiska i, ako zatraži, potvrdi PIN.</p>
+<p lang="en">Bluetooth pairing goes like this: switch on pairing mode on the device (usually a button held for 3 seconds), on the computer open <em>Settings → Bluetooth & devices → Add device</em>, pick it from the list and, if asked, confirm the PIN.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="prozivanje" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">koliko često</span><span lang="en">how often</span></p>
+    <h2><span lang="sr">Prozivanje i kašnjenje</span><span lang="en">Polling and delay</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Računar USB miš ili tastaturu ne čeka pasivno, nego ga <strong>proziva</strong> (polling) u stalnim razmacima: „imaš li nešto novo?” Broj prozivanja u sekundi zove se <strong>učestanost prozivanja</strong> (polling rate). Običan miš se proziva 125 puta u sekundi, odnosno na svakih 8 ms, a miš za igre 1000 puta (svake milisekunde) ili više.</p>
+<p lang="en">The computer does not wait passively for a USB mouse or keyboard, but <strong>polls</strong> it at regular intervals: "do you have anything new?" The number of polls per second is called the <strong>polling rate</strong>. An ordinary mouse is polled 125 times a second, that is every 8 ms, and a gaming mouse 1000 times (every millisecond) or more.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Učestanost prozivanja i razmak</span><span lang="en">Polling rate and interval</span></caption><thead><tr><th><span lang="sr">Prozivanja u sekundi</span><span lang="en">Polls per second</span></th><th><span lang="sr">Razmak</span><span lang="en">Interval</span></th></tr></thead><tbody><tr><td>125 Hz</td><td>8 ms</td></tr><tr><td>250 Hz</td><td>4 ms</td></tr><tr><td>500 Hz</td><td>2 ms</td></tr><tr><td>1000 Hz</td><td>1 ms</td></tr><tr><td>8000 Hz</td><td>0,125 ms</td></tr></tbody></table></div>
+</div><figure class="lab" id="lab-poll">
+<div class="viewport" style="aspect-ratio:16/10"><canvas tabindex="0" aria-label="Animacija prenosa podataka od miša do računara i uzoraka putanje kursora / Animation of data going from a mouse to the computer and samples of the cursor path"></canvas></div>
+<div class="controls"><div class="btns"><span class="lbl"><span lang="sr">Veza</span><span lang="en">Link</span></span><div class="seg" id="poll-link" role="group"><button type="button" data-v="usb" aria-pressed="true">USB</button><button type="button" data-v="dongle" aria-pressed="false"><span lang="sr">2,4 GHz prijemnik</span><span lang="en">2.4 GHz receiver</span></button><button type="button" data-v="bt" aria-pressed="false">Bluetooth</button></div></div><div class="btns"><span class="lbl"><span lang="sr">Prozivanje</span><span lang="en">Polling</span></span><div class="seg" id="poll-rate" role="group"><button type="button" data-v="125" aria-pressed="true">125 Hz</button><button type="button" data-v="500" aria-pressed="false">500 Hz</button><button type="button" data-v="1000" aria-pressed="false">1000 Hz</button></div></div></div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-poll-calc"></div><div class="result" id="lab-poll-result"></div><div class="calc" id="lab-poll-note"></div></div>
+<figcaption><span lang="sr">Gore: paketi putuju od miša do računara. Dole: ruka pomera miš po krugu (siva linija), a tačke su položaji koje je računar dobio. Pri niskom prozivanju tačaka je malo i putanja je „uglasta”.</span><span lang="en">Top: packets travel from the mouse to the computer. Bottom: the hand moves the mouse in a circle (grey line), and the dots are the positions the computer received. At a low polling rate there are few dots and the path is "angular".</span></figcaption>
+</figure>
+  </div>
+</section>
+
+<section class="sec" id="audio" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">zvuk i slika</span><span lang="en">sound and picture</span></p>
+    <h2><span lang="sr">Mikrofon, kamera i skener</span><span lang="en">Microphone, camera and scanner</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Gde se priključuju</span><span lang="en">Where they plug in</span></caption><thead><tr><th><span lang="sr">Uređaj</span><span lang="en">Device</span></th><th><span lang="sr">Priključak</span><span lang="en">Port</span></th><th><span lang="sr">Napomena</span><span lang="en">Note</span></th></tr></thead><tbody><tr><td><span lang="sr">mikrofon</span><span lang="en">microphone</span></td><td><span lang="sr">3,5 mm, <strong>roze</strong></span><span lang="en">3.5 mm, <strong>pink</strong></span></td><td><span lang="sr">ulaz zvučne kartice</span><span lang="en">sound card input</span></td></tr><tr><td><span lang="sr">line-in (npr. gramofon)</span><span lang="en">line-in (e.g. a turntable)</span></td><td><span lang="sr">3,5 mm, <strong>svetloplavi</strong></span><span lang="en">3.5 mm, <strong>light blue</strong></span></td><td><span lang="sr">linijski nivo signala</span><span lang="en">line-level signal</span></td></tr><tr><td><span lang="sr">USB mikrofon, slušalice sa mikrofonom</span><span lang="en">USB microphone, headset</span></td><td><span lang="sr">USB</span><span lang="en">USB</span></td><td><span lang="sr">ima svoju zvučnu karticu</span><span lang="en">it has its own sound card</span></td></tr><tr><td><span lang="sr">veb kamera</span><span lang="en">webcam</span></td><td><span lang="sr">USB (UVC klasa)</span><span lang="en">USB (UVC class)</span></td><td><span lang="sr">radi bez posebnog drajvera</span><span lang="en">works without a special driver</span></td></tr><tr><td><span lang="sr">skener</span><span lang="en">scanner</span></td><td><span lang="sr">USB-B ili mreža</span><span lang="en">USB-B or network</span></td><td><span lang="sr">traži drajver i program za skeniranje</span><span lang="en">needs a driver and scanning software</span></td></tr><tr><td><span lang="sr">kamera ili konzola kao izvor</span><span lang="en">camera or console as a source</span></td><td><span lang="sr">kartica za snimanje (HDMI ulaz)</span><span lang="en">capture card (HDMI input)</span></td><td><span lang="sr">za striming</span><span lang="en">for streaming</span></td></tr></tbody></table></div><p lang="sr">Slušalice za telefon često imaju jedan priključak sa četiri kontakta (TRRS), u kome su i zvučnici i mikrofon. Za računar sa dva odvojena priključka koristi se mali razdelnik (Y-kabl).</p>
+<p lang="en">Phone headsets often have a single four-contact plug (TRRS) carrying both the speakers and the microphone. For a computer with two separate jacks a small splitter (Y-cable) is used.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="drajveri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">podešavanje</span><span lang="en">setup</span></p>
+    <h2><span lang="sr">Drajveri i provera rada</span><span lang="en">Drivers and checking that it works</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Drajver</strong> je program koji operativnom sistemu objašnjava kako da razgovara sa uređajem. Za tastature, miševe, kamere i USB mikrofone sistem već ima opšte drajvere, pa rade odmah. Uređaji sa posebnim mogućnostima (dodatni tasteri, osvetljenje, grafičke table, skeneri) traže drajver ili program proizvođača.</p>
+<p lang="en">A <strong>driver</strong> is a program that tells the operating system how to talk to a device. For keyboards, mice, cameras and USB microphones the system already has generic drivers, so they work at once. Devices with special features (extra buttons, lighting, graphics tablets, scanners) need the maker's driver or program.</p><p lang="sr">Ako uređaj ne radi, otvori <strong>Upravljač uređajima</strong> (Device Manager: desni klik na Start). Uređaj sa žutim uzvičnikom ima problem sa drajverom; desni klik → <em>Ažuriraj upravljački program</em> ili <em>Deinstaliraj</em>, pa ga isključi i ponovo priključi.</p>
+<p lang="en">If a device does not work, open <strong>Device Manager</strong> (right-click Start). A device with a yellow exclamation mark has a driver problem; right-click → <em>Update driver</em> or <em>Uninstall</em>, then unplug it and plug it in again.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · razmak prozivanja</span><span lang="en">Example 1 · polling interval</span></h4><p class="given" lang="sr">Dato: miš se proziva 500 puta u sekundi. Koliki je razmak između dva prozivanja?</p><p class="given" lang="en">Given: a mouse is polled 500 times a second. What is the interval between two polls?</p><ol lang="sr"><li>Jedna sekunda ima 1000 ms.</li><li>Razmak: 1000 ms / 500 = 2 ms.</li></ol>
+<ol lang="en"><li>One second has 1000 ms.</li><li>Interval: 1000 ms / 500 = 2 ms.</li></ol><p class="answer"><span lang="sr">2 ms</span><span lang="en">2 ms</span></p></div><div class="ex"><h4><span lang="sr">Primer 2 · broj portova</span><span lang="en">Example 2 · number of ports</span></h4><p class="given" lang="sr">Dato: računar ima 4 slobodna USB porta. Treba priključiti tastaturu, miš, kameru, štampač, skener i USB fleš. Šta radiš?</p><p class="given" lang="en">Given: a computer has 4 free USB ports. You need to connect a keyboard, a mouse, a camera, a printer, a scanner and a USB flash drive. What do you do?</p><ol lang="sr"><li>Uređaja je 6, a portova 4: fale 2.</li><li>Priključi USB hab sa 4 porta u jedan slobodan port.</li><li>Sada ima 3 + 4 = 7 portova; sporije uređaje (tastatura, miš) stavi na hab, a kameru i fleš direktno na računar.</li></ol>
+<ol lang="en"><li>There are 6 devices and 4 ports: 2 are missing.</li><li>Plug a 4-port USB hub into one free port.</li><li>Now there are 3 + 4 = 7 ports; put the slow devices (keyboard, mouse) on the hub, and the camera and flash drive straight into the computer.</li></ol><p class="answer"><span lang="sr">USB hab</span><span lang="en">a USB hub</span></p></div><div class="ex"><h4><span lang="sr">Primer 3 · PS/2 ne radi</span><span lang="en">Example 3 · PS/2 not working</span></h4><p class="given" lang="sr">Dato: priključio si PS/2 tastaturu dok je računar radio i ona ne reaguje.</p><p class="given" lang="en">Given: you plugged in a PS/2 keyboard while the computer was running and it does not respond.</p><ol lang="sr"><li>PS/2 ne podržava hot swap.</li><li>Ugasi računar, proveri da je tastatura u ljubičastom portu i upali ga ponovo.</li></ol>
+<ol lang="en"><li>PS/2 does not support hot swap.</li><li>Shut the computer down, check that the keyboard is in the purple port and switch it on again.</li></ol><p class="answer"><span lang="sr">ponovo pokreni računar</span><span lang="en">restart the computer</span></p></div><div class="ex"><h4><span lang="sr">Primer 4 · bežični miš seče</span><span lang="en">Example 4 · wireless mouse stutters</span></h4><p class="given" lang="sr">Dato: bežični miš sa prijemnikom pozadi na kućištu ponekad zastaje. Šta proveravaš?</p><p class="given" lang="en">Given: a wireless mouse with its receiver at the back of the case sometimes freezes. What do you check?</p><ol lang="sr"><li>Bateriju: zameni je ili napuni.</li><li>Udaljenost i prepreke: metalno kućište između miša i prijemnika slabi signal.</li><li>Premesti prijemnik napred ili ga stavi na produžni kabl, dalje od USB 3.0 portova i rutera.</li></ol>
+<ol lang="en"><li>The battery: replace or charge it.</li><li>Distance and obstacles: a metal case between the mouse and the receiver weakens the signal.</li><li>Move the receiver to the front or put it on an extension cable, away from USB 3.0 ports and the router.</li></ol><p class="answer"><span lang="sr">baterija, pa položaj prijemnika</span><span lang="en">battery, then receiver position</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 9</span><span lang="en">Part 9</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Zamenjeni PS/2 portovi.</b> Tastatura u zelenom ili miš u ljubičastom portu ne radi. Gledaj boje.</div></li><li><div><b>Mikrofon u zelenom priključku.</b> Zeleni je izlaz za zvučnike. Mikrofon ide u roze.</div></li><li><div><b>Bluetooth uređaj nije u režimu uparivanja.</b> Računar ga ne vidi na spisku dok se ne uključi uparivanje na samom uređaju.</div></li><li><div><b>Pasivni hab za jake uređaje.</b> Hab bez svog napajanja ne može da napaja više spoljnih diskova ili kamera. Koristi hab sa adapterom.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>Swapped PS/2 ports.</b> A keyboard in the green or a mouse in the purple port does not work. Watch the colours.</div></li><li><div><b>A microphone in the green jack.</b> Green is the speaker output. The microphone goes into pink.</div></li><li><div><b>A Bluetooth device not in pairing mode.</b> The computer does not see it in the list until pairing is switched on on the device itself.</div></li><li><div><b>An unpowered hub for hungry devices.</b> A hub without its own power cannot feed several external drives or cameras. Use a hub with an adapter.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 10</span><span lang="en">Part 10</span></b> · <span lang="sr"></span><span lang="en"></span></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Ulazne jedinice se povezuju žično (USB, PS/2, 3,5 mm audio) ili bežično (Bluetooth, 2,4 GHz, IR).</li><li>USB je Plug and Play i hot swap, napaja uređaj i ima klasu HID za tastature i miševe.</li><li>PS/2: ljubičasti za tastaturu, zeleni za miš, bez hot swap-a.</li><li>Bežični uređaji zavise od baterije i ometanja; Bluetooth traži uparivanje.</li><li>Računar USB uređaj proziva: 125 Hz = 8 ms, 1000 Hz = 1 ms.</li><li>Mikrofon u roze priključak; problemi sa drajverom se rešavaju u Upravljaču uređajima.</li></ul><ul lang="en"><li>Input devices connect by wire (USB, PS/2, 3.5 mm audio) or wirelessly (Bluetooth, 2.4 GHz, IR).</li><li>USB is Plug and Play and hot swap, powers the device and has the HID class for keyboards and mice.</li><li>PS/2: purple for the keyboard, green for the mouse, no hot swap.</li><li>Wireless devices depend on the battery and interference; Bluetooth needs pairing.</li><li>The computer polls a USB device: 125 Hz = 8 ms, 1000 Hz = 1 ms.</li><li>The microphone goes into the pink jack; driver problems are fixed in Device Manager.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC10" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/periferije-labs.js"></script>
+</body>
+</html>

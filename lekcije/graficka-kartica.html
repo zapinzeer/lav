@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Šta radi grafička kartica, njeni delovi, paralelni rad GPU-a, VRAM i rezolucija, ugradnja i izbor, uz animaciju bojenja piksela.">
+<title>Grafička kartica · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="graficka-kartica">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš ulogu grafičke kartice i razliku između integrisane i diskretne grafike;</li><li>nabrojiš delove kartice i čemu služe;</li><li>objasniš zašto je GPU brz za grafiku i koliko memorije zauzima slika;</li><li>ugradiš karticu i izabereš je prema nameni.</li></ul>
+    <ul lang="en"><li>explain the role of the graphics card and the difference between integrated and dedicated graphics;</li><li>list the parts of a card and what they are for;</li><li>explain why a GPU is fast at graphics and how much memory a picture takes;</li><li>install a card and choose one for a purpose.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="uloga" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">čemu služi</span><span lang="en">what it is for</span></p>
+    <h2><span lang="sr">Šta radi grafička kartica</span><span lang="en">What a graphics card does</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Grafička kartica</strong> (video kartica, GPU) pretvara podatke iz računara u sliku na monitoru. Svaka slika je mreža <strong>piksela</strong>, a kartica mora da izračuna boju svakog od njih i to da ponovi 60, 144 ili više puta u sekundi. Za Full HD to je preko dva miliona piksela po slici.</p>
+<p lang="en">The <strong>graphics card</strong> (video card, GPU) turns data from the computer into a picture on the monitor. Every picture is a grid of <strong>pixels</strong>, and the card has to work out the colour of each of them and repeat it 60, 144 or more times a second. For Full HD that is over two million pixels per picture.</p><p lang="sr">Grafika može biti:</p>
+<p lang="en">Graphics can be:</p><ul lang="sr"><li><strong>integrisana</strong> (iGPU): deo procesora; koristi običan RAM, troši malo i dovoljna je za kancelariju, internet i filmove;</li><li><strong>diskretna</strong> (posebna kartica): ima svoj procesor i svoju memoriju, mnogo je jača i potrebna je za igre, 3D modelovanje, montažu videa i veštačku inteligenciju.</li></ul>
+<ul lang="en"><li><strong>integrated</strong> (iGPU): part of the processor; it uses ordinary RAM, uses little power and is enough for office work, the internet and films;</li><li><strong>dedicated</strong> (a separate card): it has its own processor and its own memory, is much stronger and is needed for games, 3D modelling, video editing and artificial intelligence.</li></ul><figure class="fig" style="max-width:680px"><svg class="dg" viewBox="0 0 640 120" role="img" aria-label="Put od podataka do slike / The path from data to an image" style="width:100%;height:auto">
+<defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+<rect x="6" y="34" width="96" height="50" rx="6" class="fillcs" stroke="var(--copper)"/><text x="54" y="56" text-anchor="middle">CPU</text><text x="54" y="72" text-anchor="middle" class="sm mu" lang="sr">komande</text><text x="54" y="72" text-anchor="middle" class="sm mu" lang="en">commands</text>
+<rect x="132" y="34" width="96" height="50" rx="6" class="fillfs" stroke="var(--field)"/><text x="180" y="56" text-anchor="middle" lang="sr">temena</text><text x="180" y="56" text-anchor="middle" lang="en">vertices</text><text x="180" y="72" text-anchor="middle" class="sm mu" lang="sr">oblik scene</text><text x="180" y="72" text-anchor="middle" class="sm mu" lang="en">shape of the scene</text>
+<rect x="258" y="34" width="110" height="50" rx="6" class="fillfs" stroke="var(--field)"/><text x="313" y="56" text-anchor="middle" lang="sr">rasterizacija</text><text x="313" y="56" text-anchor="middle" lang="en">rasterisation</text><text x="313" y="72" text-anchor="middle" class="sm mu" lang="sr">trouglovi → pikseli</text><text x="313" y="72" text-anchor="middle" class="sm mu" lang="en">triangles → pixels</text>
+<rect x="398" y="34" width="100" height="50" rx="6" class="fillfs" stroke="var(--field)"/><text x="448" y="56" text-anchor="middle" lang="sr">senčenje</text><text x="448" y="56" text-anchor="middle" lang="en">shading</text><text x="448" y="72" text-anchor="middle" class="sm mu" lang="sr">boja piksela</text><text x="448" y="72" text-anchor="middle" class="sm mu" lang="en">pixel colour</text>
+<rect x="528" y="34" width="106" height="50" rx="6" class="fillvs" stroke="var(--violet)"/><text x="581" y="56" text-anchor="middle" lang="sr">frejm bafer</text><text x="581" y="56" text-anchor="middle" lang="en">frame buffer</text><text x="581" y="72" text-anchor="middle" class="sm mu" lang="sr">→ monitor</text><text x="581" y="72" text-anchor="middle" class="sm mu" lang="en">→ monitor</text>
+<line class="thin" x1="102" y1="59" x2="130" y2="59" marker-end="url(#ar2)"/><line class="thin" x1="228" y1="59" x2="256" y2="59" marker-end="url(#ar2)"/><line class="thin" x1="368" y1="59" x2="396" y2="59" marker-end="url(#ar2)"/><line class="thin" x1="498" y1="59" x2="526" y2="59" marker-end="url(#ar2)"/>
+<text x="400" y="108" text-anchor="middle" class="mu sm" lang="sr">sve plavo radi GPU, milionima piksela istovremeno</text><text x="400" y="108" text-anchor="middle" class="mu sm" lang="en">everything blue is done by the GPU, on millions of pixels at once</text>
+</svg><figcaption><span lang="sr">Procesor (CPU) samo kaže šta treba nacrtati. Grafički procesor računa oblike, pretvara ih u piksele, boji ih i upisuje gotovu sliku u frejm bafer, odakle ide na monitor.</span><span lang="en">The processor (CPU) only says what to draw. The graphics processor works out the shapes, turns them into pixels, colours them and writes the finished picture into the frame buffer, from where it goes to the monitor.</span></figcaption></figure>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="delovi" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">anatomija</span><span lang="en">anatomy</span></p>
+    <h2><span lang="sr">Delovi grafičke kartice</span><span lang="en">Parts of a graphics card</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<figure class="fig" style="max-width:680px"><svg class="dg" viewBox="0 0 620 260" role="img" aria-label="Delovi grafičke kartice / Parts of a graphics card" style="width:100%;height:auto">
+<rect x="40" y="40" width="440" height="150" rx="8" class="fillgs" stroke="var(--good)" stroke-width="1.5"/>
+<rect x="210" y="82" width="90" height="70" rx="6" class="fillk"/>
+<text x="255" y="122" text-anchor="middle" class="lbl-w">GPU</text>
+<g class="fillv"><rect x="170" y="70" width="28" height="18" rx="2"/><rect x="170" y="104" width="28" height="18" rx="2"/><rect x="170" y="138" width="28" height="18" rx="2"/><rect x="312" y="70" width="28" height="18" rx="2"/><rect x="312" y="104" width="28" height="18" rx="2"/><rect x="312" y="138" width="28" height="18" rx="2"/></g>
+<g class="fillc"><rect x="370" y="60" width="14" height="14" rx="2"/><rect x="390" y="60" width="14" height="14" rx="2"/><rect x="410" y="60" width="14" height="14" rx="2"/><rect x="370" y="80" width="14" height="14" rx="2"/><rect x="390" y="80" width="14" height="14" rx="2"/><rect x="410" y="80" width="14" height="14" rx="2"/></g>
+<rect x="440" y="44" width="34" height="18" rx="2" class="fillk"/>
+<path d="M90 190v16h300v-16" class="fillf" stroke="var(--copper)"/>
+<rect x="90" y="190" width="300" height="16" class="fillf"/>
+<rect x="18" y="30" width="22" height="170" rx="2" class="fills" stroke="var(--ink)"/>
+<rect x="22" y="50" width="14" height="22" rx="2" class="fillk"/><rect x="22" y="84" width="14" height="22" rx="2" class="fillk"/><rect x="22" y="118" width="14" height="22" rx="2" class="fillk"/><rect x="22" y="152" width="14" height="22" rx="2" class="fillk"/>
+<line class="thin" x1="255" y1="82" x2="540" y2="30"/><text x="545" y="34" lang="sr">GPU, grafički procesor</text><text x="545" y="34" lang="en">GPU, graphics processor</text>
+<line class="thin" x1="340" y1="113" x2="540" y2="74"/><text x="545" y="78" lang="sr">VRAM (GDDR)</text><text x="545" y="78" lang="en">VRAM (GDDR)</text>
+<line class="thin" x1="424" y1="74" x2="540" y2="118"/><text x="545" y="122">VRM</text>
+<line class="thin" x1="474" y1="53" x2="540" y2="160"/><text x="545" y="164" lang="sr">dodatno napajanje</text><text x="545" y="164" lang="en">extra power</text>
+<line class="thin" x1="240" y1="206" x2="300" y2="236"/><text x="305" y="240" lang="sr">PCIe x16 konektor</text><text x="305" y="240" lang="en">PCIe x16 edge connector</text>
+<line class="thin" x1="29" y1="200" x2="60" y2="236"/><text x="64" y="240" lang="sr">izlazi: HDMI, DisplayPort</text><text x="64" y="240" lang="en">outputs: HDMI, DisplayPort</text>
+</svg><figcaption><span lang="sr">Pogled odozgo bez hladnjaka. U sredini je grafički procesor, oko njega memorijski čipovi, desno regulatori napona (VRM), dole PCIe konektor, a levo metalni nosač sa izlazima za monitore.</span><span lang="en">A top view without the cooler. In the middle is the graphics processor, around it the memory chips, on the right the voltage regulators (VRM), at the bottom the PCIe connector, and on the left the metal bracket with the monitor outputs.</span></figcaption></figure><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Delovi i njihove uloge</span><span lang="en">Parts and their roles</span></caption><thead><tr><th><span lang="sr">Deo</span><span lang="en">Part</span></th><th><span lang="sr">Uloga</span><span lang="en">Role</span></th></tr></thead><tbody><tr><td><span lang="sr">GPU</span><span lang="en">GPU</span></td><td><span lang="sr">grafički procesor sa hiljadama malih jezgara koja rade istovremeno</span><span lang="en">the graphics processor with thousands of small cores working at the same time</span></td></tr><tr><td>VRAM</td><td><span lang="sr">video memorija (GDDR6, GDDR6X, GDDR7) za teksture, modele i gotove slike</span><span lang="en">video memory (GDDR6, GDDR6X, GDDR7) for textures, models and finished images</span></td></tr><tr><td>VRM</td><td><span lang="sr">napaja GPU i memoriju stabilnim naponom</span><span lang="en">feeds the GPU and memory with a steady voltage</span></td></tr><tr><td><span lang="sr">hladnjak</span><span lang="en">cooler</span></td><td><span lang="sr">rebra, toplotne cevi i 1–3 ventilatora; jaka kartica greje kao mala grejalica</span><span lang="en">fins, heat pipes and 1–3 fans; a strong card heats like a small heater</span></td></tr><tr><td>PCIe x16</td><td><span lang="sr">konektor kojim kartica razmenjuje podatke sa pločom</span><span lang="en">the connector the card uses to exchange data with the board</span></td></tr><tr><td><span lang="sr">dodatno napajanje</span><span lang="en">extra power</span></td><td><span lang="sr">6+2-pinski ili 16-pinski (12V-2x6) konektor iz napajanja</span><span lang="en">a 6+2-pin or 16-pin (12V-2x6) connector from the power supply</span></td></tr><tr><td><span lang="sr">izlazi</span><span lang="en">outputs</span></td><td><span lang="sr">HDMI i DisplayPort; starije kartice i DVI</span><span lang="en">HDMI and DisplayPort; older cards also DVI</span></td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="paralelno" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">zašto je brza</span><span lang="en">why it is fast</span></p>
+    <h2><span lang="sr">Mnogo malih radnika: paralelni rad</span><span lang="en">Many small workers: parallel work</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Procesor (CPU) ima mali broj vrlo pametnih jezgara, obično 4 do 16. Ona brzo rešavaju složene zadatke jedan za drugim. Grafički procesor ima <strong>hiljade jednostavnih jezgara</strong>. Svako je sporije i „gluplje”, ali kad treba obojiti dva miliona piksela po istom pravilu, hiljade radnika završe posao mnogo brže od nekoliko stručnjaka.</p>
+<p lang="en">The processor (CPU) has a small number of very clever cores, usually 4 to 16. They solve complex tasks quickly one after another. The graphics processor has <strong>thousands of simple cores</strong>. Each is slower and "simpler", but when two million pixels have to be coloured by the same rule, thousands of workers finish much faster than a few experts.</p><details class="think"><summary><span lang="sr">Pomisli prvo: zašto onda ne bacimo CPU i sve radimo na GPU?</span><span lang="en">Think first: so why not throw away the CPU and do everything on the GPU?</span></summary><div class="ans"><p lang="sr">Većina programa ima korake koji zavise jedan od drugog: ne možeš da uradiš drugi dok ne završiš prvi. Tu hiljade radnika ne pomažu. GPU je odličan samo za poslove koji se dele na mnogo istih, nezavisnih delova (pikseli, video, neuronske mreže).</p>
+<p lang="en">Most programs have steps that depend on each other: you cannot do the second until the first is done. Thousands of workers do not help there. A GPU is great only for jobs that split into many identical, independent pieces (pixels, video, neural networks).</p></div></details>
+</div><figure class="lab" id="lab-gpu">
+<div class="viewport" style="aspect-ratio:16/10"><canvas tabindex="0" aria-label="Animacija bojenja piksela sa malo i mnogo jezgara / Animation of colouring pixels with few and many cores"></canvas></div>
+<div class="controls"><div class="btns"><span class="lbl"><span lang="sr">Ko crta</span><span lang="en">Who draws</span></span><div class="seg" id="gpu-mode" role="group"><button type="button" data-v="cpu" aria-pressed="true"><span lang="sr">CPU · 8 jezgara</span><span lang="en">CPU · 8 cores</span></button><button type="button" data-v="gpu" aria-pressed="false"><span lang="sr">GPU · 256 jezgara</span><span lang="en">GPU · 256 cores</span></button></div></div><div class="ctl"><label for="gpu-res"><span lang="sr">Rezolucija mreže</span><span lang="en">Grid resolution</span></label><output id="gpu-res-out" for="gpu-res"></output><input type="range" id="gpu-res" min="16" max="64" step="8" value="32"></div></div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-gpu-calc"></div><div class="result" id="lab-gpu-result"></div><div class="calc" id="lab-gpu-note"></div></div>
+<figcaption><span lang="sr">Svaki kvadratić je jedan piksel. Jezgra uzimaju piksele u grupama i boje ih. Uporedi koliko „taktova” treba procesoru, a koliko grafičkom procesoru za istu sliku.</span><span lang="en">Every square is one pixel. The cores take pixels in groups and colour them. Compare how many "ticks" the processor needs and how many the graphics processor needs for the same picture.</span></figcaption>
+</figure>
+  </div>
+</section>
+
+<section class="sec" id="vram" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">video memorija</span><span lang="en">video memory</span></p>
+    <h2><span lang="sr">VRAM i rezolucija</span><span lang="en">VRAM and resolution</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Gotova slika se čuva u delu video memorije koji se zove <strong>frejm bafer</strong>. Svaki piksel zauzima obično 4 bajta (crvena, zelena, plava i providnost). Zato je jedna slika u Full HD rezoluciji oko 8 MB, a u 4K oko 33 MB. To nije mnogo; veći deo VRAM-a zauzimaju <strong>teksture</strong> (slike koje se „lepe” na 3D modele) i sami modeli.</p>
+<p lang="en">The finished picture is kept in a part of video memory called the <strong>frame buffer</strong>. Each pixel usually takes 4 bytes (red, green, blue and transparency). So one picture in Full HD is about 8 MB, and in 4K about 33 MB. That is not much; most of the VRAM is taken by <strong>textures</strong> (pictures "glued" onto 3D models) and by the models themselves.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Rezolucije i broj piksela</span><span lang="en">Resolutions and pixel counts</span></caption><thead><tr><th><span lang="sr">Naziv</span><span lang="en">Name</span></th><th><span lang="sr">Rezolucija</span><span lang="en">Resolution</span></th><th><span lang="sr">Piksela</span><span lang="en">Pixels</span></th><th><span lang="sr">Jedna slika</span><span lang="en">One picture</span></th></tr></thead><tbody><tr><td>HD</td><td>1280 × 720</td><td><span lang="sr">0,9 miliona</span><span lang="en">0.9 million</span></td><td>3,7 MB</td></tr><tr><td>Full HD</td><td>1920 × 1080</td><td><span lang="sr">2,1 milion</span><span lang="en">2.1 million</span></td><td>8,3 MB</td></tr><tr><td>QHD (1440p)</td><td>2560 × 1440</td><td><span lang="sr">3,7 miliona</span><span lang="en">3.7 million</span></td><td>14,7 MB</td></tr><tr><td>4K UHD</td><td>3840 × 2160</td><td><span lang="sr">8,3 miliona</span><span lang="en">8.3 million</span></td><td>33,2 MB</td></tr></tbody></table></div><p lang="sr">Za kancelarijski rad dovoljna je integrisana grafika. Za igre u Full HD danas se preporučuje bar 8 GB VRAM-a, a za 4K, montažu i AI 12–16 GB i više. Kada VRAM ponestane, kartica pozajmljuje sistemski RAM preko PCIe veze, a to je mnogo sporije, pa slika počinje da zastajkuje.</p>
+<p lang="en">For office work integrated graphics is enough. For games in Full HD at least 8 GB of VRAM is recommended today, and for 4K, editing and AI 12–16 GB or more. When the VRAM runs out, the card borrows system RAM over the PCIe link, which is much slower, so the picture starts to stutter.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="ugradnja" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">postupak</span><span lang="en">procedure</span></p>
+    <h2><span lang="sr">Ugradnja grafičke kartice</span><span lang="en">Installing a graphics card</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<ol lang="sr"><li>Isključi računar, izvuci kabl i dodirni kućište.</li><li>Ukloni jedan ili dva metalna poklopca slotova na zadnjoj strani kućišta (koliko je kartica široka).</li><li>Otvori bravicu na kraju gornjeg <strong>PCIe x16</strong> slota (onaj najbliži procesoru, jer ima najviše traka).</li><li>Spusti karticu ravno u slot i pritisni dok bravica ne <strong>klikne</strong>.</li><li>Pričvrsti nosač kartice zavrtnjima za kućište.</li><li>Priključi dodatno napajanje (6+2-pin ili 16-pin) ako ga kartica ima.</li><li>Kabl monitora priključi <strong>u karticu</strong>, ne u ploču.</li><li>Uključi računar i instaliraj najnoviji drajver proizvođača (NVIDIA, AMD ili Intel).</li></ol>
+<ol lang="en"><li>Switch the computer off, pull out the cable and touch the case.</li><li>Remove one or two metal slot covers at the back of the case (as wide as the card).</li><li>Open the latch at the end of the top <strong>PCIe x16</strong> slot (the one closest to the processor, as it has the most lanes).</li><li>Lower the card straight into the slot and press until the latch <strong>clicks</strong>.</li><li>Fix the card bracket to the case with screws.</li><li>Connect the extra power (6+2-pin or 16-pin) if the card has it.</li><li>Plug the monitor cable <strong>into the card</strong>, not into the board.</li><li>Switch the computer on and install the latest driver from the maker (NVIDIA, AMD or Intel).</li></ol><div class="rule-box green"><p class="eyebrow"><span lang="sr">Teške kartice</span><span lang="en">Heavy cards</span></p><p lang="sr">Velike kartice teže i preko 1,5 kg i vremenom savijaju slot. Zato se uz njih isporučuje <strong>nosač</strong> (podupirač) koji drži kraj kartice. Pre kupovine proveri i <strong>dužinu</strong> kartice: mora da stane u kućište.</p>
+<p lang="en">Large cards weigh over 1.5 kg and bend the slot over time. That is why they come with a <strong>support bracket</strong> that holds the end of the card. Before buying, also check the card <strong>length</strong>: it must fit in the case.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="izbor" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">kupovina</span><span lang="en">buying</span></p>
+    <h2><span lang="sr">Kako se bira grafička kartica</span><span lang="en">How to choose a graphics card</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Izbor prema nameni</span><span lang="en">Choosing by purpose</span></caption><thead><tr><th><span lang="sr">Namena</span><span lang="en">Purpose</span></th><th><span lang="sr">Preporuka</span><span lang="en">Recommendation</span></th></tr></thead><tbody><tr><td><span lang="sr">kancelarija, škola, filmovi</span><span lang="en">office, school, films</span></td><td><span lang="sr">integrisana grafika</span><span lang="en">integrated graphics</span></td></tr><tr><td><span lang="sr">igre u Full HD</span><span lang="en">games in Full HD</span></td><td><span lang="sr">srednja klasa, 8 GB VRAM</span><span lang="en">mid-range, 8 GB VRAM</span></td></tr><tr><td><span lang="sr">igre u 1440p i 4K</span><span lang="en">games in 1440p and 4K</span></td><td><span lang="sr">jača klasa, 12–16 GB VRAM</span><span lang="en">upper range, 12–16 GB VRAM</span></td></tr><tr><td><span lang="sr">montaža videa, 3D, AI</span><span lang="en">video editing, 3D, AI</span></td><td><span lang="sr">što više VRAM-a, podrška za CUDA/ROCm</span><span lang="en">as much VRAM as possible, CUDA/ROCm support</span></td></tr></tbody></table></div><p lang="sr">Pored snage proveri i: <strong>dužinu i širinu</strong> kartice (koliko slotova zauzima), da li <strong>napajanje</strong> ima dovoljno snage i prave konektore, koje <strong>izlaze</strong> ima (koliko monitora i kojih) i da li se procesor i kartica slažu po snazi, da jedan ne usporava drugog.</p>
+<p lang="en">Besides power also check: the <strong>length and width</strong> of the card (how many slots it takes), whether the <strong>power supply</strong> has enough capacity and the right connectors, which <strong>outputs</strong> it has (how many monitors and which), and whether the processor and card are matched in power, so that one does not hold back the other.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · broj piksela</span><span lang="en">Example 1 · pixel count</span></h4><p class="given" lang="sr">Dato: monitor ima rezoluciju 1920 × 1080. Koliko piksela kartica mora da izračuna za jednu sliku, a koliko u sekundi pri 60 slika u sekundi (60 FPS)?</p><p class="given" lang="en">Given: a monitor has a resolution of 1920 × 1080. How many pixels must the card work out for one picture, and how many per second at 60 frames per second (60 FPS)?</p><ol lang="sr"><li>Jedna slika: 1920 · 1080 = 2 073 600 piksela.</li><li>U sekundi: 2 073 600 · 60 ≈ 124 miliona piksela.</li></ol>
+<ol lang="en"><li>One picture: 1920 · 1080 = 2,073,600 pixels.</li><li>Per second: 2,073,600 · 60 ≈ 124 million pixels.</li></ol><p class="answer"><span lang="sr">≈ 2,1 milion po slici, ≈ 124 miliona u sekundi</span><span lang="en">≈ 2.1 million per picture, ≈ 124 million per second</span></p></div><div class="ex"><h4><span lang="sr">Primer 2 · frejm bafer</span><span lang="en">Example 2 · frame buffer</span></h4><p class="given" lang="sr">Dato: koliko memorije zauzima jedna slika u 4K (3840 × 2160) ako piksel ima 4 bajta?</p><p class="given" lang="en">Given: how much memory does one picture in 4K (3840 × 2160) take if a pixel has 4 bytes?</p><ol lang="sr"><li>Broj piksela: 3840 · 2160 = 8 294 400.</li><li>Bajtova: 8 294 400 · 4 = 33 177 600 B.</li><li>To je oko 33 MB (milion bajtova).</li></ol>
+<ol lang="en"><li>Pixel count: 3840 · 2160 = 8,294,400.</li><li>Bytes: 8,294,400 · 4 = 33,177,600 B.</li><li>That is about 33 MB (million bytes).</li></ol><p class="answer"><span lang="sr">≈ 33 MB</span><span lang="en">≈ 33 MB</span></p></div><div class="ex"><h4><span lang="sr">Primer 3 · nema slike</span><span lang="en">Example 3 · no picture</span></h4><p class="given" lang="sr">Dato: ugradio si novu karticu. Računar radi, ventilatori se vrte, a monitor piše „No signal”.</p><p class="given" lang="en">Given: you installed a new card. The computer runs and the fans spin, but the monitor says "No signal".</p><ol lang="sr"><li>Proveri gde je kabl monitora: verovatno je ostao u izlazu na ploči.</li><li>Prebaci ga u izlaz na kartici.</li><li>Ako i dalje nema slike, proveri dodatno napajanje kartice i da li je bravica slota kliknula.</li></ol>
+<ol lang="en"><li>Check where the monitor cable is: it is probably still in the output on the board.</li><li>Move it to an output on the card.</li><li>If there is still no picture, check the card's extra power and that the slot latch clicked.</li></ol><p class="answer"><span lang="sr">kabl u karticu, pa napajanje i slot</span><span lang="en">cable into the card, then power and slot</span></p></div><div class="ex"><h4><span lang="sr">Primer 4 · izbor za učionicu</span><span lang="en">Example 4 · choice for a classroom</span></h4><p class="given" lang="sr">Dato: škola kupuje 20 računara za rad u Wordu, Excelu i pretraživaču. Da li treba kupiti posebne grafičke kartice?</p><p class="given" lang="en">Given: a school is buying 20 computers for Word, Excel and a web browser. Should it buy dedicated graphics cards?</p><ol lang="sr"><li>Ti programi ne traže 3D grafiku.</li><li>Integrisana grafika u procesoru je dovoljna, troši manje i nema dodatnu cenu.</li><li>Novac je pametnije uložiti u SSD i dovoljno RAM-a.</li></ol>
+<ol lang="en"><li>Those programs do not need 3D graphics.</li><li>The integrated graphics in the processor is enough, uses less power and costs nothing extra.</li><li>The money is better spent on an SSD and enough RAM.</li></ol><p class="answer"><span lang="sr">ne, dovoljna je integrisana grafika</span><span lang="en">no, integrated graphics is enough</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Kabl monitora u ploči.</b> Kada postoji posebna kartica, izlazi na ploči obično ne rade. Monitor uvek u karticu.</div></li><li><div><b>Zaboravljeno dodatno napajanje.</b> Kartica bez 8-pinskog ili 16-pinskog kabla ne daje sliku ili javlja grešku.</div></li><li><div><b>Pogrešan slot.</b> Donji x16 slotovi često imaju samo 4 trake. Kartica radi, ali sporije.</div></li><li><div><b>Stari drajver.</b> Bez pravog drajvera kartica radi u osnovnom režimu: niska rezolucija i bez 3D ubrzanja.</div></li><li><div><b>Kartica ne staje.</b> Pre kupovine izmeri slobodno mesto u kućištu i uporedi ga sa dužinom kartice.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>The monitor cable in the board.</b> When there is a dedicated card, the outputs on the board usually do not work. The monitor always goes into the card.</div></li><li><div><b>Forgotten extra power.</b> A card without its 8-pin or 16-pin cable gives no picture or reports an error.</div></li><li><div><b>The wrong slot.</b> The lower x16 slots often have only 4 lanes. The card works, but slower.</div></li><li><div><b>An old driver.</b> Without the right driver the card runs in basic mode: low resolution and no 3D acceleration.</div></li><li><div><b>The card does not fit.</b> Before buying, measure the free room in the case and compare it with the length of the card.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 9</span><span lang="en">Part 9</span></b> · <span lang="sr"></span><span lang="en"></span></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Grafička kartica pretvara podatke u sliku, piksel po piksel, desetine puta u sekundi.</li><li>Integrisana grafika je deo procesora; diskretna kartica ima svoj GPU i VRAM.</li><li>Delovi: GPU, VRAM, VRM, hladnjak, PCIe x16 konektor, dodatno napajanje i izlazi.</li><li>GPU je brz jer ima hiljade jezgara koja rade paralelno.</li><li>Slika u Full HD ima 2,1 milion piksela i zauzima oko 8 MB; VRAM uglavnom troše teksture.</li><li>Ugradnja: gornji PCIe x16 slot, klik, zavrtanj, dodatno napajanje, monitor u karticu, drajver.</li></ul><ul lang="en"><li>The graphics card turns data into a picture, pixel by pixel, dozens of times a second.</li><li>Integrated graphics is part of the processor; a dedicated card has its own GPU and VRAM.</li><li>Parts: GPU, VRAM, VRM, cooler, PCIe x16 connector, extra power and outputs.</li><li>A GPU is fast because it has thousands of cores working in parallel.</li><li>A Full HD picture has 2.1 million pixels and takes about 8 MB; VRAM is mostly used by textures.</li><li>Installation: top PCIe x16 slot, click, screw, extra power, monitor into the card, driver.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC08" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/periferije-labs.js"></script>
+</body>
+</html>

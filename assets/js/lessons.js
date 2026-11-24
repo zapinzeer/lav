@@ -40,8 +40,8 @@ window.LAV_CLASSES = {
     en: 'Computer hardware',
     color: 'green',
     blurb: {
-      sr: 'Kućišta, napajanje, matična ploča sa 3D modelom, ugradnja i memorija.',
-      en: 'Cases, power supplies, the motherboard with a 3D model, assembly and memory.'
+      sr: 'Kućišta, napajanje, matična ploča sa 3D modelom, ugradnja, memorija i diskovi, grafička kartica, ulazne i izlazne jedinice, kvarovi i njihova popravka.',
+      en: 'Cases, power supplies, the motherboard with a 3D model, assembly, memory and drives, the graphics card, input and output devices, faults and repairs.'
     }
   },
   podaci: {
@@ -438,6 +438,110 @@ window.LAV_LESSONS = [
       en: 'Registers, cache, RAM and ROM, then HDD, SSD, optical and portable media, with a comparison of speed and capacity.'
     },
     tags: ['formulas']
+  },
+  {
+    slug: 'ugradnja-diska-i-optickih-uredjaja',
+    cls: 'racunari',
+    date: '2026-11-24',
+    minutes: 22,
+    quiz: 'PC07',
+    title: { sr: 'Ugradnja tvrdog diska i optičkih uređaja', en: 'Installing hard disks and optical drives' },
+    summary: {
+      sr: 'Ležišta od 5,25″, 3,5″ i 2,5″, M.2, SATA kablovi, CD, DVD i Blu-ray, pa BIOS, particije i formatiranje.',
+      en: '5.25″, 3.5″ and 2.5″ bays, M.2, SATA cables, CD, DVD and Blu-ray, then the BIOS, partitions and formatting.'
+    },
+    tags: ['animation']
+  },
+  {
+    slug: 'graficka-kartica',
+    cls: 'racunari',
+    date: '2026-11-24',
+    minutes: 22,
+    quiz: 'PC08',
+    title: { sr: 'Grafička kartica', en: 'The graphics card' },
+    summary: {
+      sr: 'Integrisana i diskretna grafika, delovi kartice, zašto je GPU brz, VRAM i rezolucija, ugradnja i izbor.',
+      en: 'Integrated and dedicated graphics, the parts of a card, why a GPU is fast, VRAM and resolution, installing and choosing one.'
+    },
+    tags: ['animation']
+  },
+  {
+    slug: 'ulazne-jedinice',
+    cls: 'racunari',
+    date: '2026-11-24',
+    minutes: 20,
+    quiz: 'PC09',
+    title: { sr: 'Ulazne jedinice', en: 'Input devices' },
+    summary: {
+      sr: 'Tastatura i matrica tastera, miš i DPI, ekran na dodir, skener, kamera, mikrofon i posebni ulazni uređaji.',
+      en: 'The keyboard and its key matrix, the mouse and DPI, touch screens, scanners, cameras, microphones and special input devices.'
+    },
+    tags: ['animation']
+  },
+  {
+    slug: 'povezivanje-ulaznih-jedinica',
+    cls: 'racunari',
+    date: '2026-11-24',
+    minutes: 20,
+    quiz: 'PC10',
+    title: { sr: 'Povezivanje ulaznih jedinica sa računarom', en: 'Connecting input devices to the computer' },
+    summary: {
+      sr: 'USB i njegove verzije, PS/2, Bluetooth i bežični prijemnici, audio priključci, prozivanje i drajveri.',
+      en: 'USB and its versions, PS/2, Bluetooth and wireless receivers, audio jacks, polling and drivers.'
+    },
+    tags: ['animation']
+  },
+  {
+    slug: 'izlazne-jedinice',
+    cls: 'racunari',
+    date: '2026-11-24',
+    minutes: 22,
+    quiz: 'PC11',
+    title: { sr: 'Izlazne jedinice', en: 'Output devices' },
+    summary: {
+      sr: 'Monitori, pikseli i RGB, LCD i OLED, gustina piksela, projektori, štampači i CMYK, zvučnici i slušalice.',
+      en: 'Monitors, pixels and RGB, LCD and OLED, pixel density, projectors, printers and CMYK, speakers and headphones.'
+    },
+    tags: ['animation']
+  },
+  {
+    slug: 'povezivanje-izlaznih-jedinica',
+    cls: 'racunari',
+    date: '2026-11-24',
+    minutes: 22,
+    quiz: 'PC12',
+    title: { sr: 'Povezivanje izlaznih jedinica sa računarom', en: 'Connecting output devices to the computer' },
+    summary: {
+      sr: 'VGA, DVI, HDMI, DisplayPort i USB-C, propusni opseg, više monitora, adapteri, štampači u mreži i zvuk.',
+      en: 'VGA, DVI, HDMI, DisplayPort and USB-C, bandwidth, several monitors, adapters, network printers and sound.'
+    },
+    tags: ['animation']
+  },
+  {
+    slug: 'kvarovi-kod-racunara',
+    cls: 'racunari',
+    date: '2026-11-24',
+    minutes: 24,
+    quiz: 'PC13',
+    title: { sr: 'Kvarovi kod računara (karakteristike i manifestacija)', en: 'Computer faults (features and symptoms)' },
+    summary: {
+      sr: 'Vrste kvarova, POST i zvučni signali, simptomi po komponentama, pregrevanje i postupak traženja kvara.',
+      en: 'Kinds of faults, POST and beep codes, symptoms part by part, overheating and how to look for a fault.'
+    },
+    tags: ['animation']
+  },
+  {
+    slug: 'zamena-neispravnih-komponenti',
+    cls: 'racunari',
+    date: '2026-11-24',
+    minutes: 22,
+    quiz: 'PC14',
+    title: { sr: 'Zamena neispravnih komponenti', en: 'Replacing faulty components' },
+    summary: {
+      sr: 'Priprema i kompatibilnost, opšti postupak, zamena RAM-a, diska, napajanja, grafičke i termalne paste, provera i reciklaža.',
+      en: 'Preparation and compatibility, the general procedure, replacing RAM, a drive, the PSU, the graphics card and thermal paste, testing and recycling.'
+    },
+    tags: ['animation']
   },
   {
     slug: 'podaci-sql-firebase',

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Kako se ugrađuju HDD, SSD, M.2 SSD i optički uređaj: ležišta, SATA kablovi, BIOS i formatiranje, uz animaciju ugradnje.">
+<title>Ugradnja tvrdog diska i optičkih uređaja · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="ugradnja-diska-i-optickih-uredjaja">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>prepoznaš ležišta od 5,25″, 3,5″ i 2,5″ i M.2 slot;</li><li>ugradiš HDD, SSD i optički uređaj i priključiš SATA kablove;</li><li>razlikuješ SATA, NVMe i stari IDE interfejs;</li><li>pripremiš nov disk u BIOS-u i operativnom sistemu.</li></ul>
+    <ul lang="en"><li>recognise 5.25″, 3.5″ and 2.5″ bays and the M.2 slot;</li><li>install an HDD, an SSD and an optical drive and connect the SATA cables;</li><li>tell SATA, NVMe and the old IDE interface apart;</li><li>prepare a new drive in the BIOS and the operating system.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="lezista" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">gde idu diskovi</span><span lang="en">where drives go</span></p>
+    <h2><span lang="sr">Ležišta i formati uređaja</span><span lang="en">Bays and device formats</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Računar čuva podatke na <strong>uređajima za skladištenje</strong>: tvrdom disku (HDD), SSD-u i optičkom uređaju (CD, DVD, Blu-ray). Svaki od njih ima svoje mesto u kućištu. Mesta se zovu <strong>ležišta</strong> (engl. <em>bays</em>) i označavaju se širinom uređaja u inčima.</p>
+<p lang="en">A computer stores data on <strong>storage devices</strong>: the hard disk drive (HDD), the SSD and the optical drive (CD, DVD, Blu-ray). Each has its own place in the case. These places are called <strong>bays</strong> and are named after the width of the device in inches.</p><figure class="fig" style="max-width:680px"><svg class="dg" viewBox="0 0 600 300" role="img" aria-label="Ležišta za uređaje u kućištu / Device bays in a case" style="width:100%;height:auto">
+<rect x="20" y="14" width="250" height="272" rx="8" class="thin"/>
+<rect x="36" y="30" width="218" height="34" rx="4" class="fillcs" stroke="var(--copper)" stroke-width="1.5"/>
+<rect x="36" y="70" width="218" height="34" rx="4" class="fills" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="145" y="52" text-anchor="middle">5,25″ ODD</text>
+<text x="145" y="92" text-anchor="middle" class="mu sm" lang="sr">prazno ležište sa maskom</text><text x="145" y="92" text-anchor="middle" class="mu sm" lang="en">empty bay with a cover</text>
+<rect x="56" y="122" width="178" height="26" rx="4" class="fillfs" stroke="var(--field)" stroke-width="1.5"/>
+<rect x="56" y="152" width="178" height="26" rx="4" class="fillfs" stroke="var(--field)" stroke-width="1.5"/>
+<text x="145" y="139" text-anchor="middle">3,5″ HDD</text><text x="145" y="169" text-anchor="middle">3,5″ HDD</text>
+<rect x="80" y="196" width="130" height="20" rx="3" class="fillvs" stroke="var(--violet)" stroke-width="1.5"/>
+<text x="145" y="210" text-anchor="middle">2,5″ SSD</text>
+<rect x="36" y="232" width="218" height="40" rx="4" class="fills" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="145" y="256" text-anchor="middle" class="mu" lang="sr">napajanje</text><text x="145" y="256" text-anchor="middle" class="mu" lang="en">power supply</text>
+<text x="145" y="10" text-anchor="middle" class="mu sm" lang="sr">prednja strana kućišta</text><text x="145" y="10" text-anchor="middle" class="mu sm" lang="en">front of the case</text>
+<rect x="320" y="40" width="250" height="160" rx="10" class="fillgs" stroke="var(--good)" stroke-width="1.5"/>
+<text x="445" y="62" text-anchor="middle" class="go" lang="sr">matična ploča</text><text x="445" y="62" text-anchor="middle" class="go" lang="en">motherboard</text>
+<rect x="350" y="120" width="120" height="16" rx="3" class="fillv"/>
+<circle cx="476" cy="128" r="4" class="fillk"/>
+<text x="410" y="152" text-anchor="middle" class="sm">M.2 SSD (NVMe)</text>
+<g class="fillf"><rect x="510" y="150" width="14" height="8" rx="1"/><rect x="510" y="162" width="14" height="8" rx="1"/><rect x="530" y="150" width="14" height="8" rx="1"/><rect x="530" y="162" width="14" height="8" rx="1"/></g>
+<text x="527" y="186" text-anchor="middle" class="sm">SATA</text>
+<path class="wfd" d="M234 135 C 300 135, 470 210, 517 172"/>
+<path class="wfd" d="M210 206 C 300 230, 480 230, 537 172"/>
+<text x="445" y="240" text-anchor="middle" class="mu sm" lang="sr">SATA kablovi za podatke</text><text x="445" y="240" text-anchor="middle" class="mu sm" lang="en">SATA data cables</text>
+</svg><figcaption><span lang="sr">Tipičan raspored: optički uređaj gore napred, diskovi od 3,5″ u kavezu ispod, SSD od 2,5″ na posebnom nosaču, a M.2 SSD direktno na matičnoj ploči. Isprekidane linije su SATA kablovi za podatke.</span><span lang="en">A typical layout: the optical drive at the top front, 3.5″ drives in the cage below, a 2.5″ SSD on its own bracket, and the M.2 SSD directly on the motherboard. The dashed lines are SATA data cables.</span></figcaption></figure><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Formati uređaja za skladištenje</span><span lang="en">Storage device formats</span></caption><thead><tr><th><span lang="sr">Format</span><span lang="en">Format</span></th><th><span lang="sr">Uređaj</span><span lang="en">Device</span></th><th><span lang="sr">Gde se ugrađuje</span><span lang="en">Where it is installed</span></th></tr></thead><tbody><tr><td>5,25″</td><td><span lang="sr">optički uređaj (DVD, Blu-ray)</span><span lang="en">optical drive (DVD, Blu-ray)</span></td><td><span lang="sr">spoljno ležište, otvor na prednjoj strani</span><span lang="en">external bay, opening at the front</span></td></tr><tr><td>3,5″</td><td><span lang="sr">HDD za stoni računar</span><span lang="en">desktop HDD</span></td><td><span lang="sr">unutrašnji kavez za diskove</span><span lang="en">internal drive cage</span></td></tr><tr><td>2,5″</td><td><span lang="sr">SSD ili HDD za laptop</span><span lang="en">SSD or laptop HDD</span></td><td><span lang="sr">nosač od 2,5″ ili adapter u ležištu od 3,5″</span><span lang="en">a 2.5″ bracket or an adapter in a 3.5″ bay</span></td></tr><tr><td>M.2 2280</td><td><span lang="sr">SSD u obliku pločice</span><span lang="en">an SSD shaped like a stick</span></td><td><span lang="sr">slot na matičnoj ploči</span><span lang="en">a slot on the motherboard</span></td></tr></tbody></table></div><details class="think"><summary><span lang="sr">Pomisli prvo: zašto se optički uređaj ugrađuje u spoljno ležište, a disk u unutrašnje?</span><span lang="en">Think first: why does the optical drive go in an external bay and the hard disk in an internal one?</span></summary><div class="ans"><p lang="sr">Optičkom uređaju korisnik mora da priđe da bi ubacio disk, pa mu prednja strana mora biti spolja. Tvrdom disku niko ne prilazi, pa je skriven unutra, gde je bolje zaštićen i hlađen.</p>
+<p lang="en">The user must reach the optical drive to insert a disc, so its front has to be outside. Nobody needs to reach the hard disk, so it is hidden inside, where it is better protected and cooled.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="koraci" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">korak po korak</span><span lang="en">step by step</span></p>
+    <h2><span lang="sr">Ugradnja u četiri koraka</span><span lang="en">Installation in four steps</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Bez obzira koji uređaj ugrađuješ, postupak je skoro isti. Pre svega isključi računar, izvuci kabl za napajanje i dodirni metalno kućište da ispustiš statički elektricitet. Zatim:</p>
+<p lang="en">Whatever device you install, the procedure is almost the same. First switch the computer off, pull out the power cable and touch the metal case to discharge static electricity. Then:</p><ol lang="sr"><li>pripremi ležište: skini masku ili izvuci fioku (nosač) za disk;</li><li>ubaci uređaj i pričvrsti ga zavrtnjima ili šinama bez alata;</li><li>priključi kabl za podatke (SATA) od uređaja do matične ploče;</li><li>priključi kabl za napajanje (SATA power) iz napajanja.</li></ol>
+<ol lang="en"><li>prepare the bay: remove the cover or pull out the drive tray (caddy);</li><li>slide the device in and fix it with screws or tool-less rails;</li><li>connect the data cable (SATA) from the device to the motherboard;</li><li>connect the power cable (SATA power) from the power supply.</li></ol><p lang="sr">M.2 SSD je izuzetak: nema kablove. Ubacuje se u slot pod uglom od oko 30°, spusti se i pričvrsti jednim malim zavrtnjem ili kopčom.</p>
+<p lang="en">The M.2 SSD is the exception: it has no cables. It goes into the slot at an angle of about 30°, is pressed down and held by one small screw or a clip.</p>
+</div><figure class="lab" id="lab-drive">
+<div class="viewport" style="aspect-ratio:16/10"><canvas tabindex="0" aria-label="Animacija ugradnje diska, SSD-a, M.2 SSD-a i optičkog uređaja / Animation of installing a hard disk, an SSD, an M.2 SSD and an optical drive"></canvas></div>
+<div class="controls"><div class="btns"><span class="lbl"><span lang="sr">Uređaj</span><span lang="en">Device</span></span><div class="seg" id="drv-kind" role="group"><button type="button" data-v="hdd" aria-pressed="true">HDD 3,5″</button><button type="button" data-v="ssd" aria-pressed="false">SSD 2,5″</button><button type="button" data-v="m2" aria-pressed="false">M.2</button><button type="button" data-v="odd" aria-pressed="false"><span lang="sr">DVD 5,25″</span><span lang="en">DVD 5.25″</span></button></div></div><div class="btns"><span class="lbl"><span lang="sr">Korak</span><span lang="en">Step</span></span><div class="seg" id="drv-step" role="group"><button type="button" data-v="1" aria-pressed="true">1</button><button type="button" data-v="2" aria-pressed="false">2</button><button type="button" data-v="3" aria-pressed="false">3</button><button type="button" data-v="4" aria-pressed="false">4</button></div></div></div>
+<div class="pc-info" id="lab-drive-info" aria-live="polite"></div>
+<figcaption><span lang="sr">Izaberi uređaj i korak. Animacija pokazuje gde uređaj ide, odakle se ubacuje i koji kablovi se priključuju. Narandžasti kabl je za podatke, žuti za napajanje.</span><span lang="en">Pick a device and a step. The animation shows where the device goes, where it slides in from and which cables are connected. The orange cable carries data, the yellow one power.</span></figcaption>
+</figure><div class="rest">
+<div class="rule-box green"><p class="eyebrow"><span lang="sr">Pravilo četiri zavrtnja</span><span lang="en">The four-screw rule</span></p><p lang="sr">Tvrdi disk se pričvršćuje sa <strong>četiri zavrtnja</strong> (dva sa svake strane) ili gumenim šinama. Disk koji je labav vibrira, pravi buku i brže se kvari, jer mu se ploče okreću 5400 ili 7200 puta u minuti.</p>
+<p lang="en">A hard disk is fixed with <strong>four screws</strong> (two on each side) or rubber rails. A loose drive vibrates, makes noise and fails sooner, because its platters spin 5400 or 7200 times a minute.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="kablovi" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">povezivanje</span><span lang="en">connecting</span></p>
+    <h2><span lang="sr">Kablovi i interfejsi</span><span lang="en">Cables and interfaces</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Svaki SATA uređaj ima <strong>dva konektora</strong>: uži, sa 7 pinova, za podatke i širi, sa 15 pinova, za napajanje. Oba imaju oblik slova L, pa ne mogu da se ukopčaju naopako. Kabl za podatke ide u SATA port na matičnoj ploči, a kabl za napajanje dolazi iz napajanja.</p>
+<p lang="en">Every SATA device has <strong>two connectors</strong>: the narrow 7-pin one for data and the wide 15-pin one for power. Both are L-shaped, so they cannot be plugged in upside down. The data cable goes into a SATA port on the motherboard, and the power cable comes from the power supply.</p><figure class="fig" style="max-width:680px"><svg class="dg" viewBox="0 0 600 200" role="img" aria-label="Zadnja strana SATA diska i IDE diska / The back of a SATA drive and an IDE drive" style="width:100%;height:auto">
+<rect x="20" y="30" width="270" height="110" rx="8" class="fills" stroke="var(--ink)" stroke-width="1.5"/>
+<text x="155" y="22" text-anchor="middle" lang="sr">SATA disk (pozadi)</text><text x="155" y="22" text-anchor="middle" lang="en">SATA drive (back)</text>
+<path d="M44 74h70v18h-62v-8h-8z" class="fillf"/>
+<path d="M130 74h120v18h-112v-8h-8z" class="fillc"/>
+<text x="80" y="112" text-anchor="middle" class="sm" lang="sr">podaci · 7 pinova</text><text x="80" y="112" text-anchor="middle" class="sm" lang="en">data · 7 pins</text>
+<text x="190" y="112" text-anchor="middle" class="sm" lang="sr">napajanje · 15 pinova</text><text x="190" y="112" text-anchor="middle" class="sm" lang="en">power · 15 pins</text>
+<text x="155" y="160" text-anchor="middle" class="mu sm" lang="sr">oba konektora imaju oblik slova L</text><text x="155" y="160" text-anchor="middle" class="mu sm" lang="en">both connectors are L-shaped</text>
+<rect x="320" y="30" width="260" height="110" rx="8" class="fills" stroke="var(--ink)" stroke-width="1.5"/>
+<text x="450" y="22" text-anchor="middle" lang="sr">IDE (PATA) disk, stariji</text><text x="450" y="22" text-anchor="middle" lang="en">IDE (PATA) drive, older</text>
+<rect x="336" y="72" width="140" height="22" rx="2" class="fillf"/>
+<g class="fillk"><rect x="484" y="74" width="6" height="6"/><rect x="494" y="74" width="6" height="6"/><rect x="504" y="74" width="6" height="6"/><rect x="484" y="84" width="6" height="6"/><rect x="494" y="84" width="6" height="6"/><rect x="504" y="84" width="6" height="6"/></g>
+<rect x="520" y="70" width="48" height="26" rx="3" class="fillc"/>
+<text x="406" y="112" text-anchor="middle" class="sm" lang="sr">40 pinova</text><text x="406" y="112" text-anchor="middle" class="sm" lang="en">40 pins</text>
+<text x="497" y="112" text-anchor="middle" class="sm" lang="sr">džamper</text><text x="497" y="112" text-anchor="middle" class="sm" lang="en">jumper</text>
+<text x="544" y="112" text-anchor="middle" class="sm">Molex</text>
+<text x="450" y="160" text-anchor="middle" class="mu sm" lang="sr">Master / Slave bira se džamperom</text><text x="450" y="160" text-anchor="middle" class="mu sm" lang="en">Master / Slave is set with the jumper</text>
+</svg><figcaption><span lang="sr">Levo: savremeni SATA disk. Desno: stari IDE (PATA) disk sa širokim trakastim kablom, džamperom za Master/Slave i Molex konektorom za napajanje. IDE se danas sreće samo u starim računarima.</span><span lang="en">Left: a modern SATA drive. Right: an old IDE (PATA) drive with a wide ribbon cable, a Master/Slave jumper and a Molex power connector. IDE is only found in old computers today.</span></figcaption></figure><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Interfejsi za uređaje za skladištenje</span><span lang="en">Interfaces for storage devices</span></caption><thead><tr><th><span lang="sr">Interfejs</span><span lang="en">Interface</span></th><th><span lang="sr">Brzina (okvirno)</span><span lang="en">Speed (approx.)</span></th><th><span lang="sr">Uređaji</span><span lang="en">Devices</span></th></tr></thead><tbody><tr><td>IDE / PATA</td><td>133 MB/s</td><td><span lang="sr">stari HDD i CD/DVD</span><span lang="en">old HDD and CD/DVD</span></td></tr><tr><td>SATA III</td><td>600 MB/s</td><td><span lang="sr">HDD, 2,5″ SSD, DVD, Blu-ray</span><span lang="en">HDD, 2.5″ SSD, DVD, Blu-ray</span></td></tr><tr><td>M.2 SATA</td><td>600 MB/s</td><td><span lang="sr">M.2 SSD sa B+M ključem</span><span lang="en">M.2 SSD with a B+M key</span></td></tr><tr><td>M.2 NVMe (PCIe 4.0 ×4)</td><td>~7000 MB/s</td><td><span lang="sr">M.2 SSD sa M ključem</span><span lang="en">M.2 SSD with an M key</span></td></tr><tr><td>USB 3.2</td><td>~1000 MB/s</td><td><span lang="sr">spoljni diskovi i optika</span><span lang="en">external drives and optical drives</span></td></tr></tbody></table></div><p lang="sr">Kod M.2 obrati pažnju na <strong>ključ</strong> (urez na kontaktima) i na oznaku slota. Neki slotovi primaju samo NVMe, neki samo SATA, a na nekim pločama korišćenje M.2 slota isključuje jedan ili dva SATA porta. To piše u priručniku ploče.</p>
+<p lang="en">With M.2 pay attention to the <strong>key</strong> (the notch in the contacts) and to the slot label. Some slots take only NVMe, some only SATA, and on some boards using an M.2 slot disables one or two SATA ports. The board manual says so.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="opticki" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">CD, DVD, Blu-ray</span><span lang="en">CD, DVD, Blu-ray</span></p>
+    <h2><span lang="sr">Optički uređaji</span><span lang="en">Optical drives</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Optički uređaj čita podatke <strong>laserom</strong>: zrak se odbija od sitnih udubljenja na disku, a senzor prepoznaje promene u odbijenoj svetlosti kao jedinice i nule. Što je talasna dužina lasera kraća, udubljenja mogu biti sitnija, pa na disk staje više podataka.</p>
+<p lang="en">An optical drive reads data with a <strong>laser</strong>: the beam reflects off tiny pits on the disc, and a sensor recognises the changes in the reflected light as ones and zeros. The shorter the wavelength of the laser, the smaller the pits can be, so more data fits on the disc.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Vrste optičkih diskova</span><span lang="en">Kinds of optical discs</span></caption><thead><tr><th><span lang="sr">Disk</span><span lang="en">Disc</span></th><th><span lang="sr">Kapacitet</span><span lang="en">Capacity</span></th><th><span lang="sr">Laser</span><span lang="en">Laser</span></th></tr></thead><tbody><tr><td>CD</td><td>700 MB</td><td><span lang="sr">infracrveni, 780 nm</span><span lang="en">infrared, 780 nm</span></td></tr><tr><td>DVD</td><td><span lang="sr">4,7 GB (dvoslojni 8,5 GB)</span><span lang="en">4.7 GB (dual layer 8.5 GB)</span></td><td><span lang="sr">crveni, 650 nm</span><span lang="en">red, 650 nm</span></td></tr><tr><td>Blu-ray</td><td><span lang="sr">25 GB po sloju</span><span lang="en">25 GB per layer</span></td><td><span lang="sr">plavoljubičasti, 405 nm</span><span lang="en">blue-violet, 405 nm</span></td></tr></tbody></table></div><p lang="sr">Ugradnja ide <strong>spreda</strong>: prvo skineš plastičnu masku sa prednje strane kućišta i metalni poklopac iza nje, pa uređaj uguraš kroz otvor dok mu se prednja ploča ne poravna sa kućištem. Zatim ga pričvrstiš sa po dva zavrtnja sa strane (ili bravicom bez alata) i priključiš SATA kablove. Danas mnoga kućišta nemaju ležište od 5,25″, pa se koristi <strong>spoljni USB optički uređaj</strong> koji se samo ukopča.</p>
+<p lang="en">Installation is done <strong>from the front</strong>: first remove the plastic cover from the front of the case and the metal plate behind it, then push the drive through the opening until its front panel lines up with the case. Then fix it with two screws on each side (or a tool-less latch) and connect the SATA cables. Many cases today have no 5.25″ bay, so an <strong>external USB optical drive</strong> is used, which you just plug in.</p><details class="think"><summary><span lang="sr">Pomisli prvo: zašto oznaka „DVD-RW” znači više od „DVD-ROM”?</span><span lang="en">Think first: why does "DVD-RW" mean more than "DVD-ROM"?</span></summary><div class="ans"><p lang="sr">ROM (Read Only Memory) uređaj samo čita diskove. R znači da može jednom da upiše (snimi) disk, a RW (ReWritable) da može da briše i upisuje više puta.</p>
+<p lang="en">A ROM (Read Only Memory) drive only reads discs. R means it can write (burn) a disc once, and RW (ReWritable) that it can erase and write many times.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="posle" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">u sistemu</span><span lang="en">in the system</span></p>
+    <h2><span lang="sr">Posle ugradnje: BIOS i operativni sistem</span><span lang="en">After installation: the BIOS and the operating system</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Kada upališ računar, novi uređaj prvo mora da „vidi” <strong>BIOS/UEFI</strong>. Uđi u podešavanja (taster Del ili F2 pri paljenju) i proveri da li se disk pojavljuje na spisku uređaja. SATA režim treba da bude <strong>AHCI</strong>, a ako sa novog diska želiš da pokrećeš sistem, podesi <strong>redosled pokretanja</strong> (Boot order).</p>
+<p lang="en">When you switch the computer on, the new device must first be "seen" by the <strong>BIOS/UEFI</strong>. Enter the setup (the Del or F2 key at power-on) and check that the drive shows up in the device list. The SATA mode should be <strong>AHCI</strong>, and if you want to start the system from the new drive, set the <strong>boot order</strong>.</p><p lang="sr">Nov disk je prazan i operativni sistem ga još ne prikazuje kao slovo (D:, E:). U Windowsu otvori <strong>Upravljanje diskovima</strong> (Disk Management) i uradi tri stvari:</p>
+<p lang="en">A new drive is empty and the operating system does not show it as a letter (D:, E:) yet. In Windows open <strong>Disk Management</strong> and do three things:</p><ol lang="sr"><li><strong>inicijalizuj</strong> disk i izaberi tabelu particija GPT (za diskove veće od 2 TB obavezno);</li><li>napravi <strong>particiju</strong> (jedan deo ili ceo disk);</li><li><strong>formatiraj</strong> je u sistem datoteka NTFS i dodeli joj slovo.</li></ol>
+<ol lang="en"><li><strong>initialise</strong> the drive and choose the GPT partition table (required for drives above 2 TB);</li><li>create a <strong>partition</strong> (part of the drive or all of it);</li><li><strong>format</strong> it with the NTFS file system and give it a letter.</li></ol><div class="rule-box violet"><p class="eyebrow"><span lang="sr">Pazi pri formatiranju</span><span lang="en">Careful when formatting</span></p><p lang="sr">Formatiranje briše sve podatke na particiji. Ako ugrađuješ disk koji već ima podatke (na primer iz starog računara), <strong>ne inicijalizuj ga i ne formatiraj</strong>: Windows će ga sam prepoznati.</p>
+<p lang="en">Formatting erases all data on the partition. If you install a drive that already holds data (for example from an old computer), <strong>do not initialise or format it</strong>: Windows will recognise it by itself.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · broj kablova</span><span lang="en">Example 1 · number of cables</span></h4><p class="given" lang="sr">Dato: ugrađuješ jedan 3,5″ HDD, jedan 2,5″ SSD i jedan DVD uređaj, svi SATA. Koliko SATA kablova za podatke i koliko SATA priključaka za napajanje ti treba?</p><p class="given" lang="en">Given: you are installing one 3.5″ HDD, one 2.5″ SSD and one DVD drive, all SATA. How many SATA data cables and how many SATA power plugs do you need?</p><ol lang="sr"><li>Svaki SATA uređaj ima svoj kabl za podatke do ploče.</li><li>Svaki SATA uređaj treba i svoj priključak za napajanje.</li><li>Tri uređaja: 3 kabla za podatke i 3 priključka za napajanje, a ploča mora imati bar 3 slobodna SATA porta.</li></ol>
+<ol lang="en"><li>Every SATA device has its own data cable to the board.</li><li>Every SATA device also needs its own power plug.</li><li>Three devices: 3 data cables and 3 power plugs, and the board needs at least 3 free SATA ports.</li></ol><p class="answer"><span lang="sr">3 kabla za podatke + 3 priključka za napajanje</span><span lang="en">3 data cables + 3 power plugs</span></p></div><div class="ex"><h4><span lang="sr">Primer 2 · M.2 slot</span><span lang="en">Example 2 · M.2 slot</span></h4><p class="given" lang="sr">Dato: ploča ima dva M.2 slota; u priručniku piše da M2_2 deli trake sa SATA portovima 5 i 6. Imaš NVMe SSD i dva HDD-a.</p><p class="given" lang="en">Given: a board has two M.2 slots; the manual says M2_2 shares lanes with SATA ports 5 and 6. You have an NVMe SSD and two HDDs.</p><ol lang="sr"><li>Ako NVMe stavimo u M2_2, portovi SATA 5 i 6 se isključuju.</li><li>Zato NVMe stavljamo u M2_1, koji ništa ne deli.</li><li>HDD-ove priključujemo na SATA 1 i 2.</li></ol>
+<ol lang="en"><li>If we put the NVMe in M2_2, ports SATA 5 and 6 are disabled.</li><li>So we put the NVMe in M2_1, which shares nothing.</li><li>We connect the HDDs to SATA 1 and 2.</li></ol><p class="answer"><span lang="sr">NVMe u M2_1, diskovi na SATA 1 i 2</span><span lang="en">NVMe in M2_1, drives on SATA 1 and 2</span></p></div><div class="ex"><h4><span lang="sr">Primer 3 · kapacitet</span><span lang="en">Example 3 · capacity</span></h4><p class="given" lang="sr">Dato: treba da snimiš arhivu od 20 GB na optičke diskove. Koliko je potrebno jednoslojnih DVD-ova, a koliko Blu-ray diskova od 25 GB?</p><p class="given" lang="en">Given: you need to burn a 20 GB archive to optical discs. How many single-layer DVDs and how many 25 GB Blu-ray discs do you need?</p><ol lang="sr"><li>Jedan DVD prima 4,7 GB: 20 / 4,7 ≈ 4,3.</li><li>Ne možemo snimiti deo diska, pa zaokružujemo naviše: 5 DVD-ova.</li><li>Jedan Blu-ray od 25 GB prima celu arhivu.</li></ol>
+<ol lang="en"><li>One DVD holds 4.7 GB: 20 / 4.7 ≈ 4.3.</li><li>We cannot burn part of a disc, so we round up: 5 DVDs.</li><li>One 25 GB Blu-ray holds the whole archive.</li></ol><p class="answer"><span lang="sr">5 DVD-ova ili 1 Blu-ray</span><span lang="en">5 DVDs or 1 Blu-ray</span></p></div><div class="ex"><h4><span lang="sr">Primer 4 · disk se ne vidi</span><span lang="en">Example 4 · drive not visible</span></h4><p class="given" lang="sr">Dato: ugradio si novi SSD. BIOS ga vidi, ali u „Ovaj računar” nema novog slova.</p><p class="given" lang="en">Given: you installed a new SSD. The BIOS sees it, but there is no new letter in "This PC".</p><ol lang="sr"><li>Pošto ga BIOS vidi, kablovi su dobri.</li><li>Disk je nov i nije inicijalizovan ni formatiran.</li><li>U Upravljanju diskovima: inicijalizuj (GPT), napravi particiju i formatiraj u NTFS.</li></ol>
+<ol lang="en"><li>Since the BIOS sees it, the cables are fine.</li><li>The drive is new and not initialised or formatted.</li><li>In Disk Management: initialise (GPT), create a partition and format it as NTFS.</li></ol><p class="answer"><span lang="sr">inicijalizacija, particija, formatiranje</span><span lang="en">initialise, partition, format</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Zaboravljen kabl za napajanje.</b> Kabl za podatke je ukopčan, ali disk ne dobija struju i BIOS ga ne vidi. Uvek proveri oba konektora.</div></li><li><div><b>Pogrešni zavrtnji.</b> Zavrtnji za kućište su grublji od zavrtnjeva za disk i mogu da oštete navoj na disku. SSD od 2,5″ koristi sitne M3 zavrtnje.</div></li><li><div><b>Disk okrenut naopako u kavezu.</b> Konektori moraju biti okrenuti ka zadnjoj strani kućišta, gde se vode kablovi.</div></li><li><div><b>Formatiran pogrešan disk.</b> U Upravljanju diskovima proveri kapacitet pre formatiranja. Sistemski disk i disk sa podacima izgledaju slično.</div></li><li><div><b>Nasilno savijen SATA konektor.</b> Plastični jezičak lako pukne. Konektor uvek ubacuj ravno, bez savijanja kabla uz sam disk.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>A forgotten power cable.</b> The data cable is plugged in, but the drive gets no power and the BIOS cannot see it. Always check both connectors.</div></li><li><div><b>The wrong screws.</b> Case screws are coarser than drive screws and can damage the thread in the drive. A 2.5″ SSD uses small M3 screws.</div></li><li><div><b>A drive upside down in the cage.</b> The connectors must face the back of the case, where the cables are routed.</div></li><li><div><b>The wrong drive formatted.</b> In Disk Management check the capacity before formatting. The system drive and a data drive look similar.</div></li><li><div><b>A SATA connector bent by force.</b> The plastic tab breaks easily. Always push the connector in straight, without bending the cable right at the drive.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr"></span><span lang="en"></span></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Optički uređaj ide u spoljno ležište od 5,25″, HDD u kavez od 3,5″, SSD u nosač od 2,5″, a M.2 SSD na ploču.</li><li>SATA uređaj ima dva konektora: 7 pinova za podatke i 15 pinova za napajanje.</li><li>Postupak: isključi i izvuci kabl, ugradi i pričvrsti uređaj, priključi podatke, priključi napajanje.</li><li>M.2 SSD nema kablove; NVMe je mnogo brži od SATA, ali proveri koji slot šta podržava.</li><li>Optički diskovi: CD 700 MB, DVD 4,7 GB, Blu-ray 25 GB po sloju.</li><li>Posle ugradnje proveri BIOS, pa nov disk inicijalizuj, particioniši i formatiraj.</li></ul><ul lang="en"><li>The optical drive goes in a 5.25″ external bay, the HDD in a 3.5″ cage, the SSD on a 2.5″ bracket, and the M.2 SSD on the board.</li><li>A SATA device has two connectors: 7 pins for data and 15 pins for power.</li><li>The procedure: switch off and unplug, install and fix the device, connect data, connect power.</li><li>An M.2 SSD has no cables; NVMe is much faster than SATA, but check which slot supports what.</li><li>Optical discs: CD 700 MB, DVD 4.7 GB, Blu-ray 25 GB per layer.</li><li>After installing, check the BIOS, then initialise, partition and format a new drive.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC07" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/periferije-labs.js"></script>
+</body>
+</html>

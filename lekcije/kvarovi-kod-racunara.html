@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Vrste kvarova, POST i zvučni signali, simptomi po komponentama, pregrevanje, razlikovanje hardverskog i softverskog kvara i postupak dijagnostike, uz simulaciju POST-a.">
+<title>Kvarovi kod računara (karakteristike i manifestacija) · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="kvarovi-kod-racunara">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>podeliš kvarove po mestu, trajanju i uzroku;</li><li>objasniš POST i protumačiš piskove, lampice i kodove;</li><li>povežeš simptom sa komponentom koja je verovatno neispravna;</li><li>razlikuješ hardverski od softverskog kvara i tražiš kvar po postupku.</li></ul>
+    <ul lang="en"><li>group faults by place, duration and cause;</li><li>explain POST and read beeps, LEDs and codes;</li><li>link a symptom to the part that is probably faulty;</li><li>tell a hardware fault from a software one and search for a fault by procedure.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="podela" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">vrste kvarova</span><span lang="en">kinds of faults</span></p>
+    <h2><span lang="sr">Šta je kvar i kako se dele</span><span lang="en">What a fault is and how faults are grouped</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Kvar</strong> je stanje u kome računar ili neki njegov deo ne radi onako kako treba. Kvar se uvek nekako <strong>manifestuje</strong> (pokazuje): računar se ne pali, piska, gasi se, slika je izobličena, programi se ruše. Zadatak servisera je da od simptoma dođe do uzroka.</p>
+<p lang="en">A <strong>fault</strong> is a state in which the computer or one of its parts does not work as it should. A fault always <strong>manifests</strong> (shows) itself somehow: the computer does not start, beeps, shuts down, the picture is distorted, programs crash. A technician's job is to get from the symptom to the cause.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Podela kvarova</span><span lang="en">Kinds of faults</span></caption><thead><tr><th><span lang="sr">Prema</span><span lang="en">By</span></th><th><span lang="sr">Vrste</span><span lang="en">Kinds</span></th></tr></thead><tbody><tr><td><span lang="sr">mestu</span><span lang="en">place</span></td><td><span lang="sr"><strong>hardverski</strong> (fizički deo) i <strong>softverski</strong> (operativni sistem, drajver, program, virus)</span><span lang="en"><strong>hardware</strong> (a physical part) and <strong>software</strong> (operating system, driver, program, virus)</span></td></tr><tr><td><span lang="sr">trajanju</span><span lang="en">duration</span></td><td><span lang="sr"><strong>trajni</strong> (stalno prisutni) i <strong>povremeni</strong> (javljaju se ponekad, najteže se nalaze)</span><span lang="en"><strong>permanent</strong> (always there) and <strong>intermittent</strong> (appear now and then, hardest to find)</span></td></tr><tr><td><span lang="sr">uzroku</span><span lang="en">cause</span></td><td><span lang="sr">pregrevanje, prašina, habanje, udar ili pad, vlaga, statički elektricitet, nestabilna mreža, starenje delova, greška korisnika</span><span lang="en">overheating, dust, wear, a knock or a fall, moisture, static electricity, an unstable mains supply, ageing parts, user error</span></td></tr><tr><td><span lang="sr">posledici</span><span lang="en">effect</span></td><td><span lang="sr">računar ne radi uopšte, radi nestabilno ili radi sporije i lošije</span><span lang="en">the computer does not work at all, works unstably, or works slower and worse</span></td></tr></tbody></table></div><div class="rule-box violet"><p class="eyebrow"><span lang="sr">Prvo podaci</span><span lang="en">Data first</span></p><p lang="sr">Kod svakog kvara diska ili sumnje na njega, prvo <strong>sačuvaj podatke</strong> (bekap), pa tek onda popravljaj. Delovi se kupuju, a fotografije i radovi ne.</p>
+<p lang="en">With any disk fault, or even a suspicion of one, <strong>save the data</strong> (backup) first, and only then repair. Parts can be bought; photos and schoolwork cannot.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="post" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">pri paljenju</span><span lang="en">at power-on</span></p>
+    <h2><span lang="sr">POST: provera pri paljenju</span><span lang="en">POST: the power-on self-test</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Odmah po uključivanju BIOS/UEFI pokreće <strong>POST</strong> (Power-On Self-Test): redom proverava procesor, memoriju, grafičku karticu i uređaje za pokretanje sistema. Ako je sve u redu, čuje se <strong>jedan kratak pisak</strong> (ili nijedan) i počinje učitavanje operativnog sistema. Ako nešto ne valja, POST staje i javlja grešku:</p>
+<p lang="en">Right after power-on the BIOS/UEFI runs <strong>POST</strong> (Power-On Self-Test): it checks the processor, memory, graphics card and boot devices in turn. If all is well, you hear <strong>one short beep</strong> (or none) and the operating system starts loading. If something is wrong, POST stops and reports an error:</p><ul lang="sr"><li><strong>zvučnim signalima</strong> (beep kodovima) preko malog zvučnika na ploči;</li><li><strong>LED lampicama</strong> na ploči (CPU, DRAM, VGA, BOOT): ostane da svetli ona kod koje je stalo;</li><li><strong>dvocifrenim kodom</strong> (Q-code, POST code) na malom displeju skupljih ploča;</li><li><strong>porukom</strong> na ekranu, ako grafika radi.</li></ul>
+<ul lang="en"><li><strong>beep codes</strong> through a small speaker on the board;</li><li><strong>LEDs</strong> on the board (CPU, DRAM, VGA, BOOT): the one where it stopped stays lit;</li><li>a <strong>two-digit code</strong> (Q-code, POST code) on a small display on dearer boards;</li><li>a <strong>message</strong> on the screen, if graphics works.</li></ul><p lang="sr">Značenje zvučnih signala <strong>zavisi od proizvođača BIOS-a</strong> (AMI, Award, Phoenix) i ploče, pa se uvek proverava u priručniku. Često je: neprekidni ili ponavljani dugi pisak znači problem sa memorijom, a jedan dug i dva ili tri kratka problem sa grafikom.</p>
+<p lang="en">The meaning of beeps <strong>depends on the BIOS maker</strong> (AMI, Award, Phoenix) and the board, so always check the manual. Commonly: a continuous or repeating long beep means a memory problem, and one long and two or three short a graphics problem.</p>
+</div><figure class="lab" id="lab-post">
+<div class="viewport" style="aspect-ratio:16/10"><canvas tabindex="0" aria-label="Simulacija POST provere sa LED lampicama i zvučnim signalima / A simulation of POST with LEDs and beep codes"></canvas></div>
+<div class="controls"><div class="btns"><span class="lbl"><span lang="sr">Simuliraj kvar</span><span lang="en">Simulate a fault</span></span><div class="seg" id="post-fault" role="group"><button type="button" data-v="ok" aria-pressed="true"><span lang="sr">bez kvara</span><span lang="en">no fault</span></button><button type="button" data-v="cpu" aria-pressed="false">CPU</button><button type="button" data-v="ram" aria-pressed="false">RAM</button><button type="button" data-v="gpu" aria-pressed="false"><span lang="sr">grafika</span><span lang="en">graphics</span></button><button type="button" data-v="boot" aria-pressed="false"><span lang="sr">disk</span><span lang="en">drive</span></button></div></div><div class="btns"><button type="button" class="btn" id="post-run"><span lang="sr">Uključi ponovo</span><span lang="en">Power on again</span></button></div></div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-post-calc"></div><div class="result" id="lab-post-result"></div><div class="calc" id="lab-post-note"></div></div>
+<figcaption><span lang="sr">POST ide redom kroz četiri provere. Izaberi kvar i gledaj gde se provera zaustavlja, koja lampica ostaje upaljena i kakav zvučni signal se čuje (kratki i dugi piskovi su nacrtani kao kratke i duge crtice). Signali su primer; prava značenja su u priručniku ploče.</span><span lang="en">POST goes through four checks in order. Pick a fault and watch where the check stops, which LED stays lit and what beep pattern you hear (short and long beeps are drawn as short and long dashes). The patterns are an example; the real meanings are in the board manual.</span></figcaption>
+</figure>
+  </div>
+</section>
+
+<section class="sec" id="manifestacije" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">simptomi</span><span lang="en">symptoms</span></p>
+    <h2><span lang="sr">Kako se kvarovi pokazuju po komponentama</span><span lang="en">How faults show up, part by part</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Simptomi i mogući uzroci</span><span lang="en">Symptoms and possible causes</span></caption><thead><tr><th><span lang="sr">Komponenta</span><span lang="en">Part</span></th><th><span lang="sr">Kako se kvar manifestuje</span><span lang="en">How the fault shows</span></th><th><span lang="sr">Kako se proverava</span><span lang="en">How to check</span></th></tr></thead><tbody><tr><td><span lang="sr">napajanje</span><span lang="en">power supply</span></td><td><span lang="sr">računar se uopšte ne pali, gasi se pod opterećenjem (u igri), miris paljevine, zujanje</span><span lang="en">the computer does not start at all, shuts down under load (in a game), a burning smell, buzzing</span></td><td><span lang="sr">zamena ispravnim napajanjem, tester napajanja</span><span lang="en">swap with a working PSU, a PSU tester</span></td></tr><tr><td><span lang="sr">matična ploča</span><span lang="en">motherboard</span></td><td><span lang="sr">ne prolazi POST, ne radi neki port ili slot, nadut kondenzator, sat kasni (prazna CMOS baterija)</span><span lang="en">fails POST, a port or slot does not work, a bulging capacitor, the clock lags (empty CMOS battery)</span></td><td><span lang="sr">vizuelni pregled, POST kod, zamena baterije</span><span lang="en">visual check, POST code, replace the battery</span></td></tr><tr><td><span lang="sr">procesor</span><span lang="en">processor</span></td><td><span lang="sr">gašenje ili usporavanje kad se zagreje, nema slike ni piskova</span><span lang="en">shutting down or slowing down when hot, no picture and no beeps</span></td><td><span lang="sr">temperatura u BIOS-u, HWMonitor, provera hladnjaka</span><span lang="en">temperature in the BIOS, HWMonitor, check the cooler</span></td></tr><tr><td>RAM</td><td><span lang="sr">piskovi pri paljenju, plavi ekran (BSOD), nasumično rušenje programa, oštećeni fajlovi</span><span lang="en">beeps at start-up, blue screen (BSOD), random program crashes, corrupted files</span></td><td><span lang="sr">MemTest86, Windows Memory Diagnostic, jedan po jedan modul</span><span lang="en">MemTest86, Windows Memory Diagnostic, one module at a time</span></td></tr><tr><td>HDD</td><td><span lang="sr">kliktanje i struganje, vrlo spor rad, fajlovi nestaju, „Disk read error”</span><span lang="en">clicking and grinding, very slow, files vanish, "Disk read error"</span></td><td><span lang="sr">S.M.A.R.T. (CrystalDiskInfo), zvuk</span><span lang="en">S.M.A.R.T. (CrystalDiskInfo), the sound</span></td></tr><tr><td>SSD</td><td><span lang="sr">iznenada nestane iz sistema, postane samo za čitanje</span><span lang="en">suddenly disappears from the system, becomes read-only</span></td><td><span lang="sr">S.M.A.R.T., alat proizvođača</span><span lang="en">S.M.A.R.T., the maker's tool</span></td></tr><tr><td><span lang="sr">grafička kartica</span><span lang="en">graphics card</span></td><td><span lang="sr">artefakti (šareni kvadrati, linije), crni ekran, rušenje drajvera u igrama</span><span lang="en">artefacts (coloured squares, lines), black screen, driver crashes in games</span></td><td><span lang="sr">druga kartica ili integrisana grafika, temperatura</span><span lang="en">another card or integrated graphics, temperature</span></td></tr><tr><td><span lang="sr">monitor</span><span lang="en">monitor</span></td><td><span lang="sr">mrtvi ili zaglavljeni pikseli, treperenje, nema slike</span><span lang="en">dead or stuck pixels, flicker, no picture</span></td><td><span lang="sr">drugi kabl, drugi računar</span><span lang="en">another cable, another computer</span></td></tr><tr><td><span lang="sr">periferije</span><span lang="en">peripherals</span></td><td><span lang="sr">ne reaguje, „seče”, pogrešni znakovi</span><span lang="en">no response, stuttering, wrong characters</span></td><td><span lang="sr">drugi port, drugi računar, Upravljač uređajima</span><span lang="en">another port, another computer, Device Manager</span></td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="pregrevanje" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">toplota</span><span lang="en">heat</span></p>
+    <h2><span lang="sr">Pregrevanje i prašina</span><span lang="en">Overheating and dust</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Najčešći uzrok „čudnih” kvarova je <strong>pregrevanje</strong>. Prašina zatrpa rebra hladnjaka i filtere, ventilator se istroši, a termalna pasta između procesora i hladnjaka se posle nekoliko godina osuši. Kada temperatura pređe granicu, procesor i grafička kartica sami <strong>smanje brzinu</strong> (throttling), a ako ni to ne pomogne, računar se <strong>ugasi</strong> da bi se zaštitio.</p>
+<p lang="en">The most common cause of "strange" faults is <strong>overheating</strong>. Dust clogs the cooler fins and filters, a fan wears out, and the thermal paste between the processor and the cooler dries out after a few years. When the temperature goes over the limit, the processor and graphics card <strong>slow themselves down</strong> (throttling), and if that does not help, the computer <strong>shuts down</strong> to protect itself.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Okvirne temperature procesora</span><span lang="en">Approximate processor temperatures</span></caption><thead><tr><th><span lang="sr">Stanje</span><span lang="en">State</span></th><th><span lang="sr">Temperatura</span><span lang="en">Temperature</span></th></tr></thead><tbody><tr><td><span lang="sr">mirovanje</span><span lang="en">idle</span></td><td>30–50 °C</td></tr><tr><td><span lang="sr">puno opterećenje</span><span lang="en">full load</span></td><td>60–85 °C</td></tr><tr><td><span lang="sr">smanjivanje brzine (throttling)</span><span lang="en">throttling</span></td><td><span lang="sr">≈ 95–100 °C</span><span lang="en">≈ 95–100 °C</span></td></tr><tr><td><span lang="sr">zaštitno gašenje</span><span lang="en">protective shutdown</span></td><td><span lang="sr">≈ 100–105 °C</span><span lang="en">≈ 100–105 °C</span></td></tr></tbody></table></div><p lang="sr">Simptomi pregrevanja: ventilatori su stalno glasni, računar je spor posle nekoliko minuta igre, gasi se uvek pri zahtevnom radu, a kućište je vruće. Rešenje: očisti prašinu komprimovanim vazduhom (drži ventilator da se ne vrti), zameni termalnu pastu i obezbedi protok vazduha.</p>
+<p lang="en">Symptoms of overheating: the fans are always loud, the computer slows down after a few minutes of a game, it always shuts down under heavy work, and the case is hot. The fix: blow out the dust with compressed air (hold the fan so it does not spin), replace the thermal paste and make sure air can flow.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="hw-sw" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">hardver ili softver</span><span lang="en">hardware or software</span></p>
+    <h2><span lang="sr">Hardverski ili softverski kvar?</span><span lang="en">Hardware or software fault?</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Isti simptom, na primer plavi ekran, može da izazove i neispravna memorija i loš drajver. Da bi ih razlikovao:</p>
+<p lang="en">The same symptom, for example a blue screen, can be caused by both faulty memory and a bad driver. To tell them apart:</p><ul lang="sr"><li>Da li se kvar javlja i <strong>pre</strong> učitavanja sistema (u BIOS-u, tokom POST-a)? Ako da, gotovo sigurno je hardver.</li><li>Pokreni računar sa <strong>USB-a</strong> sa drugim sistemom (live Linux, Windows instalacija). Ako tamo sve radi, problem je verovatno u instaliranom sistemu.</li><li>Probaj <strong>bezbedni režim</strong> (Safe Mode): sistem se učitava sa osnovnim drajverima.</li><li>Pogledaj <strong>Event Viewer</strong> (Pregledač događaja) i kod sa plavog ekrana (npr. MEMORY_MANAGEMENT ukazuje na RAM).</li><li>Seti se šta je poslednje promenjeno: novi program, drajver, ažuriranje ili deo.</li></ul>
+<ul lang="en"><li>Does the fault also appear <strong>before</strong> the system loads (in the BIOS, during POST)? If yes, it is almost certainly hardware.</li><li>Start the computer from <strong>USB</strong> with a different system (live Linux, Windows setup). If everything works there, the problem is probably in the installed system.</li><li>Try <strong>Safe Mode</strong>: the system loads with basic drivers.</li><li>Look at the <strong>Event Viewer</strong> and the code on the blue screen (e.g. MEMORY_MANAGEMENT points to RAM).</li><li>Remember what changed last: a new program, driver, update or part.</li></ul><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Alati za dijagnostiku</span><span lang="en">Diagnostic tools</span></caption><thead><tr><th><span lang="sr">Alat</span><span lang="en">Tool</span></th><th><span lang="sr">Čemu služi</span><span lang="en">What it is for</span></th></tr></thead><tbody><tr><td>MemTest86</td><td><span lang="sr">test RAM-a pre pokretanja sistema</span><span lang="en">tests RAM before the system starts</span></td></tr><tr><td>CrystalDiskInfo</td><td><span lang="sr">stanje diska (S.M.A.R.T.)</span><span lang="en">drive health (S.M.A.R.T.)</span></td></tr><tr><td>HWMonitor, HWiNFO</td><td><span lang="sr">temperature, brzine ventilatora, naponi</span><span lang="en">temperatures, fan speeds, voltages</span></td></tr><tr><td><span lang="sr">Pregledač događaja</span><span lang="en">Event Viewer</span></td><td><span lang="sr">zapis grešaka u Windowsu</span><span lang="en">the Windows error log</span></td></tr><tr><td><span lang="sr">POST kartica</span><span lang="en">POST card</span></td><td><span lang="sr">prikazuje POST kod kod ploča bez displeja</span><span lang="en">shows the POST code on boards without a display</span></td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="postupak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">metoda</span><span lang="en">method</span></p>
+    <h2><span lang="sr">Postupak traženja kvara</span><span lang="en">How to look for a fault</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Dobar serviser ne menja delove nasumice, nego radi po <strong>postupku</strong>. Najvažnije pravilo: <strong>menjaj jednu stvar u isto vreme</strong>, inače nećeš znati šta je pomoglo.</p>
+<p lang="en">A good technician does not swap parts at random, but works by a <strong>procedure</strong>. The most important rule: <strong>change one thing at a time</strong>, otherwise you will not know what helped.</p><figure class="fig" style="max-width:680px"><svg class="dg" viewBox="0 0 640 250" role="img" aria-label="Postupak dijagnostike kvara / The fault diagnosis procedure" style="width:100%;height:auto">
+<defs><marker id="ar7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+<g>
+<rect x="10" y="20" width="140" height="56" rx="8" class="fillcs" stroke="var(--copper)"/><text x="80" y="44" text-anchor="middle">1</text><text x="80" y="62" text-anchor="middle" class="sm" lang="sr">prikupi podatke</text><text x="80" y="62" text-anchor="middle" class="sm" lang="en">gather information</text>
+<rect x="170" y="20" width="140" height="56" rx="8" class="fillcs" stroke="var(--copper)"/><text x="240" y="44" text-anchor="middle">2</text><text x="240" y="62" text-anchor="middle" class="sm" lang="sr">ponovi kvar</text><text x="240" y="62" text-anchor="middle" class="sm" lang="en">reproduce the fault</text>
+<rect x="330" y="20" width="140" height="56" rx="8" class="fillfs" stroke="var(--field)"/><text x="400" y="44" text-anchor="middle">3</text><text x="400" y="62" text-anchor="middle" class="sm" lang="sr">prvo najjednostavnije</text><text x="400" y="62" text-anchor="middle" class="sm" lang="en">simplest first</text>
+<rect x="490" y="20" width="140" height="56" rx="8" class="fillfs" stroke="var(--field)"/><text x="560" y="44" text-anchor="middle">4</text><text x="560" y="62" text-anchor="middle" class="sm" lang="sr">postavi pretpostavku</text><text x="560" y="62" text-anchor="middle" class="sm" lang="en">make a guess</text>
+<rect x="490" y="120" width="140" height="56" rx="8" class="fillvs" stroke="var(--violet)"/><text x="560" y="144" text-anchor="middle">5</text><text x="560" y="162" text-anchor="middle" class="sm" lang="sr">proveri jednu promenu</text><text x="560" y="162" text-anchor="middle" class="sm" lang="en">test one change</text>
+<rect x="290" y="120" width="160" height="56" rx="8" class="fills" stroke="var(--ink)"/><text x="370" y="144" text-anchor="middle" lang="sr">rešeno?</text><text x="370" y="144" text-anchor="middle" lang="en">fixed?</text>
+<rect x="60" y="120" width="160" height="56" rx="8" class="fillgs" stroke="var(--good)"/><text x="140" y="144" text-anchor="middle">6</text><text x="140" y="162" text-anchor="middle" class="sm" lang="sr">zapiši i proveri sve</text><text x="140" y="162" text-anchor="middle" class="sm" lang="en">record and test all</text>
+</g>
+<line class="thin" x1="150" y1="48" x2="168" y2="48" marker-end="url(#ar7)"/><line class="thin" x1="310" y1="48" x2="328" y2="48" marker-end="url(#ar7)"/><line class="thin" x1="470" y1="48" x2="488" y2="48" marker-end="url(#ar7)"/>
+<line class="thin" x1="560" y1="76" x2="560" y2="118" marker-end="url(#ar7)"/><line class="thin" x1="490" y1="148" x2="452" y2="148" marker-end="url(#ar7)"/>
+<line class="thin" x1="290" y1="148" x2="222" y2="148" marker-end="url(#ar7)"/><text x="256" y="140" text-anchor="middle" class="sm go" lang="sr">da</text><text x="256" y="140" text-anchor="middle" class="sm go" lang="en">yes</text>
+<path class="dash" d="M370 176V214H636V48H633" marker-end="url(#ar7)"/><text x="470" y="232" text-anchor="middle" class="sm rd" lang="sr">ne: vrati promenu, nova pretpostavka</text><text x="470" y="232" text-anchor="middle" class="sm rd" lang="en">no: undo the change, new guess</text>
+</svg><figcaption><span lang="sr">Krug traženja kvara: prikupi podatke (pitaj korisnika šta se desilo i kada), ponovi kvar, proveri prvo najjednostavnije (kablovi, prekidači), postavi pretpostavku, promeni jednu stvar i proveri. Ako nije rešeno, vrati promenu i probaj sledeću pretpostavku.</span><span lang="en">The fault-finding loop: gather information (ask the user what happened and when), reproduce the fault, check the simplest things first (cables, switches), make a guess, change one thing and test. If it is not fixed, undo the change and try the next guess.</span></figcaption></figure><p lang="sr">Jedna od najmoćnijih metoda je <strong>zamena ispravnim delom</strong>: sumnjivi deo zameniš delom za koji znaš da radi. Ako kvar nestane, našao si krivca. Druga je <strong>minimalna konfiguracija</strong>: ostaviš samo ploču, procesor, jedan modul RAM-a i napajanje, pa dodaješ delove jedan po jedan.</p>
+<p lang="en">One of the most powerful methods is <strong>swapping with a known-good part</strong>: you replace the suspect part with one you know works. If the fault goes away, you have found the culprit. Another is the <strong>minimal configuration</strong>: leave only the board, processor, one RAM module and the power supply, then add parts one at a time.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · pisak pri paljenju</span><span lang="en">Example 1 · beep at power-on</span></h4><p class="given" lang="sr">Dato: računar se pali, ventilatori se vrte, nema slike, a ploča ponavlja dug pisak. Lampica DRAM svetli.</p><p class="given" lang="en">Given: the computer starts, the fans spin, there is no picture, and the board repeats a long beep. The DRAM LED is lit.</p><ol lang="sr"><li>Ponavljani dug pisak i DRAM lampica ukazuju na memoriju.</li><li>Isključi računar, izvadi RAM, proveri da nema prašine i vrati ga čvrsto do klika.</li><li>Ako ne pomogne, probaj jedan po jedan modul i drugi slot.</li></ol>
+<ol lang="en"><li>A repeating long beep and the DRAM LED point to memory.</li><li>Switch off, take the RAM out, check for dust and put it back firmly until it clicks.</li><li>If that does not help, try one module at a time and another slot.</li></ol><p class="answer"><span lang="sr">kvar ili loše postavljen RAM</span><span lang="en">faulty or badly seated RAM</span></p></div><div class="ex"><h4><span lang="sr">Primer 2 · gašenje u igri</span><span lang="en">Example 2 · shutting down in a game</span></h4><p class="given" lang="sr">Dato: računar radi normalno u Wordu, ali se posle 10 minuta igre sam ugasi. Šta je verovatan uzrok?</p><p class="given" lang="en">Given: the computer works normally in Word, but after 10 minutes of a game it switches itself off. What is the likely cause?</p><ol lang="sr"><li>Kvar se javlja samo pod opterećenjem i posle nekog vremena.</li><li>To ukazuje na pregrevanje (prašina, pasta) ili na slabo napajanje.</li><li>Proveri temperature u HWMonitoru tokom igre; ako su ispod 85 °C, sumnjaj na napajanje.</li></ol>
+<ol lang="en"><li>The fault appears only under load and after some time.</li><li>That points to overheating (dust, paste) or a weak power supply.</li><li>Check the temperatures in HWMonitor during the game; if they stay below 85 °C, suspect the power supply.</li></ol><p class="answer"><span lang="sr">pregrevanje ili napajanje</span><span lang="en">overheating or the power supply</span></p></div><div class="ex"><h4><span lang="sr">Primer 3 · kliktanje diska</span><span lang="en">Example 3 · clicking drive</span></h4><p class="given" lang="sr">Dato: stari računar je postao vrlo spor, a iz kućišta se čuje ritmično kliktanje.</p><p class="given" lang="en">Given: an old computer has become very slow, and rhythmic clicking comes from the case.</p><ol lang="sr"><li>Kliktanje HDD-a je znak mehaničkog kvara glave.</li><li>CrystalDiskInfo verovatno pokazuje „Caution” ili „Bad”.</li><li>Odmah kopiraj važne podatke na drugi disk, pa zameni disk.</li></ol>
+<ol lang="en"><li>Clicking from an HDD is a sign of a mechanical head fault.</li><li>CrystalDiskInfo will probably show "Caution" or "Bad".</li><li>Copy the important data to another drive at once, then replace the drive.</li></ol><p class="answer"><span lang="sr">HDD otkazuje: prvo bekap</span><span lang="en">the HDD is failing: backup first</span></p></div><div class="ex"><h4><span lang="sr">Primer 4 · sat kasni</span><span lang="en">Example 4 · clock lags</span></h4><p class="given" lang="sr">Dato: posle svakog isključivanja iz struje računar pokazuje pogrešan datum i traži podešavanje BIOS-a.</p><p class="given" lang="en">Given: after every time it is unplugged, the computer shows the wrong date and asks for BIOS setup.</p><ol lang="sr"><li>BIOS podešavanja i sat čuva CMOS baterija.</li><li>Kad se baterija isprazni, sve se vraća na početno.</li><li>Zameni bateriju CR2032 i ponovo podesi datum.</li></ol>
+<ol lang="en"><li>The BIOS settings and clock are kept by the CMOS battery.</li><li>When the battery is flat, everything resets.</li><li>Replace the CR2032 battery and set the date again.</li></ol><p class="answer"><span lang="sr">prazna CMOS baterija</span><span lang="en">a flat CMOS battery</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške pri traženju kvara</span><span lang="en">Common mistakes when looking for a fault</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Više promena odjednom.</b> Zamenio si RAM i drajver i proradilo je. Šta je pomoglo? Ne znaš.</div></li><li><div><b>Preskočene jednostavne stvari.</b> Pola „kvarova” su izvučen kabl, isključen prekidač na napajanju ili pogrešan ulaz monitora.</div></li><li><div><b>Popravka pre bekapa.</b> Pokušaji popravke diska koji otkazuje mogu da unište poslednju šansu da se spasu podaci.</div></li><li><div><b>Otvaranje napajanja.</b> U napajanju ostaje opasan napon i kad je izvučeno iz struje. Neispravno napajanje se menja, ne popravlja.</div></li><li><div><b>Nezapisani postupak.</b> Bez beleški isti kvar sledeći put tražiš ispočetka.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>Several changes at once.</b> You replaced the RAM and the driver and it worked. What helped? You do not know.</div></li><li><div><b>Skipped simple things.</b> Half the "faults" are a loose cable, the PSU switch off or the wrong monitor input.</div></li><li><div><b>Repair before backup.</b> Trying to fix a failing drive can destroy the last chance to save the data.</div></li><li><div><b>Opening the power supply.</b> A dangerous voltage stays inside a power supply even when unplugged. A faulty PSU is replaced, not repaired.</div></li><li><div><b>An unrecorded procedure.</b> Without notes you search for the same fault from scratch next time.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 9</span><span lang="en">Part 9</span></b> · <span lang="sr"></span><span lang="en"></span></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Kvarovi su hardverski ili softverski, trajni ili povremeni; svaki se manifestuje nekim simptomom.</li><li>POST proverava CPU, RAM, grafiku i disk; grešku javlja piskom, lampicom, kodom ili porukom.</li><li>Značenje piskova zavisi od BIOS-a i ploče: proveri priručnik.</li><li>Pregrevanje izaziva usporavanje i gašenje; rešenje je čišćenje i nova termalna pasta.</li><li>Hardver od softvera razlikuješ preko POST-a, pokretanja sa USB-a, bezbednog režima i dnevnika grešaka.</li><li>Postupak: podaci, ponavljanje, prvo jednostavno, jedna promena, zamena ispravnim delom, zapis.</li></ul><ul lang="en"><li>Faults are hardware or software, permanent or intermittent; each shows itself through some symptom.</li><li>POST checks the CPU, RAM, graphics and drive; it reports an error with a beep, an LED, a code or a message.</li><li>The meaning of beeps depends on the BIOS and the board: check the manual.</li><li>Overheating causes slowing down and shutdowns; the fix is cleaning and new thermal paste.</li><li>You tell hardware from software through POST, booting from USB, Safe Mode and the error log.</li><li>Procedure: information, reproduce, simple first, one change, swap with a good part, record.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC13" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/periferije-labs.js"></script>
+</body>
+</html>

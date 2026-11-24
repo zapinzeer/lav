@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Tastatura, miš, ekran na dodir, skener, kamera, mikrofon i posebni ulazni uređaji: kako rade i čemu služe, uz animacije matrice tastature, optičkog miša i skenera.">
+<title>Ulazne jedinice · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="ulazne-jedinice">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš šta su ulazne jedinice i podeliš ih po vrsti podataka;</li><li>opišeš delove tastature, raspored QWERTZ i kako radi matrica tastera;</li><li>objasniš kako radi optički miš i šta znači DPI;</li><li>opišeš skener, kameru, mikrofon i posebne ulazne uređaje.</li></ul>
+    <ul lang="en"><li>explain what input devices are and group them by the kind of data;</li><li>describe the parts of a keyboard, the QWERTZ layout and how a key matrix works;</li><li>explain how an optical mouse works and what DPI means;</li><li>describe the scanner, camera, microphone and special input devices.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="pojam" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">pojam i podela</span><span lang="en">idea and kinds</span></p>
+    <h2><span lang="sr">Šta su ulazne jedinice</span><span lang="en">What input devices are</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Računar radi samo sa brojevima, a mi pritiskamo tastere, pomeramo ruku, pričamo i pokazujemo slike. <strong>Ulazne jedinice</strong> su uređaji koji te radnje i pojave iz stvarnog sveta pretvaraju u <strong>digitalne podatke</strong> (nule i jedinice) i šalju ih računaru. Podaci kroz njih idu samo u jednom smeru: od korisnika ka računaru.</p>
+<p lang="en">A computer works only with numbers, while we press keys, move our hand, talk and show pictures. <strong>Input devices</strong> are devices that turn those actions and real-world things into <strong>digital data</strong> (zeros and ones) and send them to the computer. Data goes through them in one direction only: from the user to the computer.</p><figure class="fig" style="max-width:680px"><svg class="dg" viewBox="0 0 640 230" role="img" aria-label="Podela ulaznih jedinica / Kinds of input devices" style="width:100%;height:auto">
+<rect x="230" y="8" width="180" height="40" rx="8" class="fillcs" stroke="var(--copper)" stroke-width="1.5"/>
+<text x="320" y="33" text-anchor="middle" lang="sr">Ulazne jedinice</text><text x="320" y="33" text-anchor="middle" lang="en">Input devices</text>
+<path class="thin" d="M320 48v20M80 68h480M80 68v18M240 68v18M400 68v18M560 68v18"/>
+<g><rect x="8" y="86" width="144" height="36" rx="6" class="fillfs" stroke="var(--field)"/><text x="80" y="109" text-anchor="middle" lang="sr">unos teksta</text><text x="80" y="109" text-anchor="middle" lang="en">text entry</text></g>
+<g><rect x="168" y="86" width="144" height="36" rx="6" class="fillfs" stroke="var(--field)"/><text x="240" y="109" text-anchor="middle" lang="sr">pokazivački</text><text x="240" y="109" text-anchor="middle" lang="en">pointing</text></g>
+<g><rect x="328" y="86" width="144" height="36" rx="6" class="fillfs" stroke="var(--field)"/><text x="400" y="109" text-anchor="middle" lang="sr">slika i zvuk</text><text x="400" y="109" text-anchor="middle" lang="en">image and sound</text></g>
+<g><rect x="488" y="86" width="144" height="36" rx="6" class="fillfs" stroke="var(--field)"/><text x="560" y="109" text-anchor="middle" lang="sr">posebni</text><text x="560" y="109" text-anchor="middle" lang="en">special</text></g>
+<text x="80" y="146" text-anchor="middle" class="sm" lang="sr">tastatura</text><text x="80" y="146" text-anchor="middle" class="sm" lang="en">keyboard</text>
+<text x="80" y="164" text-anchor="middle" class="sm mu" lang="sr">ekranska tastatura</text><text x="80" y="164" text-anchor="middle" class="sm mu" lang="en">on-screen keyboard</text>
+<text x="240" y="146" text-anchor="middle" class="sm" lang="sr">miš · tačped</text><text x="240" y="146" text-anchor="middle" class="sm" lang="en">mouse · touchpad</text>
+<text x="240" y="164" text-anchor="middle" class="sm" lang="sr">ekran na dodir</text><text x="240" y="164" text-anchor="middle" class="sm" lang="en">touch screen</text>
+<text x="240" y="182" text-anchor="middle" class="sm" lang="sr">grafička tabla · džojstik</text><text x="240" y="182" text-anchor="middle" class="sm" lang="en">graphics tablet · joystick</text>
+<text x="400" y="146" text-anchor="middle" class="sm" lang="sr">skener · veb kamera</text><text x="400" y="146" text-anchor="middle" class="sm" lang="en">scanner · webcam</text>
+<text x="400" y="164" text-anchor="middle" class="sm" lang="sr">mikrofon · digitalni foto-aparat</text><text x="400" y="164" text-anchor="middle" class="sm" lang="en">microphone · digital camera</text>
+<text x="560" y="146" text-anchor="middle" class="sm" lang="sr">čitač bar koda</text><text x="560" y="146" text-anchor="middle" class="sm" lang="en">barcode reader</text>
+<text x="560" y="164" text-anchor="middle" class="sm" lang="sr">čitač otiska prsta</text><text x="560" y="164" text-anchor="middle" class="sm" lang="en">fingerprint reader</text>
+<text x="560" y="182" text-anchor="middle" class="sm" lang="sr">čitač kartica · senzori</text><text x="560" y="182" text-anchor="middle" class="sm" lang="en">card reader · sensors</text>
+<text x="320" y="218" text-anchor="middle" class="mu sm" lang="sr">smer podataka: korisnik / svet → računar</text><text x="320" y="218" text-anchor="middle" class="mu sm" lang="en">direction of data: user / world → computer</text>
+</svg><figcaption><span lang="sr">Ulazne jedinice prema vrsti podataka koje unose. Neki uređaji, kao ekran na dodir ili multifunkcijski štampač sa skenerom, su istovremeno ulazni i izlazni.</span><span lang="en">Input devices by the kind of data they enter. Some devices, such as a touch screen or a multifunction printer with a scanner, are input and output at the same time.</span></figcaption></figure><details class="think"><summary><span lang="sr">Pomisli prvo: da li je ekran na dodir ulazna ili izlazna jedinica?</span><span lang="en">Think first: is a touch screen an input or an output device?</span></summary><div class="ans"><p lang="sr">Oba. Kao ekran prikazuje sliku (izlaz), a sloj osetljiv na dodir javlja računaru gde ga dodiruješ (ulaz). Takve uređaje zovemo ulazno-izlaznim.</p>
+<p lang="en">Both. As a screen it shows a picture (output), and its touch-sensitive layer tells the computer where you touch it (input). We call such devices input/output devices.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="tastatura" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">unos teksta</span><span lang="en">text entry</span></p>
+    <h2><span lang="sr">Tastatura</span><span lang="en">The keyboard</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr"><strong>Tastatura</strong> je osnovna ulazna jedinica za unos teksta i komandi. Standardna ima 104 do 105 tastera podeljenih u grupe:</p>
+<p lang="en">The <strong>keyboard</strong> is the basic input device for entering text and commands. A standard one has 104 to 105 keys divided into groups:</p><ul lang="sr"><li><strong>alfanumerički</strong> deo: slova, brojevi, znaci, razmaknica i Enter;</li><li><strong>funkcijski</strong> tasteri F1–F12, čije značenje zavisi od programa;</li><li><strong>modifikatori</strong>: Shift, Ctrl, Alt, AltGr i Windows taster, koji menjaju značenje drugih tastera;</li><li><strong>navigacija</strong>: strelice, Home, End, Page Up/Down, Insert, Delete;</li><li><strong>numerički</strong> deo desno, za brz unos brojeva (uključuje se tasterom Num Lock).</li></ul>
+<ul lang="en"><li>the <strong>alphanumeric</strong> part: letters, digits, symbols, the space bar and Enter;</li><li>the <strong>function</strong> keys F1–F12, whose meaning depends on the program;</li><li><strong>modifiers</strong>: Shift, Ctrl, Alt, AltGr and the Windows key, which change the meaning of other keys;</li><li><strong>navigation</strong>: arrows, Home, End, Page Up/Down, Insert, Delete;</li><li>the <strong>numeric</strong> pad on the right, for typing numbers quickly (switched on with Num Lock).</li></ul><p lang="sr">Raspored slova zavisi od jezika. Englesku tastaturu zovemo <strong>QWERTY</strong> (po prvih šest slova), a srpska latinična je <strong>QWERTZ</strong>, jer su Y i Z zamenili mesta i dodata su slova Š, Đ, Č, Ć i Ž. Raspored se bira u operativnom sistemu; isti fizički taster može da daje različita slova.</p>
+<p lang="en">The letter layout depends on the language. The English keyboard is called <strong>QWERTY</strong> (after its first six letters), while the Serbian Latin one is <strong>QWERTZ</strong>, because Y and Z swapped places and the letters Š, Đ, Č, Ć and Ž were added. The layout is chosen in the operating system; the same physical key can give different letters.</p><p lang="sr">Ispod tastera nalazi se <strong>matrica</strong>: mreža redova i kolona. Mali kontroler u tastaturi stalno, hiljadama puta u sekundi, „proziva” red po red i proverava u kojoj koloni je kontakt zatvoren. Kada pronađe pritisnut taster, šalje računaru njegov <strong>kod</strong> (scan code), a operativni sistem prema rasporedu odlučuje koje je to slovo.</p>
+<p lang="en">Under the keys there is a <strong>matrix</strong>: a grid of rows and columns. A small controller in the keyboard constantly, thousands of times a second, "calls" row after row and checks in which column the contact is closed. When it finds a pressed key, it sends the computer its <strong>code</strong> (scan code), and the operating system decides which letter it is according to the layout.</p>
+</div><figure class="lab" id="lab-kbd">
+<div class="viewport" style="aspect-ratio:16/10"><canvas tabindex="0" aria-label="Matrica tastature koju kontroler skenira red po red / A keyboard matrix scanned row by row by the controller"></canvas></div>
+<div class="controls"><div class="btns"><span class="lbl"><span lang="sr">Brzina skeniranja</span><span lang="en">Scan speed</span></span><div class="seg" id="kbd-speed" role="group"><button type="button" data-v="slow" aria-pressed="true"><span lang="sr">usporeno</span><span lang="en">slowed down</span></button><button type="button" data-v="fast" aria-pressed="false"><span lang="sr">brže</span><span lang="en">faster</span></button></div></div></div>
+<div class="pc-info" id="lab-kbd-info" aria-live="polite"></div>
+<figcaption><span lang="sr">Klikni ili dodirni taster. Kontroler aktivira jedan red (narandžasto) i čita kolone. Kada aktivni red dođe do pritisnutog tastera, zatvara se kontakt u njegovoj koloni i kontroler šalje kod tog tastera.</span><span lang="en">Click or tap a key. The controller activates one row (orange) and reads the columns. When the active row reaches the pressed key, the contact in its column closes and the controller sends the code of that key.</span></figcaption>
+</figure><div class="rest">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Vrste tastatura po prekidačima</span><span lang="en">Keyboards by switch type</span></caption><thead><tr><th><span lang="sr">Vrsta</span><span lang="en">Type</span></th><th><span lang="sr">Kako radi</span><span lang="en">How it works</span></th><th><span lang="sr">Osobine</span><span lang="en">Features</span></th></tr></thead><tbody><tr><td><span lang="sr">membranska</span><span lang="en">membrane</span></td><td><span lang="sr">gumena kupola pritisne dve folije</span><span lang="en">a rubber dome presses two films together</span></td><td><span lang="sr">tiha, jeftina, mekan hod</span><span lang="en">quiet, cheap, soft feel</span></td></tr><tr><td><span lang="sr">mehanička</span><span lang="en">mechanical</span></td><td><span lang="sr">poseban prekidač sa oprugom ispod svakog tastera</span><span lang="en">a separate spring switch under every key</span></td><td><span lang="sr">precizna, dugotrajna, glasnija, skuplja</span><span lang="en">precise, long-lasting, louder, dearer</span></td></tr><tr><td><span lang="sr">„makaze” (laptop)</span><span lang="en">"scissor" (laptop)</span></td><td><span lang="sr">mehanizam u obliku makaza drži kratak hod</span><span lang="en">a scissor-shaped mechanism keeps a short travel</span></td><td><span lang="sr">tanka, stabilna</span><span lang="en">thin, stable</span></td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="pokazivaci" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">pokazivanje</span><span lang="en">pointing</span></p>
+    <h2><span lang="sr">Miš i drugi pokazivački uređaji</span><span lang="en">The mouse and other pointing devices</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr"><strong>Miš</strong> pomera pokazivač (kursor) na ekranu. Savremeni <strong>optički miš</strong> ima malu kameru i LED (ili laser) koji osvetljava podlogu. Kamera snima nekoliko hiljada sitnih slika podloge u sekundi, a čip u mišu poredi svaku sliku sa prethodnom i izračunava za koliko se slika „pomerila”. To pomeranje šalje računaru.</p>
+<p lang="en">The <strong>mouse</strong> moves the pointer (cursor) on the screen. A modern <strong>optical mouse</strong> has a tiny camera and an LED (or a laser) that lights up the surface. The camera takes several thousand tiny pictures of the surface every second, and the chip in the mouse compares each picture with the previous one and works out how far the picture has "moved". It sends that movement to the computer.</p><p lang="sr">Osetljivost miša se izražava u <strong>DPI</strong> (tačaka po inču, tačnije CPI): koliko koraka miš prijavi kada ga pomeriš za jedan inč (2,54 cm). Miš od 1600 DPI za pomeraj od jednog inča javlja 1600 koraka. Veći DPI znači da kursor pređe veći put za isti pokret ruke.</p>
+<p lang="en">Mouse sensitivity is given in <strong>DPI</strong> (dots per inch, more precisely CPI): how many steps the mouse reports when you move it one inch (2.54 cm). A 1600 DPI mouse reports 1600 steps for one inch of movement. A higher DPI means the cursor travels further for the same hand movement.</p><ul lang="sr"><li><strong>tačped</strong> (touchpad): površina na laptopu koja prati pokret prsta; podržava pokrete sa više prstiju;</li><li><strong>ekran na dodir</strong>: kapacitivni (telefoni) reaguje na prst, a otporni (rezistivni) na pritisak, pa radi i sa olovkom ili rukavicom;</li><li><strong>grafička tabla</strong>: olovka i podloga za crtanje, prepoznaje i jačinu pritiska;</li><li><strong>džojstik i gejmped</strong>: za igre i upravljanje mašinama;</li><li><strong>trekbol</strong>: kuglica koja se okreće prstom, a sam uređaj stoji.</li></ul>
+<ul lang="en"><li><strong>touchpad</strong>: the surface on a laptop that follows a finger; it supports multi-finger gestures;</li><li><strong>touch screen</strong>: a capacitive one (phones) reacts to a finger, a resistive one to pressure, so it also works with a stylus or a glove;</li><li><strong>graphics tablet</strong>: a pen and a pad for drawing; it also senses how hard you press;</li><li><strong>joystick and gamepad</strong>: for games and controlling machines;</li><li><strong>trackball</strong>: a ball you turn with a finger while the device stays put.</li></ul>
+</div><figure class="lab" id="lab-in">
+<div class="viewport" style="aspect-ratio:16/10"><canvas tabindex="0" aria-label="Animacija optičkog miša i skenera / Animation of an optical mouse and a scanner"></canvas></div>
+<div class="controls"><div class="btns"><span class="lbl"><span lang="sr">Uređaj</span><span lang="en">Device</span></span><div class="seg" id="in-kind" role="group"><button type="button" data-v="mouse" aria-pressed="true"><span lang="sr">optički miš</span><span lang="en">optical mouse</span></button><button type="button" data-v="scan" aria-pressed="false"><span lang="sr">skener</span><span lang="en">scanner</span></button></div></div><div class="ctl"><label for="in-dpi"><span lang="sr">Rezolucija (DPI)</span><span lang="en">Resolution (DPI)</span></label><output id="in-dpi-out" for="in-dpi"></output><input type="range" id="in-dpi" min="400" max="3200" step="400" value="1600"></div></div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-in-calc"></div><div class="result" id="lab-in-result"></div><div class="calc" id="lab-in-note"></div></div>
+<figcaption><span lang="sr">Miš: levo je podloga ispod miša, desno dve uzastopne slike koje snima senzor. Čip pronalazi pomeraj između njih. Skener: svetlosna traka prelazi preko papira i red po red pretvara sliku u piksele. Veći DPI daje više tačaka.</span><span lang="en">Mouse: on the left is the surface under the mouse, on the right two consecutive pictures taken by the sensor. The chip finds the shift between them. Scanner: a light bar moves over the paper and turns the picture into pixels row by row. A higher DPI gives more dots.</span></figcaption>
+</figure>
+  </div>
+</section>
+
+<section class="sec" id="slika-zvuk" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">slika i zvuk</span><span lang="en">image and sound</span></p>
+    <h2><span lang="sr">Skener, kamera i mikrofon</span><span lang="en">Scanner, camera and microphone</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Skener</strong> pretvara papir u digitalnu sliku. Ispod stakla se kreće traka sa svetlom i nizom senzora (CCD ili CIS) koji meri koliko svetla odbija svaka tačka papira. Rezolucija skenera se daje u <strong>DPI</strong>: za dokumente je dovoljno 300 DPI, a za fotografije 600 i više. Program za <strong>OCR</strong> (optičko prepoznavanje znakova) može od skeniranog teksta da napravi tekst koji se menja u Wordu.</p>
+<p lang="en">A <strong>scanner</strong> turns paper into a digital image. Under the glass a bar with a light and a row of sensors (CCD or CIS) moves and measures how much light each point of the paper reflects. Scanner resolution is given in <strong>DPI</strong>: 300 DPI is enough for documents, and 600 or more for photos. An <strong>OCR</strong> (optical character recognition) program can turn scanned text into text you can edit in Word.</p><p lang="sr"><strong>Veb kamera</strong> i <strong>digitalni foto-aparat</strong> imaju senzor slike sa milionima ćelija osetljivih na svetlo. Kamera se opisuje rezolucijom (720p, 1080p, 4K) i brojem slika u sekundi (30 ili 60 FPS).</p>
+<p lang="en">A <strong>webcam</strong> and a <strong>digital camera</strong> have an image sensor with millions of light-sensitive cells. A camera is described by its resolution (720p, 1080p, 4K) and the number of frames per second (30 or 60 FPS).</p><p lang="sr"><strong>Mikrofon</strong> pretvara zvuk (titranje vazduha) u signal, a zvučna kartica ga <strong>uzorkuje</strong>: meri ga mnogo puta u sekundi i svako merenje zapisuje kao broj. Muzika na CD-u se uzorkuje 44 100 puta u sekundi (44,1 kHz), a razgovor je razumljiv i pri 16 kHz.</p>
+<p lang="en">A <strong>microphone</strong> turns sound (vibrating air) into a signal, and the sound card <strong>samples</strong> it: measures it many times a second and records each measurement as a number. Music on a CD is sampled 44,100 times a second (44.1 kHz), while speech is clear even at 16 kHz.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Posebne ulazne jedinice</span><span lang="en">Special input devices</span></caption><thead><tr><th><span lang="sr">Uređaj</span><span lang="en">Device</span></th><th><span lang="sr">Gde se koristi</span><span lang="en">Where it is used</span></th></tr></thead><tbody><tr><td><span lang="sr">čitač bar koda i QR koda</span><span lang="en">barcode and QR code reader</span></td><td><span lang="sr">prodavnice, magacini, biblioteke</span><span lang="en">shops, warehouses, libraries</span></td></tr><tr><td><span lang="sr">čitač otiska prsta</span><span lang="en">fingerprint reader</span></td><td><span lang="sr">prijava na laptop, kontrola ulaza</span><span lang="en">laptop sign-in, door access</span></td></tr><tr><td><span lang="sr">čitač kartica (smart, NFC)</span><span lang="en">card reader (smart, NFC)</span></td><td><span lang="sr">lična karta, bankovne kartice, đačke kartice</span><span lang="en">ID cards, bank cards, student cards</span></td></tr><tr><td><span lang="sr">senzori (temperatura, pokret)</span><span lang="en">sensors (temperature, motion)</span></td><td><span lang="sr">meteorološke stanice, pametne kuće, roboti</span><span lang="en">weather stations, smart homes, robots</span></td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · DPI miša</span><span lang="en">Example 1 · mouse DPI</span></h4><p class="given" lang="sr">Dato: miš ima 800 DPI. Koliko koraka prijavi računaru ako ga pomeriš 5 cm udesno?</p><p class="given" lang="en">Given: a mouse has 800 DPI. How many steps does it report to the computer if you move it 5 cm to the right?</p><ol lang="sr"><li>Jedan inč je 2,54 cm, pa je 5 cm = 5 / 2,54 ≈ 1,97 inča.</li><li>Broj koraka: 1,97 · 800 ≈ 1575.</li></ol>
+<ol lang="en"><li>One inch is 2.54 cm, so 5 cm = 5 / 2.54 ≈ 1.97 inches.</li><li>Number of steps: 1.97 · 800 ≈ 1575.</li></ol><p class="answer"><span lang="sr">≈ 1575 koraka</span><span lang="en">≈ 1575 steps</span></p></div><div class="ex"><h4><span lang="sr">Primer 2 · skeniranje</span><span lang="en">Example 2 · scanning</span></h4><p class="given" lang="sr">Dato: skeniraš papir veličine 8 × 10 inča pri 300 DPI. Koliko piksela ima slika?</p><p class="given" lang="en">Given: you scan a sheet of 8 × 10 inches at 300 DPI. How many pixels does the image have?</p><ol lang="sr"><li>Širina: 8 · 300 = 2400 piksela.</li><li>Visina: 10 · 300 = 3000 piksela.</li><li>Ukupno: 2400 · 3000 = 7 200 000 piksela.</li></ol>
+<ol lang="en"><li>Width: 8 · 300 = 2400 pixels.</li><li>Height: 10 · 300 = 3000 pixels.</li><li>Total: 2400 · 3000 = 7,200,000 pixels.</li></ol><p class="answer"><span lang="sr">7,2 miliona piksela (2400 × 3000)</span><span lang="en">7.2 million pixels (2400 × 3000)</span></p></div><div class="ex"><h4><span lang="sr">Primer 3 · pogrešno slovo</span><span lang="en">Example 3 · wrong letter</span></h4><p class="given" lang="sr">Dato: kucaš „zdravo”, a na ekranu piše „ydravo”. Šta nije u redu?</p><p class="given" lang="en">Given: you type "zdravo", and the screen shows "ydravo". What is wrong?</p><ol lang="sr"><li>Slova Y i Z su zamenjena.</li><li>To se dešava kada je u sistemu izabran engleski (QWERTY) raspored, a tastatura je srpska (QWERTZ).</li><li>Promeni raspored (Win + razmaknica ili Alt + Shift).</li></ol>
+<ol lang="en"><li>The letters Y and Z are swapped.</li><li>This happens when the English (QWERTY) layout is chosen in the system, but the keyboard is Serbian (QWERTZ).</li><li>Change the layout (Win + Space or Alt + Shift).</li></ol><p class="answer"><span lang="sr">pogrešan raspored tastature</span><span lang="en">wrong keyboard layout</span></p></div><div class="ex"><h4><span lang="sr">Primer 4 · izbor uređaja</span><span lang="en">Example 4 · choosing a device</span></h4><p class="given" lang="sr">Dato: biblioteka želi brzo da evidentira knjige pri iznošenju. Koju ulaznu jedinicu da koristi?</p><p class="given" lang="en">Given: a library wants to record books quickly at checkout. Which input device should it use?</p><ol lang="sr"><li>Ručno kucanje broja knjige je sporo i dovodi do grešaka.</li><li>Na svaku knjigu se zalepi bar kod.</li><li>Čitač bar koda ga očita za delić sekunde i pošalje broj kao da je otkucan.</li></ol>
+<ol lang="en"><li>Typing the book number by hand is slow and error-prone.</li><li>A barcode is stuck on every book.</li><li>A barcode reader reads it in a fraction of a second and sends the number as if it had been typed.</li></ol><p class="answer"><span lang="sr">čitač bar koda</span><span lang="en">a barcode reader</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Miš na staklu ili sjajnoj površini.</b> Senzor ne vidi teksturu podloge, pa kursor skače ili stoji. Koristi podlogu za miš.</div></li><li><div><b>Uključen Caps Lock ili Num Lock.</b> Lozinka „ne radi”, a brojevi na numeričkom delu pomeraju kursor. Proveri lampice na tastaturi.</div></li><li><div><b>Previsok DPI skeniranja.</b> Dokument skeniran na 1200 DPI zauzima ogroman prostor, a ne izgleda bolje. Za tekst je 300 DPI dovoljno.</div></li><li><div><b>Mešanje DPI miša i brzine kursora.</b> DPI je osobina senzora, a brzina pokazivača je podešavanje u sistemu. Oba utiču na to koliko kursor pređe.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>A mouse on glass or a glossy surface.</b> The sensor sees no texture in the surface, so the cursor jumps or stops. Use a mouse pad.</div></li><li><div><b>Caps Lock or Num Lock on.</b> The password "does not work", and the numeric pad moves the cursor. Check the lights on the keyboard.</div></li><li><div><b>Scanning DPI too high.</b> A document scanned at 1200 DPI takes huge space and does not look better. 300 DPI is enough for text.</div></li><li><div><b>Mixing up mouse DPI and pointer speed.</b> DPI is a property of the sensor, while pointer speed is a system setting. Both affect how far the cursor travels.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr"></span><span lang="en"></span></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Ulazne jedinice pretvaraju radnje i pojave iz sveta u digitalne podatke za računar.</li><li>Tastatura ima matricu tastera koju kontroler skenira i šalje kod pritisnutog tastera.</li><li>Srpska latinična tastatura je QWERTZ; raspored se bira u sistemu.</li><li>Optički miš poredi hiljade slika podloge u sekundi; osetljivost se meri u DPI.</li><li>Skener radi red po red (300 DPI za tekst), a mikrofon i kamera pretvaraju zvuk i sliku u brojeve.</li><li>Postoje i posebni ulazni uređaji: čitači bar koda, otiska prsta i kartica, senzori.</li></ul><ul lang="en"><li>Input devices turn actions and things in the world into digital data for the computer.</li><li>A keyboard has a key matrix that the controller scans, sending the code of the pressed key.</li><li>The Serbian Latin keyboard is QWERTZ; the layout is chosen in the system.</li><li>An optical mouse compares thousands of pictures of the surface a second; sensitivity is measured in DPI.</li><li>A scanner works row by row (300 DPI for text), and a microphone and a camera turn sound and pictures into numbers.</li><li>There are also special input devices: barcode, fingerprint and card readers, and sensors.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC09" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/periferije-labs.js"></script>
+</body>
+</html>

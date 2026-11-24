@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Monitori, pikseli i RGB, tehnologije ekrana i gustina piksela, projektori, štampači i CMYK, zvučnici, uz interaktivno mešanje boja i računanje PPI.">
+<title>Izlazne jedinice · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="izlazne-jedinice">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš šta su izlazne jedinice i podeliš ih;</li><li>objasniš kako piksel pravi boju od crvenog, zelenog i plavog;</li><li>uporediš tehnologije ekrana i izračunaš gustinu piksela;</li><li>opišeš vrste štampača, CMYK i zvučne sisteme.</li></ul>
+    <ul lang="en"><li>explain what output devices are and group them;</li><li>explain how a pixel makes a colour from red, green and blue;</li><li>compare screen technologies and work out pixel density;</li><li>describe kinds of printers, CMYK and sound systems.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="pojam" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">pojam i podela</span><span lang="en">idea and kinds</span></p>
+    <h2><span lang="sr">Šta su izlazne jedinice</span><span lang="en">What output devices are</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Izlazne jedinice</strong> rade obrnuto od ulaznih: digitalne podatke iz računara pretvaraju u nešto što čovek može da vidi, čuje ili opipa. Podaci kroz njih idu od računara ka korisniku.</p>
+<p lang="en"><strong>Output devices</strong> do the opposite of input devices: they turn digital data from the computer into something a person can see, hear or touch. Data goes through them from the computer to the user.</p><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Podela izlaznih jedinica</span><span lang="en">Kinds of output devices</span></caption><thead><tr><th><span lang="sr">Vrsta</span><span lang="en">Kind</span></th><th><span lang="sr">Uređaji</span><span lang="en">Devices</span></th></tr></thead><tbody><tr><td><span lang="sr">prikaz slike</span><span lang="en">showing images</span></td><td><span lang="sr">monitor, projektor, TV, VR naočare</span><span lang="en">monitor, projector, TV, VR headset</span></td></tr><tr><td><span lang="sr">štampa</span><span lang="en">printing</span></td><td><span lang="sr">štampač (laserski, inkdžet, matrični, termalni), ploter, 3D štampač</span><span lang="en">printer (laser, inkjet, dot-matrix, thermal), plotter, 3D printer</span></td></tr><tr><td><span lang="sr">zvuk</span><span lang="en">sound</span></td><td><span lang="sr">zvučnici, slušalice</span><span lang="en">speakers, headphones</span></td></tr><tr><td><span lang="sr">ostalo</span><span lang="en">other</span></td><td><span lang="sr">Brajev displej za slepe, vibracija (haptika) u gejmpedu</span><span lang="en">Braille display for the blind, vibration (haptics) in a gamepad</span></td></tr></tbody></table></div><details class="think"><summary><span lang="sr">Pomisli prvo: zašto je multifunkcijski štampač i ulazna i izlazna jedinica?</span><span lang="en">Think first: why is a multifunction printer both an input and an output device?</span></summary><div class="ans"><p lang="sr">Štampač je izlazni deo (papir iz računara), a skener u istom uređaju je ulazni deo (papir u računar). Kopiranje koristi oba dela.</p>
+<p lang="en">The printer is the output part (paper from the computer), and the scanner in the same device is the input part (paper into the computer). Copying uses both parts.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="monitor" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">slika</span><span lang="en">picture</span></p>
+    <h2><span lang="sr">Monitor i pikseli</span><span lang="en">The monitor and pixels</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Slika na monitoru se sastoji od <strong>piksela</strong>, sitnih tačaka poređanih u redove i kolone. Svaki piksel ima tri <strong>podpiksela</strong>: crveni (R), zeleni (G) i plavi (B). Menjanjem jačine svakog od njih dobija se bilo koja boja. To je <strong>aditivno</strong> mešanje: što više svetla, to je boja svetlija, a sve tri na najjače daju belo.</p>
+<p lang="en">The picture on a monitor is made of <strong>pixels</strong>, tiny dots arranged in rows and columns. Every pixel has three <strong>subpixels</strong>: red (R), green (G) and blue (B). By changing the brightness of each, any colour can be made. This is <strong>additive</strong> mixing: the more light, the brighter the colour, and all three at full give white.</p><p lang="sr">Svaki podpiksel obično ima 256 nivoa (od 0 do 255), pa je ukupan broj boja 256 · 256 · 256 ≈ 16,7 miliona. Boja se često zapisuje heksadecimalno: #FF0000 je čisto crvena, #FFFFFF bela, a #000000 crna.</p>
+<p lang="en">Each subpixel usually has 256 levels (from 0 to 255), so the total number of colours is 256 · 256 · 256 ≈ 16.7 million. A colour is often written in hexadecimal: #FF0000 is pure red, #FFFFFF white and #000000 black.</p>
+</div><figure class="lab" id="lab-rgb">
+<div class="viewport" style="aspect-ratio:16/10"><canvas tabindex="0" aria-label="Mešanje boje piksela od crvenog, zelenog i plavog podpiksela / Mixing a pixel colour from red, green and blue subpixels"></canvas></div>
+<div class="controls"><div class="ctl"><label for="rgb-r"><span lang="sr">Crveni (R)</span><span lang="en">Red (R)</span></label><output id="rgb-r-out" for="rgb-r"></output><input type="range" id="rgb-r" min="0" max="255" step="1" value="255"></div><div class="ctl"><label for="rgb-g"><span lang="sr">Zeleni (G)</span><span lang="en">Green (G)</span></label><output id="rgb-g-out" for="rgb-g"></output><input type="range" id="rgb-g" min="0" max="255" step="1" value="160"></div><div class="ctl"><label for="rgb-b"><span lang="sr">Plavi (B)</span><span lang="en">Blue (B)</span></label><output id="rgb-b-out" for="rgb-b"></output><input type="range" id="rgb-b" min="0" max="255" step="1" value="40"></div></div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-rgb-calc"></div><div class="result" id="lab-rgb-result"></div><div class="calc" id="lab-rgb-note"></div></div>
+<figcaption><span lang="sr">Levo je uvećan deo ekrana: svaki piksel ima tri uske trake, crvenu, zelenu i plavu. Desno je boja koju oko vidi kada se gleda sa normalne udaljenosti. Probaj da napraviš žutu, ljubičastu, belu i sivu.</span><span lang="en">On the left is a magnified part of the screen: each pixel has three narrow stripes, red, green and blue. On the right is the colour the eye sees from a normal distance. Try to make yellow, purple, white and grey.</span></figcaption>
+</figure><div class="rest">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Osobine monitora</span><span lang="en">Monitor features</span></caption><thead><tr><th><span lang="sr">Osobina</span><span lang="en">Feature</span></th><th><span lang="sr">Značenje</span><span lang="en">Meaning</span></th><th><span lang="sr">Primer</span><span lang="en">Example</span></th></tr></thead><tbody><tr><td><span lang="sr">rezolucija</span><span lang="en">resolution</span></td><td><span lang="sr">broj piksela po širini i visini</span><span lang="en">number of pixels across and down</span></td><td>1920 × 1080</td></tr><tr><td><span lang="sr">dijagonala</span><span lang="en">diagonal</span></td><td><span lang="sr">veličina ekrana u inčima, od ugla do ugla</span><span lang="en">screen size in inches, corner to corner</span></td><td>24″</td></tr><tr><td><span lang="sr">odnos stranica</span><span lang="en">aspect ratio</span></td><td><span lang="sr">odnos širine i visine</span><span lang="en">width to height</span></td><td>16:9, 21:9</td></tr><tr><td><span lang="sr">osvežavanje</span><span lang="en">refresh rate</span></td><td><span lang="sr">koliko puta u sekundi se slika iscrta</span><span lang="en">how many times a second the picture is drawn</span></td><td>60, 144 Hz</td></tr><tr><td><span lang="sr">vreme odziva</span><span lang="en">response time</span></td><td><span lang="sr">koliko brzo piksel promeni boju</span><span lang="en">how fast a pixel changes colour</span></td><td>1–5 ms</td></tr><tr><td><span lang="sr">gustina (PPI)</span><span lang="en">density (PPI)</span></td><td><span lang="sr">piksela po inču; veća je oštrija slika</span><span lang="en">pixels per inch; higher is sharper</span></td><td>92 PPI</td></tr></tbody></table></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="tehnologije" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">vrste ekrana</span><span lang="en">kinds of screens</span></p>
+    <h2><span lang="sr">Tehnologije ekrana i gustina piksela</span><span lang="en">Screen technologies and pixel density</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Vrste ekrana</span><span lang="en">Kinds of screens</span></caption><thead><tr><th><span lang="sr">Tehnologija</span><span lang="en">Technology</span></th><th><span lang="sr">Kako radi</span><span lang="en">How it works</span></th><th><span lang="sr">Osobine</span><span lang="en">Features</span></th></tr></thead><tbody><tr><td>CRT</td><td><span lang="sr">elektronski snop iscrtava sliku po fosfornom staklu</span><span lang="en">an electron beam draws the picture on a phosphor glass</span></td><td><span lang="sr">zastareo, težak i dubok</span><span lang="en">obsolete, heavy and deep</span></td></tr><tr><td>LCD (TN)</td><td><span lang="sr">tečni kristali propuštaju svetlo iz pozadinskog osvetljenja</span><span lang="en">liquid crystals let through light from a backlight</span></td><td><span lang="sr">brz i jeftin, slabije boje i uglovi</span><span lang="en">fast and cheap, weaker colours and angles</span></td></tr><tr><td>LCD (IPS)</td><td><span lang="sr">drugačije poređani kristali</span><span lang="en">differently arranged crystals</span></td><td><span lang="sr">verne boje, široki uglovi gledanja</span><span lang="en">accurate colours, wide viewing angles</span></td></tr><tr><td>LCD (VA)</td><td><span lang="sr">kristali uspravni kad su ugašeni</span><span lang="en">crystals stand upright when off</span></td><td><span lang="sr">dubok crni, dobar kontrast</span><span lang="en">deep black, good contrast</span></td></tr><tr><td>OLED</td><td><span lang="sr">svaki piksel sam svetli</span><span lang="en">every pixel gives its own light</span></td><td><span lang="sr">savršeno crno, tanak; skuplji, može da „zapamti” sliku</span><span lang="en">perfect black, thin; dearer, can "burn in"</span></td></tr></tbody></table></div><p lang="sr">Ista rezolucija na većem ekranu daje veće piksele i manje oštru sliku. Zato se uvodi <strong>gustina piksela</strong> (PPI): broj piksela po inču. Dijagonala u pikselima računa se Pitagorinom teoremom, a zatim se podeli dijagonalom u inčima. Za monitor na stolu (oko 60 cm od očiju) oko 90–110 PPI izgleda dobro, a telefoni imaju 400 i više, jer se drže bliže očima.</p>
+<p lang="en">The same resolution on a bigger screen gives bigger pixels and a less sharp picture. That is why we use <strong>pixel density</strong> (PPI): the number of pixels per inch. The diagonal in pixels comes from Pythagoras' theorem and is then divided by the diagonal in inches. For a desk monitor (about 60 cm from the eyes) about 90–110 PPI looks good, while phones have 400 or more, because they are held closer to the eyes.</p>
+</div><figure class="lab" id="lab-ppi">
+<div class="viewport" style="aspect-ratio:16/10"><canvas tabindex="0" aria-label="Gustina piksela za izabranu rezoluciju i dijagonalu / Pixel density for a chosen resolution and diagonal"></canvas></div>
+<div class="controls"><div class="btns"><span class="lbl"><span lang="sr">Rezolucija</span><span lang="en">Resolution</span></span><div class="seg" id="ppi-res" role="group"><button type="button" data-v="hd" aria-pressed="false">1366×768</button><button type="button" data-v="fhd" aria-pressed="true">1920×1080</button><button type="button" data-v="qhd" aria-pressed="false">2560×1440</button><button type="button" data-v="uhd" aria-pressed="false">3840×2160</button></div></div><div class="ctl"><label for="ppi-d"><span lang="sr">Dijagonala</span><span lang="en">Diagonal</span></label><output id="ppi-d-out" for="ppi-d"></output><input type="range" id="ppi-d" min="13" max="43" step="1" value="24"></div></div>
+<div class="readout" aria-live="polite"><div class="calc" id="lab-ppi-calc"></div><div class="result" id="lab-ppi-result"></div><div class="calc" id="lab-ppi-note"></div></div>
+<figcaption><span lang="sr">Ekran je nacrtan u razmeri, a uvećani isečak desno pokazuje koliko su pikseli gusti. Promeni dijagonalu: što je ekran veći za istu rezoluciju, pikseli su krupniji.</span><span lang="en">The screen is drawn to scale, and the magnified patch on the right shows how dense the pixels are. Change the diagonal: the bigger the screen for the same resolution, the larger the pixels.</span></figcaption>
+</figure>
+  </div>
+</section>
+
+<section class="sec" id="projektor" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">velika slika</span><span lang="en">big picture</span></p>
+    <h2><span lang="sr">Projektor</span><span lang="en">The projector</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Projektor</strong> baca uvećanu sliku na platno ili zid. Jaka lampa ili laser osvetljava mali čip (DLP sa milionima sićušnih ogledala ili LCD panel), a sočivo uvećava sliku. Najvažnije osobine su <strong>svetlina</strong> u lumenima (za učionicu sa svetlom bar 3000 lm), <strong>rezolucija</strong> i <strong>kontrast</strong>. U zamračenoj prostoriji slika je mnogo bolja, pa se zato zatvaraju zavese.</p>
+<p lang="en">A <strong>projector</strong> throws an enlarged picture onto a screen or a wall. A strong lamp or laser lights up a small chip (DLP with millions of tiny mirrors, or an LCD panel), and a lens enlarges the image. The most important features are <strong>brightness</strong> in lumens (at least 3000 lm for a lit classroom), <strong>resolution</strong> and <strong>contrast</strong>. In a darkened room the picture is much better, which is why the curtains are closed.</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="stampaci" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">papir</span><span lang="en">paper</span></p>
+    <h2><span lang="sr">Štampači</span><span lang="en">Printers</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Štampač prenosi sliku na papir. Na papiru se boje mešaju <strong>suptraktivno</strong>: svaka boja mastila upija (oduzima) deo svetla. Zato štampači koriste cijan (C), magentu (M) i žutu (Y), a posebno i crnu (K), jer mešavina tri boje daje mutnu tamnobraon umesto čiste crne.</p>
+<p lang="en">A printer transfers an image to paper. On paper colours mix <strong>subtractively</strong>: each ink colour absorbs (subtracts) part of the light. That is why printers use cyan (C), magenta (M) and yellow (Y), and also black (K) separately, because a mix of the three gives a muddy dark brown instead of pure black.</p><figure class="fig" style="max-width:560px"><svg class="dg" viewBox="0 0 600 220" role="img" aria-label="Aditivno i suptraktivno mešanje boja / Additive and subtractive colour mixing" style="width:100%;height:auto">
+<g style="mix-blend-mode:normal"><circle cx="120" cy="90" r="52" fill="#ff3b3b" fill-opacity=".75"/><circle cx="170" cy="90" r="52" fill="#3bdc5a" fill-opacity=".75"/><circle cx="145" cy="132" r="52" fill="#3b6bff" fill-opacity=".75"/></g>
+<text x="145" y="208" text-anchor="middle" lang="sr">RGB · aditivno (ekran)</text><text x="145" y="208" text-anchor="middle" lang="en">RGB · additive (screen)</text>
+<text x="80" y="60" text-anchor="middle" class="sm">R</text><text x="212" y="60" text-anchor="middle" class="sm">G</text><text x="145" y="176" text-anchor="middle" class="sm">B</text>
+<g><circle cx="430" cy="90" r="52" fill="#00c8e6" fill-opacity=".7"/><circle cx="480" cy="90" r="52" fill="#e6229a" fill-opacity=".7"/><circle cx="455" cy="132" r="52" fill="#f2d21a" fill-opacity=".7"/></g>
+<text x="455" y="208" text-anchor="middle" lang="sr">CMYK · suptraktivno (papir)</text><text x="455" y="208" text-anchor="middle" lang="en">CMYK · subtractive (paper)</text>
+<text x="390" y="60" text-anchor="middle" class="sm">C</text><text x="522" y="60" text-anchor="middle" class="sm">M</text><text x="455" y="176" text-anchor="middle" class="sm">Y</text>
+</svg><figcaption><span lang="sr">Levo: ekran meša svetlo (RGB), pa preklapanje daje svetlije boje i belo. Desno: štampač meša mastila (CMY), pa preklapanje daje tamnije boje i skoro crno.</span><span lang="en">Left: a screen mixes light (RGB), so overlapping gives brighter colours and white. Right: a printer mixes inks (CMY), so overlapping gives darker colours and almost black.</span></figcaption></figure><div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Vrste štampača</span><span lang="en">Kinds of printers</span></caption><thead><tr><th><span lang="sr">Vrsta</span><span lang="en">Kind</span></th><th><span lang="sr">Kako radi</span><span lang="en">How it works</span></th><th><span lang="sr">Gde se koristi</span><span lang="en">Where it is used</span></th></tr></thead><tbody><tr><td><span lang="sr">laserski</span><span lang="en">laser</span></td><td><span lang="sr">laser „crta” sliku na bubnju, prah (toner) se lepi na bubanj, prenosi na papir i topi grejačem (fjuzerom)</span><span lang="en">a laser "draws" the image on a drum, powder (toner) sticks to the drum, moves to the paper and is melted by the fuser</span></td><td><span lang="sr">kancelarije: brz, jeftina strana</span><span lang="en">offices: fast, cheap per page</span></td></tr><tr><td><span lang="sr">inkdžet (mlazni)</span><span lang="en">inkjet</span></td><td><span lang="sr">glava ispaljuje sićušne kapi mastila</span><span lang="en">the head fires tiny droplets of ink</span></td><td><span lang="sr">kuća, fotografije u boji</span><span lang="en">home, colour photos</span></td></tr><tr><td><span lang="sr">matrični (iglični)</span><span lang="en">dot-matrix</span></td><td><span lang="sr">iglice udaraju kroz traku sa bojom</span><span lang="en">pins strike through an ink ribbon</span></td><td><span lang="sr">računi u više primeraka (indigo)</span><span lang="en">multi-copy forms (carbon copies)</span></td></tr><tr><td><span lang="sr">termalni</span><span lang="en">thermal</span></td><td><span lang="sr">toplota zatamni poseban papir</span><span lang="en">heat darkens special paper</span></td><td><span lang="sr">fiskalni računi, nalepnice</span><span lang="en">receipts, labels</span></td></tr><tr><td><span lang="sr">ploter</span><span lang="en">plotter</span></td><td><span lang="sr">široki inkdžet ili pero</span><span lang="en">a wide inkjet or a pen</span></td><td><span lang="sr">tehnički crteži, plakati</span><span lang="en">technical drawings, posters</span></td></tr><tr><td><span lang="sr">3D štampač</span><span lang="en">3D printer</span></td><td><span lang="sr">topi plastičnu nit i gradi predmet sloj po sloj</span><span lang="en">melts a plastic filament and builds an object layer by layer</span></td><td><span lang="sr">prototipovi, rezervni delovi</span><span lang="en">prototypes, spare parts</span></td></tr></tbody></table></div><p lang="sr">Štampač se opisuje <strong>rezolucijom</strong> u DPI (600–1200 za tekst), <strong>brzinom</strong> u stranama u minuti (ppm) i <strong>cenom po strani</strong> (koliko košta toner ili mastilo podeljeno brojem strana).</p>
+<p lang="en">A printer is described by its <strong>resolution</strong> in DPI (600–1200 for text), its <strong>speed</strong> in pages per minute (ppm) and its <strong>cost per page</strong> (the price of the toner or ink divided by the number of pages).</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="zvuk" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">zvuk</span><span lang="en">sound</span></p>
+    <h2><span lang="sr">Zvučnici i slušalice</span><span lang="en">Speakers and headphones</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Zvuk je u računaru zapisan kao niz brojeva. <strong>Zvučna kartica</strong> (danas uglavnom ugrađena u ploču) ima <strong>DA konvertor</strong> (DAC) koji te brojeve pretvara u signal koji pokreće membranu zvučnika. Membrana gura vazduh i mi čujemo zvuk.</p>
+<p lang="en">Inside the computer, sound is stored as a sequence of numbers. The <strong>sound card</strong> (today mostly built into the board) has a <strong>DA converter</strong> (DAC) that turns those numbers into a signal that moves the speaker cone. The cone pushes the air and we hear the sound.</p><ul lang="sr"><li><strong>2.0</strong>: dva zvučnika, levi i desni (stereo);</li><li><strong>2.1</strong>: dva zvučnika i <strong>subwoofer</strong> za duboke tonove;</li><li><strong>5.1 i 7.1</strong>: prostorni zvuk sa zvučnicima ispred, sa strane i iza slušaoca, i subwooferom (to je „.1”).</li></ul>
+<ul lang="en"><li><strong>2.0</strong>: two speakers, left and right (stereo);</li><li><strong>2.1</strong>: two speakers and a <strong>subwoofer</strong> for deep tones;</li><li><strong>5.1 and 7.1</strong>: surround sound with speakers in front, at the sides and behind the listener, plus a subwoofer (that is the ".1").</li></ul><p lang="sr">Slušalice su mali zvučnici blizu uha; mogu biti žičane (3,5 mm ili USB) ili bežične (Bluetooth). Zvučnici za računar obično imaju svoje pojačalo i napajanje (aktivni zvučnici).</p>
+<p lang="en">Headphones are small speakers close to the ear; they can be wired (3.5 mm or USB) or wireless (Bluetooth). Computer speakers usually have their own amplifier and power (active speakers).</p>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">vežbaj</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Rešeni primeri</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · gustina piksela</span><span lang="en">Example 1 · pixel density</span></h4><p class="given" lang="sr">Dato: monitor od 24″ ima rezoluciju 1920 × 1080. Kolika je gustina piksela?</p><p class="given" lang="en">Given: a 24″ monitor has a resolution of 1920 × 1080. What is its pixel density?</p><ol lang="sr"><li>Dijagonala u pikselima: √(1920² + 1080²) = √(3 686 400 + 1 166 400) = √4 852 800 ≈ 2203.</li><li>Podelimo dijagonalom u inčima: 2203 / 24 ≈ 92.</li></ol>
+<ol lang="en"><li>Diagonal in pixels: √(1920² + 1080²) = √(3,686,400 + 1,166,400) = √4,852,800 ≈ 2203.</li><li>Divide by the diagonal in inches: 2203 / 24 ≈ 92.</li></ol><p class="answer"><span lang="sr">≈ 92 PPI</span><span lang="en">≈ 92 PPI</span></p></div><div class="ex"><h4><span lang="sr">Primer 2 · broj boja</span><span lang="en">Example 2 · number of colours</span></h4><p class="given" lang="sr">Dato: koliko boja može da prikaže piksel ako svaki podpiksel ima 256 nivoa?</p><p class="given" lang="en">Given: how many colours can a pixel show if each subpixel has 256 levels?</p><ol lang="sr"><li>Tri podpiksela, svaki sa 256 mogućnosti.</li><li>Broj kombinacija: 256 · 256 · 256 = 16 777 216.</li></ol>
+<ol lang="en"><li>Three subpixels, each with 256 options.</li><li>Number of combinations: 256 · 256 · 256 = 16,777,216.</li></ol><p class="answer"><span lang="sr">≈ 16,7 miliona boja</span><span lang="en">≈ 16.7 million colours</span></p></div><div class="ex"><h4><span lang="sr">Primer 3 · brzina štampe</span><span lang="en">Example 3 · printing speed</span></h4><p class="given" lang="sr">Dato: laserski štampač štampa 24 strane u minuti. Koliko traje štampa testa od 6 strana za 30 učenika?</p><p class="given" lang="en">Given: a laser printer prints 24 pages per minute. How long does it take to print a 6-page test for 30 students?</p><ol lang="sr"><li>Ukupno strana: 6 · 30 = 180.</li><li>Vreme: 180 / 24 = 7,5 minuta (plus nekoliko sekundi zagrevanja).</li></ol>
+<ol lang="en"><li>Total pages: 6 · 30 = 180.</li><li>Time: 180 / 24 = 7.5 minutes (plus a few seconds of warm-up).</li></ol><p class="answer"><span lang="sr">7,5 minuta</span><span lang="en">7.5 minutes</span></p></div><div class="ex"><h4><span lang="sr">Primer 4 · izbor štampača</span><span lang="en">Example 4 · choosing a printer</span></h4><p class="given" lang="sr">Dato: sekretarijat škole štampa 2000 crno-belih strana mesečno, a retko nešto u boji. Koji štampač da izabere?</p><p class="given" lang="en">Given: a school office prints 2000 black-and-white pages a month, and rarely anything in colour. Which printer should it choose?</p><ol lang="sr"><li>Mnogo crno-belih strana traži malu cenu po strani i brzinu.</li><li>Laserski štampač ima jeftin toner po strani i ne suši mu se mastilo kada stoji.</li><li>Za retku štampu u boji dovoljan je jedan jeftin inkdžet.</li></ol>
+<ol lang="en"><li>Many black-and-white pages call for a low cost per page and speed.</li><li>A laser printer has cheap toner per page and has no ink to dry out when idle.</li><li>For rare colour printing one cheap inkjet is enough.</li></ol><p class="answer"><span lang="sr">crno-beli laserski štampač</span><span lang="en">a black-and-white laser printer</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>Pogrešna rezolucija u sistemu.</b> LCD izgleda oštro samo u svojoj izvornoj (native) rezoluciji. U drugoj slova postaju mutna.</div></li><li><div><b>Monitor od 144 Hz radi na 60 Hz.</b> Osvežavanje se mora uključiti u podešavanjima ekrana, a kabl mora da ga podrži.</div></li><li><div><b>Mešanje RGB i CMYK.</b> Slika pripremljena za ekran (RGB) na papiru izgleda tamnije i bleđe. Za štampu se priprema u CMYK.</div></li><li><div><b>Inkdžet koji dugo stoji.</b> Mastilo se osuši u glavi. Štampaj bar jednu stranu nedeljno ili koristi laserski štampač.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>The wrong resolution in the system.</b> An LCD looks sharp only at its native resolution. At any other, text becomes blurry.</div></li><li><div><b>A 144 Hz monitor running at 60 Hz.</b> The refresh rate must be switched on in the display settings, and the cable must support it.</div></li><li><div><b>Mixing up RGB and CMYK.</b> A picture made for a screen (RGB) looks darker and duller on paper. For print it is prepared in CMYK.</div></li><li><div><b>An inkjet that sits unused.</b> The ink dries in the head. Print at least one page a week or use a laser printer.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 9</span><span lang="en">Part 9</span></b> · <span lang="sr"></span><span lang="en"></span></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>Izlazne jedinice pretvaraju podatke iz računara u sliku, štampu, zvuk ili dodir.</li><li>Piksel ima tri podpiksela (RGB); 256 nivoa po boji daje 16,7 miliona boja.</li><li>Monitor opisuju rezolucija, dijagonala, odnos stranica, osvežavanje, odziv i gustina (PPI).</li><li>LCD (TN, IPS, VA) koristi pozadinsko svetlo; OLED pikseli sami svetle.</li><li>Štampači mešaju boje suptraktivno (CMYK): laserski, inkdžet, matrični, termalni, 3D.</li><li>Zvučna kartica pretvara brojeve u zvuk; sistemi 2.0, 2.1, 5.1, 7.1.</li></ul><ul lang="en"><li>Output devices turn data from the computer into pictures, print, sound or touch.</li><li>A pixel has three subpixels (RGB); 256 levels per colour give 16.7 million colours.</li><li>A monitor is described by resolution, diagonal, aspect ratio, refresh rate, response time and density (PPI).</li><li>LCD (TN, IPS, VA) uses a backlight; OLED pixels light themselves.</li><li>Printers mix colours subtractively (CMYK): laser, inkjet, dot-matrix, thermal, 3D.</li><li>The sound card turns numbers into sound; 2.0, 2.1, 5.1 and 7.1 systems.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="PC11" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/periferije-labs.js"></script>
+</body>
+</html>
