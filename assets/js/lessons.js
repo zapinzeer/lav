@@ -52,6 +52,15 @@ window.LAV_CLASSES = {
       sr: 'Osnove podataka, SQL-a i Firebase baze kao servisa za podatke.',
       en: 'The basics of data, SQL and the Firebase database as a data service.'
     }
+  },
+  dizajn: {
+    sr: 'UI/UX dizajn',
+    en: 'UI/UX design',
+    color: 'field',
+    blurb: {
+      sr: 'Osnovni principi dizajna korisničkog interfejsa i iskustva: hijerarhija, kontrast, heuristike, Fitsov i Hikov zakon i pristupačnost.',
+      en: 'The basic principles of user interface and experience design: hierarchy, contrast, heuristics, Fitts\'s and Hick\'s laws and accessibility.'
+    }
   }
 };
 
@@ -555,5 +564,19 @@ window.LAV_LESSONS = [
       en: 'What data and databases are, tables and keys, basic SQL (SELECT, WHERE, INSERT, UPDATE, DELETE, JOIN) and Firebase Realtime Database as a service.'
     },
     tags: []
+  }
+,
+  {
+    slug: 'osnovni-principi-ui-ux',
+    cls: 'dizajn',
+    date: '2026-11-26',
+    minutes: 26,
+    quiz: 'UX01',
+    title: { sr: 'Osnovni principi UI/UX dizajna', en: 'Basic principles of UI/UX design' },
+    summary: {
+      sr: 'UI i UX, dizajn usmeren na korisnika, vizuelna hijerarhija i geštalt principi, kontrast boja, Nilsenove heuristike, Fitsov i Hikov zakon i pristupačnost.',
+      en: 'UI and UX, user-centred design, visual hierarchy and the Gestalt principles, colour contrast, Nielsen\'s heuristics, Fitts\'s and Hick\'s laws and accessibility.'
+    },
+    tags: ['lab', 'formulas']
   }
 ];

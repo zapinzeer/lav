@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Osnovni principi UI/UX dizajna: razlika između UI i UX, dizajn usmeren na korisnika, vizuelna hijerarhija i geštalt principi, boja i kontrast, Nilsenove heuristike, Fitsov i Hikov zakon i pristupačnost, uz interaktivne vežbe.">
+<title>Osnovni principi UI/UX dizajna · lav</title>
+<script>try{var h=JSON.parse(localStorage.getItem("lav-hs"));if(h&&h.secure&&h.until>Date.now())document.documentElement.className+=" lav-locked"}catch(e){}</script>
+<script src="../assets/js/fingerprint-lock.js" data-lock></script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=STIX+Two+Text:ital,wght@1,500;1,600&display=swap">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/lav.css">
+</head>
+<body data-nav="library">
+<div id="site-header"></div>
+
+<div class="wrap" id="lesson-top" data-slug="osnovni-principi-ui-ux">
+  <aside class="goals">
+    <p class="eyebrow"><span lang="sr">Posle ove lekcije umeš da</span><span lang="en">After this lesson you can</span></p>
+    <ul lang="sr"><li>objasniš razliku između korisničkog interfejsa (UI) i korisničkog iskustva (UX);</li><li>opišeš korake dizajna usmerenog na korisnika;</li><li>primeniš vizuelnu hijerarhiju i geštalt principe blizine, sličnosti, poravnanja i kontrasta;</li><li>izračunaš i proveriš kontrast teksta i pozadine;</li><li>oceniš interfejs pomoću Nilsenovih heuristika i Fitsovog i Hikovog zakona;</li><li>navedeš osnovna pravila pristupačnosti.</li></ul>
+    <ul lang="en"><li>explain the difference between the user interface (UI) and the user experience (UX);</li><li>describe the steps of user-centred design;</li><li>apply visual hierarchy and the Gestalt principles of proximity, similarity, alignment and contrast;</li><li>calculate and check the contrast between text and background;</li><li>judge an interface with Nielsen's heuristics and with Fitts's and Hick's laws;</li><li>list the basic rules of accessibility.</li></ul>
+  </aside>
+</div>
+<nav class="lp-toc" data-slot="toc"></nav>
+
+<main class="wrap">
+
+<section class="sec" id="uiux" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 1</span><span lang="en">Part 1</span></b> · <span lang="sr">pojmovi</span><span lang="en">the terms</span></p>
+    <h2><span lang="sr">Šta su UI i UX?</span><span lang="en">What are UI and UX?</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>UI</strong> (User Interface, korisnički interfejs) je sve ono što korisnik vidi i dodiruje: dugmad, polja za unos, meniji, ikonice, boje, slova i raspored na ekranu. <strong>UX</strong> (User Experience, korisničko iskustvo) je ono što korisnik <em>doživi</em> dok koristi proizvod: da li je brzo našao šta mu treba, da li se zbunio, da li je uspeo da završi posao i kakav mu je osećaj ostao posle toga.</p>
+<p lang="en"><strong>UI</strong> (user interface) is everything the user sees and touches: buttons, input fields, menus, icons, colours, fonts and the layout of the screen. <strong>UX</strong> (user experience) is what the user <em>goes through</em> while using a product: whether they found what they needed quickly, whether they got confused, whether they managed to finish the job, and how they felt afterwards.</p>
+<p lang="sr">Zgodno poređenje je kašika: oblik, materijal i boja su UI, a to koliko lako jedeš supu je UX. Lepa kašika sa rupom u sredini ima dobar UI i loš UX. UI je deo UX-a, ali UX obuhvata mnogo više: brzinu učitavanja, jasne poruke o greškama, tekst, pa čak i podršku kad nešto ne radi.</p>
+<p lang="en">A handy comparison is a spoon: its shape, material and colour are the UI, and how easily you eat soup with it is the UX. A pretty spoon with a hole in the middle has a good UI and a bad UX. UI is a part of UX, but UX covers much more: loading speed, clear error messages, the wording, even the help you get when something does not work.</p>
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">UI i UX jedno pored drugog</span><span lang="en">UI and UX side by side</span></caption><thead><tr><th></th><th>UI</th><th>UX</th></tr></thead><tbody><tr><td><span lang="sr">Pitanje</span><span lang="en">Question</span></td><td><span lang="sr">Kako izgleda?</span><span lang="en">How does it look?</span></td><td><span lang="sr">Kako radi i kako se osećam dok ga koristim?</span><span lang="en">How does it work and how do I feel using it?</span></td></tr><tr><td><span lang="sr">Bavi se</span><span lang="en">Deals with</span></td><td><span lang="sr">bojama, slovima, ikonama, rasporedom, stanjima dugmadi</span><span lang="en">colours, type, icons, layout, button states</span></td><td><span lang="sr">potrebama korisnika, tokom koraka, strukturom, testiranjem</span><span lang="en">user needs, the flow of steps, structure, testing</span></td></tr><tr><td><span lang="sr">Alati</span><span lang="en">Tools</span></td><td><span lang="sr">dizajn sistem, paleta, tipografija, maketa visoke vernosti</span><span lang="en">design system, palette, typography, high-fidelity mock-up</span></td><td><span lang="sr">intervju, persona, mapa puta korisnika, skica (wireframe), test upotrebljivosti</span><span lang="en">interview, persona, user journey map, wireframe, usability test</span></td></tr><tr><td><span lang="sr">Meri se</span><span lang="en">Measured by</span></td><td><span lang="sr">doslednošću i čitljivošću</span><span lang="en">consistency and readability</span></td><td><span lang="sr">uspešnošću zadatka, vremenom, brojem grešaka, zadovoljstvom</span><span lang="en">task success, time, number of errors, satisfaction</span></td></tr></tbody></table></div>
+<p lang="sr">Dobar dizajn ima tri osobine koje se često navode zajedno: <strong>korisnost</strong> (rešava pravi problem), <strong>upotrebljivost</strong> (lako se uči i koristi, bez grešaka) i <strong>prijatnost</strong> (lepo je i ostavlja dobar utisak). Upotrebljivost se proverava jednostavno: daš ljudima zadatak i gledaš gde zapnu.</p>
+<p lang="en">Good design has three qualities that are often named together: <strong>usefulness</strong> (it solves a real problem), <strong>usability</strong> (it is easy to learn and use, without errors) and <strong>delight</strong> (it is pleasant and leaves a good impression). Usability is checked simply: you give people a task and watch where they get stuck.</p>
+<details class="think"><summary><span lang="sr">Pomisli prvo: seti se aplikacije koja te je iznervirala. Da li je problem bio UI ili UX?</span><span lang="en">Think first: remember an app that annoyed you. Was the problem UI or UX?</span></summary><div class="ans"><p lang="sr">Najčešće UX: predugačka registracija, dugme koje se ne vidi, poruka „Greška” bez objašnjenja, sadržaj koji se pomera dok se učitava. Ružna boja retko nekog otera, a nejasan tok skoro uvek.</p>
+<p lang="en">Most often UX: a sign-up that is too long, a button you cannot find, a message saying just "Error", content that jumps while it loads. An ugly colour rarely drives anyone away, but an unclear flow almost always does.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="proces" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 2</span><span lang="en">Part 2</span></b> · <span lang="sr">kako se dizajnira</span><span lang="en">how design is done</span></p>
+    <h2><span lang="sr">Dizajn usmeren na korisnika</span><span lang="en">User-centred design</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Najvažnije pravilo UX-a glasi: <strong>ti nisi korisnik</strong>. Ono što je tebi očigledno, jer si napravio aplikaciju, drugima nije. Zato se dizajn ne radi „iz glave”, već u krugu u kome se korisnici pitaju i posmatraju, a rešenje se popravlja dok ne proradi za njih.</p>
+<p lang="en">The most important rule of UX is: <strong>you are not the user</strong>. What is obvious to you, because you built the app, is not obvious to others. So design is not done "from your head", but in a cycle in which users are asked and watched, and the solution is improved until it works for them.</p>
+<figure class="fig" style="max-width:680px"><svg class="dg" viewBox="0 0 640 270" role="img" aria-label="Krug dizajna usmerenog na korisnika / The user-centred design cycle" style="width:100%;height:auto">
+<defs><marker id="uxar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+<rect x="20" y="30" width="150" height="62" rx="8" class="fillcs" stroke="var(--copper)"/><text x="95" y="54" text-anchor="middle">1</text><text x="95" y="74" text-anchor="middle" class="sm" lang="sr">istraži korisnike</text><text x="95" y="74" text-anchor="middle" class="sm" lang="en">research users</text>
+<rect x="245" y="30" width="150" height="62" rx="8" class="fillcs" stroke="var(--copper)"/><text x="320" y="54" text-anchor="middle">2</text><text x="320" y="74" text-anchor="middle" class="sm" lang="sr">definiši problem</text><text x="320" y="74" text-anchor="middle" class="sm" lang="en">define the problem</text>
+<rect x="470" y="30" width="150" height="62" rx="8" class="fillfs" stroke="var(--field)"/><text x="545" y="54" text-anchor="middle">3</text><text x="545" y="74" text-anchor="middle" class="sm" lang="sr">smisli rešenja</text><text x="545" y="74" text-anchor="middle" class="sm" lang="en">come up with ideas</text>
+<rect x="470" y="178" width="150" height="62" rx="8" class="fillfs" stroke="var(--field)"/><text x="545" y="202" text-anchor="middle">4</text><text x="545" y="222" text-anchor="middle" class="sm" lang="sr">napravi prototip</text><text x="545" y="222" text-anchor="middle" class="sm" lang="en">build a prototype</text>
+<rect x="245" y="178" width="150" height="62" rx="8" class="fillcs" stroke="var(--copper)"/><text x="320" y="202" text-anchor="middle">5</text><text x="320" y="222" text-anchor="middle" class="sm" lang="sr">testiraj sa ljudima</text><text x="320" y="222" text-anchor="middle" class="sm" lang="en">test with people</text>
+<rect x="20" y="178" width="150" height="62" rx="8" fill="none" stroke="var(--muted)" stroke-dasharray="5 4"/><text x="95" y="202" text-anchor="middle" class="mu sm" lang="sr">nauči šta ne radi</text><text x="95" y="202" text-anchor="middle" class="mu sm" lang="en">learn what fails</text><text x="95" y="222" text-anchor="middle" class="mu sm" lang="sr">i ponovi krug</text><text x="95" y="222" text-anchor="middle" class="mu sm" lang="en">and go round again</text>
+<path class="thin" d="M172 61H241" marker-end="url(#uxar)"/><path class="thin" d="M397 61H466" marker-end="url(#uxar)"/><path class="thin" d="M545 94V174" marker-end="url(#uxar)"/><path class="thin" d="M468 209H399" marker-end="url(#uxar)"/><path class="thin" d="M243 209H174" marker-end="url(#uxar)"/><path class="thin" d="M95 176V96" marker-end="url(#uxar)"/>
+<text x="320" y="140" text-anchor="middle" class="cu" lang="sr">korisnik u centru</text><text x="320" y="140" text-anchor="middle" class="cu" lang="en">the user at the centre</text>
+</svg><figcaption><span lang="sr">Krug se ponavlja više puta. Svaki prolaz je brži i jeftiniji ako je prototip prost: skica na papiru se popravlja za minut, a gotova aplikacija za nedelju dana.</span><span lang="en">The cycle repeats many times. Each pass is quicker and cheaper if the prototype is simple: a paper sketch is fixed in a minute, a finished app in a week.</span></figcaption></figure>
+<ul lang="sr"><li><strong>Istraživanje.</strong> Intervju, anketa, posmatranje ljudi dok rade posao. Cilj je da saznaš šta im stvarno treba, a ne šta misliš da im treba.</li><li><strong>Persona.</strong> Izmišljen, ali realan opis tipičnog korisnika („Milica, 16 godina, uči sa telefona u autobusu”). Pomaže timu da se seti za koga radi.</li><li><strong>Mapa puta korisnika.</strong> Koraci kroz koje korisnik prolazi da bi stigao do cilja, sa mestima gde se nervira.</li><li><strong>Skica (wireframe).</strong> Crno-beli raspored bez boja i slika: samo gde šta stoji.</li><li><strong>Prototip.</strong> Skica na koju se može kliknuti (Figma, papir). Dovoljno da se testira.</li><li><strong>Test upotrebljivosti.</strong> Petoro ljudi dobije zadatak („promeni lozinku”) i glasno priča šta misli. Već pet ljudi otkrije većinu velikih problema.</li></ul>
+<ul lang="en"><li><strong>Research.</strong> Interviews, surveys, watching people do the job. The aim is to find out what they really need, not what you think they need.</li><li><strong>Persona.</strong> A made-up but realistic description of a typical user ("Milica, 16, studies on her phone on the bus"). It helps the team remember who they are building for.</li><li><strong>User journey map.</strong> The steps a user goes through to reach a goal, with the places where they get annoyed.</li><li><strong>Wireframe.</strong> A black-and-white layout with no colours or pictures: just what goes where.</li><li><strong>Prototype.</strong> A sketch you can click on (Figma, paper). Enough to test.</li><li><strong>Usability test.</strong> Five people get a task ("change your password") and think aloud. Just five people uncover most of the big problems.</li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="hijerarhija" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 3</span><span lang="en">Part 3</span></b> · <span lang="sr">raspored</span><span lang="en">layout</span></p>
+    <h2><span lang="sr">Vizuelna hijerarhija i geštalt principi</span><span lang="en">Visual hierarchy and the Gestalt principles</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Ljudi ekran ne čitaju, već ga <strong>preleću pogledom</strong>. <strong>Vizuelna hijerarhija</strong> govori oku šta je najvažnije, šta sledeće, a šta može da sačeka. Postiže se veličinom, debljinom slova, bojom, kontrastom i praznim prostorom. Na zapadnim ekranima pogled obično ide u obliku slova F ili Z: gore levo, pa preko, pa dole.</p>
+<p lang="en">People do not read a screen, they <strong>scan</strong> it. <strong>Visual hierarchy</strong> tells the eye what matters most, what comes next and what can wait. It is built with size, font weight, colour, contrast and white space. On Western screens the eye usually moves in an F or Z shape: top left, then across, then down.</p>
+<p lang="sr"><strong>Geštalt principi</strong> opisuju kako mozak sam grupiše ono što vidi. Dizajner ih koristi da raspored „objasni sebe” bez ijedne reči:</p>
+<p lang="en">The <strong>Gestalt principles</strong> describe how the brain groups what it sees by itself. A designer uses them so that a layout "explains itself" without a single word:</p>
+<ul lang="sr"><li><strong>Blizina.</strong> Stvari koje su blizu doživljavamo kao grupu. Natpis treba da bude bliži svom polju nego susednom.</li><li><strong>Sličnost.</strong> Stvari istog oblika, boje ili veličine doživljavamo kao srodne. Svi linkovi iste boje, sva dugmad istog oblika.</li><li><strong>Poravnanje.</strong> Elementi na zajedničkoj nevidljivoj liniji deluju uredno i povezano. Nasumično centriranje i ivice deluju haotično.</li><li><strong>Kontrast.</strong> Ono što se razlikuje privlači pažnju. Glavna radnja (npr. „Pošalji”) treba da odskače od sporednih.</li><li><strong>Zajednička oblast.</strong> Okvir ili pozadina oko elemenata ih spaja u celinu (kartica).</li></ul>
+<ul lang="en"><li><strong>Proximity.</strong> Things that are close together are seen as a group. A label should sit closer to its own field than to the next one.</li><li><strong>Similarity.</strong> Things of the same shape, colour or size are seen as related. All links one colour, all buttons one shape.</li><li><strong>Alignment.</strong> Elements on a shared invisible line look tidy and connected. Random centring and ragged edges look chaotic.</li><li><strong>Contrast.</strong> What is different draws attention. The main action (e.g. "Send") should stand out from the secondary ones.</li><li><strong>Common region.</strong> A frame or background around elements joins them into one unit (a card).</li></ul>
+<div class="rule-box"><p class="eyebrow"><span lang="sr">Prazan prostor nije bačen prostor</span><span lang="en">White space is not wasted space</span></p><p lang="sr">Prostor oko elemenata nije „višak” koji treba popuniti. On razdvaja grupe, odmara oko i daje važnim stvarima mesto da se istaknu.</p><p lang="en">The space around elements is not "spare" room to be filled. It separates groups, rests the eye and gives important things room to stand out.</p></div>
+</div><figure class="lab" id="lab-gestalt">
+<div class="uxs-stage"><div class="uxs-card" id="gs-card"><div class="uxs-h"><span lang="sr">Radionica: pravimo igricu</span><span lang="en">Workshop: let's make a game</span></div><div class="uxs-meta"><span lang="sr">Subota 14. 12. · Kabinet 12 · 10:00</span><span lang="en">Saturday 14 Dec · Room 12 · 10:00</span></div><div class="uxs-p"><span lang="sr">Za tri sata napravićemo jednostavnu igru u pregledaču. Predznanje nije potrebno.</span><span lang="en">In three hours we will build a simple browser game. No experience needed.</span></div><div class="uxs-f"><label class="uxs-l" for="gs-name"><span lang="sr">Ime i prezime</span><span lang="en">Full name</span></label><input class="uxs-i" id="gs-name" type="text" tabindex="-1" readonly></div><div class="uxs-f"><label class="uxs-l" for="gs-mail"><span lang="sr">E-pošta</span><span lang="en">E-mail</span></label><input class="uxs-i" id="gs-mail" type="text" tabindex="-1" readonly></div><div class="uxs-acts"><span class="uxs-b uxs-b2"><span lang="sr">Otkaži</span><span lang="en">Cancel</span></span><span class="uxs-b uxs-b1"><span lang="sr">Prijavi se</span><span lang="en">Sign up</span></span></div></div></div>
+<div class="controls one"><div class="btns"><label class="switch"><input type="checkbox" id="gs-prox"><span lang="sr">blizina</span><span lang="en">proximity</span></label><label class="switch"><input type="checkbox" id="gs-align"><span lang="sr">poravnanje</span><span lang="en">alignment</span></label><label class="switch"><input type="checkbox" id="gs-hier"><span lang="sr">hijerarhija</span><span lang="en">hierarchy</span></label><label class="switch"><input type="checkbox" id="gs-act"><span lang="sr">kontrast radnje</span><span lang="en">action contrast</span></label></div><div class="btns"><button type="button" class="btn" id="gs-all"><span lang="sr">Uključi sve</span><span lang="en">Turn all on</span></button><button type="button" class="btn" id="gs-none"><span lang="sr">Isključi sve</span><span lang="en">Turn all off</span></button></div></div>
+<div class="readout" aria-live="polite"><div class="calc" id="gs-calc"></div><div class="result" id="gs-result"></div><div class="calc" id="gs-note"></div></div>
+<figcaption><span lang="sr">Ista prijava, isti tekst, ista polja. Uključuj principe jedan po jedan i gledaj kako kartica postaje jasnija, iako nije dodata nijedna reč.</span><span lang="en">The same sign-up, the same text, the same fields. Turn the principles on one at a time and watch the card get clearer, even though not a single word is added.</span></figcaption>
+</figure>
+  </div>
+</section>
+
+<section class="sec" id="boja" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 4</span><span lang="en">Part 4</span></b> · <span lang="sr">čitljivost</span><span lang="en">readability</span></p>
+    <h2><span lang="sr">Boja, kontrast i tipografija</span><span lang="en">Colour, contrast and typography</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr">Tekst mora da se jasno odvaja od pozadine, i to ne samo na tvom dobrom monitoru, već i na jeftinom telefonu na suncu, i za ljude koji slabije vide. Koliko se tekst odvaja meri se <strong>odnosom kontrasta</strong> između dve boje. Prvo se za svaku boju izračuna <strong>relativna osvetljenost</strong> <em>L</em>, od 0 (crna) do 1 (bela), pa se uporede:</p>
+<p lang="en">Text must stand out clearly from its background, not just on your good monitor, but also on a cheap phone in the sun, and for people with weaker sight. How much the text stands out is measured by the <strong>contrast ratio</strong> between two colours. First the <strong>relative luminance</strong> <em>L</em> of each colour is worked out, from 0 (black) to 1 (white), and then they are compared:</p>
+<div class="formula">
+<div class="tex">\[ K = \frac{L_1 + 0{,}05}{L_2 + 0{,}05} \]</div>
+<dl class="legend">
+<div><dt>K</dt><dd><span lang="sr">odnos kontrasta, od 1 : 1 do 21 : 1</span><span lang="en">contrast ratio, from 1 : 1 to 21 : 1</span></dd><span class="unit">: 1</span></div>
+<div><dt>L₁</dt><dd><span lang="sr">osvetljenost svetlije boje</span><span lang="en">luminance of the lighter colour</span></dd><span class="unit">0–1</span></div>
+<div><dt>L₂</dt><dd><span lang="sr">osvetljenost tamnije boje</span><span lang="en">luminance of the darker colour</span></dd><span class="unit">0–1</span></div>
+</dl>
+</div>
+<p lang="sr">Crno na belom daje (1 + 0,05) / (0 + 0,05) = <strong>21 : 1</strong>, najveći mogući kontrast. Ista boja na istoj boji daje 1 : 1. Međunarodna pravila pristupačnosti WCAG traže:</p>
+<p lang="en">Black on white gives (1 + 0.05) / (0 + 0.05) = <strong>21 : 1</strong>, the highest possible contrast. A colour on itself gives 1 : 1. The international accessibility guidelines, WCAG, ask for:</p>
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Najmanji kontrast po WCAG pravilima</span><span lang="en">Minimum contrast under WCAG</span></caption><thead><tr><th><span lang="sr">Šta</span><span lang="en">What</span></th><th><span lang="sr">Nivo AA</span><span lang="en">Level AA</span></th><th><span lang="sr">Nivo AAA</span><span lang="en">Level AAA</span></th></tr></thead><tbody><tr><td><span lang="sr">običan tekst</span><span lang="en">normal text</span></td><td>4,5 : 1</td><td>7 : 1</td></tr><tr><td><span lang="sr">krupan tekst (od 24 px, ili 18,5 px podebljano)</span><span lang="en">large text (24 px and up, or 18.5 px bold)</span></td><td>3 : 1</td><td>4,5 : 1</td></tr><tr><td><span lang="sr">ikone, ivice polja, delovi grafika</span><span lang="en">icons, field borders, parts of charts</span></td><td>3 : 1</td><td>–</td></tr></tbody></table></div>
+<p lang="sr"><strong>Boja nikad ne sme da bude jedini nosilac značenja.</strong> Oko 8 % muškaraca ne razlikuje dobro crvenu i zelenu. Polje sa greškom zato pored crvene ivice dobija ikonicu i tekst („Unesi ispravnu e-poštu”). Paleta neka bude mala: jedna glavna boja za radnje, neutralne za tekst i pozadine, i boje za stanja (uspeh, upozorenje, greška).</p>
+<p lang="en"><strong>Colour must never be the only carrier of meaning.</strong> About 8 % of men cannot tell red and green apart well. So a field with an error gets an icon and text ("Enter a valid e-mail") as well as a red border. Keep the palette small: one main colour for actions, neutrals for text and backgrounds, and colours for states (success, warning, error).</p>
+<p lang="sr"><strong>Tipografija:</strong> najviše dve porodice slova; osnovni tekst oko 16 px na ekranu; red od 45 do 75 znakova (duži zamara oko); razmak između redova oko 1,5 visine slova; veličine naslova u jasnim koracima (npr. 16, 20, 25, 31 px), a ne 16, 17, 18.</p>
+<p lang="en"><strong>Typography:</strong> two font families at most; body text around 16 px on screen; lines of 45 to 75 characters (longer ones tire the eye); line spacing of about 1.5 times the font size; heading sizes in clear steps (e.g. 16, 20, 25, 31 px), not 16, 17, 18.</p>
+</div><figure class="lab" id="lab-contrast">
+<div class="uxs-stage uxs-con" id="ct-stage"><div class="uxs-con-big"><span lang="sr">Naslov 24 px</span><span lang="en">Heading 24 px</span></div><div class="uxs-con-small"><span lang="sr">Ovo je običan tekst od 16 piksela. Da li se lako čita?</span><span lang="en">This is normal 16-pixel text. Is it easy to read?</span></div><div class="uxs-con-row"><span class="uxs-con-ic" aria-hidden="true">✓</span><span class="uxs-con-tiny"><span lang="sr">sitan tekst 13 px</span><span lang="en">small text 13 px</span></span></div></div>
+<div class="controls"><div class="ctl"><label for="ct-fg"><span lang="sr">Boja teksta</span><span lang="en">Text colour</span></label><output id="ct-fg-o"></output><input type="color" id="ct-fg" value="#767676"></div><div class="ctl"><label for="ct-bg"><span lang="sr">Boja pozadine</span><span lang="en">Background colour</span></label><output id="ct-bg-o"></output><input type="color" id="ct-bg" value="#ffffff"></div><div class="btns"><span class="lbl"><span lang="sr">Primeri</span><span lang="en">Examples</span></span><div class="seg" id="ct-pre" role="group"><button type="button" data-v="#767676|#ffffff" aria-pressed="true"><span lang="sr">siva na beloj</span><span lang="en">grey on white</span></button><button type="button" data-v="#141d26|#eef1f3" aria-pressed="false"><span lang="sr">tamno</span><span lang="en">dark ink</span></button><button type="button" data-v="#ffffff|#f5b800" aria-pressed="false"><span lang="sr">belo na žutoj</span><span lang="en">white on yellow</span></button><button type="button" data-v="#c4362c|#23764a" aria-pressed="false"><span lang="sr">crveno na zelenoj</span><span lang="en">red on green</span></button><button type="button" data-v="#aab4be|#eef1f3" aria-pressed="false"><span lang="sr">bleda siva</span><span lang="en">pale grey</span></button></div></div></div>
+<div class="readout" aria-live="polite"><div class="calc" id="ct-calc"></div><div class="result" id="ct-result"></div><div class="uxs-badges" id="ct-badges"></div></div>
+<figcaption><span lang="sr">Izaberi boju teksta i pozadine i vidi odnos kontrasta i koje nivoe WCAG pravila prolazi. Siva #767676 na beloj je najsvetlija siva koja još prolazi nivo AA za običan tekst.</span><span lang="en">Pick a text and a background colour and see the contrast ratio and which WCAG levels it passes. Grey #767676 on white is the lightest grey that still passes level AA for normal text.</span></figcaption>
+</figure>
+  </div>
+</section>
+
+<section class="sec" id="heuristike" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 5</span><span lang="en">Part 5</span></b> · <span lang="sr">pravila palca</span><span lang="en">rules of thumb</span></p>
+    <h2><span lang="sr">Nilsenovih deset heuristika</span><span lang="en">Nielsen's ten heuristics</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr">Jakob Nilsen je 1994. sažeo iskustvo iz mnogo testova u deset <strong>heuristika</strong>, opštih pravila po kojima se interfejs može brzo proceniti i bez korisnika. Kad pregledaš aplikaciju, prođi kroz listu i za svako pravilo zapiši gde je prekršeno.</p>
+<p lang="en">In 1994 Jakob Nielsen summed up the experience from many tests in ten <strong>heuristics</strong>, general rules by which an interface can be judged quickly, even without users. When you review an app, go through the list and note for each rule where it is broken.</p>
+<div class="tbl-wrap"><table class="scale num"><caption><span lang="sr">Heuristike i primeri</span><span lang="en">The heuristics with examples</span></caption><thead><tr><th>#</th><th><span lang="sr">Heuristika</span><span lang="en">Heuristic</span></th><th><span lang="sr">Primer</span><span lang="en">Example</span></th></tr></thead><tbody>
+<tr><td>1</td><td><span lang="sr">Vidljivost stanja sistema</span><span lang="en">Visibility of system status</span></td><td><span lang="sr">traka napretka pri slanju fajla, „Sačuvano” posle izmene</span><span lang="en">a progress bar while uploading, "Saved" after an edit</span></td></tr>
+<tr><td>2</td><td><span lang="sr">Sličnost sistema i stvarnog sveta</span><span lang="en">Match between the system and the real world</span></td><td><span lang="sr">reči koje korisnik zna („Korpa”, a ne „Entitet porudžbine”), ikona kante za brisanje</span><span lang="en">words the user knows ("Basket", not "Order entity"), a bin icon for delete</span></td></tr>
+<tr><td>3</td><td><span lang="sr">Kontrola i sloboda korisnika</span><span lang="en">User control and freedom</span></td><td><span lang="sr">dugme „Opozovi” (Undo), lak izlaz iz prozora</span><span lang="en">an Undo button, an easy way out of a dialog</span></td></tr>
+<tr><td>4</td><td><span lang="sr">Doslednost i standardi</span><span lang="en">Consistency and standards</span></td><td><span lang="sr">isto dugme izgleda isto na svakoj strani; logo vodi na početnu</span><span lang="en">the same button looks the same on every page; the logo leads home</span></td></tr>
+<tr><td>5</td><td><span lang="sr">Sprečavanje grešaka</span><span lang="en">Error prevention</span></td><td><span lang="sr">izbor datuma iz kalendara umesto kucanja; potvrda pre brisanja</span><span lang="en">picking a date from a calendar instead of typing it; a confirmation before deleting</span></td></tr>
+<tr><td>6</td><td><span lang="sr">Prepoznavanje umesto pamćenja</span><span lang="en">Recognition rather than recall</span></td><td><span lang="sr">nedavne pretrage, predlozi dok kucaš</span><span lang="en">recent searches, suggestions while you type</span></td></tr>
+<tr><td>7</td><td><span lang="sr">Fleksibilnost i efikasnost</span><span lang="en">Flexibility and efficiency of use</span></td><td><span lang="sr">prečice na tastaturi za iskusne (Ctrl+S)</span><span lang="en">keyboard shortcuts for experts (Ctrl+S)</span></td></tr>
+<tr><td>8</td><td><span lang="sr">Estetski i minimalistički dizajn</span><span lang="en">Aesthetic and minimalist design</span></td><td><span lang="sr">samo ono što treba za ovaj korak, bez gomile nebitnog</span><span lang="en">only what this step needs, without clutter</span></td></tr>
+<tr><td>9</td><td><span lang="sr">Pomoć pri prepoznavanju i ispravljanju grešaka</span><span lang="en">Help users recognise, diagnose and recover from errors</span></td><td><span lang="sr">„Lozinka mora imati bar 8 znakova” umesto „Greška 0x80”</span><span lang="en">"The password needs at least 8 characters" instead of "Error 0x80"</span></td></tr>
+<tr><td>10</td><td><span lang="sr">Pomoć i dokumentacija</span><span lang="en">Help and documentation</span></td><td><span lang="sr">kratko uputstvo ili savet tačno tamo gde zatreba</span><span lang="en">a short guide or tip right where it is needed</span></td></tr>
+</tbody></table></div>
+<p lang="sr">Uz heuristike, dobar interfejs uvek daje <strong>povratnu informaciju</strong> (feedback): dugme menja izgled kad se pritisne, polje se oboji kad je unos neispravan. Svaki element ima više <strong>stanja</strong>: običan, pod mišem (hover), fokusiran tastaturom, pritisnut, onemogućen, učitava se. Ako neko stanje nije dizajnirano, korisnik ne zna šta se dešava.</p>
+<p lang="en">On top of the heuristics, a good interface always gives <strong>feedback</strong>: a button changes when pressed, a field is coloured when the input is wrong. Every element has several <strong>states</strong>: default, hover, keyboard focus, pressed, disabled, loading. If a state has not been designed, the user does not know what is going on.</p>
+<details class="think"><summary><span lang="sr">Pomisli prvo: koju heuristiku krši sajt koji posle klika na „Pošalji” ne pokaže ništa?</span><span lang="en">Think first: which heuristic does a site break if nothing happens after you click "Send"?</span></summary><div class="ans"><p lang="sr">Prvu, vidljivost stanja sistema. Korisnik ne zna da li je poruka otišla, pa klikne još jednom i pošalje je dva puta. Rešenje: dugme pređe u stanje „Šalje se…”, pa stigne poruka „Poslato”.</p>
+<p lang="en">The first one, visibility of system status. The user does not know whether the message went, so they click again and send it twice. The fix: the button switches to "Sending…", and then a "Sent" message appears.</p></div></details>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="zakoni" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 6</span><span lang="en">Part 6</span></b> · <span lang="sr">zakoni interakcije</span><span lang="en">laws of interaction</span></p>
+    <h2><span lang="sr">Fitsov i Hikov zakon</span><span lang="en">Fitts's law and Hick's law</span></h2>
+  </div>
+  <div class="grid">
+<div class="intro">
+<p lang="sr"><strong>Fitsov zakon</strong> kaže da vreme potrebno da se pogodi cilj (dugme) raste sa udaljenošću do njega, a opada sa njegovom veličinom. Teškoća pogađanja meri se <strong>indeksom težine</strong> u bitima:</p>
+<p lang="en"><strong>Fitts's law</strong> says that the time needed to hit a target (a button) grows with the distance to it and shrinks with its size. How hard it is to hit is measured by the <strong>index of difficulty</strong> in bits:</p>
+<div class="formula">
+<div class="tex">\[ ID = \log_2\!\left(\frac{D}{W} + 1\right) \qquad T = a + b \cdot ID \]</div>
+<dl class="legend">
+<div><dt>ID</dt><dd><span lang="sr">indeks težine</span><span lang="en">index of difficulty</span></dd><span class="unit">bit</span></div>
+<div><dt>D</dt><dd><span lang="sr">udaljenost do sredine cilja</span><span lang="en">distance to the centre of the target</span></dd><span class="unit">px</span></div>
+<div><dt>W</dt><dd><span lang="sr">širina cilja u pravcu kretanja</span><span lang="en">width of the target along the movement</span></dd><span class="unit">px</span></div>
+<div><dt>T</dt><dd><span lang="sr">vreme do pogotka; a i b se mere za svaku osobu i uređaj</span><span lang="en">time to hit it; a and b are measured for each person and device</span></dd><span class="unit">ms</span></div>
+</dl>
+</div>
+<p lang="sr">Posledice za dizajn: važna dugmad neka budu <strong>velika</strong> i <strong>blizu</strong> mesta gde je ruka ili pogled. Na telefonu ciljevi treba da imaju bar oko <strong>44 × 44 px</strong> (otprilike jagodica prsta). Ivice i uglovi ekrana su „beskonačno široki” za miš, jer kursor tamo ne može da promaši, pa se tu stavljaju meniji.</p>
+<p lang="en">What it means for design: important buttons should be <strong>large</strong> and <strong>close</strong> to where the hand or the eye already is. On a phone targets should be at least about <strong>44 × 44 px</strong> (roughly a fingertip). The edges and corners of the screen are "infinitely wide" for a mouse, because the pointer cannot overshoot them, which is why menus go there.</p>
+<p lang="sr"><strong>Hikov zakon</strong> kaže da vreme odlučivanja raste sa brojem ponuđenih izbora <em>n</em>, ali sporije nego sam broj, po logaritmu:</p>
+<p lang="en"><strong>Hick's law</strong> says that decision time grows with the number of choices offered, <em>n</em>, but more slowly than the number itself, by a logarithm:</p>
+<div class="formula"><div class="tex">\[ T = a + b \cdot \log_2(n + 1) \]</div></div>
+<p lang="sr">Zato meni sa 30 stavki odjednom zbunjuje, a isti meni podeljen u 5 grupa po 6 ide brže. Kad je izbora mnogo, grupiši ih, sakrij retko korišćene iza „Još” i istakni preporučeni izbor.</p>
+<p lang="en">That is why a menu with 30 items at once is confusing, while the same menu split into 5 groups of 6 is quicker. When there are many choices, group them, hide the rarely used ones behind "More" and highlight the recommended choice.</p>
+<div class="rule-box blue"><p class="eyebrow"><span lang="sr">Milerov broj</span><span lang="en">Miller's number</span></p><p lang="sr">Kratkoročna memorija čuva oko 7 ± 2 stvari (novija istraživanja kažu i manje, oko 4). Ne teraj korisnika da pamti broj sa prethodnog ekrana: pokaži mu ga ponovo.</p><p lang="en">Short-term memory holds about 7 ± 2 things (newer research says even fewer, about 4). Do not make the user remember a number from the previous screen: show it to them again.</p></div>
+</div><figure class="lab" id="lab-fitts">
+<div class="uxs-stage uxs-fit" id="ft-stage"><button type="button" class="uxs-fit-start" id="ft-start"><span lang="sr">Start</span><span lang="en">Start</span></button><button type="button" class="uxs-fit-target" id="ft-target" aria-label="cilj / target"></button><div class="uxs-fit-msg" id="ft-msg"></div></div>
+<div class="controls"><div class="ctl"><label for="ft-d"><span lang="sr">Udaljenost D</span><span lang="en">Distance D</span></label><output id="ft-d-o"></output><input type="range" id="ft-d" min="80" max="460" step="10" value="300"></div><div class="ctl"><label for="ft-w"><span lang="sr">Širina cilja W</span><span lang="en">Target width W</span></label><output id="ft-w-o"></output><input type="range" id="ft-w" min="8" max="120" step="4" value="44"></div><div class="btns"><button type="button" class="btn" id="ft-reset"><span lang="sr">Obriši merenja</span><span lang="en">Clear the timings</span></button></div></div>
+<div class="readout" aria-live="polite"><div class="calc" id="ft-calc"></div><div class="result" id="ft-result"></div><div class="calc" id="ft-note"></div></div>
+<figcaption><span lang="sr">Klikni Start, pa što brže pogodi narandžasti cilj. Ponovi nekoliko puta sa malim i dalekim ciljem, pa sa velikim i bliskim, i uporedi vremena sa indeksom težine.</span><span lang="en">Click Start, then hit the orange target as fast as you can. Try a few times with a small, far target, then with a large, near one, and compare the times with the index of difficulty.</span></figcaption>
+</figure>
+  </div>
+</section>
+
+<section class="sec" id="pristupacnost" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 7</span><span lang="en">Part 7</span></b> · <span lang="sr">za sve korisnike</span><span lang="en">for every user</span></p>
+    <h2><span lang="sr">Pristupačnost i odzivni dizajn</span><span lang="en">Accessibility and responsive design</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="intro">
+<p lang="sr"><strong>Pristupačnost</strong> (accessibility, skraćeno a11y) znači da proizvod mogu da koriste svi: ljudi koji slabije vide ili su slepi i koriste čitač ekrana, koji ne mogu da koriste miš, koji slabije čuju, ali i neko sa slomljenom rukom ili na suncu sa telefonom. Ono što pomaže njima, pomaže i svima ostalima.</p>
+<p lang="en"><strong>Accessibility</strong> (a11y for short) means everyone can use the product: people with weak sight or who are blind and use a screen reader, who cannot use a mouse, who are hard of hearing, but also someone with a broken arm or with a phone in bright sun. What helps them helps everybody else too.</p>
+<ul lang="sr"><li><strong>Tekst za slike.</strong> Svaka slika koja nosi značenje ima opis (<code>alt</code>), koji čitač ekrana pročita naglas.</li><li><strong>Tastatura.</strong> Sve što radi mišem mora da radi i tasterima Tab, Enter i razmaknica, a fokus mora da bude vidljiv.</li><li><strong>Natpisi polja.</strong> Svako polje ima pravi natpis, ne samo sivi tekst unutar polja koji nestane čim počneš da kucaš.</li><li><strong>Kontrast i veličina.</strong> Najmanje 4,5 : 1 za tekst; stranica mora da radi i kad korisnik uveća slova na 200 %.</li><li><strong>Ne samo boja.</strong> Greška ima i ikonicu i reči, link je i podvučen.</li><li><strong>Jasan jezik.</strong> Kratke rečenice, poznate reči, dugmad koja kažu šta rade („Sačuvaj izmene”, a ne „OK”).</li><li><strong>Pokret i zvuk.</strong> Video ima titlove, animacija se može zaustaviti i ne treperi više od tri puta u sekundi.</li></ul>
+<ul lang="en"><li><strong>Text for images.</strong> Every image that carries meaning has a description (<code>alt</code>) which a screen reader reads aloud.</li><li><strong>Keyboard.</strong> Everything that works with a mouse must also work with Tab, Enter and Space, and the focus must be visible.</li><li><strong>Field labels.</strong> Every field has a real label, not just grey text inside the field that disappears as soon as you start typing.</li><li><strong>Contrast and size.</strong> At least 4.5 : 1 for text; the page must still work when the user zooms text to 200 %.</li><li><strong>Not just colour.</strong> An error has an icon and words too, a link is also underlined.</li><li><strong>Plain language.</strong> Short sentences, familiar words, buttons that say what they do ("Save changes", not "OK").</li><li><strong>Motion and sound.</strong> Video has captions, animation can be paused and does not flash more than three times a second.</li></ul>
+<p lang="sr"><strong>Odzivni dizajn</strong> (responsive) znači da se ista stranica prilagođava širini ekrana: na telefonu kolone idu jedna ispod druge, meni se skuplja u dugme, a dugmad su dovoljno velika za prst. Dobra praksa je <strong>prvo mobilni</strong> (mobile first): dizajniraš najpre za mali ekran, gde moraš da odlučiš šta je zaista važno, pa onda dodaješ za veći.</p>
+<p lang="en"><strong>Responsive design</strong> means the same page adapts to the width of the screen: on a phone columns stack one under another, the menu folds into a button, and buttons are big enough for a finger. A good habit is <strong>mobile first</strong>: you design for the small screen first, where you have to decide what really matters, and then add for the larger one.</p>
+<div class="rule-box green"><p class="eyebrow"><span lang="sr">Brza provera za 2 minuta</span><span lang="en">A two-minute check</span></p><p lang="sr">Prođi kroz stranicu samo tasterom Tab. Uvećaj na 200 %. Pogledaj je u crno-beloj varijanti. Ako u sva tri slučaja i dalje sve razumeš i sve možeš da uradiš, na dobrom si putu.</p><p lang="en">Go through the page using only the Tab key. Zoom to 200 %. Look at it in black and white. If in all three cases you still understand everything and can do everything, you are on the right track.</p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="primeri" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 8</span><span lang="en">Part 8</span></b> · <span lang="sr">vežba</span><span lang="en">practice</span></p>
+    <h2><span lang="sr">Primeri iz prakse</span><span lang="en">Worked examples</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="ex"><h4><span lang="sr">Primer 1 · kontrast</span><span lang="en">Example 1 · contrast</span></h4><p class="given" lang="sr">Dato: svetlosiv tekst ima osvetljenost L = 0,35, a bela pozadina L = 1. Da li prolazi nivo AA za običan tekst?</p><p class="given" lang="en">Given: light grey text has a luminance of L = 0.35 and a white background L = 1. Does it pass level AA for normal text?</p><ol lang="sr"><li>Svetlija boja je pozadina: L₁ = 1, tamnija je tekst: L₂ = 0,35.</li><li>K = (1 + 0,05) / (0,35 + 0,05) = 1,05 / 0,40 = 2,625.</li><li>Za običan tekst treba bar 4,5 : 1.</li></ol>
+<ol lang="en"><li>The lighter colour is the background: L₁ = 1, the darker is the text: L₂ = 0.35.</li><li>K = (1 + 0.05) / (0.35 + 0.05) = 1.05 / 0.40 = 2.625.</li><li>Normal text needs at least 4.5 : 1.</li></ol><p class="answer"><span lang="sr">K ≈ 2,6 : 1, ne prolazi. Tekst treba potamneti.</span><span lang="en">K ≈ 2.6 : 1, it fails. The text should be made darker.</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 2 · Fitsov zakon</span><span lang="en">Example 2 · Fitts's law</span></h4><p class="given" lang="sr">Dato: dugme „Kupi” široko 30 px udaljeno je 450 px od kursora. Dizajner ga proširi na 90 px. Koliko se menja indeks težine?</p><p class="given" lang="en">Given: a 30 px wide "Buy" button is 450 px from the pointer. The designer widens it to 90 px. How much does the index of difficulty change?</p><ol lang="sr"><li>Pre: ID = log₂(450/30 + 1) = log₂(16) = 4 bita.</li><li>Posle: ID = log₂(450/90 + 1) = log₂(6) ≈ 2,58 bita.</li><li>Razlika: 4 − 2,58 ≈ 1,4 bita manje.</li></ol>
+<ol lang="en"><li>Before: ID = log₂(450/30 + 1) = log₂(16) = 4 bits.</li><li>After: ID = log₂(450/90 + 1) = log₂(6) ≈ 2.58 bits.</li><li>Difference: 4 − 2.58 ≈ 1.4 bits less.</li></ol><p class="answer"><span lang="sr">Sa 4 na oko 2,6 bita: dugme se pogađa primetno brže.</span><span lang="en">From 4 down to about 2.6 bits: the button is hit noticeably faster.</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 3 · pregled forme heuristikama</span><span lang="en">Example 3 · reviewing a form with heuristics</span></h4><p class="given" lang="sr">Dato: forma za prijavu ima polja bez natpisa (samo sivi tekst u polju), crvenu ivicu kao jedini znak greške, dugme „OK” i posle slanja ništa se ne dešava 5 sekundi. Šta popraviti?</p><p class="given" lang="en">Given: a sign-in form has fields with no labels (only grey text inside), a red border as the only sign of an error, an "OK" button, and after sending nothing happens for 5 seconds. What should be fixed?</p><ol lang="sr"><li>Natpisi iznad polja: pristupačnost i prepoznavanje umesto pamćenja.</li><li>Greška sa ikonicom i rečima šta nije u redu i kako da se ispravi (heuristika 9, ne samo boja).</li><li>Dugme koje kaže šta radi: „Prijavi se” (heuristika 2).</li><li>Stanje „Prijavljivanje…” sa indikatorom dok se čeka (heuristika 1).</li></ol>
+<ol lang="en"><li>Labels above the fields: accessibility, and recognition rather than recall.</li><li>An error with an icon and words saying what is wrong and how to fix it (heuristic 9, not colour alone).</li><li>A button that says what it does: "Sign in" (heuristic 2).</li><li>A "Signing in…" state with an indicator while waiting (heuristic 1).</li></ol><p class="answer"><span lang="sr">Četiri izmene, a forma postaje jasna, pristupačna i daje povratnu informaciju.</span><span lang="en">Four changes, and the form becomes clear, accessible and gives feedback.</span></p></div>
+<div class="ex"><h4><span lang="sr">Primer 4 · Hikov zakon</span><span lang="en">Example 4 · Hick's law</span></h4><p class="given" lang="sr">Dato: meni ima 15 stavki u jednom spisku. Uz b = 150 ms po bitu, koliko se vreme odlučivanja menja ako se svede na 3 glavne stavke i „Još”?</p><p class="given" lang="en">Given: a menu has 15 items in one list. With b = 150 ms per bit, how much does decision time change if it is cut to 3 main items and "More"?</p><ol lang="sr"><li>Pre: log₂(15 + 1) = 4 bita, pa je b · 4 = 600 ms.</li><li>Posle: 4 izbora, log₂(4 + 1) ≈ 2,32 bita, pa je b · 2,32 ≈ 348 ms.</li><li>Razlika ≈ 250 ms za svaki izbor, a korisnici koji traže retku stavku imaju jedan klik više.</li></ol>
+<ol lang="en"><li>Before: log₂(15 + 1) = 4 bits, so b · 4 = 600 ms.</li><li>After: 4 choices, log₂(4 + 1) ≈ 2.32 bits, so b · 2.32 ≈ 348 ms.</li><li>Difference ≈ 250 ms for every choice, while users looking for a rare item have one more click.</li></ol><p class="answer"><span lang="sr">Oko 250 ms brže za većinu korisnika; zato se retko korišćeno sakriva.</span><span lang="en">About 250 ms faster for most users; that is why rarely used items are tucked away.</span></p></div>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="greske" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 9</span><span lang="en">Part 9</span></b> · <span lang="sr">pazi</span><span lang="en">watch out</span></p>
+    <h2><span lang="sr">Česte greške</span><span lang="en">Common mistakes</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<ul class="pitfalls" lang="sr"><li><div><b>„Meni je jasno, biće i drugima.”</b> Ti nisi korisnik. Testiraj sa ljudima koji aplikaciju vide prvi put.</div></li><li><div><b>UX je samo lep izgled.</b> Lepa aplikacija u kojoj ne možeš da završiš posao je loš UX.</div></li><li><div><b>Sivi tekst na beloj pozadini.</b> Izgleda elegantno, ali se slabo čita. Proveri kontrast.</div></li><li><div><b>Boja kao jedini znak.</b> Crveno i zeleno mnogi ne razlikuju; dodaj ikonu ili tekst.</div></li><li><div><b>Sitna dugmad na telefonu.</b> Ispod oko 44 px prst promašuje.</div></li><li><div><b>Previše izbora odjednom.</b> Grupiši i istakni glavni izbor.</div></li><li><div><b>Nedosledan izgled.</b> Ako isto dugme na svakoj strani izgleda drugačije, korisnik mora ponovo da uči.</div></li><li><div><b>Nema povratne informacije.</b> Svaka radnja treba da pokaže da je primljena i šta se desilo.</div></li></ul>
+<ul class="pitfalls" lang="en"><li><div><b>"It's clear to me, so it will be to others."</b> You are not the user. Test with people who see the app for the first time.</div></li><li><div><b>UX is just good looks.</b> A pretty app in which you cannot get the job done is bad UX.</div></li><li><div><b>Grey text on a white background.</b> It looks elegant, but it is hard to read. Check the contrast.</div></li><li><div><b>Colour as the only sign.</b> Many people cannot tell red from green; add an icon or text.</div></li><li><div><b>Tiny buttons on a phone.</b> Below about 44 px a finger misses.</div></li><li><div><b>Too many choices at once.</b> Group them and highlight the main choice.</div></li><li><div><b>Inconsistent look.</b> If the same button looks different on every page, the user has to learn it again.</div></li><li><div><b>No feedback.</b> Every action should show that it was received and what happened.</div></li></ul>
+</div>
+  </div>
+</section>
+
+<section class="sec" id="sazetak" data-toc>
+  <div class="sec-head">
+    <p class="eyebrow"><b><span lang="sr">Deo 10</span><span lang="en">Part 10</span></b></p>
+    <h2><span lang="sr">Sažetak</span><span lang="en">Summary</span></h2>
+  </div>
+  <div class="grid nolab">
+<div class="rest">
+<div class="summary"><ul lang="sr"><li>UI je ono što vidiš i dodiruješ; UX je celo iskustvo korišćenja. UI je deo UX-a.</li><li>Dizajn usmeren na korisnika: istraži, definiši, smisli, napravi prototip, testiraj, ponovi. Ti nisi korisnik.</li><li>Vizuelna hijerarhija vodi oko; geštalt principi blizine, sličnosti, poravnanja i kontrasta grupišu elemente bez reči.</li><li>Kontrast K = (L₁ + 0,05) / (L₂ + 0,05); običan tekst bar 4,5 : 1, krupan bar 3 : 1. Boja nije jedini znak.</li><li>Nilsenovih 10 heuristika služi za brz pregled interfejsa; najvažnije su vidljivost stanja, doslednost, sprečavanje grešaka i jasne poruke.</li><li>Fitsov zakon: veći i bliži cilj se brže pogađa; Hikov zakon: više izbora, sporija odluka.</li><li>Pristupačnost: alt tekst, tastatura, natpisi polja, kontrast, jasan jezik; odzivni dizajn i prvo mobilni.</li></ul>
+<ul lang="en"><li>UI is what you see and touch; UX is the whole experience of using it. UI is a part of UX.</li><li>User-centred design: research, define, ideate, prototype, test, repeat. You are not the user.</li><li>Visual hierarchy guides the eye; the Gestalt principles of proximity, similarity, alignment and contrast group elements without words.</li><li>Contrast K = (L₁ + 0.05) / (L₂ + 0.05); normal text at least 4.5 : 1, large text at least 3 : 1. Colour is not the only sign.</li><li>Nielsen's 10 heuristics are for a quick review of an interface; the key ones are system status, consistency, error prevention and clear messages.</li><li>Fitts's law: a bigger, nearer target is hit faster; Hick's law: more choices, slower decision.</li><li>Accessibility: alt text, keyboard, field labels, contrast, plain language; responsive design and mobile first.</li></ul></div>
+</div>
+  </div>
+</section>
+
+<section id="test" data-test="UX01" data-toc data-toc-sr="Test" data-toc-en="Test"></section>
+<nav class="pager" data-slot="pager"></nav>
+</main>
+<div id="site-footer"></div>
+<script src="../config.js"></script>
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/lab2d.js"></script>
+<script src="../assets/js/lessons/ux-labs.js"></script>
+</body>
+</html>
